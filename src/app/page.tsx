@@ -1,7 +1,15 @@
-import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div>Hello Taha</div>
+    <div>
+      <Button>
+        <Link href="/signup">
+          sign up
+        </Link>
+      </Button>
+    </div>
+    // <div>hello</div>
   )
 }
