@@ -1,22 +1,21 @@
 "use client"
 
+import SubmitButton from '@/components/atoms/SubmitButton'
 import FormField from '@/components/molecules/FormField'
-import { Button } from '@/components/ui/button'
+import { useAppSelector } from '@/store/base.store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { SIGN_UP_FIELDS } from '../../constants/user.constants'
+import { setUser } from '../../../user/store/user.slice'
+import { SIGN_UP_FIELDS } from '../../constants/sign-up.constants'
 import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
-import { useCreateUserMutation } from '../../store/user.api.slice'
-import { setUser } from '../../store/user.slice'
-import { mapUserDbModelToAppModel } from '../../utils/user.utils'
-import SubmitButton from '@/components/atoms/SubmitButton'
+import { useSingupMutation } from '../../store/auth.api.slice'
 
 
 function SignupForm() {
     const router=useRouter()
-    const [signup]=useCreateUserMutation()
+    const [signup]=useSingupMutation()
     const dispatch=useDispatch()
     const {
         handleSubmit,
@@ -38,13 +37,15 @@ function SignupForm() {
     })
     const onSubmit=async (data:ISignupForm)=>{
         const userResponse=await signup(data)
-        if(userResponse.error) {
+        if(userResponse.error) {            
             // fire a toast 
         }else {
             try{
                 // extracting the user actual data not the response data {status,data(user)}
                 const {data}=userResponse.data
-                const user=mapUserDbModelToAppModel(data)                
+                const {user}=data
+                console.log(user);
+                
                 dispatch(setUser(user))
                 reset()
                 router.replace('/verify-email')
@@ -68,7 +69,7 @@ function SignupForm() {
                 disabled={isSubmitting}
                 state={isSubmitting?"LOADING":"NORMAL"}
             >
-                Continue
+                {isSubmitting?"Loading...":"Sign up"}
             </SubmitButton>
         </form>
     )

@@ -1,11 +1,17 @@
+"use client"
+
+import { useAppSelector } from '@/store/base.store'
 import React from 'react'
+import { useSelector } from 'react-redux'
 
+interface Props {}
 
-function Page() {
+function Page(props: Props) {
+    const {user}=useAppSelector(state=>state.user)
+    console.log(user);                
+
     return (
-        <div>
-            <h1 className='text-center mt-[100px]'>Verification email sent to your email, check your email inbox</h1>
-        </div>
+        <div></div>
     )
 }
 

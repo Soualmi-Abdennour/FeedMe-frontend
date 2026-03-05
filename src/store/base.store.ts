@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import userReducer from "@/features/user/store/user.slice"
 import authReducer from "@/features/auth/store/auth.slice"
+import { useDispatch, useSelector } from "react-redux";
 
 
 // RTK QUERY SETUP 
@@ -26,3 +27,8 @@ export const store=configureStore({
     )
 })
 
+type AppDispatch = typeof store.dispatch;
+type RootState = ReturnType<typeof store.getState>;
+
+export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();

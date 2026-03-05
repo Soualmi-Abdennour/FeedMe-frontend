@@ -5,8 +5,13 @@ export default function Home() {
   return (
     <div>
       <Button>
-        <Link href="/signup">
+        <Link href="/sign-up">
           sign up
+        </Link>
+      </Button>
+      <Button>
+        <Link href="/sign-in">
+          sign in
         </Link>
       </Button>
     </div>

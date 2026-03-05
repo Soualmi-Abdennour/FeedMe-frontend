@@ -6,28 +6,21 @@ export interface authStateI {
     authentication:authStateModel|null
 }
 
-const getInitialState = (): authStateI => {
-    const storedState = null
-    // localStorage.getItem("authentication");
-    return {
-        authentication: storedState ? JSON.parse(storedState) : null
-    };
-};
 
-
+const initialState: authStateI = {
+    authentication: null
+}
 
 
 const authSlice=createSlice({
     name:"auth",
-    initialState:getInitialState(),
+    initialState,
     reducers:{
-        setAuthState:(state,action)=>{
+        setAuthState:(state:authStateI,action)=>{
             state.authentication=action.payload
-            // localStorage.setItem("authState",action.payload)
         },
-        clearAuthState:(state)=>{
+        clearAuthState:(state:authStateI)=>{
             state.authentication=null
-            localStorage.clear()
         }
     }
 })
