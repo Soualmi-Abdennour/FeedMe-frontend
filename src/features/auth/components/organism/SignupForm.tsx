@@ -35,16 +35,15 @@ function SignupForm() {
         }
     })
     const onSubmit=async (data:ISignupForm)=>{
-        const userResponse=await signup(data)
-        if(userResponse.error) {   
+        const response=await signup(data).unwrap()
+        if(response.errors) {   
             console.log("errr");
                      
             // fire a toast 
         }else {
             try{
                 // extracting the user actual data not the response data {status,data(user)}
-                const { data }=userResponse.data
-                const { user } = data
+                const user=response.data.user
                 console.log(user);
                 
                 dispatch(setUser(user))

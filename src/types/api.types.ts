@@ -12,10 +12,26 @@ export type ApiError={
 }
 export type ApiResponse<T> = {
     status: ApiStatus;
-    data: T | null;
+    data: T ;
     message: string;
     errors:ApiError[] | null
 };
 
 
 export type UserResponse=ApiResponse<UserResponseData>
+export type SendVerificationResponse=ApiResponse<null|UserResponseData>
+export type VerificationResponse=ApiResponse<null |UserResponseData>
+
+export type verifyTokenCredientials = {
+    token:string;
+    endpoint:string
+}
+export type sendVerificationTokenCredientials = {
+    email:string;
+    endpoint:string
+}
+export type resetPasswordCredentials = {
+    identifier:string;
+    password:string;
+    passwordConfirm:string;
+}

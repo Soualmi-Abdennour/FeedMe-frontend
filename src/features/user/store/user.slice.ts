@@ -1,26 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit/react";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserAppModel } from "../types/user.types";
 
+interface IUserState {
+    user: UserAppModel | null;
+}
 
-interface userStateI {
-    user: null | UserAppModel
-}
-const initialState: userStateI = {
+const initialState: IUserState = {
     user: null
-}
+};
 
 const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setUser: (state:userStateI, action) => {
-            state.user = action.payload
+        setUser: (state: IUserState, action: PayloadAction<UserAppModel>) => {
+            state.user = action.payload;
         },
-        clearUser: (state: userStateI) => {
-            state.user = null
+
+        updateUser: (state: IUserState, action: PayloadAction<Partial<UserAppModel>>) => {
+            if (state.user) {
+                Object.assign(state.user, action.payload);
+            }
+        },
+
+        clearUser: (state: IUserState) => {
+            state.user = null;
         }
     }
-})
+});
 
-export const { clearUser, setUser } = userSlice.actions
-export default userSlice.reducer
+export const { clearUser, setUser, updateUser } = userSlice.actions;
+export default userSlice.reducer;

@@ -32,15 +32,15 @@ function SigninForm() {
         }
     })
     const onSubmit = async (data: ISigninForm) => {
-        const userResponse = await signin(data)
-        if (userResponse.error) {
+        const response = await signin(data).unwrap()
+        if (response.errors) {
             
             // fire a toast 
         } else {
             try {
                 // extracting the user actual data not the response data {status,data(user)}
-                const { data } = userResponse.data
-                const { user } = data
+
+                const user = response.data?.user
                 console.log(user);
                 
                 dispatch(setUser(user))
@@ -48,7 +48,7 @@ function SigninForm() {
                 if (!user.isVerified)
                     router.replace('/verify-email')
                 else
-                    router.replace("/")
+                    router.replace("/home")
             }
             catch (e) {
 

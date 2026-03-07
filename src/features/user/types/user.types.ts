@@ -1,12 +1,13 @@
 
 export type UserRole = "USER" | "RESTAURANT" | "ADMIN"
 
-export type UserAppModel = UserDbModel 
+// export type UserAppModel 
+// = UserDbModel 
 // & (
     // NormalUserProfile | RestaurantUserProfile | null
 // )
 
-type UserDbModel = {
+export type UserAppModel = {
     id: string
 
     userName: string

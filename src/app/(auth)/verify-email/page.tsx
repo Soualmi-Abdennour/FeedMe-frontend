@@ -1,4 +1,4 @@
-import VerifyTokenPage from "@/features/auth/components/templates/VerifyTokenPage";
+import VerifyEmailTokenPage from "@/features/auth/components/templates/VerifyEmailTokenPage";
 
 
-export default VerifyTokenPage
+export default VerifyEmailTokenPage

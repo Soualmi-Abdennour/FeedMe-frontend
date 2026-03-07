@@ -1,5 +1,10 @@
 import { fetchAPI } from "@/store/base.store";
-import { UserResponse } from "@/types/api.types";
+import { ApiResponse, resetPasswordCredentials, SendVerificationResponse, sendVerificationTokenCredientials, UserResponse, VerificationResponse, verifyTokenCredientials } from "@/types/api.types";
+import { IForgetPasswordForm } from "../schema/forgetPassword.schema";
+import { UserAppModel } from "@/features/user/types/user.types";
+import { ISignupForm } from "../schema/signup.schema";
+import { ISigninForm } from "../schema/signin.schema";
+import { IResetPasswordForm } from "../schema/resetPassword.schema";
 
 
 
@@ -8,33 +13,42 @@ import { UserResponse } from "@/types/api.types";
 
 export const authApiSlice=fetchAPI.injectEndpoints({
     endpoints:(build)=>({
-        singup:build.mutation({
-            query:(userCredientials)=>({
+        singup:build.mutation<UserResponse,ISignupForm>({
+            query:(signupCredientials)=>({
                 url:"/authentication/sign-up",
                 method:"POST",
-                body: userCredientials
+                body: signupCredientials
             })
         }),
-        signin:build.mutation({
-            query:(userCredientials)=>({
+        signin:build.mutation<UserResponse,ISigninForm>({
+            query:(signinCredientials)=>({
                 url:"authentication/sign-in",
                 method:"POST",
-                body:userCredientials
+                body:signinCredientials
             })
         }),
-        verifyToken:build.query<UserResponse,string|null>({
-            query:(token)=>({
-                url: `authentication/verify-email-token?token=${token}`
+        verifyToken:build.query<VerificationResponse,verifyTokenCredientials>({
+            query:({token,endpoint})=>({
+                url: `authentication/${endpoint}?token=${token}`
             })
         }),
-        sendVerificationEmail:build.mutation({
-            query:(user)=>({
-                url:"/authentication/send-verification-email",
+        sendVerificationEmail: build.mutation<SendVerificationResponse, sendVerificationTokenCredientials>({
+            query:({email,endpoint})=>({
+                url: `/authentication/${endpoint}`,
                 method:"POST",
-                body:user
+                body:{
+                    email
+                }
+            })
+        }),
+        resetPassword:build.mutation<UserResponse,resetPasswordCredentials>({
+            query:(resetPasswordCredentials)=>({
+                url:"authentication/reset-password",
+                method:"POST",
+                body: resetPasswordCredentials
             })
         })
     })
 })
 
-export const {useSingupMutation,useSigninMutation,useVerifyTokenQuery,useSendVerificationEmailMutation} =authApiSlice
+export const {useSingupMutation,useSigninMutation,useVerifyTokenQuery,useSendVerificationEmailMutation,useResetPasswordMutation} =authApiSlice

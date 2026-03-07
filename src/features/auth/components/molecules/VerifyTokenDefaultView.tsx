@@ -6,9 +6,10 @@ import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
 import { useAppSelector } from "@/store/base.store";
 
 function VerifyTokenDefaultView({ props }: { props: IVerifyTokenFormProps }) {
-    const [cooldown, setCooldown] = useState(60); // start countdown immediately
+    const [cooldown, setCooldown] = useState(10); // start countdown immediately
     const [sendVerificationEmail] = useSendVerificationEmailMutation();
     const { user } = useAppSelector((state) => state.user);
+    const { displayMessage, buttonMessage, buttonState ,resendVerificationEndpoint} = props;
 
     // Countdown effect
     useEffect(() => {
@@ -22,16 +23,24 @@ function VerifyTokenDefaultView({ props }: { props: IVerifyTokenFormProps }) {
     }, [cooldown]);
 
     const handleClick = async () => {
-        setCooldown(60); // restart cooldown on click
-        await sendVerificationEmail(user); // trigger API
+        setCooldown(10); // restart cooldown on click
+        
+        
+        await sendVerificationEmail({
+            email:user?.email!,
+            endpoint:resendVerificationEndpoint
+        }); // trigger API
     };
 
-    const { displayMessage, buttonMessage, buttonState } = props;
 
     return (
         <div className="flex flex-col max-w-[500px] mx-auto justify-between items-center min-h-[500px]">
-            <h1 className="text-center">{displayMessage}</h1>
-            {cooldown > 0 && <h3>Resend the link in: {cooldown} seconds</h3>}
+            <h1 className="text-center">
+                {displayMessage[0]}
+                <span>{user?.email}</span>
+                {displayMessage[1]}
+            </h1>
+            {cooldown > 0 && <h2>Resend the link in: {cooldown} seconds</h2>}
             <SubmitButton
                 disabled={cooldown > 0}
                 state={"ERROR"}
