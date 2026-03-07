@@ -69,7 +69,7 @@ function SignupForm() {
             ))}
             <SubmitButton
                 disabled={isSubmitting}
-                state={isSubmitting?"LOADING":"NORMAL"}
+                state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting?"Loading...":"Sign up"}
             </SubmitButton>

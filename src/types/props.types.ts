@@ -16,7 +16,7 @@ export interface IFormField {
 export interface ISubmitButton {
     disabled?:boolean;
     children:React.ReactNode
-    state:"LOADING"|"NORMAL"|"ERROR"|"SUCCESS";
+    state?:"LOADING"|"FAIL"|"ERROR"|"SUCCESS" | "DEFAULT" ;
     className?:string;
     onClick?:()=>void
 }

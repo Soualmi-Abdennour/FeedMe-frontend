@@ -39,8 +39,8 @@ function SigninForm() {
         } else {
             try {
                 // extracting the user actual data not the response data {status,data(user)}
-                const { DATA } = userResponse.data
-                const { user } = DATA
+                const { data } = userResponse.data
+                const { user } = data
                 console.log(user);
                 
                 dispatch(setUser(user))
@@ -67,7 +67,7 @@ function SigninForm() {
             ))}
             <SubmitButton
                 disabled={isSubmitting}
-                state={isSubmitting ? "LOADING" : "NORMAL"}
+                state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting ? "Loading..." : "Sign ip"}
             </SubmitButton>

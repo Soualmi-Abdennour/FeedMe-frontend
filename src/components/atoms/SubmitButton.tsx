@@ -6,7 +6,7 @@ import { Check, ChevronRight, Loader, RotateCw } from 'lucide-react'
 
 
 function SubmitButton({
-    state,
+    state="DEFAULT",
     children,
     disabled=false,
     className,
@@ -15,12 +15,14 @@ function SubmitButton({
     const getIconByState=()=>{
         if(state==="LOADING")
             return <Loader className='animate-spin size-8'></Loader>
-        if(state==="NORMAL")
+        if(state==="FAIL")
             return <ChevronRight className='size-8'></ChevronRight>
         if(state==="SUCCESS") 
             return <Check className='size-8'></Check>
         if(state==="ERROR")
             return <RotateCw className='size-8'></RotateCw>
+        else 
+            return <ChevronRight className='size-8'></ChevronRight>
     }
 
     return (

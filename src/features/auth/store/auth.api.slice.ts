@@ -1,4 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
+import { UserResponse } from "@/types/api.types";
 
 
 
@@ -21,7 +22,12 @@ export const authApiSlice=fetchAPI.injectEndpoints({
                 body:userCredientials
             })
         }),
+        verifyToken:build.query<UserResponse,string|null>({
+            query:(token)=>({
+                url: `authentication/verify-email-token?token=${token}`
+            })
+        })
     })
 })
 
-export const {useSingupMutation,useSigninMutation} =authApiSlice
+export const {useSingupMutation,useSigninMutation,useVerifyTokenQuery} =authApiSlice
