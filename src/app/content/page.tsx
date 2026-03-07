@@ -1,24 +1,24 @@
-import { UserDbModel } from '@/features/user/types/user.types'
-import React from 'react'
+// import { UserDbModel } from '@/features/user/types/user.types'
+// import React from 'react'
 
-type StatusType ="SUCCESS"|"FAIL"|"ERROR"
-type UserResponseData ={
-    user?:UserDbModel,
-    accessToken?:string|null,
-    refreshToken?:string|null,
-}
-type APIError={
-    field?:string,
-    message:string,
-}
+// type StatusType ="SUCCESS"|"FAIL"|"ERROR"
+// type UserResponseData ={
+//     user?:UserDbModel,
+//     accessToken?:string|null,
+//     refreshToken?:string|null,
+// }
+// type APIError={
+//     field?:string,
+//     message:string,
+// }
 
-// in front make the data field type as generic 
-type  APIResponse={
-    status: StatusType,
-    message:String,
-    data:AuthResponseData | null,
-    errors: APIError[]|null
-}
+// // in front make the data field type as generic 
+// type  APIResponse={
+//     status: StatusType,
+//     message:String,
+//     data:AuthResponseData | null,
+//     errors: APIError[]|null
+// }
 
 function Page() {
     return (

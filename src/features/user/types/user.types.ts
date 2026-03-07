@@ -1,9 +1,10 @@
 
-export type UserRole="USER"|"RESTAURANT"|"ADMIN"
+export type UserRole = "USER" | "RESTAURANT" | "ADMIN"
 
-export type UserAppModel = UserDbModel & {
-    // profile: NormalUserProfile | RestaurantUserProfile | null
-}
+export type UserAppModel = UserDbModel 
+// & (
+    // NormalUserProfile | RestaurantUserProfile | null
+// )
 
 type UserDbModel = {
     id: string
@@ -31,41 +32,47 @@ type UserDbModel = {
 }
 
 // type NormalUserProfile = {
-//     basicInformation: {
-//         fullName: string
-//         city: string | null
-//         phoneNumber: string
-//         bio: string | null
-//         profileImageUrl?: string
-//     }
+//     profileType: "USER_PROFILE" | "RESTAURANT_PROFILE"
+//     profile: {
+//         basicInformation: {
+//             fullName: string
+//             city: string | null
+//             phoneNumber: string
+//             bio: string | null
+//             profileImageUrl?: string
+//         }
 
-//     usagePreferences: {
-//         usageGoal: UsageGoal
-//         kitchenCategory: KitchenCategory
-//     } | null
+//         usagePreferences: {
+//             usageGoal: UsageGoal
+//             kitchenCategory: KitchenCategory
+//         } | null
+//     }
 // }
 // type RestaurantUserProfile = {
-//     basicInformation: {
-//         restaurantName: string
-//         restaurantLogoUrl: string | null
-//         businessEmail: string | null
-//         phoneNumber: string
-//     }
+//     profileType: "USER_PROFILE" | "RESTAURANT_PROFILE"
+//     profile: {
+//         basicInformation: {
+//             restaurantName: string
+//             restaurantLogoUrl: string | null
+//             businessEmail: string | null
+//             phoneNumber: string
+//         }
 
-//     locationAndContact: {
-//         city: string
-//         wilaya: Wilaya
-//         street: string | null
-//         postalCode?: string
-//         googleMapsLink?: string
-//     }
+//         locationAndContact: {
+//             city: string
+//             wilaya: Wilaya
+//             street: string | null
+//             postalCode?: string
+//             googleMapsLink?: string
+//         }
 
-//     restaurantDetails: {
-//         kitchenCategories: KitchenCategory[]
-//         openingHours: {
-//             day: WeekDay
-//             from: string
-//             to: string
-//         }[]
+//         restaurantDetails: {
+//             kitchenCategories: KitchenCategory[]
+//             openingHours: {
+//                 day: WeekDay
+//                 from: string
+//                 to: string
+//             }[]
+//         }
 //     }
 // }

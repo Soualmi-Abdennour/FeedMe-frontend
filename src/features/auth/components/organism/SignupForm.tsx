@@ -2,13 +2,12 @@
 
 import SubmitButton from '@/components/atoms/SubmitButton'
 import FormField from '@/components/molecules/FormField'
-import { useAppSelector } from '@/store/base.store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { setUser } from '../../../user/store/user.slice'
-import { SIGN_UP_FIELDS } from '../../constants/sign-up.constants'
+import { SIGN_UP_FIELDS } from '../../constants/signup.constants'
 import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
 import { useSingupMutation } from '../../store/auth.api.slice'
 
@@ -37,13 +36,15 @@ function SignupForm() {
     })
     const onSubmit=async (data:ISignupForm)=>{
         const userResponse=await signup(data)
-        if(userResponse.error) {            
+        if(userResponse.error) {   
+            console.log("errr");
+                     
             // fire a toast 
         }else {
             try{
                 // extracting the user actual data not the response data {status,data(user)}
-                const {data}=userResponse.data
-                const {user}=data
+                const { data }=userResponse.data
+                const { user } = data
                 console.log(user);
                 
                 dispatch(setUser(user))
@@ -51,7 +52,8 @@ function SignupForm() {
                 router.replace('/verify-email')
             }
             catch(e){
-
+                console.log(e);
+                
             }
         } 
     }
