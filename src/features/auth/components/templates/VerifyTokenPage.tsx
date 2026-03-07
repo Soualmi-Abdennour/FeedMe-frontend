@@ -1,9 +1,9 @@
 "use client"
 import { useSearchParams } from 'next/navigation'
-import VerifyTokenStateView from '../organism/VerifyTokenProcess'
-import VerifyTokenForm from '../molecules/VerifyTokenView'
 import { VERIFY_EMAIL_MESSAGES } from '../../constants/verify.email.constants'
 import { IVerifyTokenFormProps } from '../../types/props.types'
+import VerifyTokenDefaultView from '../molecules/VerifyTokenDefaultView'
+import VerifyTokenProcess from '../organism/VerifyTokenProcess'
 
 
 function VerifyTokenPage() {
@@ -12,9 +12,9 @@ function VerifyTokenPage() {
     const props: IVerifyTokenFormProps = {
         displayMessage: VERIFY_EMAIL_MESSAGES["DEFAULT"].dispalyMessage
     }
-    if (!token) return <VerifyTokenForm props={props}></VerifyTokenForm>
+    if (!token) return <VerifyTokenDefaultView props={props}></VerifyTokenDefaultView>
     return (
-        <VerifyTokenStateView token={token}></VerifyTokenStateView>
+        <VerifyTokenProcess token={token}></VerifyTokenProcess>
     )
 }
 

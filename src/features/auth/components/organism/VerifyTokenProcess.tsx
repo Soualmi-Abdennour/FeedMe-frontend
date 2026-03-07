@@ -1,14 +1,14 @@
 "use client"
 import { useAppSelector } from '@/store/base.store'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { VERIFY_EMAIL_MESSAGES } from '../../constants/verify.email.constants'
 import { useVerifyTokenQuery } from '../../store/auth.api.slice'
 import { IVerifyTokenFormProps } from '../../types/props.types'
-import VerifyTokenForm from '../molecules/VerifyTokenView'
+import VerifyTokenView from '../molecules/VerifyTokenView'
 
 
 
-function VerifyTokenStateView({token}:{token:string}) {
+function VerifyTokenProcess({token}:{token:string}) {
     const { data, isLoading, refetch } = useVerifyTokenQuery(token)
     const { user } = useAppSelector(state => state.user)
     const router = useRouter()
@@ -53,8 +53,8 @@ function VerifyTokenStateView({token}:{token:string}) {
 
 
     return (
-        <VerifyTokenForm props={getVerifyTokenFormProps()}></VerifyTokenForm>
+        <VerifyTokenView props={getVerifyTokenFormProps()}></VerifyTokenView>
     )
 }
 
-export default VerifyTokenStateView
+export default VerifyTokenProcess

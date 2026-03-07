@@ -26,8 +26,15 @@ export const authApiSlice=fetchAPI.injectEndpoints({
             query:(token)=>({
                 url: `authentication/verify-email-token?token=${token}`
             })
+        }),
+        sendVerificationEmail:build.mutation({
+            query:(user)=>({
+                url:"/authentication/send-verification-email",
+                method:"POST",
+                body:user
+            })
         })
     })
 })
 
-export const {useSingupMutation,useSigninMutation,useVerifyTokenQuery} =authApiSlice
+export const {useSingupMutation,useSigninMutation,useVerifyTokenQuery,useSendVerificationEmailMutation} =authApiSlice
