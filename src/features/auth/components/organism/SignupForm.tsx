@@ -36,22 +36,19 @@ function SignupForm() {
     })
     const onSubmit=async (data:ISignupForm)=>{
         const response=await signup(data).unwrap()
-        if(response.errors) {   
-            console.log("errr");
+        const user = response.data?.user
+
+        if(response.errors || !user) {   
                      
             // fire a toast 
         }else {
             try{
-                // extracting the user actual data not the response data {status,data(user)}
-                const user=response.data.user
-                console.log(user);
-                
+                // extracting the user actual data not the response data {status,data(user)}    
                 dispatch(setUser(user))
                 reset()
                 router.replace('/verify-email')
             }
             catch(e){
-                console.log(e);
                 
             }
         } 

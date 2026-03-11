@@ -1,12 +1,13 @@
 "use client"
 import { Button } from '@/components/ui/button'
+import { UserAppModel } from '@/features/user/types/user.types'
 import { useAppSelector } from '@/store/base.store'
 import Link from 'next/link'
 
 export default function Home() {
-  const { user } = useAppSelector(state => state.user)
+  const  user  = useAppSelector(state => state.user.user) as UserAppModel  
   return (
-    <div>
+    <div className="">
       {!user ? (
         <><Button>
           <Link href="/sign-up">
@@ -20,7 +21,7 @@ export default function Home() {
           </Button>
         </>
       ) : (
-        <div>hello</div>
+        <div>hello </div>
       )}
     </div>
   )

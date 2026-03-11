@@ -1,4 +1,4 @@
-import { VerificationProcessState } from "../types/props.types";
+import { VerificationProcessState } from "@/types/props.types";
 
 export const VERIFY_EMAIL_MESSAGES:VerificationProcessState={
     LOADING:{

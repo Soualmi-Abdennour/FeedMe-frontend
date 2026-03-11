@@ -1,20 +1,20 @@
 "use client"
-import { useAppSelector } from '@/store/base.store'
+import { VerificationResponse } from '@/types/api.types'
 import { useRouter } from 'next/navigation'
-import { VERIFY_EMAIL_MESSAGES } from '../../constants/verifyEmail.constants'
-import { useVerifyTokenQuery } from '../../store/auth.api.slice'
-import { IVerifyTokenFormProps } from '../../types/props.types'
-import VerifyTokenView from '../molecules/VerifyTokenView'
-import { VerificationProcessState } from "../../types/props.types";
+import { IVerificationProps, VerificationProcessState } from '../../types/props.types'
+import VerificationView from '../molecules/VerificationView'
 
+type queryProps = {
+    data: VerificationResponse | undefined;
+    isLoading: boolean;
+    queryFn: () => void
+}
 
-
-function VerifyTokenProcess({ token, endpoint, verificationMessages }: { token: string, endpoint: string, verificationMessages: VerificationProcessState }) {
-    const { data, isLoading, refetch } = useVerifyTokenQuery({token,endpoint})
-    const { user } = useAppSelector(state => state.user)
+function VerificationProcess({ verificationMessages, queryProps }: { verificationMessages: VerificationProcessState, queryProps: queryProps }) {
+    const { data, isLoading, queryFn } = queryProps
+    
     const router = useRouter()
-
-    const getVerifyTokenFormProps = (): IVerifyTokenFormProps => {
+    const getVerifyProps = (): IVerificationProps => {
         if (isLoading) {
             return {
                 displayMessage: verificationMessages["LOADING"].dispalyMessage,
@@ -37,10 +37,10 @@ function VerifyTokenProcess({ token, endpoint, verificationMessages }: { token: 
                 buttonMessage: verificationMessages["ERROR"].buttonMessage,
                 buttonState: "ERROR",
                 onClick: () => {
-                    refetch()
+                    queryFn()
                 }
             }
-        } else {
+        } else  {
             return {
                 displayMessage: verificationMessages["FAIL"].dispalyMessage,
                 buttonMessage: verificationMessages["FAIL"].buttonMessage,
@@ -54,8 +54,8 @@ function VerifyTokenProcess({ token, endpoint, verificationMessages }: { token: 
 
 
     return (
-        <VerifyTokenView props={getVerifyTokenFormProps()}></VerifyTokenView>
+        <VerificationView props={getVerifyProps()}></VerificationView>
     )
 }
 
-export default VerifyTokenProcess
+export default VerificationProcess

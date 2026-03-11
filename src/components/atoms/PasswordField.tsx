@@ -20,7 +20,7 @@ function PasswordField({
     const [showPassword, setShowPassword] = useState<boolean>(false)
     return (
         <>
-            <FieldLabel>{label}</FieldLabel>
+            <FieldLabel className='text-green-600'>{label}</FieldLabel>
             <div>
                 <Controller
                     name={name}

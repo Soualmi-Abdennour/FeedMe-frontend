@@ -1,11 +1,12 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import SubmitButton from "@/components/atoms/SubmitButton";
-import { IVerifyTokenFormProps } from "../../types/props.types";
 import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
 import { useAppSelector } from "@/store/base.store";
+import { IVerificationProps } from "@/types/props.types";
 
-function VerifyTokenDefaultView({ props }: { props: IVerifyTokenFormProps }) {
+function VerifyTokenDefaultView({ props }: { props: IVerificationProps }) {
+    
     const [cooldown, setCooldown] = useState(10); // start countdown immediately
     const [sendVerificationEmail] = useSendVerificationEmailMutation();
     const { user } = useAppSelector((state) => state.user);
@@ -27,8 +28,8 @@ function VerifyTokenDefaultView({ props }: { props: IVerifyTokenFormProps }) {
         
         
         await sendVerificationEmail({
-            email:user?.email!,
-            endpoint:resendVerificationEndpoint
+            identifier:user?.email!,
+            endpoint:resendVerificationEndpoint!
         }); // trigger API
     };
 

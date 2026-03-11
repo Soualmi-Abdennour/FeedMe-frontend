@@ -17,14 +17,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <StoreProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <div className='max-w-[600px] mx-auto mt-9 '>
+    <html lang="en">
+      <body className={`${inter.className} min-h-screen`}>
+        <StoreProvider>
+          <div className='max-w-[600px] mx-auto mt-9'>
             {children}
           </div>
-          </body>
-      </html>
-    </StoreProvider>
+        </StoreProvider>
+      </body>
+    </html>
   )
 }

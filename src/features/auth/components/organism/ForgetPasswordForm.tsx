@@ -27,12 +27,12 @@ function ForgetPasswordForm() {
         resolver: zodResolver(forgetPasswordFormSchema),
         mode: "onChange",
         defaultValues: {
-            email: process.env.NODE_ENV === "development" ? "abdousoualmi16@gmail.com" : "",
+            identifier: process.env.NODE_ENV === "development" ? "abdousoualmi16@gmail.com" : "",
         }
     })
     const onSubmit = async (data: IForgetPasswordForm) => {
         // to get data immediatly 
-        const reposnse =await forgetPassword({email:data.email,endpoint:"/forget-password"}).unwrap()
+        const reposnse = await forgetPassword({ identifier: data.identifier,endpoint:"/forget-password"}).unwrap()
         if (reposnse?.status ==="SUCCESS"){
             dispatch(setUser(reposnse.data?.user!))
             reset()

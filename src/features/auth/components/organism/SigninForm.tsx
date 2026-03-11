@@ -9,6 +9,7 @@ import { setUser } from '../../../user/store/user.slice'
 import { SIGN_IN_FIELDS } from '../../constants/signin.constants'
 import { ISigninForm, signinFormSchema } from '../../schema/signin.schema'
 import { useSigninMutation } from '../../store/auth.api.slice'
+import { setAuthState } from '../../store/auth.slice'
 
 
 function SigninForm() {
@@ -33,22 +34,26 @@ function SigninForm() {
     })
     const onSubmit = async (data: ISigninForm) => {
         const response = await signin(data).unwrap()
-        if (response.errors) {
+        const user = response.data?.user
+        const jwtToken = response.data?.jwtToken
+
+        
+        if (response.errors || !user) {
             
             // fire a toast 
         } else {
             try {
                 // extracting the user actual data not the response data {status,data(user)}
-
-                const user = response.data?.user
-                console.log(user);
                 
                 dispatch(setUser(user))
                 reset()
-                if (!user.isVerified)
+                if (!user.isVerified){
                     router.replace('/verify-email')
-                else
-                    router.replace("/home")
+                }
+                else if(user.isVerified &&jwtToken ){
+                    dispatch(setAuthState({jwtToken}))
+                    router.replace("/onboarding")
+                }
             }
             catch (e) {
 

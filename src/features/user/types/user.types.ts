@@ -1,10 +1,11 @@
+import { KithcenCategory, ServiceStatus, UsageGoal, WeekDay, Wilaya } from "@/types/app.types"
 
 export type UserRole = "USER" | "RESTAURANT" | "ADMIN"
 
 // export type UserAppModel 
 // = UserDbModel 
 // & (
-    // NormalUserProfile | RestaurantUserProfile | null
+// NormalUserProfile | RestaurantUserProfile | null
 // )
 
 export type UserAppModel = {
@@ -27,53 +28,57 @@ export type UserAppModel = {
 
     passwordResetTokenHash?: string | null
     passwordResetExpires?: Date | null
-
+    slug:string
     createdAt: Date
     updatedAt: Date
+
+    profile: NormalUserProfile | RestaurantUserProfile
 }
 
-// type NormalUserProfile = {
-//     profileType: "USER_PROFILE" | "RESTAURANT_PROFILE"
-//     profile: {
-//         basicInformation: {
-//             fullName: string
-//             city: string | null
-//             phoneNumber: string
-//             bio: string | null
-//             profileImageUrl?: string
-//         }
+export type NormalUserProfile = {
+    userBasicInformation: {
+        fullName: string
+        city?: Wilaya | string
+        phoneNumber: string
+        bio?: string
+        profileImageUrl?: string
+    }
 
-//         usagePreferences: {
-//             usageGoal: UsageGoal
-//             kitchenCategory: KitchenCategory
-//         } | null
-//     }
-// }
-// type RestaurantUserProfile = {
-//     profileType: "USER_PROFILE" | "RESTAURANT_PROFILE"
-//     profile: {
-//         basicInformation: {
-//             restaurantName: string
-//             restaurantLogoUrl: string | null
-//             businessEmail: string | null
-//             phoneNumber: string
-//         }
+    usagePreferences: {
+        usageGoal?: UsageGoal[]
+        kitchenCategory?: KithcenCategory[]
+    }
+}
+export type RestaurantUserProfile = {
+    restaurantBasicInformation: {
+        restaurantName: string
+        restaurantLogoUrl?: string 
+        businessEmail?: string 
+        phoneNumber: string
+    }
 
-//         locationAndContact: {
-//             city: string
-//             wilaya: Wilaya
-//             street: string | null
-//             postalCode?: string
-//             googleMapsLink?: string
-//         }
+    restaurantLocationAndContact: {
+        // city: string
+        city: Wilaya
+        street?: string 
+        postalCode?: string
+        googleMapsLink: string
+    }
 
-//         restaurantDetails: {
-//             kitchenCategories: KitchenCategory[]
-//             openingHours: {
-//                 day: WeekDay
-//                 from: string
-//                 to: string
-//             }[]
-//         }
-//     }
-// }
+    restaurantDetails: {
+        kitchenCategory: KithcenCategory[]
+        // openingHours: {
+        //     day: WeekDay
+        //     from: string
+        //     to: string
+        // }[]
+
+    }
+    restaurantServices: {
+        delivery: ServiceStatus;
+        reservation: ServiceStatus;
+        dineIn: ServiceStatus;
+        specialCustomerService: ServiceStatus;
+        parkAvailability: ServiceStatus;
+    };
+}

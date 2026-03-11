@@ -2,10 +2,11 @@ import { IFormField } from '@/types/props.types';
 import { Controller } from 'react-hook-form';
 import { FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
 
 
 
-function TextField({
+function TextAreaField({
     name,
     label,
     placeholder,
@@ -17,21 +18,20 @@ function TextField({
 }: IFormField) {
     return (
         <>
-            <FieldLabel className='text-blue-600'>{label}</FieldLabel>
+            <FieldLabel>{label}</FieldLabel>
             <Controller
                 name={name}
                 control={control}
                 render={({ field }) => (
-                    <Input
+                    <Textarea
                         {...field}
                         id={id}
                         name={name}
                         placeholder={placeholder}
-                        type="text"
                         disabled={disabled}
                         autoFocus={autoFocus}
                         className={` ${errors[name] ? "border-red-500" : ""}`}
-                    ></Input>
+                    ></Textarea>
                 )}
             >
             </Controller>
@@ -42,4 +42,4 @@ function TextField({
     )
 }
 
-export default TextField
+export default TextAreaField

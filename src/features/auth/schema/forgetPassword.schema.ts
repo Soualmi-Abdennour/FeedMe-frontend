@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const forgetPasswordFormSchema=z.object({
     // can be email or userName 
-    email: z.string()
+    identifier: z.string()
         .email("Invalid Email"),
     // z.union([
     //     z.string()

@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { RESET_PASSWORD_FIELDS } from '../../constants/resetPassword.constants'
 import { IResetPasswordForm, resetPasswordFormSchema } from '../../schema/resetPassword.schema'
 import { useResetPasswordMutation } from '../../store/auth.api.slice'
+import { setAuthState } from '../../store/auth.slice'
 
 
 function ResetPasswordForm() {
@@ -35,14 +36,21 @@ function ResetPasswordForm() {
     const onSubmit = async (data: IResetPasswordForm) => {
         // to get data immediatly 
         const reposnse = await resetPassword({
-            identifier:"abdousoualmi16@gmail.com",
+            identifier:user?.email!,
             password:data.password,
             passwordConfirm:data.passwordConfirm
         }).unwrap()
         if (reposnse?.status === "SUCCESS"){
             dispatch(setUser(reposnse.data?.user!))
             reset()
-            router.replace("/home")
+            if(!user?.isVerified){
+                dispatch(setAuthState({jwtToken:reposnse.data?.jwtToken!}))
+                router.replace("/verify-email")
+            }
+            if(!user?.isOnboardingCompleted)
+                router.replace("/onboarding")
+            else
+                router.replace("/home")
         }
     }
     return (

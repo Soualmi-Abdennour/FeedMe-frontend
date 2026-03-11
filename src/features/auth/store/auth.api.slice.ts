@@ -15,7 +15,7 @@ export const authApiSlice=fetchAPI.injectEndpoints({
     endpoints:(build)=>({
         singup:build.mutation<UserResponse,ISignupForm>({
             query:(signupCredientials)=>({
-                url:"/authentication/sign-up",
+                url:"authentication/sign-up",
                 method:"POST",
                 body: signupCredientials
             })
@@ -29,15 +29,15 @@ export const authApiSlice=fetchAPI.injectEndpoints({
         }),
         verifyToken:build.query<VerificationResponse,verifyTokenCredientials>({
             query:({token,endpoint})=>({
-                url: `authentication/${endpoint}?token=${token}`
+                url: `authentication/${endpoint}/${token}`
             })
         }),
         sendVerificationEmail: build.mutation<SendVerificationResponse, sendVerificationTokenCredientials>({
-            query:({email,endpoint})=>({
-                url: `/authentication/${endpoint}`,
+            query: ({ identifier,endpoint})=>({
+                url: `authentication/${endpoint}`,
                 method:"POST",
                 body:{
-                    email
+                    identifier
                 }
             })
         }),

@@ -1,4 +1,4 @@
-import { UserAppModel } from "@/features/user/types/user.types";
+import { NormalUserProfile, RestaurantUserProfile, UserAppModel, UserRole } from "@/features/user/types/user.types";
 
 export type ApiStatus = "SUCCESS" | "FAIL" | "ERROR";
 
@@ -18,7 +18,7 @@ export type ApiResponse<T> = {
 };
 
 
-export type UserResponse=ApiResponse<UserResponseData>
+export type UserResponse=ApiResponse<UserResponseData|null>
 export type SendVerificationResponse=ApiResponse<null|UserResponseData>
 export type VerificationResponse=ApiResponse<null |UserResponseData>
 
@@ -27,11 +27,15 @@ export type verifyTokenCredientials = {
     endpoint:string
 }
 export type sendVerificationTokenCredientials = {
-    email:string;
+    identifier:string;
     endpoint:string
 }
 export type resetPasswordCredentials = {
     identifier:string;
     password:string;
     passwordConfirm:string;
+}
+export type onboardingCredientials={
+    role:UserRole,
+    profile: NormalUserProfile | RestaurantUserProfile
 }
