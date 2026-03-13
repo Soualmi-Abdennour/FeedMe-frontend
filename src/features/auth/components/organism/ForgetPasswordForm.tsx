@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { FORGET_PASSWORD_FIELDS } from '../../constants/forgetPassword.constants'
 import { forgetPasswordFormSchema, IForgetPasswordForm } from '../../schema/forgetPassword.schema'
 import { useSendVerificationEmailMutation } from '../../store/auth.api.slice'
+import { toast } from 'sonner'
 
 
 function ForgetPasswordForm() {
@@ -30,13 +31,17 @@ function ForgetPasswordForm() {
             identifier: process.env.NODE_ENV === "development" ? "abdousoualmi16@gmail.com" : "",
         }
     })
-    const onSubmit = async (data: IForgetPasswordForm) => {
-        // to get data immediatly 
-        const reposnse = await forgetPassword({ identifier: data.identifier,endpoint:"/forget-password"}).unwrap()
-        if (reposnse?.status ==="SUCCESS"){
-            dispatch(setUser(reposnse.data?.user!))
+    const onSubmit = async (formData: IForgetPasswordForm) => {
+        const {status,data:responseData,message} = await forgetPassword({ identifier: formData.identifier,endpoint:"/forget-password"}).unwrap()
+        
+        if(status==="ERROR" || status==="FAIL") {
+            toast.error(message)
+        }
+        else{
+            toast.success(message)
+            dispatch(setUser(responseData?.user!))
             reset()
-            router.replace("/verify-reset-password")
+            router.replace("/reset-password")
         }
     }
     return (

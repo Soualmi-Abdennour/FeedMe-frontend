@@ -19,6 +19,7 @@ export type UserAppModel = {
 
     isVerified: boolean
     isOnboardingCompleted: boolean
+    isLoggedOut:boolean
 
     password: string
     passwordChangedAt?: Date

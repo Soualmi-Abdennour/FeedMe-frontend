@@ -31,7 +31,7 @@ export interface ISubmitButton {
 export type VerificationState = "LOADING" | "ERROR" | "FAIL" | "SUCCESS" | "DEFAULT"
 
 export interface IVerificationProps {
-    displayMessage: string | string[],
+    displayMessage: string ,
     buttonMessage?: string,
     onClick?: () => void,
     buttonState?: VerificationState,
@@ -41,7 +41,7 @@ export interface IVerificationProps {
 
 export type VerificationProcessState = {
     [key in VerificationState]: {
-        dispalyMessage: string | string[];
+        dispalyMessage: string;
         buttonMessage: string;
         redirectTo?: string;
     }

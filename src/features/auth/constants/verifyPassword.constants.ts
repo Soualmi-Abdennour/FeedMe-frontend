@@ -1,4 +1,4 @@
-import { VerificationProcessState } from "../types/props.types";
+import { VerificationProcessState } from "../../../types/props.types";
 
 export const VERIFY_PASSWORD_MESSAGES:VerificationProcessState={
     LOADING:{
@@ -17,15 +17,11 @@ export const VERIFY_PASSWORD_MESSAGES:VerificationProcessState={
     SUCCESS:{
         dispalyMessage:"Link verified successefully",
         buttonMessage:"Continue",
-        redirectTo:"/reset-password"
+        redirectTo:"/reset-password?verifiedToken=${verifiedToken}"
     },
     DEFAULT:{
-        dispalyMessage:[
-            "Email sent successfully to ",
-            " please check your inbox"
-        ],
+        dispalyMessage:"Email sent successfully to ${email} please check your inbox",
         buttonMessage:""
     }
-
-}
+} as const
 

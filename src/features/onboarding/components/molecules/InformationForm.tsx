@@ -43,13 +43,11 @@ function InformationForm<TSchema extends z.ZodType>({
         mode:"onChange",
         defaultValues,
     })
-    const onSubmit = (data: z.infer<TSchema>)=>{
-
-        
+    const onSubmit = (formData: z.infer<TSchema>)=>{
         dispatch(setStep({
             step:stepMetadata.step,
             values:{
-                [String(stepMetadata.correspondProfileField)]:data
+                [String(stepMetadata.correspondProfileField)]: formData
             }
         })
     )

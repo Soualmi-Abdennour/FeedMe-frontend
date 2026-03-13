@@ -20,12 +20,8 @@ export const VERIFY_EMAIL_MESSAGES:VerificationProcessState={
         redirectTo:"/onboarding"
     },
     DEFAULT:{
-        dispalyMessage:[
-            "Email sent successfully to ",
-            " please check your inbox"
-        ],
+        dispalyMessage:"Email sent successfully to ${email} please check your inbox",
         buttonMessage:""
     }
-
-}
+} as const
 

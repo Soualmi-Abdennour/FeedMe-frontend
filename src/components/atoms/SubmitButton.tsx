@@ -1,7 +1,7 @@
 import { ISubmitButton } from '@/types/props.types'
 import React from 'react'
 import { Button } from '../ui/button'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/shadcn.utils'
 import { Check, ChevronRight, Loader, RotateCw } from 'lucide-react'
 
 

@@ -1,9 +1,10 @@
 "use client"
-import React, { useEffect, useState } from "react";
 import SubmitButton from "@/components/atoms/SubmitButton";
-import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
 import { useAppSelector } from "@/store/base.store";
 import { IVerificationProps } from "@/types/props.types";
+import { useEffect, useState } from "react";
+import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
+import { toast } from "sonner";
 
 function VerifyTokenDefaultView({ props }: { props: IVerificationProps }) {
     
@@ -12,6 +13,7 @@ function VerifyTokenDefaultView({ props }: { props: IVerificationProps }) {
     const { user } = useAppSelector((state) => state.user);
     const { displayMessage, buttonMessage, buttonState ,resendVerificationEndpoint} = props;
 
+    const displayMessageWithEmail:string[]=displayMessage.split("${email}")
     // Countdown effect
     useEffect(() => {
         if (cooldown <= 0) return;
@@ -25,21 +27,26 @@ function VerifyTokenDefaultView({ props }: { props: IVerificationProps }) {
 
     const handleClick = async () => {
         setCooldown(10); // restart cooldown on click
-        
-        
-        await sendVerificationEmail({
+        const {status,message}=await sendVerificationEmail({
             identifier:user?.email!,
             endpoint:resendVerificationEndpoint!
-        }); // trigger API
+        }).unwrap();
+        
+        if(status==="ERROR"||status==="FAIL"){
+            toast.error(message)
+        }
+        else {
+            toast.success(message)
+        }
     };
 
 
     return (
         <div className="flex flex-col max-w-[500px] mx-auto justify-between items-center min-h-[500px]">
             <h1 className="text-center">
-                {displayMessage[0]}
-                <span>{user?.email}</span>
-                {displayMessage[1]}
+                {displayMessageWithEmail[0]}
+                <span className="bg-red-500">{user?.email}</span>
+                {displayMessageWithEmail[1]}
             </h1>
             {cooldown > 0 && <h2>Resend the link in: {cooldown} seconds</h2>}
             <SubmitButton

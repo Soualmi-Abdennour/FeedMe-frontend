@@ -17,17 +17,12 @@ function OnboardingProcessPage() {
     const dispatch = useAppDispatch()
 
     const handleSubmit = async () => {
-
-
-        const response = await onboard({
+        const {status,message,data:responseData} = await onboard({
             role: onboarding.onboardingType!,
             profile: onboarding.profile!
         }).unwrap()
- 
-        console.log(response.data?.user);
-        
-        if (response.data?.user)
-            dispatch(setUser(response.data?.user))
+        if (status==="SUCCESS")
+            dispatch(setUser(responseData?.user!))
     }
     useEffect(() => {
         ((step === 3 && onboardingType === "USER") || (step === 5 && onboardingType === "RESTAURANT")) && handleSubmit()

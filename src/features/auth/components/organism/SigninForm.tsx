@@ -10,6 +10,7 @@ import { SIGN_IN_FIELDS } from '../../constants/signin.constants'
 import { ISigninForm, signinFormSchema } from '../../schema/signin.schema'
 import { useSigninMutation } from '../../store/auth.api.slice'
 import { setAuthState } from '../../store/auth.slice'
+import { toast } from 'sonner'
 
 
 function SigninForm() {
@@ -32,31 +33,24 @@ function SigninForm() {
             password: process.env.NODE_ENV === "development" ? "Anything123+" : "",
         }
     })
-    const onSubmit = async (data: ISigninForm) => {
-        const response = await signin(data).unwrap()
-        const user = response.data?.user
-        const jwtToken = response.data?.jwtToken
+    const onSubmit = async (formData: ISigninForm) => {
+        const { status, data: responseData, message } = await signin(formData).unwrap()
 
-        
-        if (response.errors || !user) {
-            
-            // fire a toast 
-        } else {
-            try {
-                // extracting the user actual data not the response data {status,data(user)}
-                
-                dispatch(setUser(user))
-                reset()
-                if (!user.isVerified){
-                    router.replace('/verify-email')
-                }
-                else if(user.isVerified &&jwtToken ){
-                    dispatch(setAuthState({jwtToken}))
-                    router.replace("/onboarding")
-                }
+
+        if (status === "ERROR" || status === "FAIL") {
+            toast.error(message)
+        }
+        else {
+            toast.success(message)
+            dispatch(setUser(responseData?.user!))
+            reset()
+
+            if (!responseData?.user.isVerified) {
+                router.replace('/verify-email')
             }
-            catch (e) {
-
+            else if (!responseData.user.isOnboardingCompleted) {
+                dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
+                router.replace("/onboarding")
             }
         }
     }

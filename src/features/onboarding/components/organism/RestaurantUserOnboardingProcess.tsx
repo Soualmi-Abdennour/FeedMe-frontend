@@ -16,7 +16,6 @@ import RestaurantServicesForm from '../molecules/RestaurantServicesForm'
 
 function RestaurantUserOnboardingProcess() {
     const { onboarding: { step } } = useAppSelector(state => state.onboarding)
-    // const [onboard, { data, isLoading }] = useOnboardMutation()
     const dispatch = useAppDispatch()
     const { onboarding } = useAppSelector(state => state.onboarding)
     console.log(onboarding);
@@ -36,14 +35,6 @@ function RestaurantUserOnboardingProcess() {
 
     } as RestaurantUserProfile["restaurantLocationAndContact"]
 
-    // const handleSubmit = async () => {
-    //     const response = await onboard({
-    //         role: onboarding.onboardingType!,
-    //         profile: onboarding.profile!
-    //     }).unwrap()
-    //     if (response.data?.user)
-    //         dispatch(setUser(response.data?.user))
-    // }
     const currentStepComponent = (): React.ReactNode => {
         if (step === 1)
             return (<InformationForm
