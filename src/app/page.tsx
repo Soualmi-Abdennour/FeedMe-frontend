@@ -144,7 +144,7 @@ export default function landinPage() {
         </div>
         <div className="cont2 grid grid-cols-2 pt-[200px] items-center">
           <div className="">
-          <p className="text-gray-700 text-[20px] py-5">
+          <p id="community"className="text-gray-700 text-[20px] py-5">
             Community
           </p>
             <h2 className="font-medium text-4xl">
@@ -302,17 +302,17 @@ export default function landinPage() {
           <div className="list">
           <ul className="flex items-center gap-8 font-bold mx-8">
           <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
-            <Link href="/" >
+            <Link href="#community" >
               Community
             </Link>
           </li>
           <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
-            <Link href="/" >
+            <Link href="#features" >
               Order
             </Link>
           </li>
           <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
-            <Link href="/" >
+            <Link href="#footer" >
               Contact
             </Link>
           </li>
