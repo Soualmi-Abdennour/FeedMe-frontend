@@ -9,7 +9,7 @@ export default function Home() {
           sign up
         </Link>
       </Button>
-      <Button>
+      <Button >
         <Link href="/sign-in">
           sign in
         </Link>

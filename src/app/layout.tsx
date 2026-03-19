@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
-
+import Image from 'next/image'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -20,7 +20,13 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="en">
         <body className={inter.className}>
-          <div className='max-w-[600px] mx-auto mt-9 '>
+          <div className='max-w-[562px] max-h-[670px] mx-auto mt-9 '>
+          <Image
+                src={'sign-up/bck.svg'}
+                fill
+                alt='bck'
+                className='absolute top-0 left-0 -z-10 object-cover'
+            ></Image>
             {children}
           </div>
           </body>

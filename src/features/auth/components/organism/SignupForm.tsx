@@ -12,8 +12,10 @@ import { SIGN_UP_FIELDS } from '../../constants/sign-up.constants'
 import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
 import { useSingupMutation } from '../../store/auth.api.slice'
 
-
-function SignupForm() {
+interface SignupFormProps {
+    className?: string
+}
+function SignupForm({className}: SignupFormProps) {
     const router=useRouter()
     const [signup]=useSingupMutation()
     const dispatch=useDispatch()
@@ -69,7 +71,7 @@ function SignupForm() {
                 disabled={isSubmitting}
                 state={isSubmitting?"LOADING":"NORMAL"}
             >
-                {isSubmitting?"Loading...":"Sign up"}
+                {isSubmitting?"Loading...":"Continue"}
             </SubmitButton>
         </form>
     )
