@@ -1,12 +1,14 @@
 "use client"
 import SubmitButton from "@/components/atoms/SubmitButton";
 import { useAppSelector } from "@/store/base.store";
-import { IVerificationProps } from "@/types/props.types";
+import { UserResponse } from "@/types/api.types";
+import { IDefaultVerificationProcessProps } from "@/types/props.types";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useEffect, useState } from "react";
-import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
 import { toast } from "sonner";
+import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
 
-function VerifyTokenDefaultView({ props }: { props: IVerificationProps }) {
+function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessProps }) {
     
     const [cooldown, setCooldown] = useState(10); // start countdown immediately
     const [sendVerificationEmail] = useSendVerificationEmailMutation();
@@ -26,17 +28,26 @@ function VerifyTokenDefaultView({ props }: { props: IVerificationProps }) {
     }, [cooldown]);
 
     const handleClick = async () => {
+        
         setCooldown(10); // restart cooldown on click
-        const {status,message}=await sendVerificationEmail({
+        const fetchResponse=await sendVerificationEmail({
             identifier:user?.email!,
             endpoint:resendVerificationEndpoint!
-        }).unwrap();
+        })
+        const error:FetchBaseQueryError=fetchResponse.error as FetchBaseQueryError
+        const successResponse:UserResponse=fetchResponse.data as UserResponse
         
-        if(status==="ERROR"||status==="FAIL"){
-            toast.error(message)
+        if(error){
+            const errorResponse=error.data as UserResponse
+            if (errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }
         }
         else {
-            toast.success(message)
+            toast.success(successResponse.message)
         }
     };
 

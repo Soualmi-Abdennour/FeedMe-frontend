@@ -8,7 +8,7 @@ import { setStep } from '../../store/onboarding.slice'
 
 function SelectOnboardingRole() {
     const dispatch=useAppDispatch()
-    
+
     return (
         <div className=' flex justify-center items-center'>
             <div>

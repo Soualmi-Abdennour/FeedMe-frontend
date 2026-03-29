@@ -8,7 +8,6 @@ export const VERIFY_EMAIL_MESSAGES:VerificationProcessState={
     FAIL:{
         dispalyMessage:"Invalid Token please use the provided link",
         buttonMessage:"back to sign up",
-        redirectTo:"/sign-up"
     },
     ERROR:{
         dispalyMessage:"Something went wrong please try again",
@@ -17,7 +16,6 @@ export const VERIFY_EMAIL_MESSAGES:VerificationProcessState={
     SUCCESS:{
         dispalyMessage:"Email verified successefully",
         buttonMessage:"Continue",
-        redirectTo:"/onboarding"
     },
     DEFAULT:{
         dispalyMessage:"Email sent successfully to ${email} please check your inbox",

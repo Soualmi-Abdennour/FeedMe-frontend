@@ -1,5 +1,5 @@
 import { ALGERIA_STATES } from "@/constants/app.constants";
-import { IFormField } from "@/types/props.types";
+import { IFormField, IWorkingDayFormField } from "@/types/props.types";
 
 export const RESTAURANT_USER_ONBOARDING_FORM_FIELDS: Omit<IFormField, "errors" | "control">[] = [
     {
@@ -53,3 +53,97 @@ export const RESTAURANT_USER_ONBOARDING_FORM_FIELDS: Omit<IFormField, "errors" |
         placeholder: "xxxxxxxx",
     },
 ]
+
+export const RESTAURANT_WORKING_DAYS_FORM: Omit<IWorkingDayFormField,"errors"|"control">[] = [
+    {
+        day: "Sunday",
+        from: {
+            name: "Sunday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Sunday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    },
+    {
+        day: "Monday",
+        from: {
+            name: "Monday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Monday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    },
+    {
+        day: "Tuesday",
+        from: {
+            name: "Tuesday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Tuesday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    },
+    {
+        day: "Wednesday",
+        from: {
+            name: "Wednesday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Wednesday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    },
+    {
+        day: "Thursday",
+        from: {
+            name: "Thursday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Thursday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    },
+    {
+        day: "Friday",
+        from: {
+            name: "Friday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Friday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    },
+    {
+        day: "Saturday",
+        from: {
+            name: "Saturday.from",
+            type: "time",
+            placeholder: "08:00"
+        },
+        to: {
+            name: "Saturday.to",
+            type: "time",
+            placeholder: "20:00"
+        }
+    }
+];

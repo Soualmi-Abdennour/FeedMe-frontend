@@ -18,7 +18,7 @@ function SelectArea<T>({
             <h1 className="text-2xl mt-4">{areaTitle}</h1>
             <div className="flex gap-10 flex-wrap border border-gray-500 p-3 rounded-sm">
                 {itemsList.map((item) => (
-                    <div
+                    <button
                         key={String(item)}
                         className={cn(
                             "rounded-md border-primary border px-3 py-2 cursor-pointer whitespace-nowrap",
@@ -29,7 +29,7 @@ function SelectArea<T>({
                         onClick={()=>handleSelect(item)}
                     >
                         <h2>{String(item)}</h2>
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>

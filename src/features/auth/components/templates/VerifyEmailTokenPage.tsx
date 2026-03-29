@@ -1,54 +1,62 @@
 "use client"
 import { setUser } from "@/features/user/store/user.slice"
-import { useAppDispatch, useAppSelector } from "@/store/base.store"
-import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { useAppDispatch } from "@/store/base.store"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useCallback, useEffect } from "react"
 import VerificationProcess from "../../../../components/organism/VerificationProcess"
-import { IVerificationProps } from "../../../../types/props.types"
+import { IDefaultVerificationProcessProps } from "../../../../types/props.types"
 import { VERIFY_EMAIL_MESSAGES } from "../../constants/verifyEmail.constants"
-import { useVerifyTokenQuery } from "../../store/auth.api.slice"
+import { useLazyVerifyTokenQuery } from "../../store/auth.api.slice"
 import { setAuthState } from "../../store/auth.slice"
 import VerifyTokenDefaultView from "../molecules/VerifyTokenDefaultView"
-import { ApiResponse, UserResponse, UserResponseData } from "@/types/api.types"
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
+import { ApiStatus, UserResponse } from "@/types/api.types"
+import { mapUserDbToAppModel } from "@/features/user/utils/user.utils"
 
 function VerifyEmailTokenPage() {
+
     const params = useSearchParams()
     const dispatch = useAppDispatch()
     const token = params.get("token") ?? ""
+    const router = useRouter()
 
 
-    const props: IVerificationProps = {
+    const props: IDefaultVerificationProcessProps = {
         displayMessage: VERIFY_EMAIL_MESSAGES["DEFAULT"].dispalyMessage,
         resendVerificationEndpoint: "resend-verification-email"
     }
-    
-        const { data, isLoading, refetch } = useVerifyTokenQuery({
+
+    const [verifyToken] = useLazyVerifyTokenQuery()
+
+
+    const runVerifyTokenQuery = useCallback(async (): Promise<UserResponse> => {
+        const fetchResponse = await verifyToken({
             token,
             endpoint: "verify-email-token"
         })
-        const {data:responseData,status}=data as UserResponse
-        useEffect(() => {
-            if (status === "SUCCESS") {
-                dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
-                dispatch(setUser(responseData?.user!))
-            }
-        }, [responseData, dispatch])
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
+        const errorResponse: UserResponse = error?.data as UserResponse
+        return successResponse ?? errorResponse
+    }, [verifyToken, dispatch])
 
-    if (!token) return <VerifyTokenDefaultView props={props} />
-
-
-    const handleRefetch = async () => {
-        const {status,data:responseData} = await refetch().unwrap()
-        if(status==="SUCCESS"){
-            dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
-            dispatch(setUser(responseData?.user!))
-        }
+    const onSuccessFn = (successResponse: UserResponse) => {
+        const successResponseData = successResponse.data
+        router.replace("/onboarding")
+        dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
+        dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
     }
-
+    const onFailFn = () => {
+        router.replace("/sign-up")
+    }
+    if (!token) return <VerifyTokenDefaultView props={props} />
     return (
         <VerificationProcess
             verificationMessages={VERIFY_EMAIL_MESSAGES}
-            queryProps={{ data, isLoading, queryFn: handleRefetch }}
+            queryFn={runVerifyTokenQuery}
+            onFailFn={onFailFn}
+            onErrorFn={runVerifyTokenQuery}
+            onSuccessFn={onSuccessFn}
         />
     )
 }

@@ -1,9 +1,9 @@
-import { NormalUserProfile, RestaurantUserProfile, UserAppModel, UserRole } from "@/features/user/types/user.types";
+import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserDbModel, UserRole } from "@/features/user/types/user.types";
 
 export type ApiStatus = "SUCCESS" | "FAIL" | "ERROR";
 
 export type UserResponseData={
-    user:UserAppModel;
+    user:UserDbModel;
     jwtToken?:string
 }
 export type ApiError={
@@ -36,6 +36,12 @@ export type resetPasswordCredentials = {
     passwordConfirm:string;
 }
 export type onboardingCredientials={
+    endpoint:"user"|"restaurant",
     role:UserRole,
-    profile: NormalUserProfile | RestaurantUserProfile
+    profile: NormalUserProfileAppModel | RestaurantUserProfileAppModel
+}
+
+export type editProfileCredientials ={
+    endpoint:"user"|"restaurant"
+    profile: Partial<NormalUserProfileAppModel | RestaurantUserProfileAppModel>
 }

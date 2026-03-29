@@ -22,7 +22,7 @@ export const KITCHEN_CATEGORY = [
     { key: "DESSERTS_AND_SWEETS", value: "Deserts & Sweets" },
     { key: "SEAFOOD", value: "Seafood" },
     { key: "HEALTHY_FOOD", value: "Healthy Food" },
-    { key: "TRADITIONAL_DISH", value: "Traditional dish" }
+    { key: "TRADITIONAL_DISHES", value: "Traditional dishes" }
 ] as const
 
 // Week Days
@@ -93,6 +93,6 @@ export const RESTAURANT_SERVICES = [
     { key: "delivery", value: "Delivery" },
     { key: "reservation", value: "Reservation" },
     { key: "dineIn", value: "Dine in" },
-    { key: "specialCustomerService", value: "Special customer service" },
+    { key: "takeAway", value: "Special customer service" },
     { key: "parkAvailability", value: "Park Availability" }
 ] as const

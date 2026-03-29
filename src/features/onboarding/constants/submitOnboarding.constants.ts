@@ -8,7 +8,6 @@ export const SUBMIT_ONBOARDING_MESSAGES:VerificationProcessState={
     FAIL:{
         dispalyMessage:"Unauthorazied access",
         buttonMessage:"back to sign-in",
-        redirectTo:"/sign-in"
     },
     ERROR:{
         dispalyMessage:"Something went wrong please try again",
@@ -17,7 +16,6 @@ export const SUBMIT_ONBOARDING_MESSAGES:VerificationProcessState={
     SUCCESS:{
         dispalyMessage:"Account created successefully, welcome to the app",
         buttonMessage:"Continue",
-        redirectTo:"/home"
     },
     DEFAULT:{
         dispalyMessage:"",

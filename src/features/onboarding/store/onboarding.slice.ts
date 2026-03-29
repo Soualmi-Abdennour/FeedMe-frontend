@@ -1,20 +1,16 @@
 import { OnboardingStepPayloadModel } from "@/features/onboarding/types/onboarding.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit/react";
 import { OnboardingStateModel } from "../types/onboarding.types";
-import { NormalUserProfile, RestaurantUserProfile, UserRole } from "@/features/user/types/user.types";
+import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserRole } from "@/features/user/types/user.types";
 
 
 export interface IOnboardingState {
-    onboarding: OnboardingStateModel
+    onboarding: OnboardingStateModel | null
 }
 
 
 const initialState: IOnboardingState = {
-    onboarding: {
-        step: 0,
-        onboardingType: null,
-        profile: null,
-    }
+    onboarding:null
 }
 
 
@@ -23,33 +19,38 @@ const onboardingSlice = createSlice({
     initialState,
     reducers: {
         setStep: (state: IOnboardingState, action: PayloadAction<OnboardingStepPayloadModel>) => {
-            const { step, onboardingType, values } = action.payload
-
+            const { step, onboardingType, values,isOnboardingCompleted } = action.payload
+            if(!state.onboarding){
+                state.onboarding = {
+                    step: 0,
+                    isOnboardingCompleted:false,
+                    onboardingType: "GUEST",
+                    profile: null,
+                }
+            }
             state.onboarding.step = step
-
+            if(isOnboardingCompleted){
+                state.onboarding.isOnboardingCompleted=isOnboardingCompleted
+            }
             if (onboardingType) {
                 state.onboarding.onboardingType = onboardingType
             }
             if (state.onboarding.onboardingType === "USER") {
                 state.onboarding.profile = {
                     ...state.onboarding.profile,
-                    ...(values as Partial<NormalUserProfile>)
-                } as NormalUserProfile
+                    ...(values as Partial<NormalUserProfileAppModel>)
+                } as NormalUserProfileAppModel
             }
             if (state.onboarding.onboardingType === "RESTAURANT") {
                 state.onboarding.profile = {
                     ...state.onboarding.profile,
-                    ...(values as Partial<RestaurantUserProfile>)
-                } as RestaurantUserProfile
+                    ...(values as Partial<RestaurantUserProfileAppModel>)
+                } as RestaurantUserProfileAppModel
             }
         },
 
         clearOnboarding: (state: IOnboardingState) => {
-            state.onboarding = {
-                step: 0,
-                onboardingType: null,
-                profile: null
-            }
+            state.onboarding = null
         }
     }
 })
