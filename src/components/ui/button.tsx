@@ -21,7 +21,10 @@ const buttonVariants = cva(
           "bg-fail-500 text-neutral-0 text-btn-1  hover:bg-fail-600  focus:ring-2 focus:ring-fail-300 focus:outline-none  active:bg-fail-700  disabled:bg-fail-200",
         error:
           "bg-error-500 text-neutral-0 text-btn-1  hover:bg-error-600 focus:ring-2 focus:ring-error-300 focus:outline-none  active:bg-error-700 disabled:bg-error-200",
+        ghost: 
+        ""
       },
+
       size: {
         default: "px-6 py-3",
         sm:      "px-4 py-2",

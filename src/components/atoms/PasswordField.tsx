@@ -8,6 +8,9 @@ import { Button } from '../ui/button'
 import { Eye, EyeClosed } from 'lucide-react'
 import { cn } from "@/lib/utils"
 
+function hideChars(text:string) {
+    return text.replace(/./g, '*');
+}
 function PasswordField({
     name,
     label,
@@ -22,7 +25,7 @@ function PasswordField({
     return (
         <>
         <div className={cn(
-            "w-full rounded-lg px-4 py-3 border transition-all duration-200",
+            "w-full flex rounded-lg px-4 py-1.5 border transition-all duration-200",
             "text-neutral-900 text-body",
             "border-primary-500 shadow-primary-400",
             "hover:border-primary-500 hover:bg-primary-100",
@@ -30,8 +33,8 @@ function PasswordField({
             errors[name] && "border-fail-500 shadow-fail-400 hover:border-fail-500 focus-within:ring-fail-300" ,
             disabled && "border-neutral-200 bg-neutral-100 cursor-not-allowed opacity-60 pointer-events-none",
         )}>
-            <FieldLabel>{label}</FieldLabel>
-            <div className="flex justify-between">
+            <div className='flex-1'>
+            <FieldLabel className='text-neutral-500'>{label}</FieldLabel>
                 <Controller
                     name={name}
                     control={control}
@@ -41,28 +44,29 @@ function PasswordField({
                             id={id}
                             name={name}
                             placeholder={placeholder}
+                            value={showPassword?field.value:hideChars(field.value)}
                             type="text"
                             disabled={disabled}
                             autoFocus={autoFocus}
-                            className={`  bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
+                            className={` w-full bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
                         ></Input>
                     )}
                 >
                 </Controller>
                 
-                <Button
+            </div>   
+            <Button
                     type='button'
-                    variant="primary"
+                    variant="ghost"
                     onClick={() => setShowPassword((state) => !state)}
-                    className={`bg-transparent rounded-full hover:bg-neutral-100 focus:bg-transparent`}
+                    className={` p-0 `}
                 >
                     {showPassword ? (
                         <EyeClosed className="flex justify-end"></EyeClosed>
                     ) : (
-                        <Eye></Eye>
+                        <Eye className='size-10' size={40}></Eye>
                     )}
                 </Button>
-            </div>
         </div>
             <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                 {errors[name] && errors[name].message}

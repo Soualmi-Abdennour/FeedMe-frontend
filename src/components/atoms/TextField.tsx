@@ -22,7 +22,7 @@ function TextField({
     return (
         <>
         <div className={cn(
-            "w-full rounded-lg px-4 py-3 border transition-all duration-200",
+            "w-full rounded-lg pl-4 py-1.5 border transition-all duration-200",
             "text-neutral-900 text-body",
             "border-primary-500 shadow-primary-400",
             "hover:border-primary-500 hover:bg-primary-100",
@@ -43,7 +43,7 @@ function TextField({
                         type="text"
                         disabled={disabled}
                         autoFocus={autoFocus}
-                        className={` bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
+                        className={` bg-transparent w-full outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
                     ></Input>
                 )}
             >

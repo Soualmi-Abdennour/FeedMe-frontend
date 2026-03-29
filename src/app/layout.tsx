@@ -4,7 +4,9 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
 import Image from 'next/image'
+import { relative } from 'path'
 const inter = Inter({ subsets: ['latin'] })
+import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,14 +21,14 @@ export default function RootLayout({
   return (
     <StoreProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <div className='max-w-[562px] max-h-[670px] mx-auto mt-9 '>
+        <body className={ cn(inter.className ,`relative bg-auth-gradient`)}>
           <Image
-                src={'sign-up/bck.svg'}
+                src={'/sign-up/auth-bck.png'}
                 fill
                 alt='bck'
-                className='absolute top-0 left-0 -z-10 object-cover'
+                className='absolute top-0 left-0 -z-10 object-cover opacity-30'
             ></Image>
+          <div className=''>
             {children}
           </div>
           </body>

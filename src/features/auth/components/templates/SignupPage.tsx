@@ -5,25 +5,23 @@ import Image from 'next/image'
 
 function SignupPage() {
     return (
-        <div className="min-h-screen w-full flex items-center justify-center relative overflow-visible">
-            <Image
+        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5    ">
+            <div className='size-17 bg-orange-500 rounded-md mx-auto'></div>
+            <div 
+                className="relative shadow-1 py-8 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                <Image
                     src={'sign-up/bck-form.svg'}
                     fill
                     alt='bck'
-                    className='absolute top-0 left-0 -z-10 object-cover '
+                    className='absolute inset-0 object-cover top-0 left-0 -z-10  rounded-tl-[32px] rounded-br-[32px]'
                 ></Image>
-            <div 
-            className=" rounded-2xl  shadow-modal">
-                <div className="text-center mb-6">
-                    <h1 className="text-header-3">Welcome!</h1>
-                    <p className="body-text text-neutral-500">
+                <div className="text-center">
+                    <h4>Welcome!</h4>
+                    <p className="body-text text-neutral-500 mb-4">
                         Fill in the information in order to listen with us
                     </p>
-                </div>
-                <div className=" flex justify-center translate-x-1/2">
                     <SignupForm ></SignupForm>
                 </div>
-                
             </div>
 
         </div>

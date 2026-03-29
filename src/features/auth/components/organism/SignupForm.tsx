@@ -60,7 +60,7 @@ function SignupForm({className}: SignupFormProps) {
     return (
         <form 
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2'
+            className='flex flex-col max-[320px] gap-7 mx-auto'
         >
             {SIGN_UP_FIELDS.map((formField)=>(
                 <div key={formField.name}>
@@ -70,6 +70,7 @@ function SignupForm({className}: SignupFormProps) {
             <SubmitButton
                 disabled={isSubmitting}
                 state={isSubmitting?"LOADING":"NORMAL"}
+                className='mt-6'
             >
                 {isSubmitting?"Loading...":"Continue"}
             </SubmitButton>
