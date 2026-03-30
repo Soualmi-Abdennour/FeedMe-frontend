@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChefHat, Share2, Video, MessageSquareMore } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+
 
 export default function landinPage() {
   return (
@@ -43,7 +45,7 @@ export default function landinPage() {
           <li>
             <button className="w-[112px] h-[46px] bg-primary text-white rounded-lg
             hover:bg-[#D86300] transition-all duration-500 ease-in-out">
-              <Link href="/">
+              <Link href="/sign-up">
               Sign up
               </Link>
             </button>
@@ -51,7 +53,7 @@ export default function landinPage() {
           <li>
             <button className="w-[112px] h-[46px] border-primary border-2 text-primary rounded-lg
             hover:bg-[#FFEADF] transition-all duration-500 ease-in-out">
-              <Link href="/">
+              <Link href="/sign-in">
               Log in
               </Link>
             </button>
@@ -86,7 +88,7 @@ export default function landinPage() {
           <li>
             <button className="w-[112px] h-[46px] bg-transparent border-primary text-primary border-2 rounded-lg
             hover:bg-[#FFEADF] transition-all duration-500 ease-in-out">
-              <Link href="/">
+              <Link href="/sign-in">
               Log in
               </Link>
             </button>
@@ -148,13 +150,13 @@ export default function landinPage() {
             Community
           </p>
             <h2 className="font-medium text-4xl">
-            More than food, it's<br /> connection
+            More than food, it&apos;s<br /> connection
             </h2>
           </div>
           <p className="pl-10">
           Share your recipes and food stories with people who get it. Read honest
           <br /> reviews from real eaters. Compete in cooking challenges and earn rewards 
-          <br />that mean something. This is where Algeria's food lovers gather.
+          <br />that mean something. This is where Algeria&apos;s food lovers gather.
           </p>
         </div>
         <div id="benefits" className="cont3 grid grid-cols-4 pt-[200px] items-center ">
@@ -201,7 +203,7 @@ export default function landinPage() {
           <li>
             <button className="w-[112px] h-[46px]  bg-primary text-white rounded-lg
             hover:bg-[#D86300] transition-all duration-500 ease-in-out">
-              <Link href="/">
+              <Link href="/sign-up">
               Sign up
               </Link>
             </button>
@@ -209,7 +211,7 @@ export default function landinPage() {
           <li>
             <button className="w-[112px] h-[46px] border-primary text-primary border-2 rounded-lg
             hover:bg-[#FFEADF] transition-all duration-300 ease-in-out">
-              <Link href="/">
+              <Link href="/sign-in">
               Log in
               </Link>
             </button>
@@ -238,7 +240,7 @@ export default function landinPage() {
           </h2>
           <p className="text-gray-700 text-[15px] pt-3">
           Search for restaurants near you by location or cuisine type. Browse their menus, add dishes to your cart, and pay 
-          <br />securely. You'll track your order from the kitchen to your door in real time.
+          <br />securely. You&apos;ll track your order from the kitchen to your door in real time.
           </p>
         </div>
         <div className="question pb-10">
@@ -247,7 +249,7 @@ export default function landinPage() {
           </h2>
           <p className="text-gray-700 text-[15px] pt-3">
           Yes. Upload photos of your dishes, write the recipe, and tag the cuisine type. Other cooks will rate your work and
-          <br /> share their own versions. It's how we learn from each other.
+          <br /> share their own versions. It&apos;s how we learn from each other.
           </p>
         </div>
         <div className="question pb-10">
@@ -255,7 +257,7 @@ export default function landinPage() {
           What are cooking challenges?
           </h2>
           <p className="text-gray-700 text-[15px] pt-3">
-          Weekly competitions where you submit your best dish. Win points that convert to restaurant discounts. It's friendly
+          Weekly competitions where you submit your best dish. Win points that convert to restaurant discounts. It&apos;s friendly
           <br /> competition that rewards real cooking talent.
           </p>
         </div>

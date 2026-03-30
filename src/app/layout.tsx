@@ -1,7 +1,10 @@
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-
+import StoreProvider from './StoreProvider'
+import Image from 'next/image'
+import { cn } from '@/lib/utils'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -15,8 +18,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={cn(inter.className, "relative min-h-screen h-fit bg-auth-gradient")}>
+          <Image
+            src={'/sign-up/auth-bck.png'}
+            fill
+            alt='bck'
+            className='absolute top-0 left-0 -z-10 inset-0 object-cover opacity-30'
+          ></Image>
+          <div>
+            {children}
+          </div>
+        </body>
+      </html>
+    </StoreProvider>
   )
 }
