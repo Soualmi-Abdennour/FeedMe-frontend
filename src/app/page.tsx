@@ -1,7 +1,9 @@
+"use client"
 import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { useAppSelector } from '@/store/base.store'
 import Link from 'next/link'
 import { ChefHat, Share2, Video, MessageSquareMore } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 
 export default function landinPage() {
