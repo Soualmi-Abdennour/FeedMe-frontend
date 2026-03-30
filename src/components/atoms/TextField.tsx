@@ -22,7 +22,7 @@ function TextField({
     return (
         <>
         <div className={cn(
-            "w-full rounded-lg px-4 py-3 border transition-all duration-200",
+            "w-full rounded-lg pl-4 py-1.5 border transition-all duration-200",
             "text-neutral-900 text-body",
             "border-primary-500 shadow-primary-400",
             "hover:border-primary-500 hover:bg-primary-100",
@@ -30,7 +30,7 @@ function TextField({
             errors[name] && "border-fail-500 shadow-fail-400 hover:border-fail-500 focus-within:ring-fail-300" ,
             disabled && "border-neutral-200 bg-neutral-100 cursor-not-allowed opacity-60 pointer-events-none",
         )}>
-            <FieldLabel className="text-neutral-500 inp">{label}</FieldLabel>
+            <FieldLabel className="text-neutral-500">{label}</FieldLabel>
             <Controller
                 name={name}
                 control={control}
@@ -43,7 +43,7 @@ function TextField({
                         type="text"
                         disabled={disabled}
                         autoFocus={autoFocus}
-                        className={` bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
+                        className={`w-full bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
                     ></Input>
                 )}
             >

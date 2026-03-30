@@ -6,13 +6,14 @@ const config: Config = {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/features/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
   	extend: {
   		backgroundImage: {
+			"auth-gradient": 'linear-gradient(243.18deg, #FFF5F0 10%, #FFD8C2 50%, #FFF5F0 100%)',
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
   			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-			'sign-up-bg': "url('/sign-up/bck-form.svg')",
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -114,6 +115,7 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
+		
   		},
 		spacing:{
 			"1":  "4px",
@@ -137,6 +139,9 @@ const config: Config = {
 			"19": "76px",
 			"20": "80px",
 		},
+		boxShadow:{
+			1: '0px 4px 25px 0px theme("colors.neutral.900")',
+		}
     },
   },
   plugins: [require("tailwindcss-animate")],
