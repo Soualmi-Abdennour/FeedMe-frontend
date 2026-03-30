@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 function SignupPage() {
     return (
-        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5    ">
+        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5">
             <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto'>
                 <h4 className='text-white'>FeedMe</h4>
             </div>

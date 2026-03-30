@@ -58,7 +58,7 @@ function SigninForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2'
+            className='flex flex-col gap-2 '
         >
             {SIGN_IN_FIELDS.map((formField) => (
                 <div key={formField.name}>
@@ -66,10 +66,11 @@ function SigninForm() {
                 </div>
             ))}
             <SubmitButton
+                className='mt-8'
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "NORMAL"}
             >
-                {isSubmitting ? "Loading..." : "Sign ip"}
+                {isSubmitting ? "Loading..." : "Sign in"}
             </SubmitButton>
         </form>
     )
