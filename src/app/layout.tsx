@@ -3,14 +3,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
-<<<<<<< HEAD
 import Image from 'next/image'
-import { cn } from '@/lib/utils'
-=======
+import { cn } from '@/utils/shadcn.utils'
 import RouteGuardProvider from './RouteGuardProvider'
 import { Toaster } from '@/components/ui/sonner'
 
->>>>>>> feat-onboarding
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -36,6 +33,7 @@ export default function RootLayout({
           <div>
             {children}
           </div>
+          <Toaster position='bottom-right'></Toaster>
         </body>
       </html>
     </StoreProvider>

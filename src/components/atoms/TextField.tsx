@@ -1,16 +1,10 @@
-<<<<<<< HEAD
 import { IFormField } from '@/types/props.types'
 import { Controller } from 'react-hook-form'
 import { Field, FieldLabel, } from '../ui/field'
 import { Input } from '../ui/input'
-import { cn } from "@/lib/utils"
-=======
-import { IFormField } from '@/types/props.types';
-import { Controller } from 'react-hook-form';
-import { FieldLabel } from '../ui/field';
-import { Input } from '../ui/input';
+import { cn } from "@/utils/shadcn.utils"
 
->>>>>>> feat-onboarding
+
 
 
 function TextField({

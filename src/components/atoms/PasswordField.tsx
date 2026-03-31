@@ -6,7 +6,7 @@ import { Input } from '../ui/input'
 import TextField from './TextField'
 import { Button } from '../ui/button'
 import { Eye, EyeClosed } from 'lucide-react'
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils/shadcn.utils"
 
 function hideChars(text:string) {
     return text.replace(/./g, '*');
