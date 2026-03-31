@@ -9,6 +9,8 @@ import { setUser } from '../../../user/store/user.slice'
 import { SIGN_IN_FIELDS } from '../../constants/signin.constants'
 import { ISigninForm, signinFormSchema } from '../../schema/signin.schema'
 import { useSigninMutation } from '../../store/auth.api.slice'
+import { setAuthState } from '../../store/auth.slice'
+import { toast } from 'sonner'
 
 
 function SigninForm() {
@@ -31,27 +33,24 @@ function SigninForm() {
             password: process.env.NODE_ENV === "development" ? "Anything123+" : "",
         }
     })
-    const onSubmit = async (data: ISigninForm) => {
-        const userResponse = await signin(data)
-        if (userResponse.error) {
-            
-            // fire a toast 
-        } else {
-            try {
-                // extracting the user actual data not the response data {status,data(user)}
-                const { DATA } = userResponse.data
-                const { user } = DATA
-                console.log(user);
-                
-                dispatch(setUser(user))
-                reset()
-                if (!user.isVerified)
-                    router.replace('/verify-email')
-                else
-                    router.replace("/")
-            }
-            catch (e) {
+    const onSubmit = async (formData: ISigninForm) => {
+        const { status, data: responseData, message } = await signin(formData).unwrap()
 
+
+        if (status === "ERROR" || status === "FAIL") {
+            toast.error(message)
+        }
+        else {
+            toast.success(message)
+            dispatch(setUser(responseData?.user!))
+            reset()
+
+            if (!responseData?.user.isVerified) {
+                router.replace('/verify-email')
+            }
+            else if (!responseData.user.isOnboardingCompleted) {
+                dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
+                router.replace("/onboarding")
             }
         }
     }
@@ -68,7 +67,7 @@ function SigninForm() {
             <SubmitButton
                 className='mt-8'
                 disabled={isSubmitting}
-                state={isSubmitting ? "LOADING" : "NORMAL"}
+                state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting ? "Loading..." : "Sign in"}
             </SubmitButton>

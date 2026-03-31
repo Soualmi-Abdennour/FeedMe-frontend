@@ -1,13 +1,17 @@
+<<<<<<< HEAD
 import { IFormField } from '@/types/props.types'
 import { Controller } from 'react-hook-form'
 import { Field, FieldLabel, } from '../ui/field'
 import { Input } from '../ui/input'
 import { cn } from "@/lib/utils"
+=======
+import { IFormField } from '@/types/props.types';
+import { Controller } from 'react-hook-form';
+import { FieldLabel } from '../ui/field';
+import { Input } from '../ui/input';
 
-interface Props extends IFormField {
-    errors: any;
-    control: any;
-}
+>>>>>>> feat-onboarding
+
 
 function TextField({
     name,
@@ -18,7 +22,7 @@ function TextField({
     control,
     errors,
     id
-}: Props) {
+}: IFormField) {
     return (
         <>
         <div className={cn(

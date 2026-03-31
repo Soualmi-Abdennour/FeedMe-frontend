@@ -10,6 +10,7 @@ import { setUser } from '../../../user/store/user.slice'
 import { SIGN_UP_FIELDS } from '../../constants/signup.constants'
 import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
 import { useSingupMutation } from '../../store/auth.api.slice'
+import { toast } from 'sonner'
 
 interface SignupFormProps {
     className?: string
@@ -36,27 +37,17 @@ function SignupForm({className}: SignupFormProps) {
             passwordConfirm:process.env.NODE_ENV==='development'?"Anything+13":""
         }
     })
-    const onSubmit=async (data:ISignupForm)=>{
-        const userResponse=await signup(data)
-        if(userResponse.error) {   
-            console.log("errr");
-                     
-            // fire a toast 
-        }else {
-            try{
-                // extracting the user actual data not the response data {status,data(user)}
-                const { data }=userResponse.data
-                const { user } = data
-                console.log(user);
-                
-                dispatch(setUser(user))
+    const onSubmit=async (formData:ISignupForm)=>{
+        const {status,data:responseData,message}=await signup(formData).unwrap()
+
+        if (status === "ERROR" || status === "FAIL") {   
+            toast.error(message)                     
+        }
+        else {
+                toast.success(message)
+                dispatch(setUser(responseData?.user!))
                 reset()
                 router.replace('/verify-email')
-            }
-            catch(e){
-                console.log(e);
-                
-            }
         } 
     }
     return (
@@ -71,7 +62,7 @@ function SignupForm({className}: SignupFormProps) {
             ))}
             <SubmitButton
                 disabled={isSubmitting}
-                state={isSubmitting?"LOADING":"NORMAL"}
+                state={isSubmitting ? "LOADING" : "DEFAULT"}
                 className='mt-6'
             >
                 {isSubmitting?"Loading...":"Continue"}

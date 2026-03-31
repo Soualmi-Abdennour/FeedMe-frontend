@@ -3,8 +3,14 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import StoreProvider from './StoreProvider'
+<<<<<<< HEAD
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+=======
+import RouteGuardProvider from './RouteGuardProvider'
+import { Toaster } from '@/components/ui/sonner'
+
+>>>>>>> feat-onboarding
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
