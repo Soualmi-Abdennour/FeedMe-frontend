@@ -1,4 +1,5 @@
 import { ALGERIA_STATES, KITCHEN_CATEGORY, USAGE_GOAL, WEEK_DAYS } from "@/constants/app.constants";
+import { Wilaya } from "@/types/app.types";
 import { z } from "zod";
 
 export const normalUserOnboardingFormSchema=z.object({
@@ -6,7 +7,7 @@ export const normalUserOnboardingFormSchema=z.object({
         .min(3, 'Full Name must be at least 5 characters')
         .max(80, 'Full Name must not exceed 80 characters'),
     city: z.enum(
-        ALGERIA_STATES.map(state => state.value) as [string, ...string[]],
+        ALGERIA_STATES.map(state => state.value) as [Wilaya, ...Wilaya[]],
     ).optional(),
     phoneNumber: z.string().regex(/^(0)(5|6|7)[0-9]{8}$/, "Invalid Algerian phone number"),
     bio: z.string().max(500, "You have only 500 character").optional(),

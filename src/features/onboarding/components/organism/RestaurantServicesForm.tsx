@@ -2,7 +2,7 @@
 import SubmitButton from '@/components/atoms/SubmitButton'
 import { Button } from '@/components/ui/button'
 import { RESTAURANT_SERVICES } from '@/constants/app.constants'
-import { RestaurantUserProfile } from '@/features/user/types/user.types'
+import { RestaurantUserProfileAppModel } from '@/features/user/types/user.types'
 import { cn } from '@/utils/shadcn.utils'
 import { useAppDispatch, useAppSelector } from '@/store/base.store'
 import React, { useState } from 'react'
@@ -10,21 +10,22 @@ import { setStep } from '../../store/onboarding.slice'
 
 
 function RestaurantServicesForm() {
-    const dispatch=useAppDispatch()
+    const dispatch = useAppDispatch()
     const { onboarding } = useAppSelector(state => state.onboarding)
-    const profile = onboarding.profile as RestaurantUserProfile
-    const [restaurantServices, setRestaurantServices] = useState<RestaurantUserProfile["restaurantServices"]>(profile?.restaurantServices ? profile.restaurantServices : {
+    const profile = onboarding?.profile as RestaurantUserProfileAppModel
+    const [restaurantServices, setRestaurantServices] = useState<RestaurantUserProfileAppModel["restaurantServices"]>(profile?.restaurantServices ? profile.restaurantServices : {
         delivery: "NO",
         reservation: "NO",
         dineIn: "NO",
-        specialCustomerService: "NO",
+        takeAway: "NO",
         parkAvailability: "NO"
 
     })
-    const handleSubmit=()=>{
+    const handleSubmit = () => {
         dispatch(setStep({
-            step:5,
-            values:{
+            step: 5,
+            isOnboardingCompleted: true,
+            values: {
                 restaurantServices
             }
         }))

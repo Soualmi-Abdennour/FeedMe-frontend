@@ -1,6 +1,9 @@
 "use client"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import RestaurantSelectForm from '@/features/onboarding/components/organism/RestaurantSelectForm'
+import NormalUserEditProfilePage from '@/features/user/components/organism/NormalUserEditProfile'
+import RestaurantUserEditProfilePage from '@/features/user/components/organism/RestaurantUserEditProfile'
 import { UserAppModel } from '@/features/user/types/user.types'
 import { useAppSelector } from '@/store/base.store'
 import Link from 'next/link'

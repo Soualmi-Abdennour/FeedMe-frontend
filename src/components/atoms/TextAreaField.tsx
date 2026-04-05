@@ -15,7 +15,7 @@ function TextAreaField({
     control,
     errors,
     id
-}: IFormField) {
+}: IFormField) {    
     return (
         <>
             <FieldLabel>{label}</FieldLabel>

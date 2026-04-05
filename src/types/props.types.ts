@@ -1,3 +1,5 @@
+import { UserResponse } from "./api.types";
+import { WeekDay } from "./app.types";
 
 export interface IFormField {
     name: string;
@@ -10,7 +12,8 @@ export interface IFormField {
         |"text"
         |"password"
         |"select"
-        |"textArea";
+        |"textArea"
+        | "time";
     selectList?:readonly {
         key:string;
         value:string
@@ -19,6 +22,14 @@ export interface IFormField {
     control: any
 }
 
+export interface IWorkingDayFormField {
+    day:WeekDay,
+    from: Omit<IFormField, "errors" | "control">
+    to: Omit<IFormField, "errors" | "control">
+    disabled?:boolean
+    errors:any
+    control:any
+} 
 export interface ISubmitButton {
     disabled?:boolean;
     children:React.ReactNode
@@ -30,12 +41,21 @@ export interface ISubmitButton {
 
 export type VerificationState = "LOADING" | "ERROR" | "FAIL" | "SUCCESS" | "DEFAULT"
 
-export interface IVerificationProps {
+export interface IVerificationProcessProps {
+    verificationMessages:VerificationProcessState;
+    onSuccessFn: (verificationResponse:UserResponse) => void | Promise<UserResponse>;
+    onFailFn: (verificationResponse?:UserResponse) => void | Promise<UserResponse>;
+    onErrorFn: (verificationResponse?: UserResponse) => void | Promise<UserResponse>;
+    queryFn:()=>Promise<UserResponse>
+}
+export interface IVerificationViewProps {
     displayMessage: string ,
     buttonMessage?: string,
     onClick?: () => void,
     buttonState?: VerificationState,
     buttonDisabled?: boolean,
+}
+export interface IDefaultVerificationProcessProps extends IVerificationViewProps {
     resendVerificationEndpoint?: string
 }
 
@@ -43,6 +63,5 @@ export type VerificationProcessState = {
     [key in VerificationState]: {
         dispalyMessage: string;
         buttonMessage: string;
-        redirectTo?: string;
     }
 }

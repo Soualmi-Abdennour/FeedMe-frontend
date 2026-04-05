@@ -1,10 +1,10 @@
 import React from 'react'
 import SubmitButton from '@/components/atoms/SubmitButton'
-import { IVerificationProps } from '../../types/props.types'
+import { IVerificationViewProps } from '../../types/props.types'
 
 
 
-function VerificationView({ props }: { props: IVerificationProps }) {
+function VerificationView({ props }: { props: IVerificationViewProps }) {
     const { displayMessage, buttonMessage, onClick, buttonState, buttonDisabled }=props
     return (
         <div className='flex flex-col max-w-[500px] mx-auto justify-end items-center min-h-[500px]'>

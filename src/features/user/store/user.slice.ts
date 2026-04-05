@@ -17,11 +17,11 @@ const userSlice = createSlice({
             state.user = action.payload;
         },
 
-        updateUser: (state: IUserState, action: PayloadAction<Partial<UserAppModel>>) => {
-            if (state.user) {
-                Object.assign(state.user, action.payload);
-            }
-        },
+        // updateUser: (state: IUserState, action: PayloadAction<Partial<UserAppModel>>) => {
+        //     if (state.user) {
+        //         Object.assign(state.user, action.payload);
+        //     }
+        // },
 
         clearUser: (state: IUserState) => {
             state.user = null;
@@ -29,5 +29,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { clearUser, setUser, updateUser } = userSlice.actions;
+export const { clearUser, setUser } = userSlice.actions;
 export default userSlice.reducer;

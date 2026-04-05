@@ -1,4 +1,5 @@
 
+import { Toaster } from '@/components/ui/sonner'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -6,7 +7,6 @@ import StoreProvider from './StoreProvider'
 import Image from 'next/image'
 import { cn } from '@/utils/shadcn.utils'
 import RouteGuardProvider from './RouteGuardProvider'
-import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 

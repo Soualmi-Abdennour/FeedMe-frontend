@@ -11,6 +11,9 @@ import { IResetPasswordForm, resetPasswordFormSchema } from '../../schema/resetP
 import { useResetPasswordMutation } from '../../store/auth.api.slice'
 import { setAuthState } from '../../store/auth.slice'
 import { toast } from 'sonner'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { UserResponse } from '@/types/api.types'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 
 function ResetPasswordForm() {
@@ -35,24 +38,30 @@ function ResetPasswordForm() {
         }
     })
     const onSubmit = async (formData: IResetPasswordForm) => {
-        // to get data immediatly 
-        const {status,data:responseData,message} = await resetPassword({
+        const fetchResponse = await resetPassword({
             identifier: userInState?.email!,
             password: formData.password,
             passwordConfirm: formData.passwordConfirm
-        }).unwrap()
-        if(status==="FAIL"|| status==="ERROR") {
-            toast.error(message)
+        })
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
+
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            // if(status==="FAIL"|| status==="ERROR") {
+            toast.error(errorResponse.message)
+        // }
         }
         else{
-            toast.success(message)
-            dispatch(setUser(responseData?.user!))
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
             reset()
-            if(!responseData?.user?.isVerified){
-                dispatch(setAuthState({jwtToken:responseData?.jwtToken!}))
+            if (!successResponseData?.user?.isVerified) {
                 router.replace("/verify-email")
+                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
             }
-            if (!responseData?.user?.isOnboardingCompleted)
+            if (!successResponseData?.user?.isOnboardingCompleted)
                 router.replace("/onboarding")
             else
                 router.replace("/home")

@@ -1,12 +1,11 @@
 import { IFormField } from '@/types/props.types'
-import React, { useState } from 'react'
-import { Controller } from 'react-hook-form'
-import { Field, FieldLabel } from '../ui/field'
-import { Input } from '../ui/input'
-import TextField from './TextField'
-import { Button } from '../ui/button'
 import { Eye, EyeClosed } from 'lucide-react'
 import { cn } from "@/utils/shadcn.utils"
+import { useState } from 'react'
+import { Controller } from 'react-hook-form'
+import { Button } from '../ui/button'
+import { FieldLabel } from '../ui/field'
+import { Input } from '../ui/input'
 
 function hideChars(text:string) {
     return text.replace(/./g, '*');

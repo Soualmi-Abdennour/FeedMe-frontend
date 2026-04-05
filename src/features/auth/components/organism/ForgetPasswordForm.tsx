@@ -10,6 +10,9 @@ import { FORGET_PASSWORD_FIELDS } from '../../constants/forgetPassword.constants
 import { forgetPasswordFormSchema, IForgetPasswordForm } from '../../schema/forgetPassword.schema'
 import { useSendVerificationEmailMutation } from '../../store/auth.api.slice'
 import { toast } from 'sonner'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { UserResponse } from '@/types/api.types'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 
 function ForgetPasswordForm() {
@@ -32,16 +35,22 @@ function ForgetPasswordForm() {
         }
     })
     const onSubmit = async (formData: IForgetPasswordForm) => {
-        const {status,data:responseData,message} = await forgetPassword({ identifier: formData.identifier,endpoint:"/forget-password"}).unwrap()
+        const fetchResponse = await forgetPassword({ identifier: formData.identifier, endpoint: "/forget-password" })
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
         
-        if(status==="ERROR" || status==="FAIL") {
-            toast.error(message)
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            // if(status==="ERROR" || status==="FAIL") {
+            toast.error(errorResponse.message)
+        // }
         }
         else{
-            toast.success(message)
-            dispatch(setUser(responseData?.user!))
-            reset()
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
             router.replace("/reset-password")
+            reset()
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         }
     }
     return (

@@ -11,6 +11,9 @@ import { ISigninForm, signinFormSchema } from '../../schema/signin.schema'
 import { useSigninMutation } from '../../store/auth.api.slice'
 import { setAuthState } from '../../store/auth.slice'
 import { toast } from 'sonner'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { UserResponse } from '@/types/api.types'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 
 function SigninForm() {
@@ -34,23 +37,38 @@ function SigninForm() {
         }
     })
     const onSubmit = async (formData: ISigninForm) => {
-        const { status, data: responseData, message } = await signin(formData).unwrap()
+        const fetchResponse = await signin(formData)
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
+        console.log(error);
 
-
-        if (status === "ERROR" || status === "FAIL") {
-            toast.error(message)
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            if (errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }
         }
         else {
-            toast.success(message)
-            dispatch(setUser(responseData?.user!))
-            reset()
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
+            console.log("from sign in");
 
-            if (!responseData?.user.isVerified) {
+            console.log(mapUserDbToAppModel(successResponseData?.user!));
+
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            reset()
+            if (!successResponseData?.user.isVerified) {
                 router.replace('/verify-email')
             }
-            else if (!responseData.user.isOnboardingCompleted) {
-                dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
+            else if (!successResponseData.user.isOnboardingCompleted) {
+                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
                 router.replace("/onboarding")
+            } else {
+                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
+                router.replace("/home")
             }
         }
     }

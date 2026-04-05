@@ -9,13 +9,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { INormalUserOnboardingForm, normalUserOnboardingFormSchema } from '../../schema/normalUserOnboarding.schema'
 import { setStep } from '../../store/onboarding.slice'
-import { NormalUserProfile, RestaurantUserProfile } from '@/features/user/types/user.types'
+import { NormalUserProfileAppModel, RestaurantUserProfileAppModel } from '@/features/user/types/user.types'
 import { z } from 'zod'
 
 
 type stepMetadataType={
     step:number,
-    correspondProfileField:keyof NormalUserProfile | keyof RestaurantUserProfile
+    correspondProfileField:keyof NormalUserProfileAppModel | keyof RestaurantUserProfileAppModel
 }
 
 function InformationForm<TSchema extends z.ZodType>({
@@ -29,8 +29,6 @@ function InformationForm<TSchema extends z.ZodType>({
     stepMetadata: stepMetadataType
     formFields: Omit<IFormField, "errors" | "control">[];
 }) {
-
-    console.log(defaultValues);
     
     const dispatch = useAppDispatch()
     const {

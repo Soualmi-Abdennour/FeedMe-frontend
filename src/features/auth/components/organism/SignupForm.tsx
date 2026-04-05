@@ -11,6 +11,9 @@ import { SIGN_UP_FIELDS } from '../../constants/signup.constants'
 import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
 import { useSingupMutation } from '../../store/auth.api.slice'
 import { toast } from 'sonner'
+import { UserResponse } from '@/types/api.types'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 interface SignupFormProps {
     className?: string
@@ -38,16 +41,25 @@ function SignupForm({className}: SignupFormProps) {
         }
     })
     const onSubmit=async (formData:ISignupForm)=>{
-        const {status,data:responseData,message}=await signup(formData).unwrap()
+        const fetchResponse = await signup(formData)
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
 
-        if (status === "ERROR" || status === "FAIL") {   
-            toast.error(message)                     
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            if (errorResponse.status === "ERROR" ) {   
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }
         }
         else {
-                toast.success(message)
-                dispatch(setUser(responseData?.user!))
-                reset()
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
                 router.replace('/verify-email')
+            reset()
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         } 
     }
     return (
