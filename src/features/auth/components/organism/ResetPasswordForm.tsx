@@ -70,18 +70,20 @@ function ResetPasswordForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2'
+            className='flex flex-col gap-10'
         >
             {RESET_PASSWORD_FIELDS.map((formField) => (
                 <div key={formField.name}>
-                    <FormField {...formField} control={control} errors={errors}></FormField>
+                    <FormField {...formField} control={control} errors={errors} ></FormField>
                 </div>
             ))}
             <SubmitButton
                 disabled={isSubmitting}
+                className='mt-8'
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
+                variant='primary'
             >
-                {isSubmitting ? "Loading..." : "Reset Password"}
+                {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
         </form>
     )

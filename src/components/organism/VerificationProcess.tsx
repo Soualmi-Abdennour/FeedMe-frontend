@@ -8,36 +8,42 @@ import VerificationView from '../molecules/VerificationView'
 
 
 function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onErrorFn,onFailFn }:IVerificationProcessProps) {
-    const [verificationResponse,setVerificationResponse]=useState<UserResponse>()
+    const verificationResponse ={status : "SUCCESS"}
     
     const getVerifyProps = (): IVerificationViewProps => {
         if (verificationResponse?.status === "ERROR") {
             return {
+                title : "ERROR!",
                 displayMessage: verificationMessages["ERROR"].dispalyMessage,
                 buttonMessage: verificationMessages["ERROR"].buttonMessage,
                 buttonState: "ERROR",
                 onClick: () => {
-                    onErrorFn(verificationResponse)
-                }
+                    // onErrorFn(verificationResponse)
+                },
+                imageUrl:"/verify/error.svg"
             }
         } else if (verificationResponse?.status=== "FAIL") {
             return {
+                title : "FAIL!",
                 displayMessage: verificationMessages["FAIL"].dispalyMessage,
                 buttonMessage: verificationMessages["FAIL"].buttonMessage,
                 buttonState: "FAIL",
                 onClick: () => {
-                    onFailFn()
-                }
+                    // onFailFn()
+                },
+                imageUrl:"/verify/fail.svg"
             }
         }
         else if (verificationResponse?.status === "SUCCESS") {            
             return {
+                title : "SUCCESS!",
                 displayMessage: verificationMessages["SUCCESS"].dispalyMessage,
                 buttonMessage: verificationMessages["SUCCESS"].buttonMessage,
                 buttonState: "SUCCESS",
                 onClick: () => {
-                    onSuccessFn(verificationResponse)
-                }
+                //     onSuccessFn(verificationResponse)
+                },
+                imageUrl:"/verify/success.svg"
             }
         }
         else {
@@ -45,18 +51,19 @@ function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onError
                 displayMessage: verificationMessages["LOADING"].dispalyMessage,
                 buttonMessage: verificationMessages['LOADING'].buttonMessage,
                 buttonState: "LOADING",
-                buttonDisabled: true
+                buttonDisabled: true,
+                imageUrl:"/verify/loading.svg"
             }
         }
     }
     useEffect(() => {  
         const updateVerificationState=async()=>{
-            const verificationResponse =await queryFn()
+            // const verificationResponse =await queryFn()
             console.log("from use effect");
             
 console.log(verificationResponse);
 
-            setVerificationResponse(verificationResponse)
+            // setVerificationResponse(verificationResponse)
         }
         updateVerificationState()      
     }, [queryFn])

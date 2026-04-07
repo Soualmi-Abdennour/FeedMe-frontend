@@ -12,6 +12,7 @@ import { setStep } from '../../store/onboarding.slice'
 import InformationForm from '../molecules/InformationForm'
 import RestaurantSelectForm from '../organism/RestaurantSelectForm'
 import RestaurantServicesForm from '../organism/RestaurantServicesForm'
+import { ArrowLeft } from 'lucide-react'
 
 
 function RestaurantUserOnboardingProcess() {
@@ -33,7 +34,24 @@ function RestaurantUserOnboardingProcess() {
 
     const currentStepComponent = (): React.ReactNode => {
         if (onboarding?.step === 1)
-            return (<InformationForm
+            return (
+                <div className='flex  flex-col'>
+                    <div className='relative'>
+            <Button
+            variant="ghost"
+            className='absolute top-[-70px] left-[-80px] size-[70px] text-neutral-800 font-bold'
+                onClick={() => {
+                    dispatch(setStep({
+                        step: onboarding?.step! - 1,
+                        values: {}
+                    }))
+                }}
+            >
+                <ArrowLeft></ArrowLeft>
+            </Button>
+        </div>
+                <div className='bg-primary-300 rounded-full size-[70px] mx-auto my-5'></div>
+                <InformationForm
                 key={"step-1"}
                 formFields={RESTAURANT_USER_ONBOARDING_FORM_FIELDS.slice(0, 3)}
                 defaultValues={defaultRestaurantBasicInformation}
@@ -46,9 +64,26 @@ function RestaurantUserOnboardingProcess() {
                     step: 2,
                     correspondProfileField: "restaurantBasicInformation"
                 }}
-            ></InformationForm>)
+            ></InformationForm>
+            
+            </div>
+            )
         if (onboarding?.step === 2)
-            return (<InformationForm
+            return (
+                <div className='relative'>
+                <Button
+                variant="ghost"
+                className='absolute top-[-70px] left-[-80px] size-[70px] text-neutral-800 font-bold'
+                    onClick={() => {
+                        dispatch(setStep({
+                            step: onboarding?.step! - 1,
+                            values: {}
+                        }))
+                    }}
+                >
+                    <ArrowLeft></ArrowLeft>
+                </Button>
+                <InformationForm
                 key={"step-2"}
                 formFields={RESTAURANT_USER_ONBOARDING_FORM_FIELDS.slice(3)}
                 defaultValues={defaultRestaurantLocationAndContact}
@@ -62,27 +97,49 @@ function RestaurantUserOnboardingProcess() {
                     step: 3,
                     correspondProfileField: "restaurantLocationAndContact"
                 }}
-            ></InformationForm>)
+            ></InformationForm>
+            </div>
+            )
         if (onboarding?.step === 3)
-            return <RestaurantSelectForm></RestaurantSelectForm>
+            return (
+                <div className='relative'>
+                <Button
+                variant="ghost"
+                className='absolute top-[-70px] left-[-70px] size-[70px] text-neutral-800 font-bold'
+                    onClick={() => {
+                        dispatch(setStep({
+                            step: onboarding?.step! - 1,
+                            values: {}
+                        }))
+                    }}
+                >
+                    <ArrowLeft></ArrowLeft>
+                </Button>
+                <RestaurantSelectForm></RestaurantSelectForm>
+            </div>
+            )
         if (onboarding?.step === 4)
-            return <RestaurantServicesForm></RestaurantServicesForm>
+            return (
+                <div className='relative'>
+                <Button
+                variant="ghost"
+                className='absolute top-[-100px] left-[-70px] size-[70px] text-neutral-800 font-bold'
+                    onClick={() => {
+                        dispatch(setStep({
+                            step: onboarding?.step! - 1,
+                            values: {}
+                        }))
+                    }}
+                >
+                    <ArrowLeft></ArrowLeft>
+                </Button>
+                <RestaurantServicesForm></RestaurantServicesForm>
+            </div>
+            )
     }
 
     return (
-        <div className=''>
-            <Button
-                onClick={() => {
-                    dispatch(setStep({
-                        step: onboarding?.step! - 1,
-                        values: {}
-                    }))
-                }}
-            >
-                back
-            </Button>
-            {currentStepComponent()}
-        </div>
+        currentStepComponent()
     )
 }
 

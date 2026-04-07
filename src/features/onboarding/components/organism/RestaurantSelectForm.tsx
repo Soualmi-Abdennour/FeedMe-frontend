@@ -37,13 +37,14 @@ function RestaurantSelectForm() {
 
 
     return (
-        <div className="py-10">
+        <div className="py-10 flex flex-col gap-15">
             <SelectArea
                 areaTitle="I want to"
                 selectedItemsList={kitchenCategory}
                 itemsList={KITCHEN_CATEGORY.map(item => item.value)}
                 handleSelect={(value) => toggleValue(value, setKitchenCategory)}
             ></SelectArea>
+            <h3 className="text-left text-2xl ">Day Open :</h3>
             <WorkingDaysForm
                 defaultValues={profile?.restaurantDetails?.workingDays??[]}
                 selectedDays={selectedDays}

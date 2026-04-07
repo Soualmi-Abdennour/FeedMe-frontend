@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useSendVerificationEmailMutation } from "../../store/auth.api.slice";
 
+import Image from "next/image";
+
 function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessProps }) {
     
     const [cooldown, setCooldown] = useState(10); // start countdown immediately
@@ -53,20 +55,33 @@ function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessP
 
 
     return (
-        <div className="flex flex-col max-w-[500px] mx-auto justify-between items-center min-h-[500px]">
-            <h1 className="text-center">
+        <div className="max-w-[440px] min-h-[620px]  m-auto py-10 w-full flex flex-col relative gap-5">
+        
+        <div className="relative max-w-[440px] justify-center min-h-[520px] shadow-1 pt-[80px] pb-[130px] px-auto rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+            <Image
+            src={'sign-up/bck-form.svg'}
+            fill
+            alt='bck'
+            className='absolute inset-0 object-cover top-0 left-0 -z-10  rounded-tl-[32px] rounded-br-[32px]'
+        ></Image>
+        <div className="flex flex-col justify-center items-center mx-10 absolute ">
+            <h3>Check your email ?</h3>
+            <p className="text-center text-neutral-500 pb-20 pt-5 ">
                 {displayMessageWithEmail[0]}
                 <span className="bg-red-500">{user?.email}</span>
                 {displayMessageWithEmail[1]}
-            </h1>
-            {cooldown > 0 && <h2>Resend the link in: {cooldown} seconds</h2>}
+            </p>
+            {cooldown > 0 && <p>Resend the link in: {cooldown} seconds</p>}
             <SubmitButton
                 disabled={cooldown > 0}
-                state={"ERROR"}
+                state={buttonState}
                 onClick={handleClick}
             >
                 Resend Link
             </SubmitButton>
+        </div>
+        </div>
+
         </div>
     );
 }

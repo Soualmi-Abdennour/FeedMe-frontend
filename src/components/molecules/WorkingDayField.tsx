@@ -13,8 +13,8 @@ type Props=IWorkingDayFormField & {
 function WorkingDayField({ disabled=false,day, from, to, errors, control, onClick,isSelected}:Props) {    
     return (
         <div>
-        <div className={cn('flex justify-between items-center border rounded-lg p-2 cursor-pointer',isSelected && !disabled && " border-2 border-primary")}>
-            <h3 className={cn('flex-1  cursor-pointer')} >{day}</h3>
+        <div className={cn('flex justify-between items-center border-primary-500 border rounded-lg p-1 cursor-pointer',isSelected && !disabled && " border-2 border-primary")}>
+            <h3 className={cn('flex-1 text-xl text-left cursor-pointer')} >{day}</h3>
             {isSelected &&(
                     <div className='flex gap-3'>
                         <FormField  {...from} errors={errors} control={control} disabled={!isSelected ||disabled}></FormField>
@@ -24,13 +24,13 @@ function WorkingDayField({ disabled=false,day, from, to, errors, control, onClic
             {
                 !disabled && (
                         <Button onClick={onClick}
-                        type='button'>
+                        type='button' className='text-white font-bold'>    
                             {isSelected ? "Unselect" : "Select"}
                         </Button>
                 )
             }
         </div>
-            <p className={`mt-4 text-left text-sm ${errors[day] ? "text-red-500" : ""}`}>
+            <p className={`mt-4 text-left text-sm ${errors[day] ? "text-fail-500" : ""}`}>
                 {errors[day] && errors[day].message ||errors[day]?.root?.message}
             </p>
         </div>

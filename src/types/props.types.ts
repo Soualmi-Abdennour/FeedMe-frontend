@@ -35,6 +35,7 @@ export interface ISubmitButton {
     children:React.ReactNode
     state?:"LOADING"|"FAIL"|"ERROR"|"SUCCESS" | "DEFAULT" ;
     className?:string;
+    variant?: "primary" | "secondary" | "tertiary" | "success" | "fail" | "error" | "ghost"
     onClick?:()=>void
 }
 
@@ -43,17 +44,19 @@ export type VerificationState = "LOADING" | "ERROR" | "FAIL" | "SUCCESS" | "DEFA
 
 export interface IVerificationProcessProps {
     verificationMessages:VerificationProcessState;
-    onSuccessFn: (verificationResponse:UserResponse) => void | Promise<UserResponse>;
-    onFailFn: (verificationResponse?:UserResponse) => void | Promise<UserResponse>;
-    onErrorFn: (verificationResponse?: UserResponse) => void | Promise<UserResponse>;
-    queryFn:()=>Promise<UserResponse>
+    onSuccessFn?: (verificationResponse:UserResponse) => void | Promise<UserResponse>;
+    onFailFn?: (verificationResponse?:UserResponse) => void | Promise<UserResponse>;
+    onErrorFn?: (verificationResponse?: UserResponse) => void | Promise<UserResponse>;
+    queryFn?:()=>Promise<UserResponse>
 }
 export interface IVerificationViewProps {
+    title?: string,
     displayMessage: string ,
     buttonMessage?: string,
     onClick?: () => void,
     buttonState?: VerificationState,
     buttonDisabled?: boolean,
+    imageUrl?:string
 }
 export interface IDefaultVerificationProcessProps extends IVerificationViewProps {
     resendVerificationEndpoint?: string
