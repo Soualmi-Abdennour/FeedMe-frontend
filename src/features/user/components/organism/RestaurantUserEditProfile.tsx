@@ -16,12 +16,16 @@ import { toast } from 'sonner'
 import { mapUserDbToAppModel } from '../../utils/user.utils'
 import { setUser } from '../../store/user.slice'
 
+
+
 interface Props { }
+
 
 function RestaurantUserEditProfilePage(props: Props) {
     const { profile } = useAppSelector(state => state.user.user!)
     const dispatch = useAppDispatch()
     const [updateProfile] = useUpdateProfileMutation()
+    
     const { restaurantBasicInformation, restaurantDetails, restaurantLocationAndContact, restaurantServices } = profile as RestaurantUserProfileAppModel
     const handleSubmit = async (formData: RestaurantUserProfileAppModel["restaurantDetails"]["kitchenCategory"]) => {
         const fetchResponse = await updateProfile({
@@ -34,7 +38,7 @@ function RestaurantUserEditProfilePage(props: Props) {
             }
         })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
-        const successResponse: UserResponse = fetchResponse.data as UserResponse
+        const successResponse: UserResponse = fetchResponse.data as UserResponse         
         if (error) {
             const errorResponse = error.data as UserResponse
             if (errorResponse.status === "ERROR") {
@@ -51,7 +55,7 @@ function RestaurantUserEditProfilePage(props: Props) {
         }
     }
     return (
-        <div className='flex flex-col gap-10'>
+        <div className='flex flex-col gap-10 mx-10 mt-10'>
             <EditInformationForm
                 endpoint={"restaurant"}
                 fieldToUpdate={"restaurantBasicInformation"}

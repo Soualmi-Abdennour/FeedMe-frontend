@@ -14,7 +14,7 @@ function WorkingDayField({ disabled=false,day, from, to, errors, control, onClic
     return (
         <div>
         <div className={cn('flex justify-between items-center border rounded-lg p-2 cursor-pointer',isSelected && !disabled && " border-2 border-primary")}>
-            <h3 className={cn('flex-1  cursor-pointer')} >{day}</h3>
+            <h3 className={cn('flex-1 text-xl cursor-pointer mr-3 font-medium')} >{day}</h3>
             {isSelected &&(
                     <div className='flex gap-3'>
                         <FormField  {...from} errors={errors} control={control} disabled={!isSelected ||disabled}></FormField>
@@ -24,6 +24,7 @@ function WorkingDayField({ disabled=false,day, from, to, errors, control, onClic
             {
                 !disabled && (
                         <Button onClick={onClick}
+                        className='text-white font-bold text-xs'
                         type='button'>
                             {isSelected ? "Unselect" : "Select"}
                         </Button>
