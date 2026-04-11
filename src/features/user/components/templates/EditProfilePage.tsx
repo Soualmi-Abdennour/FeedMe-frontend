@@ -20,7 +20,7 @@ function EditProfilePage(props: Props) {
         {user?.role==="USER" ? (
             <NormalUserEditProfilePage></NormalUserEditProfilePage>
         ):(
-           user?.role==="RESTAURANT" && <RestaurantUserEditProfilePage></RestaurantUserEditProfilePage>
+            user?.role==="RESTAURANT" && <RestaurantUserEditProfilePage></RestaurantUserEditProfilePage>
         )}
         </main>
     )

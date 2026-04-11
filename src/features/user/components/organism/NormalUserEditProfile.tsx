@@ -19,6 +19,7 @@ interface Props { }
 function NormalUserEditProfilePage(props: Props) {
     const dispatch = useAppDispatch()
     const [updateProfile] = useUpdateProfileMutation()
+
     const { profile } = useAppSelector(state => state.user.user!)
     const { userBasicInformation, userUsagePreferences } = profile as NormalUserProfileAppModel
     const handleSubmit2 = async (data: KithcenCategory[]) => {
@@ -39,6 +40,7 @@ function NormalUserEditProfilePage(props: Props) {
         })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
+        
         if (error) {
             const errorResponse = error.data as UserResponse
             if (errorResponse.status === "ERROR") {
@@ -69,14 +71,20 @@ function NormalUserEditProfilePage(props: Props) {
             <EditSelectForm
                 endpoint={"user"}
                 fieldToUpdate={["userUsagePreferences", "usageGoal"]}
-                itemsList={USAGE_GOAL.map((goal) => goal.value)}
-                sectionTitle={'Usage goal'}
+                itemsList={
+                    // USAGE_GOAL.map((goal) => goal.value)
+                ["Follow healthy food","Share food photos","Deserts & Sweets","Seafood"]
+                }
+                sectionTitle={'I want to :'}
                 defaultValues={userUsagePreferences.usageGoal ?? []}
             ></EditSelectForm>
             <EditSelectForm
                 endpoint={"user"}
                 fieldToUpdate={["userUsagePreferences", "kitchenCategory"]}
-                itemsList={KITCHEN_CATEGORY.map((category) => category.value)}
+                itemsList={
+                    // KITCHEN_CATEGORY.map((category) => category.value)
+                ["vegetarian","vegetarian"]
+                }
                 sectionTitle={'Kitchen category'}
                 defaultValues={userUsagePreferences.kitchenCategory ?? []}
             ></EditSelectForm>

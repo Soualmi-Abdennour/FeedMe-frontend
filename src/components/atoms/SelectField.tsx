@@ -23,8 +23,7 @@ function SelectField({
 
     return (
         <>
-            <FieldLabel>{label}</FieldLabel>
-
+            <FieldLabel className=" pb-3">{label}</FieldLabel>
             <Controller
                 name={name}
                 control={control}
@@ -37,7 +36,7 @@ function SelectField({
                         <SelectTrigger
                             id={id}
                             autoFocus={autoFocus}
-                            className={`w-[180px] ${errors[name] ? "border-red-500" : ""}`}
+                            className={`w-[180px] ${errors[name] ? "border-fail-500" : ""}`}
                         >
                             <SelectValue placeholder={placeholder} />
                         </SelectTrigger>
@@ -56,7 +55,7 @@ function SelectField({
                 )}
             />
 
-            <p className={`mt-4 text-left text-sm ${errors[name] ? "text-red-500" : ""}`}>
+            <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                 {errors[name]?.message}
             </p>
         </>

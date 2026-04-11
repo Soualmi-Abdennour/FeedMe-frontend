@@ -15,7 +15,7 @@ import { toast } from 'sonner';
 import { setUser } from '../../store/user.slice';
 import { mapUserDbToAppModel } from '../../utils/user.utils';
 import { IEditInformationFormProps } from '../../types/props.types';
-
+import {RefreshCcw} from 'lucide-react';
 
 
 function EditInformationForm<FormSchema extends z.ZodType>({
@@ -66,26 +66,27 @@ function EditInformationForm<FormSchema extends z.ZodType>({
         }
     }
     return (
-        <div className='p-3 rounded-lg border-2 border-primary'>
-            <div className='flex justify-between '>
-                <h3>Basic Information</h3>
+        <div className='flex flex-col bg-white min-w-[1000px] m-auto gap-10 p-3 rounded-lg shadow-black-500 shadow-lg'>
+            <div className='flex justify-between items-center gap-7 mx-5'>
+                <h3 className='text-xl pt-2'>Basic Information</h3>
                 <Button
+                className=' justify-end text-white font-bold'
                     onClick={() => {
                         reset()
                         setEnableEdit(state => !state)
                     }}
                 >{enableEdit ? "Cancel" : "Edit"}</Button>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
-                <div className='grid grid-cols-2 gap-5'>
+            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-7 mx-20'>
+                <div className=' gap-8'>
                     {formFields.map((formField) => (
-                        <div key={formField.name}>
+                        <div key={formField.name} >
                             <FormField {...formField} disabled={!enableEdit} control={control} errors={errors}></FormField>
                         </div>
                     ))}
                 </div>
                 {enableEdit && (
-                    <div className='flex gap-2'>
+                    <div className='flex text-white gap-2 font-bold'>
                         <SubmitButton
                             disabled={!isDirty || isSubmitting}
                             state={isSubmitting ? "LOADING" : "DEFAULT"}
@@ -96,8 +97,10 @@ function EditInformationForm<FormSchema extends z.ZodType>({
                             type='button'
                             disabled={!isDirty}
                             onClick={() => reset()}
+                            variant='primary'
                         >
                             Reset
+                            <RefreshCcw></RefreshCcw>
                         </Button>
                     </div>
                 )}
