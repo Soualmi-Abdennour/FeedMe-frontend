@@ -138,6 +138,8 @@ const [toastVisible, setToastVisible] = useState(false);
   result = [...result].sort((a, b) => (a.preparationTime || 0) - (b.preparationTime || 0));
 } else if (sort === 'time_desc') {
   result = [...result].sort((a, b) => (b.preparationTime || 0) - (a.preparationTime || 0));
+}else if (sort === 'random') {
+  result = [...result].sort(() => Math.random() - 0.5);
 }
     return result;
   }, [active, search, sort]);
