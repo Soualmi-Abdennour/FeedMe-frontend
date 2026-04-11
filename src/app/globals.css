@@ -57,4 +57,12 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+   .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE & Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
 }
+ 

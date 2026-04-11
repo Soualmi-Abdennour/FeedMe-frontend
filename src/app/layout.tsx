@@ -23,9 +23,10 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen`}>
         <StoreProvider>
           <RouteGuardProvider>
-          <div className='max-w-[600px] mx-auto mt-9'>
+          {/* <div className='max-w-[600px] mx-auto mt-9'>
             {children}
-          </div>
+          </div> */}
+                      {children}
           <Toaster position='bottom-right'></Toaster>
           </RouteGuardProvider>
         </StoreProvider>
