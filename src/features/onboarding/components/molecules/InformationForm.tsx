@@ -22,7 +22,7 @@ function InformationForm<TSchema extends z.ZodType>({
     formFields,
     validationSchema,
     defaultValues,
-    stepMetadata
+    stepMetadata,
 }: {
     defaultValues: z.infer<TSchema>;
     validationSchema: TSchema;
@@ -58,6 +58,7 @@ function InformationForm<TSchema extends z.ZodType>({
                 </div>))}
             <SubmitButton
                 disabled={isSubmitting}
+                className="w-full"
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting ? "Loading..." : "Continue"}

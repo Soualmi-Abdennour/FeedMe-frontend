@@ -10,13 +10,14 @@ function SubmitButton({
     children,
     disabled=false,
     className,
+    variant="primary",
     onClick
 }:ISubmitButton) {
     const getIconByState=()=>{
         if(state==="LOADING")
-            return <Loader className='animate-spin size-8'></Loader>
+            return <Loader className='animate-spin size-8' ></Loader>
         if(state==="FAIL")
-            return <ChevronRight className='size-8'></ChevronRight>
+            return <ChevronRight className='size-8' ></ChevronRight>
         if(state==="SUCCESS") 
             return <Check className='size-8'></Check>
         if(state==="ERROR")
@@ -24,12 +25,20 @@ function SubmitButton({
         else 
             return <ChevronRight className='size-8'></ChevronRight>
     }
+    const getVariantByState = (): "primary" | "secondary" | "tertiary" | "success" | "fail" | "error" | "ghost" => {
+        if(state === "LOADING") return "primary"
+        if(state === "FAIL") return "fail"
+        if(state === "SUCCESS") return "success"
+        if(state === "ERROR") return "error"
+        return variant ?? "primary"
+    }
 
     return (
         <Button
             disabled={disabled}
             type='submit'
-            className={cn("flex gap-1 items-center",className)}
+            variant={getVariantByState()}
+            className={cn("flex gap-1 items-center text-white font-bold",className)}
             onClick={onClick}
         >
             {children}

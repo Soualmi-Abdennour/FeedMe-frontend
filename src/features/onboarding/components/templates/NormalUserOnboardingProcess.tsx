@@ -9,6 +9,7 @@ import { normalUserOnboardingFormSchema } from '../../schema/normalUserOnboardin
 import { setStep } from '../../store/onboarding.slice'
 import InformationForm from '../molecules/InformationForm'
 import UserSelectForm from '../organism/UserSelectForm'
+import { LucideAArrowDown, LucideSquareArrowLeft, ArrowLeft } from 'lucide-react'
 
 
 function NormalUserOnboardingProcess() {
@@ -26,7 +27,9 @@ function NormalUserOnboardingProcess() {
 
     const currentStepComponent = (): React.ReactNode => {
         if (onboarding?.step === 1)
-            return (<InformationForm
+            return (<div className='flex flex-col'>
+                <div className='bg-primary-300 rounded-full size-[70px] mx-auto my-5'></div>
+            <InformationForm
                 formFields={NORMAL_USER_ONBOARDING_FORM_FIELDS}
                 defaultValues={defaultUserBasicInformation}
                 validationSchema={normalUserOnboardingFormSchema}
@@ -34,15 +37,23 @@ function NormalUserOnboardingProcess() {
                     step: 2,
                     correspondProfileField: "userBasicInformation"
                 }}
-            ></InformationForm>)
+            ></InformationForm>
+            </div>
+            )
         if (onboarding?.step === 2)
-            return <UserSelectForm></UserSelectForm>
+            return(
+                <div className='flex'>
+                    <UserSelectForm></UserSelectForm>
+                </div>
+            ) 
     }
 
 
     return (
-        <div className=''>
+        <div className='relative'>
             <Button
+            variant='ghost'
+            className='absolute left-[-80px] top-[-160px] size-[70px] text-neutral-800 font-bold'
                 onClick={() => {
                     dispatch(setStep({
                         step: onboarding?.step! - 1,
@@ -50,7 +61,7 @@ function NormalUserOnboardingProcess() {
                     }))
                 }}
             >
-                back
+                <ArrowLeft></ArrowLeft>
             </Button>
             {currentStepComponent()}
         </div>

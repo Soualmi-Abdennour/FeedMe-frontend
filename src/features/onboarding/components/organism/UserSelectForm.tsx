@@ -31,7 +31,7 @@ function UserSelectForm() {
         )
     }
     return (
-        <div className="py-10">
+        <div className=" flex flex-col justify-start py-5">
             <SelectArea 
                 areaTitle="I want to"
                 selectedItemsList={usageGoal}
@@ -45,7 +45,7 @@ function UserSelectForm() {
                 handleSelect={(value)=>toggleValue(value,setKitchenCategory)}
             ></SelectArea>
             <SubmitButton
-                className="mt-10 w-full"
+                className="mt-10 w-full text-white"
                 onClick={handleSubmit}
                 disabled={selectionCount===1}
             >

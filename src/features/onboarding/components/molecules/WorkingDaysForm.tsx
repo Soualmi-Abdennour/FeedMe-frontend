@@ -50,8 +50,8 @@ const toggleFieldDefaultValue=(day:WeekDay)=>{
     }
 }
     return (
-        <form className='flex flex-col gap-6' onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex flex-col gap-3'>
+        <form className='flex flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
+            <div className='grid-cols-2 grid gap-3 items-center'>
             {RESTAURANT_WORKING_DAYS_FORM.map((dayField)=>(
                 <div key={dayField.day}>
                     <WorkingDayField  

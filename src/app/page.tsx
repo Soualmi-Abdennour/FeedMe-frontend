@@ -8,6 +8,14 @@ import { UserAppModel } from '@/features/user/types/user.types'
 import { useAppSelector } from '@/store/base.store'
 import Link from 'next/link'
 import { ChefHat, Share2, Video, MessageSquareMore } from 'lucide-react'
+import VerificationProcess from "@/components/organism/VerificationProcess";
+import { VERIFY_EMAIL_MESSAGES } from "@/features/auth/constants/verifyEmail.constants";
+import { VERIFY_PASSWORD_MESSAGES } from "@/features/auth/constants/verifyPassword.constants";
+import { UserResponse } from "@/types/api.types";
+import ResetPasswordPage from "./(auth)/(forget password)/reset-password/page";
+import OnboardingProcessPage from "./(protected)/onboarding/page";
+import NormalUserOnboardingProcess from "@/features/onboarding/components/templates/NormalUserOnboardingProcess";
+
 
 
 export default function landinPage() {
@@ -382,5 +390,17 @@ export default function landinPage() {
         </div>
       </div>
     </div>
+
+
+
+    // <div>
+      // <VerificationProcess verificationMessages={VERIFY_PASSWORD_MESSAGES}/>
+    // <ResetPasswordPage></ResetPasswordPage>
+    // </div>
+    // <OnboardingProcessPage></OnboardingProcessPage>
+    // <NormalUserOnboardingProcess></NormalUserOnboardingProcess>
   )
 }
+
+
+

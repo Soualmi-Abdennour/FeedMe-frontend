@@ -2,16 +2,16 @@ import { VerificationProcessState } from "@/types/props.types";
 
 export const VERIFY_EMAIL_MESSAGES:VerificationProcessState={
     LOADING:{
-        dispalyMessage:"Verifying your Token please wait...",
+        dispalyMessage:"Please wait a little while!",
         buttonMessage:"Verify..."
     },
     FAIL:{
-        dispalyMessage:"Invalid Token please use the provided link",
-        buttonMessage:"back to sign up",
+        dispalyMessage:"The operation failed, please verify your information.",
+        buttonMessage:"Try Again",
     },
     ERROR:{
-        dispalyMessage:"Something went wrong please try again",
-        buttonMessage:"Try again"
+        dispalyMessage:"Sorry, there must have been an error in transferring the information. Please try again.",
+        buttonMessage:"Try Again"
     },
     SUCCESS:{
         dispalyMessage:"Email verified successefully",
