@@ -56,7 +56,7 @@ function ForgetPasswordForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2'
+            className='flex flex-col gap-20 py-10'
         >
             {FORGET_PASSWORD_FIELDS.map((formField) => (
                 <div key={formField.name}>
@@ -64,10 +64,11 @@ function ForgetPasswordForm() {
                 </div>
             ))}
             <SubmitButton
+                className='text-white font-bold '
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
-                {isSubmitting ? "Loading..." : "Send the Link"}
+                {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
         </form>
     )

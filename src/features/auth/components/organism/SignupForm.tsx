@@ -14,6 +14,8 @@ import { toast } from 'sonner'
 import { UserResponse } from '@/types/api.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 interface SignupFormProps {
     className?: string
@@ -65,7 +67,7 @@ function SignupForm({className}: SignupFormProps) {
     return (
         <form 
             onSubmit={handleSubmit(onSubmit)}
-            className='max-w-[320px] mx-auto flex flex-col gap-7'
+            className='max-w-[320px] mx-auto flex flex-col gap-3'
         >
             {SIGN_UP_FIELDS.map((formField)=>(
                 <div key={formField.name}>
@@ -75,10 +77,13 @@ function SignupForm({className}: SignupFormProps) {
             <SubmitButton
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
-                className='mt-6'
+                className='mt-4 text-white font-bold'
             >
                 {isSubmitting?"Loading...":"Continue"}
             </SubmitButton>
+            <Button variant="secondary" className='text-primary-500 font-bold'>
+                <Link href="/sign-in">Sign in</Link>
+            </Button>
         </form>
     )
 }

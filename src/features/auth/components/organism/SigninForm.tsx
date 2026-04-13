@@ -14,6 +14,9 @@ import { toast } from 'sonner'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { UserResponse } from '@/types/api.types'
 import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+
 
 
 function SigninForm() {
@@ -75,20 +78,28 @@ function SigninForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2 '
+            className='flex flex-col gap-5 '
         >
             {SIGN_IN_FIELDS.map((formField) => (
                 <div key={formField.name}>
                     <FormField {...formField} control={control} errors={errors}></FormField>
                 </div>
             ))}
+            <button
+            className='text-neutral-500 cursor-pointer hover:text-orange-500/50 self-end'
+            >
+                <a href="/forget-password">Forget password?</a>
+            </button>
             <SubmitButton
-                className='mt-8'
+                className=' text-white font-bold'
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
-                {isSubmitting ? "Loading..." : "Sign in"}
+                {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
+            <Button variant="secondary" className='text-primary-500 font-bold'>
+                <Link href="/sign-up">Sign up</Link>
+            </Button>
         </form>
     )
 }
