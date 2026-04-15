@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import { setUser } from '../../store/user.slice';
 import { mapUserDbToAppModel } from '../../utils/user.utils';
 import { IEditInformationFormProps } from '../../types/props.types';
+import { RefreshCcw } from 'lucide-react';
 
 
 
@@ -66,7 +67,7 @@ function EditInformationForm<FormSchema extends z.ZodType>({
         }
     }
     return (
-        <div className='p-3 rounded-lg border-2 border-primary'>
+        <div className='p-3 rounded-lg'>
             <div className='flex justify-between '>
                 <h3>Basic Information</h3>
                 <Button
@@ -98,6 +99,7 @@ function EditInformationForm<FormSchema extends z.ZodType>({
                             onClick={() => reset()}
                         >
                             Reset
+                            <RefreshCcw></RefreshCcw>
                         </Button>
                     </div>
                 )}

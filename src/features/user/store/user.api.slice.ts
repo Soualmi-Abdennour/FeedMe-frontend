@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { editProfileCredientials, UserResponse } from "@/types/api.types";
+import { deactivateAccountCredentials, deleteAccountCredentials, editProfileCredientials, UserResponse } from "@/types/api.types";
 
 
 
@@ -14,8 +14,24 @@ export const userApiSlice=fetchAPI.injectEndpoints({
                 method:"PATCH",
                 body:{profile}
             })
-        })
-})
+        }),
+
+        deactivateAccount: build.mutation<UserResponse, deactivateAccountCredentials>({
+            query: ({ endpoint }) => ({
+                url: `/profile/${endpoint}/deactivate`,
+                method: "PATCH",
+            })
+        }),
+
+
+        deleteAccount: build.mutation<UserResponse, deleteAccountCredentials>({
+            query: ({ endpoint }) => ({
+                url: `/profile/${endpoint}/delete`,
+                method: "DELETE",
+            })
+        }),
+    })
 })
 
-export const { useUpdateProfileMutation } = userApiSlice
+
+export const { useUpdateProfileMutation,useDeactivateAccountMutation,useDeleteAccountMutation,} = userApiSlice

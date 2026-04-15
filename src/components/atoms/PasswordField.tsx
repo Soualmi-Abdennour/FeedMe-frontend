@@ -44,7 +44,7 @@ function PasswordField({
                                 name={name}
                                 value={showPassword?field.value:hideChars(field.value)}
                                 placeholder={placeholder}
-                                type="text"
+                                type={showPassword ? "text" : "password"}
                                 disabled={disabled}
                                 autoFocus={autoFocus}
                                 className={`w-full  bg-transparent outline-none border-none text-neutral-900 placeholder:text-neutral-400`}

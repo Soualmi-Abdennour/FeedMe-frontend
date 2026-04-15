@@ -8,11 +8,13 @@ type TuplePaths<T> = {
     [K in keyof T & string]: [K, keyof T[K] & string]
 }[keyof T & string];
 
+type AccountFields = "username" | "email" | "password"
+
 export interface IEditInformationFormProps<FormSchema extends z.ZodType> {
     defaultValues: z.infer<FormSchema>;
     validationSchema: FormSchema;
     endpoint:"user"|"restaurant"
-    fieldToUpdate: keyof Pick<NormalUserProfileAppModel, "userBasicInformation"> | keyof Pick<RestaurantUserProfileAppModel, "restaurantBasicInformation"|"restaurantLocationAndContact">
+    fieldToUpdate: keyof Pick<NormalUserProfileAppModel, "userBasicInformation"> | keyof Pick<RestaurantUserProfileAppModel, "restaurantBasicInformation"|"restaurantLocationAndContact" >| AccountFields
     formFields: Omit<IFormField, "errors" | "control">[];
 }
 
