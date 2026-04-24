@@ -46,3 +46,4 @@ export default function CategoryBar({ active, onSelect, onApply }: CategoryBarPr
     </div>
   );
 };
+;7
