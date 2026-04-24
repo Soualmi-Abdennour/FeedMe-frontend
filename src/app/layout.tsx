@@ -31,8 +31,10 @@ export default function RootLayout({
             className='absolute top-0 left-0 -z-10 inset-0 object-cover opacity-30'
           ></Image>
           <div>
+
             {children}
-          </div>
+          </div> 
+                      {children}
           <Toaster position='bottom-right'></Toaster>
         </body>
       </html>

@@ -15,6 +15,7 @@ function RouteGuardProvider({ children }: { children: ReactNode }) {
     function getAllowedRoutesBasedOnUserState(user: UserAppModel | null): string[] {
         // there is no user object so the user never interact with the app 
         if (!user) return ["/", "/sign-up", "/sign-in", "/forget-password"]  
+
         // there is a user object but it is still logged out ,this commes in case of forget-password route 
         if (user.isLoggedOut) return ["/reset-password", "/sign-up", "/sign-in", "/forget-password"]
         // here the user is officialy logged in       
