@@ -2,6 +2,7 @@
 import { Toaster } from '@/components/ui/sonner'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+// @ts-ignore 
 import './globals.css'
 import StoreProvider from './StoreProvider'
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen`}>
         <StoreProvider>
           {/* <RouteGuardProvider> */}
-          <div className='max-w-[600px] mx-auto mt-9'>
+          <div>
             {children}
           </div>
           <Toaster position='bottom-right'></Toaster>

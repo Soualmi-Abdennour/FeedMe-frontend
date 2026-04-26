@@ -1,3 +1,12 @@
+import {
+    BookOpen,
+    MessageCircleQuestion,
+    Filter,
+    PlusCircle,
+    Globe,
+    Settings,
+} from "lucide-react";
+
 
 // Usage Goals
 export const USAGE_GOAL = [
@@ -96,3 +105,38 @@ export const RESTAURANT_SERVICES = [
     { key: "takeAway", value: "Special customer service" },
     { key: "parkAvailability", value: "Park Availability" }
 ] as const
+
+
+
+export const APP_NAVIGATION_ITEMS = [
+    {
+        label: "Publication",
+        path: "/publication",
+        icon: BookOpen,
+    },
+    {
+        label: "A & Q",
+        path: "/a-and-q",
+        icon: MessageCircleQuestion,
+    },
+    {
+        label: "Filtering",
+        path: "/filtering",
+        icon: Filter,
+    },
+    {
+        label: "Studio",
+        path: "/studio",
+        icon: PlusCircle,
+    },
+    {
+        label: "Profile",
+        path: "/profile",
+        icon: Globe,
+    },
+    {
+        label: "Setting",
+        path: "/setting",
+        icon: Settings,
+    },
+];
