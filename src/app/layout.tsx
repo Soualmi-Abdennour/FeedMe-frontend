@@ -1,13 +1,18 @@
-import { Toaster } from "@/components/ui/sonner";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import StoreProvider from "./StoreProvider";
+
 import Image from "next/image";
 import { cn } from "@/utils/shadcn.utils";
 // import RouteGuardProvider from './RouteGuardProvider'
 
-const inter = Inter({ subsets: ["latin"] });
+
+
+import { Toaster } from '@/components/ui/sonner'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+// @ts-ignore 
+import './globals.css'
+import StoreProvider from './StoreProvider'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,7 +40,11 @@ export default function RootLayout({
         />
         <StoreProvider>
           {/* <RouteGuardProvider> */}
-          {children}
+
+          <div>
+            {children}
+          </div>
+          <Toaster position='bottom-right'></Toaster>
           {/* </RouteGuardProvider> */}
           <Toaster position="bottom-right" />
         </StoreProvider>

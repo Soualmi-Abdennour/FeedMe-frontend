@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 import { UserResponse } from "./api.types";
 import { WeekDay } from "./app.types";
 
@@ -15,7 +16,7 @@ export interface IFormField {
         |"textArea"
         | "time";
     selectList?:readonly {
-        key:string;
+        label:string;
         value:string
     }[]
     errors: any,
@@ -64,4 +65,11 @@ export type VerificationProcessState = {
         dispalyMessage: string;
         buttonMessage: string;
     }
+}
+
+export interface IAppNavItemProps {
+    path:string
+    label:string
+    icon: LucideIcon
+    isActive:boolean
 }
