@@ -1,22 +1,27 @@
+export type OrderStatus = 'PENDING' | 'ACCEPTED';
 
-
-import type { ProductModel } from '@/features/shop/types/shop.types';
-
-
-
-
-
-export type OrderStatus = 'PENDING' | 'COMPLETE';
-
-export interface OrderModel {
+export interface OrderProduct {
   id: string;
   name: string;
-  date: string; // ISO string
-  status: OrderStatus;
-  product: ProductModel;  
-  quantity?: number;
-  description?: string;
-  price?: number;
-  
+  image: string;
+  price: string;
+    description?: string; // ✅
+
 }
- 
+
+export interface OrderUser {
+  id: string;
+  userName: string;
+  fullName: string | null;
+  avatar: string | null;
+}
+
+export interface OrderModel {
+  orderId: string;
+  orderItemId: string;
+  status: OrderStatus;
+  createdAt: string;
+  product: OrderProduct;
+  quantity: number;
+  user: OrderUser;
+}

@@ -2,14 +2,14 @@ import RequestRow from '../molecules/orderRow';
 import type { OrderModel } from '../../types/request.types';
 
 interface RequestTableProps {
-  requests: OrderModel[];
+  requests?: OrderModel[];
   onConfirm: (id: string) => void;
   onDelete: (id: string) => void;
   isCompleted?: boolean;
   onRowClick?: (order: OrderModel) => void;
 }
 
-export default function RequestTable({ requests, onConfirm, onDelete, isCompleted, onRowClick }: RequestTableProps) {
+export default function RequestTable({ requests = [], onConfirm, onDelete, isCompleted, onRowClick }: RequestTableProps) {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
       <table className="w-full">
@@ -31,7 +31,7 @@ export default function RequestTable({ requests, onConfirm, onDelete, isComplete
           ) : (
             requests.map((req) => (
               <RequestRow
-                key={req.id}
+                key={req.orderItemId}
                 order={req}
                 onConfirm={onConfirm}
                 onDelete={onDelete}

@@ -1,5 +1,4 @@
-import React from 'react';
-import Image from 'next/image';
+import React, { useState } from 'react';
 
 interface AvatarProps {
   src: string;
@@ -9,41 +8,41 @@ interface AvatarProps {
   fallback?: string;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ //define the Avatar component with the AvatarProps interface (default values for size and fallback)
+export const Avatar: React.FC<AvatarProps> = ({
   src,
   alt,
   size = 'md',
   className = '',
   fallback = '?',
 }) => {
+  const [imgError, setImgError] = useState(false);
+
   const sizeStyles = {
-    sm: 'w-8 h-8', 
-    /**w-8 → width = 2rem (32px)
-    h-8 → height = 2rem (32px)
-هذا small avatar */
+    sm: 'w-8 h-8',
     md: 'w-10 h-10',
     lg: 'w-12 h-12',
     xl: 'w-16 h-16',
   };
 
-  const sizePixels = { // Define pixel sizes for each size image
-    sm: 32,
-    md: 40,
-    lg: 48, // quand on passe props size="lg" -> 3rem = 48px
-    xl: 64,
-  };
-
   const finalClassName = `${sizeStyles[size]} rounded-full overflow-hidden flex-shrink-0 ${className}`;
 
-  return ( //(render)
+  // ✅ fallback إذا فشل تحميل الصورة
+  if (imgError || !src) {
+    return (
+      <div className={`${finalClassName} bg-orange-100 flex items-center justify-center`}>
+        <span className="text-[#F07030] font-bold text-sm">{fallback}</span>
+      </div>
+    );
+  }
+
+  return (
     <div className={finalClassName}>
-      <Image
+      {/* ✅ img عادي بدل next/image */}
+      <img
         src={src}
         alt={alt}
-        width={sizePixels[size]}
-        height={sizePixels[size]}
-        className="w-full h-full object-cover" //complate all container 
-        priority={false}
+        className="w-full h-full object-cover"
+        onError={() => setImgError(true)}
       />
     </div>
   );

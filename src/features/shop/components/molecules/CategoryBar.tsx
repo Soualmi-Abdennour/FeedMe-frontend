@@ -24,8 +24,8 @@ export default function CategoryBar({ active, onSelect, onApply }: CategoryBarPr
           <CategoryPill
             key={cat.key}
             label={cat.value}
-            value={cat.key.toLowerCase()} // S'assurer que c'est en minuscule pour matcher les produits
-            isActive={active.includes(cat.key.toLowerCase())}
+           value={cat.value.toLowerCase()}
+isActive={active.includes(cat.value.toLowerCase())}
             onClick={onSelect}
           />
         ))}

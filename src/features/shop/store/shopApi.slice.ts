@@ -7,7 +7,7 @@ interface BackendProduct {
   id: string;
   name: string;
   price: string;
-  description: string; // موجودة في الواجهة
+  description: string;
   image: string;
   preparingTime: number;
   category: string | string[];
@@ -22,13 +22,9 @@ interface BackendProduct {
 }
 
 interface ProductsResponse {
-  status: string;
-  message: string;
   data: {
     products: BackendProduct[];
   };
-  results: number;
-  nextCursor?: string;
 }
 
 export const shopApiSlice = fetchAPI.injectEndpoints({
@@ -48,22 +44,19 @@ export const shopApiSlice = fetchAPI.injectEndpoints({
           return {
             id: p.id,
             name: p.name,
-            description: p.description, // <--- أضفنا هذا السطر هنا ليظهر الوصف في التطبيق
-            price: Number(p.price) || 0,
-            
+              price: parseFloat(p.price), // ✅ هذا ناقص
+
+            description: p.description, 
             imageUrl: cleanProductPath 
               ? (cleanProductPath.startsWith('http') ? cleanProductPath : `${BASE_URL}/${cleanProductPath}`) 
               : "/placeholder-product.png",
-            
             category: Array.isArray(p.category) 
               ? p.category[0]?.toLowerCase() 
               : (p.category?.toLowerCase() || 'all'),
             preparationTime: p.preparingTime,
-            
             seller: {
               id: p.restaurant?.id || "unknown",
               username: p.restaurant?.restaurantName || p.restaurant?.User?.userName || "Seller",
-              
               avatarUrl: cleanLogoPath 
                 ? (cleanLogoPath.startsWith('http') ? cleanLogoPath : `${BASE_URL}/${cleanLogoPath}`) 
                 : null,
@@ -73,7 +66,19 @@ export const shopApiSlice = fetchAPI.injectEndpoints({
       },
       providesTags: ['Products'],
     }),
+
+    addToCart: build.mutation({
+      query: (productId) => ({
+        url: '/cart',
+        method: 'POST',
+        body: { productId },
+      }),
+      invalidatesTags: ['Cart'], 
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = shopApiSlice;
+export const { 
+  useGetAllProductsQuery, 
+  useAddToCartMutation 
+} = shopApiSlice;

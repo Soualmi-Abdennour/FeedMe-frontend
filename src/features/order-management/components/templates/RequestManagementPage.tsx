@@ -1,52 +1,65 @@
 'use client';
 
 import { useState } from 'react';
-import TabToggle from '../atoms/TabToggle'; 
+import TabToggle from '../atoms/TabToggle';
 import RequestTable from '../organisms/RequestTable';
 import OrderDetailPopup from '../molecules/OrderDetailPopup';
 import type { OrderModel } from '../../types/request.types';
-import { MOCK_REQUESTS } from '../../constants/requests.mock';
-
+import { 
+  useGetIncomingOrdersQuery, 
+  useGetAcceptedOrdersQuery,
+  useUpdateOrderStatusMutation,
+  useRejectOrderMutation
+} from '../../store/orderManagementApi.slice';
 
 const TABS = [
   { label: 'Order Complete', value: 'complete' },
-  { label: 'Order Pending',  value: 'pending'  },
+  { label: 'Order Pending', value: 'pending' },
 ];
 
 export default function RequestManagementPage() {
   const [activeTab, setActiveTab] = useState('pending');
-  const [requests, setRequests] = useState<OrderModel[]>(MOCK_REQUESTS);
   const [selectedOrder, setSelectedOrder] = useState<OrderModel | null>(null);
 
+  const { data: incomingOrders = [], isLoading: loadingPending } = useGetIncomingOrdersQuery();
+  const { data: acceptedOrders = [], isLoading: loadingAccepted } = useGetAcceptedOrdersQuery();
+  const [rejectOrder] = useRejectOrderMutation();
+  const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
-  const filtered = requests.filter((r) =>
-    activeTab === 'pending' ? r.status === 'PENDING' : r.status === 'COMPLETE'
+  // فلتر يدوي للتأكد من صحة البيانات
+  const pendingOrders = incomingOrders.filter(o => o.status === 'PENDING');
+  const completedOrders = acceptedOrders.filter(o => o.status === 'ACCEPTED');
+
+  const filtered = activeTab === 'pending' ? pendingOrders : completedOrders;
+
+  const handleConfirm = async (orderId: string) => {
+    try {
+      await updateOrderStatus(orderId).unwrap();
+    } catch (error) {
+      console.error("Failed to accept order:", error);
+    }
+  };
+
+  const handleDelete = async (orderId: string) => {
+    try {
+      await rejectOrder(orderId).unwrap();
+    } catch (error) {
+      console.error("Failed to reject order:", error);
+    }
+  };
+
+  if (loadingPending || loadingAccepted) return (
+    <div className="text-center py-20">Loading orders...</div>
   );
-
-  //change status to "complete" with sliding animation when confirm request
-  const handleConfirm = (id: string) => {
-    setRequests((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, status: 'COMPLETE' } : r))
-    );
-  };
-
-  const handleDelete = (id: string) => {
-    setRequests((prev) => prev.filter((r) => r.id !== id));
-  };
 
   return (
     <div className="p-8 min-h-screen bg-[#fdf6f0]">
-      {/* Title */}
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-6">
-        Request management:
-      </h1>
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Request management:</h1>
 
-      {/* Tabs */}
       <div className="flex justify-center mb-6">
         <TabToggle tabs={TABS} active={activeTab} onChange={setActiveTab} />
       </div>
 
-      {/* Table */}
       <RequestTable
         requests={filtered}
         onConfirm={handleConfirm}
@@ -55,7 +68,6 @@ export default function RequestManagementPage() {
         onRowClick={setSelectedOrder}
       />
 
-      {/* Order Detail Popup */}
       {selectedOrder && (
         <OrderDetailPopup
           order={selectedOrder}

@@ -1,58 +1,71 @@
 "use client";
 
-import { useState } from 'react';
-import { ShoppingCart, ArrowLeft } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Trash2 } from 'lucide-react';
 import { CartSection } from '../organism/CartTotale';
-import { CartGroup } from '../../types/order';
+import { useGetCartQuery, useClearCartMutation } from '../../store/cartApiSlice';
+import { useRouter } from 'next/navigation';
 
-interface Props {
-  initialGroups: CartGroup[];
-}
+export const CartTemplate = () => {
+  const router = useRouter();
+  const [clearCart] = useClearCartMutation();
+  const { data, isLoading, isError, refetch } = useGetCartQuery(undefined);
+  const groups = data?.data?.allCartGroups || [];
 
-export const CartTemplate = ({ initialGroups }: Props) => {
-  const [groups, setGroups] = useState<CartGroup[]>(initialGroups);
-
-  const handleRemoveGroup = (accountId: string) => {
-    setGroups(prev => prev.filter(g => g.accountId !== accountId));
-  };
-
-  if (groups.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5">
-        <div className="w-20 h-20 rounded-3xl bg-[#FFF0E8] flex items-center justify-center">
-          <ShoppingCart size={36} className="text-[#F07030]" strokeWidth={1.5} />
-        </div>
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-1">Your cart is empty</h2>
-          <p className="text-sm text-gray-400">Looks like you have not added anything yet.</p>
-        </div>
-        <button className="flex items-center gap-2 text-[#F07030] font-semibold text-sm hover:gap-3 transition-all duration-200">
-          <ArrowLeft size={16} strokeWidth={2.5} />
-          Go back to shopping
-        </button>
-      </div>
-    );
+ const handleClearCart = async () => {
+  try {
+    await clearCart().unwrap();
+    refetch(); 
+  } catch (error) {
+    console.error("Failed to clear cart:", error);
   }
+};
+
+  if (isLoading) return <div className="text-center py-20">Loading cart...</div>;
+
+  if (isError) return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5">
+      <ShoppingCart size={48} className="text-gray-300" />
+      <h2 className="text-2xl font-bold">Something went wrong</h2>
+      <button onClick={() => router.push('/shop')} className="text-[#F07030] font-semibold flex gap-2">
+        <ArrowLeft size={20} /> Back to shop
+      </button>
+    </div>
+  );
+
+  if (groups.length === 0) return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-5">
+      <ShoppingCart size={48} className="text-gray-300" />
+      <h2 className="text-2xl font-bold">Your cart is empty</h2>
+      <button onClick={() => router.push('/shop')} className="text-[#F07030] font-semibold flex gap-2">
+        <ArrowLeft size={20} /> Back to shop
+      </button>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] py-12 px-4">
-      <div className="max-w-6xl mx-auto space-y-12">
+      <div className="max-w-6xl mx-auto">
 
-        <header className="mb-10 text-center lg:text-left">
-          <h1 className="text-4xl font-black text-gray-900 mb-2">My Basket</h1>
-         
-        </header>
+        <div className="flex items-center justify-between mb-10">
+          <h1 className="text-4xl font-black">Shopping Cart</h1>
+          <button
+            onClick={handleClearCart}
+            className="flex items-center gap-2 px-4 py-2 rounded-2xl border border-red-200 text-red-400 hover:bg-red-50 hover:text-red-500 hover:border-red-300 transition-all duration-200 text-sm font-semibold"
+          >
+            <Trash2 size={16} strokeWidth={2} />
+            Clear Cart
+          </button>
+        </div>
 
         <div className="space-y-16">
-          {groups.map((group) => (
+          {groups.map((group: any) => (
             <CartSection
               key={group.accountId}
               group={group}
-              onRemoveGroup={() => handleRemoveGroup(group.accountId)}
+              onRemoveGroup={refetch}
             />
           ))}
         </div>
-
       </div>
     </div>
   );

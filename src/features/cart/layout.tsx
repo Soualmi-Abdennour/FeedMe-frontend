@@ -1,78 +1,35 @@
-"use client";
-
-import { CartTemplate } from './components/template/CartTemplate';
-
-export default function Home() {
-  // --- 1. قائمة المطاعم (قائمة المجموعات) ---
-  const allCartGroups = [
-    {
-      accountId: "res_77",
-      accountName: "Tacos de Lyon",
-      username: "tacos_lyon_dz",
-      accountAvatar: "/Screenshot 2026-01-21 190607.png",
-      items: [
-       
-        {
-          id: "b2",
-          productName: "Onion Rings",
-          price: 350,
-          description: "Crispy fried onion rings.",
-          image: "/Screenshot 2026-01-21 190607.png",
-          qty: 3,
-          accountId: "res_120",
-        },
-      ],
-    },
-    {
-      accountId: "res_99",
-      accountName: "Pizza Hut",
-      username: "pizzahut_official",
-      accountAvatar: "/Screenshot 2026-01-21 190607.png",
-      items: [
-    
-        {
-          id: "p2",
-          productName: "Garlic Bread",
-          price: 450,
-          description: "Toasted bread with garlic butter and herbs.",
-          image: "/Screenshot 2026-01-21 190607.png",
-          qty: 2,
-          accountId: "res_99",
-        },
-      ],
-    },
-    {
-      accountId: "res_120",
-      accountName: "Burger King",
-      username: "bk_algeria",
-      accountAvatar: "/Screenshot 2026-01-21 190607.png",
-      items: [
-        
-          {
-          id: "b1",
-          productName: "Whopper Meal",
-          price: 1450,
-          description: "The classic Whopper with fries and a drink.",
-          image: "/Screenshot 2026-01-21 190607.png",
-          qty: 1,
-          accountId: "res_120",
-        },
-        {
-          id: "b2",
-          productName: "Onion Rings",
-          price: 350,
-          description: "Crispy fried onion rings.",
-          image: "/Screenshot 2026-01-21 190607.png",
-          qty: 3,
-          accountId: "res_120",
-        },
-      ],
-    }
-  ];
-
+export default function ShopLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <main className="min-h-screen bg-[#F5F4F0]">
-      <CartTemplate initialGroups={allCartGroups} />
-    </main>
+    <div className="flex min-h-screen">
+
+      {/* Sidebar simulée */}
+      <div className="w-[160px] bg-white border-r border-gray-100 flex flex-col justify-between py-6 px-4 flex-shrink-0">
+        {/* Logo */}
+        <div>
+          <div className="w-10 h-10 bg-[#E85C1A] rounded-xl mb-8" />
+          {/* Nav items */}
+          <div className="flex flex-col gap-6 text-sm text-gray-500">
+            <span>Publication</span>
+            <span>A & Q</span>
+            <span className="text-[#E85C1A] font-medium">Shop</span>
+            <span>Studio</span>
+            <span>Profile</span>
+            <span>Setting</span>
+          </div>
+        </div>
+        {/* Log out */}
+        <span className="text-sm text-[#E85C1A]">Log Out</span>
+      </div>
+
+      {/* Content */}
+      <main className="flex-1 bg-[#FDF6F0]">
+        {children}
+      </main>
+
+    </div>
   );
 }
