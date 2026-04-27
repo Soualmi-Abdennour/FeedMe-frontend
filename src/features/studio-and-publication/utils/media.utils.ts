@@ -8,9 +8,9 @@ export function countMedia(mediaList: MediaAppModel[]) {
     let videosNumber = 0;
 
     for (const media of mediaList) {
-        if (media.type==="IMAGE") {
+        if (media.type === "IMAGE") {
             imagesNumber++;
-        } else if (media.type==="VIDEO") {
+        } else if (media.type === "VIDEO") {
             videosNumber++;
         }
     }
@@ -18,46 +18,51 @@ export function countMedia(mediaList: MediaAppModel[]) {
     return { imagesNumber, videosNumber };
 }
 
-export function getMediaType(mediaList:MediaAppModel[]):string{
-    return mediaList[0].type==="VIDEO"?"VIDEO":mediaList.length>1?"MULTI_IMAGE":"IMAGE"
+export function getMediaType(mediaList: MediaAppModel[]): string {
+    return mediaList[0].type === "VIDEO" ? "VIDEO" : mediaList.length > 1 ? "MULTI_IMAGE" : "IMAGE"
 }
-export function buildPostFormData(
-    data: PostFormData,
-): FormData {
+
+export function buildPostFormData(data: PostFormData): FormData {
     const formData = new FormData();
 
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("contentType", data.contentType);
-    formData.append("mediaType",getMediaType(data.mediaList))
+
+    const keptMediaIds: string[] = [];
 
     data.mediaList!.forEach((media) => {
-        if(media.source==="NEW") {
-            formData.append("media", media.file!);
+        if (media.source === "NEW") {
+            if (media.type === "VIDEO") {
+                formData.append("video", media.file!); // ✅ فيديو
+            } else {
+                formData.append("images", media.file!); // ✅ صورة
+            }
+        } else {
+            keptMediaIds.push(media.id);
         }
-        else {
-            formData.append("keptMedia",media.id)
-        }
-
     });
+
+    formData.append("keptMediaIds", JSON.stringify(keptMediaIds));
+
     return formData;
 }
 
-export function convertFileToMediaAppModel (files:File[]):MediaAppModel[]{
-    return files.map((file)=>({
+export function convertFileToMediaAppModel(files: File[]): MediaAppModel[] {
+    return files.map((file) => ({
         file,
-        type:file.type.startsWith("image")?"IMAGE":"VIDEO",
-        id:uuidv4(),
+        type: file.type.startsWith("image") ? "IMAGE" : "VIDEO",
+        id: uuidv4(),
         previewUrl: URL.createObjectURL(file),
-        source:"NEW"
+        source: "NEW"
     }))
 }
 
-export function convertMediaDbModelToMediaAppModel(mediaList:MediaDbModel[]):MediaAppModel[]{
-    return mediaList.map((media)=>({
-        id:media.id,
-        previewUrl:media.url,
-        type:media.type,
-        source:"EXISTING"
+export function convertMediaDbModelToMediaAppModel(mediaList: MediaDbModel[]): MediaAppModel[] {
+    return mediaList.map((media) => ({
+        id: media.id,
+        previewUrl: `http://localhost:8000${media.url}`,
+        type: media.type,
+        source: "EXISTING"
     }))
 }

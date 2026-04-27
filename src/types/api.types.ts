@@ -10,6 +10,9 @@ export type UserResponseData={
 export type PostResponseData = {
     posts: PostDbModel[]
 }
+export type SinglePostResponseData = {
+    post: PostDbModel
+}
 export type ApiError={
     field?:string;
     message:string
@@ -24,6 +27,7 @@ export type ApiResponse<T> = {
 
 export type UserResponse=ApiResponse<UserResponseData|null>
 export type PostResponse = ApiResponse<PostResponseData | null>
+export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
 export type SendVerificationResponse=ApiResponse<null|UserResponseData>
 export type VerificationResponse=ApiResponse<null |UserResponseData>
 
