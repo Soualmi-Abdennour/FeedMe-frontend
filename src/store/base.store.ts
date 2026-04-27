@@ -8,10 +8,11 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 // RTK QUERY SETUP 
-export const fetchAPI=createApi({
-    reducerPath:"api",
-    baseQuery:fetchBaseQuery({
-        baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+export const fetchAPI = createApi({
+    reducerPath: "api",
+    tagTypes: ['Products', 'User','Orders','Cart', 'Onboarding'], 
+    baseQuery: fetchBaseQuery({
+        baseUrl: "http://localhost:8000/api",
         prepareHeaders: (headers, { getState }) => {
             const state = getState() as RootState
             const token = state.authentication.authentication?.jwtToken          
@@ -21,32 +22,36 @@ export const fetchAPI=createApi({
             return headers
         }
     }),
-    endpoints:(builder)=>({})
+    endpoints: (builder) => ({})
 })
+
 const persistConfig = {
     key: 'root',
     storage,
-    whiteList:["user","authentication"]
+    whitelist: ["user", "authentication"] 
 }
-const rootReducer=combineReducers({
-    [fetchAPI.reducerPath]:fetchAPI.reducer,
-    user:userReducer,
-    authentication:authReducer,
-    onboarding: onboardingReducer,
 
+const rootReducer = combineReducers({
+    [fetchAPI.reducerPath]: fetchAPI.reducer,
+    user: userReducer,
+    authentication: authReducer,
+    onboarding: onboardingReducer,
 })
+
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export const store=configureStore({
+export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }).concat(
-        fetchAPI.middleware
-    )
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware({ 
+            serializableCheck: false 
+        }).concat(fetchAPI.middleware)
 })
+
 export const persistor = persistStore(store);
 
-type AppDispatch = typeof store.dispatch;
-type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
 export const useAppSelector = useSelector.withTypes<RootState>();

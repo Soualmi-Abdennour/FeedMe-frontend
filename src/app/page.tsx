@@ -390,17 +390,5 @@ export default function landinPage() {
         </div>
       </div>
     </div>
-
-
-
-    // <div>
-      // <VerificationProcess verificationMessages={VERIFY_PASSWORD_MESSAGES}/>
-    // <ResetPasswordPage></ResetPasswordPage>
-    // </div>
-    // <OnboardingProcessPage></OnboardingProcessPage>
-    // <NormalUserOnboardingProcess></NormalUserOnboardingProcess>
   )
 }
-
-
-
