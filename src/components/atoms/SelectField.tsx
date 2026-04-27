@@ -23,7 +23,8 @@ function SelectField({
 
     return (
         <>
-            <FieldLabel>{label}</FieldLabel>
+        <div className="">
+            <FieldLabel className="py-1">{label}</FieldLabel>
 
             <Controller
                 name={name}
@@ -37,7 +38,7 @@ function SelectField({
                         <SelectTrigger
                             id={id}
                             autoFocus={autoFocus}
-                            className={`w-[180px] ${errors[name] ? "border-red-500" : ""}`}
+                            className={`w-full ${errors[name] ? "border-fail-500" : ""}`}
                         >
                             <SelectValue placeholder={placeholder} />
                         </SelectTrigger>
@@ -56,9 +57,11 @@ function SelectField({
                 )}
             />
 
-            <p className={`mt-4 text-left text-sm ${errors[name] ? "text-red-500" : ""}`}>
+            <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                 {errors[name]?.message}
             </p>
+        </div>
+            
         </>
     );
 }

@@ -17,7 +17,8 @@ function TextField({
 }: IFormField) {
     return (
         <>
-            <FieldLabel className='text-blue-600'>{label}</FieldLabel>
+        <div className=''>
+            <FieldLabel className='py-1'>{label}</FieldLabel>
             <Controller
                 name={name}
                 control={control}
@@ -30,14 +31,16 @@ function TextField({
                         type="text"
                         disabled={disabled}
                         autoFocus={autoFocus}
-                        className={` ${errors[name] ? "border-red-500" : ""}`}
+                        className={` ${errors[name] ? "border-fail-500 mx-5" : ""}`}
                     ></Input>
                 )}
             >
             </Controller>
-            <p className={`mt-4 text-left text-sm ${errors[name] ? "text-red-500" : ""}`}>
+            <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                 {errors[name] && errors[name].message}
             </p>
+        </div>
+            
         </>
     )
 }

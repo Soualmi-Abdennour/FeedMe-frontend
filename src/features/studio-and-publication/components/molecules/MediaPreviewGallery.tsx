@@ -27,7 +27,7 @@ function MediaPreviewGallery({ uploadedMedia,setUploadedMedia, className }: IMed
     const offsetPx = startIndex * itemWidth
 
     return (
-        <div className="max-w-[600px] overflow-hidden relative">
+        <div className="max-w-[600px] overflow-hidden relative px-5 justify-center">
             {canGoPrev  && <Button
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10"
                 onClick={() => setStartIndex(i => i - 1)}
@@ -51,9 +51,10 @@ function MediaPreviewGallery({ uploadedMedia,setUploadedMedia, className }: IMed
                         <div
                             key={media.previewUrl}
                             ref={index === 0 ? itemRef : undefined}
-                            className="h-56 w-48 shrink-0 relative border-2 border-orange-500 rounded-md overflow-hidden"
+                            className="h-56 w-48 shrink-0 relative border-2 border-primary-500 rounded-md overflow-hidden"
                         >
-                            <Button className='absolute top-0 right-0 z-10'
+                            <Button className='absolute top-0 right-[-10px] z-10 text-white'
+                            variant='ghost'
                                 onClick={()=>setUploadedMedia(previousMediaList=>previousMediaList.filter((prevMedia)=>prevMedia.id!==media.id))}
                             >
                                 <X></X>
@@ -69,9 +70,9 @@ function MediaPreviewGallery({ uploadedMedia,setUploadedMedia, className }: IMed
                         <div
                             key={media.previewUrl}
                             ref={index === 0 ? itemRef : undefined}
-                            className="h-56 w-48 shrink-0 relative border-2 border-orange-500 rounded-md overflow-hidden"
+                            className="h-56 w-48 shrink-0 relative border-2 border-primary-500 rounded-md overflow-hidden"
                         >
-                                <Button className='absolute top-0 right-0 z-10'
+                                <Button className='absolute top-0 right-0 z-10 '
                                     onClick={() => setUploadedMedia(previousMediaList => previousMediaList.filter((file) => file.id !== media.id))}
                                 >
                                     <X></X>

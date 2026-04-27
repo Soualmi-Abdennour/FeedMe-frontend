@@ -29,6 +29,7 @@ function SubmitButton({
         <Button
             disabled={disabled}
             type='submit'
+            variant='primary'
             className={cn("flex gap-1 items-center",className)}
             onClick={onClick}
         >

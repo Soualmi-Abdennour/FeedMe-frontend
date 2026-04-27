@@ -45,15 +45,16 @@ function DeletePostForm({className,postId,onClose}:IDeletePostFormProps) {
                 </button>
             )}
             <div className='flex flex-col items-center '>
-                <h1>Delete Post?</h1>
+                <h1 className='text-fail-500 font-bold'>Delete Post?</h1>
                 <p>Are you sure you want to delete this post?</p>
-                <div>
+                <div className='grid grid-cols-2 justify-between gap-10 mt-5'>
                     <SubmitButton 
+                    className='text-white font-bold bg-fail-500 hover:bg-fail-600'
                         onClick={handleClick}
                     >
                         Delete
                     </SubmitButton>
-                    <Button onClick={onClose}>
+                    <Button onClick={onClose} variant='secondary'>
                         Cancel
                     </Button>
                 </div>

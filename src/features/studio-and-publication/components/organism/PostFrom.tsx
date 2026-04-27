@@ -36,9 +36,9 @@ function PostForm({ defaultValues,onSubmit  }: IPostFormProps) {
         await onSubmit(postData)
     }
     return (
-        <div>
+        <div className='grid grid-cols-1justify-center'>
             {mediaList && (
-                <MediaPreviewGallery uploadedMedia={mediaList} setUploadedMedia={setMediaList} />
+                <MediaPreviewGallery uploadedMedia={mediaList} setUploadedMedia={setMediaList} className=''/>
             )}
             <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList} />
             <form onSubmit={handleSubmit(submitForm)}>
@@ -47,7 +47,7 @@ function PostForm({ defaultValues,onSubmit  }: IPostFormProps) {
                         <FormField {...formField} control={control} errors={errors} />
                     </div>
                 ))}
-                <SubmitButton disabled={mediaList.length === 0 || !isValid}>
+                <SubmitButton disabled={mediaList.length === 0 || !isValid}  className='text-white font-bold w-full' >
                     Create Post
                 </SubmitButton>
             </form>

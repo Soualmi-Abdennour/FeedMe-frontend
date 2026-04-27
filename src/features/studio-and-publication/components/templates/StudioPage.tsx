@@ -24,10 +24,12 @@ function StudioPage() {
             
     const [openCreatePostFrom, setOpenCreatePostForm] = useState<boolean>(false)
     return (
-        <div className='relative z-0 w-full h-screen'>
-            <header className='flex justify-between'>
+        <div className='relative z-0 w-full px-20 '>
+            <header className='flex justify-between max-h-[56px] items-center my-20 '>
                 <Button
                     onClick={() => setOpenCreatePostForm(true)}
+                    variant='secondary'
+                    className='text-primary-500 font-bold w-[220px]'
                 >
                     Create Post
                 </Button>
@@ -35,7 +37,7 @@ function StudioPage() {
                     setFilterOptions(state => state.includes(value) ? state.filter(val => val !== value) : [...state, value])
                 }}></DropdownSelect>
             </header>
-            <div className='grid grid-cols-3 gap-3 w-fit border border-red-500 overflow-y-scroll h-full'>
+            <div className='grid grid-cols-3 gap-3 w-fit  overflow-y-scroll h-full'>
                 {MOCK_POSTS.filter(({mediaType,media}) => filterOptions.includes(mediaType)).map(({mediaType,media,id}) => (
                     <PostPreview key={id} mediaType={mediaType} media={convertMediaDbModelToMediaAppModel(media)} postId={id}></PostPreview>
                 ))}

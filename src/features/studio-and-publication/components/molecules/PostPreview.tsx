@@ -20,16 +20,16 @@ function PostPreview({ media, postId, mediaType }: IPostPreviewProps) {
             </button>
 
             {showList && (
-                <div className='flex flex-col gap-1 absolute top-3 right-16 z-10'>
+                <div className='flex flex-col gap-1 justify-center absolute top-3 right-16 z-10'>
                     <Link href={`/home/studio?action=edit&id=${postId}`}>
-                        <Button className='w-full'>Edit</Button>
+                        <Button className='w-full m-1 text-white font-medium'>Edit</Button>
                     </Link>
                     <Link href={`/home/studio?action=delete&id=${postId}`}>
-                        <Button>Delete</Button>
+                        <Button className='w-full m-1 text-white font-medium'>Delete</Button>
                     </Link>
                 </div>
             )}
-            <div className='absolute top-3 left-3 z-10'>
+            <div className='absolute items-center top-3 left-3 z-10'>
             {
                 mediaType==="VIDEO"? (
                     <Video size={30} className='text-white'></Video>
