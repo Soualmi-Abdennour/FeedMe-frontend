@@ -1,15 +1,13 @@
 "use client"
-import { ApiResponse, ApiStatus, UserResponse } from '@/types/api.types'
-import { useRouter } from 'next/navigation'
+import { UserResponse } from '@/types/api.types'
 import { useEffect, useState } from 'react'
-import { IVerificationProcessProps, VerificationProcessState,IVerificationViewProps } from '../../types/props.types'
+import { IVerificationProcessProps, IVerificationViewProps } from '../../types/props.types'
 import VerificationView from '../molecules/VerificationView'
 
 
 
 function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onErrorFn,onFailFn }:IVerificationProcessProps) {
-    const verificationResponse ={status : "SUCCESS"}
-    
+    const [verificationResponse, setVerificationResponse] = useState<UserResponse>()
     const getVerifyProps = (): IVerificationViewProps => {
         if (verificationResponse?.status === "ERROR") {
             return {
@@ -18,7 +16,7 @@ function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onError
                 buttonMessage: verificationMessages["ERROR"].buttonMessage,
                 buttonState: "ERROR",
                 onClick: () => {
-                    // onErrorFn(verificationResponse)
+                    onErrorFn(verificationResponse)
                 },
                 imageUrl:"/verify/error.svg"
             }
@@ -29,7 +27,7 @@ function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onError
                 buttonMessage: verificationMessages["FAIL"].buttonMessage,
                 buttonState: "FAIL",
                 onClick: () => {
-                    // onFailFn()
+                    onFailFn()
                 },
                 imageUrl:"/verify/fail.svg"
             }
@@ -41,7 +39,7 @@ function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onError
                 buttonMessage: verificationMessages["SUCCESS"].buttonMessage,
                 buttonState: "SUCCESS",
                 onClick: () => {
-                //     onSuccessFn(verificationResponse)
+                    onSuccessFn(verificationResponse)
                 },
                 imageUrl:"/verify/success.svg"
             }
@@ -58,12 +56,9 @@ function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onError
     }
     useEffect(() => {  
         const updateVerificationState=async()=>{
-            // const verificationResponse =await queryFn()
+            const verificationResponse =await queryFn()
             console.log("from use effect");
-            
-console.log(verificationResponse);
-
-            // setVerificationResponse(verificationResponse)
+            setVerificationResponse(verificationResponse)
         }
         updateVerificationState()      
     }, [queryFn])

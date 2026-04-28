@@ -45,9 +45,9 @@ export default function DropdownSelect({ menuLabel, selectOptions, currentValue,
                     <span className='text-gray-400'>
                         {menuLabel}
                     </span>
-                    <h3 className='text-gray-800'>
+                    <h5 className='text-gray-800'>
                         {currentValue.map((value) => value.toLowerCase()).join(", ")}
-                    </h3>
+                    </h5>
                 </div>
                 <ChevronDown
                     size={16}

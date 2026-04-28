@@ -11,6 +11,7 @@ import DeletePostForm from '../organism/DeletePostForm'
 import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
 import { PostMediaType } from '../../types/studio.types'
 import { useGetMyPostsQuery } from '../../store/studio.api.slice'  // ← الجديد
+import { AtomLoader } from '@/components/atoms/AtomLoader'
 
 
 
@@ -23,11 +24,16 @@ function StudioPage() {
     // ── جلب البوستات من الباك اند ──────────────────────────────────
     const { data, isLoading, isError } = useGetMyPostsQuery({})
     const posts = data?.data?.posts ?? []
+    console.log(data);
+    
 
     return (
-        <div className='relative z-0 w-full h-screen'>
+        <div className='relative z-0 w-full h-screen flex flex-col'>
             <header className='flex justify-between'>
-                <Button onClick={() => setOpenCreatePostForm(true)}>
+                <Button 
+                className='h-fit'
+                variant={"primary"}
+                onClick={() => setOpenCreatePostForm(true)}>
                     Create Post
                 </Button>
                 <DropdownSelect
@@ -44,9 +50,8 @@ function StudioPage() {
                 />
             </header>
 
-            {/* ── States ─────────────────────────────────────────── */}
             {isLoading && (
-                <p className="text-center mt-10 text-gray-400">جاري التحميل...</p>
+                <AtomLoader></AtomLoader>
             )}
             {isError && (
                 <p className="text-center mt-10 text-red-400">حدث خطأ في جلب المنشورات</p>
@@ -54,7 +59,7 @@ function StudioPage() {
 
             {/* ── Grid ───────────────────────────────────────────── */}
             {!isLoading && !isError && (
-                <div className='grid grid-cols-3 gap-3 w-fit overflow-y-scroll h-full'>
+                <div className='grid grid-cols-3 gap-3 w-full overflow-y-scroll flex-1  border border-black'>
                     {posts
                         .filter(({ mediaType }) => filterOptions.includes(mediaType as PostMediaType))
                         .map(({ mediaType, media, id }) => (
@@ -68,7 +73,7 @@ function StudioPage() {
                     }
                     {posts.length === 0 && (
                         <p className="col-span-3 text-center mt-10 text-gray-400">
-                            لا توجد منشورات بعد
+                            There is no Posts
                         </p>
                     )}
                 </div>

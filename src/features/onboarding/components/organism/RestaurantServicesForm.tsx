@@ -35,14 +35,14 @@ function RestaurantServicesForm() {
             <h1 className='text-xl my-7 pb-5'>Restaurant services:</h1>
             <div className='flex flex-col  gap-5'>
                 {RESTAURANT_SERVICES.map((service) => (
-                    <div className='flex items-center justify-between' key={service.key}>
+                    <div className='flex items-center justify-between' key={service.label}>
                         <h1 className='flex-1 text-xl px-7 font-bold text-left'>{service.value}</h1>
                         <div className='flex gap-2'>
                             {[...Array.from(["YES", "NO"])].map((item) => (
                                 <Button
                                     key={item}
                                     variant="primary"
-                                    className={cn(restaurantServices[service.key] === item ? " text-white font-bold bg-primary-300" : "text-black font-bold")}
+                                    className={cn(restaurantServices[service.label] === item ? " text-white font-bold bg-primary-300" : "text-black font-bold")}
                                     onClick={() => {
                                         setRestaurantServices(state => ({
                                             ...state,

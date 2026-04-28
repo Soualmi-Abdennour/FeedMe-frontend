@@ -39,7 +39,7 @@ function SelectField({
                             autoFocus={autoFocus}
                             className={`w-[180px] ${errors[name] ? "border-red-500" : ""}`}
                         >
-                            <SelectValue placeholder={placeholder} />
+                            <SelectValue placeholder={placeholder}  />
                         </SelectTrigger>
 
                         <SelectContent>

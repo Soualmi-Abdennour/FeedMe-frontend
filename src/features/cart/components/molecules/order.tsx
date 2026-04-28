@@ -26,7 +26,7 @@ export const OrderActions = ({ unitPrice }: Props) => {
       </div>
 
       <div className="w-[260px]">
-        <OrderSummary total={totalPrice} />
+        <OrderSummary total={totalPrice} onCompletePurchase={()=>{}} />
       </div>
     </div>
   );

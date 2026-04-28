@@ -25,7 +25,11 @@ function PostForm({ defaultValues,onSubmit  }: IPostFormProps) {
     } = useForm<IPostFormSchema>({
         resolver: zodResolver(postFormSchema),
         mode: "onChange",
-        defaultValues
+        defaultValues:defaultValues? defaultValues:{
+            title:"",
+            description:"",
+            // contentType:""
+        }
     })
     const submitForm =async (formData: IPostFormSchema) => {
         const { title, description, contentType } = formData
