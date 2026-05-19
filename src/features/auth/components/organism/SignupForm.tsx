@@ -12,8 +12,10 @@ import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
 import { useSingupMutation } from '../../store/auth.api.slice'
 import { toast } from 'sonner'
 
-
-function SignupForm() {
+interface SignupFormProps {
+    className?: string
+}
+function SignupForm({className}: SignupFormProps) {
     const router=useRouter()
     const [signup]=useSingupMutation()
     const dispatch=useDispatch()
@@ -51,7 +53,7 @@ function SignupForm() {
     return (
         <form 
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2'
+            className='flex flex-col max-[320px] gap-7 mx-auto'
         >
             {SIGN_UP_FIELDS.map((formField)=>(
                 <div key={formField.name}>
@@ -60,9 +62,10 @@ function SignupForm() {
             ))}
             <SubmitButton
                 disabled={isSubmitting}
-                state={isSubmitting ? "LOADING" : "DEFAULT"}
+                state={isSubmitting?"LOADING":"DEFAULT"}
+                className='mt-6'
             >
-                {isSubmitting?"Loading...":"Sign up"}
+                {isSubmitting?"Loading...":"Continue"}
             </SubmitButton>
         </form>
     )

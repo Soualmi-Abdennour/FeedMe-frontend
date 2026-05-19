@@ -8,32 +8,32 @@ export default function landinPage() {
       {/* navbar */}
       <nav className="header bg-white w-full h-[70px] py-4 px-6 flex items-center justify-end z-50 relative">
         <ul className="flex items-center gap-8 font-bold mx-8">
-          <li className="hover:text-primary hover:border-b-2 hover:border-primary transition-colors duration-200 ease-in-out ">
+          <li className="hover:text-primary-500 hover:border-b-2 hover:border-primary-500 transition-colors duration-200 ease-in-out ">
             <Link href="/" >
               Home
             </Link>
           </li>
-          <li className="hover:text-primary hover:border-b-2 hover:border-primary transition-colors duration-200 ease-in-out ">
+          <li className="hover:text-primary-500 hover:border-b-2 hover:border-primary-500 transition-colors duration-200 ease-in-out ">
             <Link href="#features" >
               Features
             </Link>
           </li>
-          <li className="hover:text-primary hover:border-b-2 hover:border-primary transition-colors duration-200 ease-in-out ">
+          <li className="hover:text-primary-500 hover:border-b-2 hover:border-primary-500 transition-colors duration-200 ease-in-out ">
             <Link href="#benefits" >
               Benifits
             </Link>
           </li>
-          <li className="hover:text-primary hover:border-b-2 hover:border-primary transition-colors duration-200 ease-in-out ">
+          <li className="hover:text-primary-500 hover:border-b-2 hover:border-primary-500 transition-colors duration-200 ease-in-out ">
             <Link href="#CTA" >
               CTA
             </Link>
           </li>
-          <li className="hover:text-primary hover:border-b-2 hover:border-primary transition-colors duration-200 ease-in-out ">
+          <li className="hover:text-primary-500 hover:border-b-2 hover:border-primary-500 transition-colors duration-200 ease-in-out ">
             <Link href="#FAQ" >
               FAQ
             </Link>
           </li>
-          <li className="hover:text-primary hover:border-b-2 hover:border-primary transition-colors duration-200 ease-in-out ">
+          <li className="hover:text-primary-500 hover:border-b-2 hover:border-primary-500 transition-colors duration-200 ease-in-out ">
             <Link href="#footer" >
               Contact
             </Link>
@@ -41,7 +41,7 @@ export default function landinPage() {
         </ul>
         <ul className="btm flex items-center gap-8 font-bold">
           <li>
-            <button className="w-[112px] h-[46px] bg-primary text-white rounded-lg
+            <button className="w-[112px] h-[46px] bg-primary-500 text-white rounded-lg
             hover:bg-[#D86300] transition-all duration-500 ease-in-out">
               <Link href="/sign-up">
                 Sign up
@@ -49,7 +49,7 @@ export default function landinPage() {
             </button>
           </li>
           <li>
-            <button className="w-[112px] h-[46px] border-primary border-2 text-primary rounded-lg
+            <button className="w-[112px] h-[46px] border-primary-500 border-2 text-primary-500 rounded-lg
             hover:bg-[#FFEADF] transition-all duration-500 ease-in-out">
               <Link href="/sign-in">
                 Log in
@@ -76,7 +76,7 @@ export default function landinPage() {
           </p>
           <ul className="btm flex items-center gap-8 mt-5 font-bold">
             <li>
-              <button className="w-[112px] h-[46px]  bg-primary text-white rounded-lg
+              <button className="w-[112px] h-[46px]  bg-primary-500 text-white rounded-lg
             hover:bg-[#D86300] transition-all duration-500 ease-in-out">
                 <Link href="/">
                   Explore
@@ -84,7 +84,7 @@ export default function landinPage() {
               </button>
             </li>
             <li>
-              <button className="w-[112px] h-[46px] bg-transparent border-primary text-primary border-2 rounded-lg
+              <button className="w-[112px] h-[46px] bg-transparent border-primary-500 text-primary-500 border-2 rounded-lg
             hover:bg-[#FFEADF] transition-all duration-500 ease-in-out">
                 <Link href="/">
                   Log in
@@ -199,7 +199,7 @@ export default function landinPage() {
           </p>
           <ul className="btm flex items-center gap-8 mt-5 font-bold pt-4">
             <li>
-              <button className="w-[112px] h-[46px]  bg-primary text-white rounded-lg
+              <button className="w-[112px] h-[46px]  bg-primary-500 text-white rounded-lg
             hover:bg-[#D86300] transition-all duration-500 ease-in-out">
                 <Link href="/sign-up">
                   Sign up
@@ -207,7 +207,7 @@ export default function landinPage() {
               </button>
             </li>
             <li>
-              <button className="w-[112px] h-[46px] border-primary text-primary border-2 rounded-lg
+              <button className="w-[112px] h-[46px] border-primary-500 text-primary-500 border-2 rounded-lg
             hover:bg-[#FFEADF] transition-all duration-300 ease-in-out">
                 <Link href="/sign-in">
                   Log in
@@ -285,7 +285,7 @@ export default function landinPage() {
           <p className="text-gray-700 text-[15px] py-6">
             Reach out to our support team anytime.
           </p>
-          <button className="w-[112px] h-[46px] border-primary text-primary border-2 rounded-lg 
+          <button className="w-[112px] h-[46px] border-primary-500 text-primary-500 border-2 rounded-lg 
           hover:bg-[#FFEADF] transition-all duration-300 ease-in-out">
             <Link href="/">
               Contact
@@ -301,22 +301,22 @@ export default function landinPage() {
           </div>
           <div className="list">
             <ul className="flex items-center gap-8 font-bold mx-8">
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="#community" >
                   Community
                 </Link>
               </li>
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="#features" >
                   Order
                 </Link>
               </li>
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="#footer" >
                   Contact
                 </Link>
               </li>
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="/" >
                   Get Start
                 </Link>
@@ -354,17 +354,17 @@ export default function landinPage() {
           </div>
           <div className="list">
             <ul className="flex items-center gap-8 font-bold mx-8 justify-end">
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="/" >
                   Privacy Policy
                 </Link>
               </li>
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="/" >
                   Terms of services
                 </Link>
               </li>
-              <li className="hover:text-primary transition-colors duration-200 ease-in-out ">
+              <li className="hover:text-primary-500 transition-colors duration-200 ease-in-out ">
                 <Link href="/" >
                   Cookie settings
                 </Link>
