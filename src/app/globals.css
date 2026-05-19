@@ -13,6 +13,7 @@
     --primary: 24.6 95% 53.1%;
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 60 4.8% 95.9%;
+    --secondary-orange: #FFEADF;
     --secondary-foreground: 24 9.8% 10%;
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%;
@@ -30,7 +31,15 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
-
+  html, body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100vw;
+    scroll-behavior: smooth;
+  }
+  
   .dark {
     --background: 20 14.3% 4.1%;
     --foreground: 60 9.1% 97.8%;
