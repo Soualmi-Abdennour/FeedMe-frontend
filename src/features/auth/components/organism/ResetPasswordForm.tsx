@@ -61,7 +61,7 @@ function ResetPasswordForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-2'
+            className='flex flex-col gap-7 py-10'
         >
             {RESET_PASSWORD_FIELDS.map((formField) => (
                 <div key={formField.name}>
@@ -69,6 +69,7 @@ function ResetPasswordForm() {
                 </div>
             ))}
             <SubmitButton
+                className='text-white font-bold '
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
