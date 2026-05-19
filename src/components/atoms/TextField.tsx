@@ -26,7 +26,7 @@ function TextField({
             errors[name] && "border-fail-500 shadow-fail-400 hover:border-fail-500 focus-within:ring-fail-300" ,
             disabled && "border-neutral-200 bg-neutral-100 cursor-not-allowed opacity-60 pointer-events-none",
         )}>
-            <FieldLabel className="text-neutral-500 inp">{label}</FieldLabel>
+            <FieldLabel className="text-neutral-500">{label}</FieldLabel>
             <Controller
                 name={name}
                 control={control}

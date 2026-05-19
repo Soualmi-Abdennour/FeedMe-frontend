@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChefHat, Share2, Video, MessageSquareMore } from 'lucide-react'
 
+
 export default function landinPage() {
   return (
     <div className="landing-container  w-full min-h-screen  scroll-smooth">

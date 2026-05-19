@@ -53,7 +53,7 @@ function SignupForm({className}: SignupFormProps) {
     return (
         <form 
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col max-[320px] gap-7 mx-auto'
+            className='max-w-[320px] mx-auto flex flex-col gap-7'
         >
             {SIGN_UP_FIELDS.map((formField)=>(
                 <div key={formField.name}>

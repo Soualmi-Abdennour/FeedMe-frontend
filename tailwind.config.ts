@@ -11,9 +11,9 @@ const config: Config = {
   theme: {
   	extend: {
   		backgroundImage: {
-            "auth-gradient": 'linear-gradient(243.18deg, #FFF5F0 10%, #FFD8C2 50%, #FFF5F0 100%)',
-  		    'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-  		    'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+			"auth-gradient": 'linear-gradient(243.18deg, #FFF5F0 10%, #FFD8C2 50%, #FFF5F0 100%)',
+  			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+  			'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -115,6 +115,7 @@ const config: Config = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
+		
   		},
 		spacing:{
 			"1":  "4px",
@@ -139,8 +140,8 @@ const config: Config = {
 			"20": "80px",
 		},
 		boxShadow:{
-            1: '0px 4px 25px 0px theme("colors.neutral.900")',        
-}
+			1: '0px 4px 25px 0px theme("colors.neutral.900")',
+		}
     },
   },
   plugins: [require("tailwindcss-animate")],

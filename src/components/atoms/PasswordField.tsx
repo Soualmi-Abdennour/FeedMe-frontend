@@ -62,7 +62,7 @@ function PasswordField({
                     className={` p-0 `}
                 >
                     {showPassword ? (
-                        <EyeClosed className="flex justify-end"></EyeClosed>
+                        <EyeClosed className="size-10" size={40}></EyeClosed>
                     ) : (
                         <Eye className='size-10' size={40}></Eye>
                     )}

@@ -5,10 +5,12 @@ import Image from 'next/image'
 
 function SignupPage() {
     return (
-        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5    ">
-            <div className='size-17 bg-orange-500 rounded-md mx-auto'></div>
+        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5">
+            <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto'>
+                <h4 className='text-white'>FeedMe</h4>
+            </div>
             <div 
-                className="relative shadow-1 py-8 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                className="relative shadow-1 pt-8 pb-13 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
                 <Image
                     src={'auth/bck-form.svg'}
                     fill

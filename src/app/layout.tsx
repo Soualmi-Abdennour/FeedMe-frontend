@@ -4,9 +4,7 @@ import { Inter } from 'next/font/google'
 // @ts-ignore 
 import "./globals.css"
 import StoreProvider from './StoreProvider'
-import RouteGuardProvider from './RouteGuardProvider'
 import { Toaster } from '@/components/ui/sonner'
-import Image from 'next/image'
 import { cn } from '@/utils/shadcn.utils'
 
 
