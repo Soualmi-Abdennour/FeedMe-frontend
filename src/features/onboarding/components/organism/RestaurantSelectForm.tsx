@@ -37,7 +37,7 @@ function RestaurantSelectForm() {
     return (
         <div className="py-10 flex flex-col gap-15 ">
             <SelectArea
-                areaTitle="I want to"
+                areaTitle="Usage Goal"
                 selectedItemsList={kitchenCategory}
                 itemsList={KITCHEN_CATEGORY.map(item => item.value)}
                 handleSelect={(value) => toggleValue(value, setKitchenCategory)}

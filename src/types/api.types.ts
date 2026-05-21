@@ -45,3 +45,16 @@ export type editProfileCredientials ={
     endpoint:"user"|"restaurant"
     profile: Partial<NormalUserProfileAppModel | RestaurantUserProfileAppModel>
 }
+export type editAccountCredientials={
+    userName:string
+    email:string
+    newPassword:string
+    newPasswordConfirm:string
+    currentPassword:string
+}
+
+
+export type deactivateAccountCredentials = {
+    endpoint: "user" | "restaurant"
+}
+

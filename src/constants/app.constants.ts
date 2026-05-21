@@ -1,3 +1,56 @@
+import {
+    BookOpen,
+    MessageCircleQuestion,
+    Filter,
+    PlusCircle,
+    Globe,
+    Settings,
+} from "lucide-react";
+
+export const APP_NAVIGATION_ITEMS = [
+    {
+        label: "Publication",
+        path: "/publication",
+        icon: BookOpen,
+    },
+    {
+        label: "A & Q",
+        path: "/a-and-q",
+        icon: MessageCircleQuestion,
+    },
+    {
+        label: "Filtering",
+        path: "/filtering",
+        icon: Filter,
+    },
+    {
+        label: "Studio",
+        path: "/studio",
+        icon: PlusCircle,
+    },
+    {
+        label: "Profile",
+        path: "/profile",
+        icon: Globe,
+    },
+    {
+        label: "Setting",
+        path: "/settings/edit-profile",
+        icon: Settings,
+    },
+];
+
+
+export const SETTINGS_NAVIGATION_ITEMS = [
+    {
+        label: "Edit Profile",
+        path: "/settings/edit-profile",
+    },
+    {
+        label: "Edit Account",
+        path: "/settings/edit-account",
+    },
+];
 
 // Usage Goals
 export const USAGE_GOAL = [

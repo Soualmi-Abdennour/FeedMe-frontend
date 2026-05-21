@@ -14,8 +14,31 @@ export const userApiSlice=fetchAPI.injectEndpoints({
                 method:"PATCH",
                 body:{profile}
             })
-        })
-})
+        }),
+        updateAccount: build.mutation<UserResponse,any>({
+            query:(profile)=>({
+                url: `/profile/edit-account`,
+                method:"PATCH",
+                body:profile
+            })
+        }),
+
+        // deactivateAccount: build.mutation<UserResponse, deactivateAccountCredentials>({
+        //     query: ({ endpoint }) => ({
+        //         url: `/profile/${endpoint}/deactivate`,
+        //         method: "PATCH",
+        //     })
+        // }),
+
+
+        deleteAccount: build.mutation<UserResponse, null>({
+            query: () => ({
+                url: `/profile/delete-account`,
+                method: "DELETE",
+            })
+        }),
+    })
 })
 
-export const { useUpdateProfileMutation } = userApiSlice
+
+export const {useUpdateAccountMutation, useUpdateProfileMutation,useDeleteAccountMutation,} = userApiSlice

@@ -39,7 +39,7 @@ function EditInformationForm<FormSchema extends z.ZodType>({
         mode: "onChange",
         defaultValues
     })
-    const onSubmit = async (formData: z.infer<FormSchema>) => {
+    const onSubmit = async (formData: z.infer<FormSchema>) => {        
         const fetchResponse = await updateProfile({
             endpoint,
             profile: {
@@ -67,8 +67,8 @@ function EditInformationForm<FormSchema extends z.ZodType>({
         }
     }
     return (
-        <div className='flex flex-col bg-white min-w-[1000px] m-auto gap-10 p-3 rounded-lg shadow-black-500 shadow-lg'>
-            <div className='flex justify-between items-center gap-7 mx-5'>
+        <div className='flex flex-col bg-white min-w-[1000px] m-auto gap-10 p-3 rounded-lg shadow-black-500 shadow-lg pb-5'>
+            <div className='flex justify-between items-center gap-7 mx-5 '>
                 <h3 className='text-xl pt-2'>Basic Information</h3>
                 <Button
                 className=' justify-end text-white font-bold'

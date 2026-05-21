@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 import { UserResponse } from "./api.types";
 import { WeekDay } from "./app.types";
 
@@ -67,4 +68,12 @@ export type VerificationProcessState = {
         dispalyMessage: string;
         buttonMessage: string;
     }
+}
+
+
+export interface IAppNavItemProps {
+    path: string
+    label: string
+    icon?: LucideIcon
+    isActive: boolean
 }

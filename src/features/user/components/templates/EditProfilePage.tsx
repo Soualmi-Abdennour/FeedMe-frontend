@@ -5,15 +5,12 @@ import { useAppSelector } from '@/store/base.store'
 import RestaurantUserEditProfilePage from '../organism/RestaurantUserEditProfile'
 import { UserAppModel } from '../../types/user.types'
 
-interface Props { }
 
-function EditProfilePage(props: Props) {
+function EditProfilePage() {
     
     const {user}=useAppSelector(state=>state.user)
     
-    if(!user?.profile) return (
-        <h1>Fuck js</h1>
-    )
+   
         
     return (
         <main>

@@ -17,7 +17,7 @@ function RestaurantUserEditProfilePage() {
     const { profile } = useAppSelector(state => state.user.user!)
     const { restaurantBasicInformation, restaurantDetails, restaurantLocationAndContact, restaurantServices } = profile as RestaurantUserProfileAppModel
     return (
-        <div className='flex flex-col gap-10 mx-10 mt-10'>
+        <div className='flex flex-col gap-10 mx-10'>
             <EditInformationForm
                 endpoint={"restaurant"}
                 fieldToUpdate={"restaurantBasicInformation"}

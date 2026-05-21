@@ -2,8 +2,6 @@ import { ChefHat, MessageSquareMore, Share2, Video } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-
-
 export default function landinPage() {
   return (
     <div className="landing-container  w-full min-h-screen  scroll-smooth">
@@ -376,20 +374,6 @@ export default function landinPage() {
         </div>
       </div>
     </div>
-
-
-
-    // <div>
-      // <VerificationProcess verificationMessages={VERIFY_PASSWORD_MESSAGES}/>
-    // <ResetPasswordPage></ResetPasswordPage>
-    // </div>
-    // <OnboardingProcessPage></OnboardingProcessPage>
-    // <NormalUserOnboardingProcess></NormalUserOnboardingProcess>
-<<<<<<< HEAD
-=======
-    // <NormalUserEditProfilePage></NormalUserEditProfilePage>
-    <RestaurantUserEditProfilePage></RestaurantUserEditProfilePage>
->>>>>>> style-update-profile
   )
 }
 
