@@ -18,7 +18,7 @@ export const authApiSlice=fetchAPI.injectEndpoints({
                 url:"authentication/sign-up",
                 method:"POST",
                 body: signupCredientials
-            })
+            }),
         }),
         signin:build.mutation<UserResponse,ISigninForm>({
             query:(signinCredientials)=>({

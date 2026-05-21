@@ -18,7 +18,7 @@ function TextAreaField({
 }: IFormField) {    
     return (
         <>
-            <FieldLabel>{label}</FieldLabel>
+            <FieldLabel className=' pb-3'>{label}</FieldLabel>
             <Controller
                 name={name}
                 control={control}

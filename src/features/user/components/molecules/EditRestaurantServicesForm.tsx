@@ -13,6 +13,7 @@ import { UserResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 import { mapUserDbToAppModel } from '../../utils/user.utils'
 import { setUser } from '../../store/user.slice'
+import {RefreshCcw} from 'lucide-react'
 
 
 function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUserProfileAppModel["restaurantServices"]}) {
@@ -44,8 +45,6 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         if (error) {
-            console.log(error);
-
             const errorResponse = error.data as UserResponse
             if (errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
@@ -55,34 +54,35 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
             }
         }
         else {
-            const successResponseData = successResponse.data
-            console.log(successResponseData);
-            
+            const successResponseData = successResponse.data            
             toast.success(successResponse.message)            
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            setEnableEdit(false)
         }
     }
     return (
-        <div>
-            <div className='flex justify-between '>
-                <h3>Restaurant Services</h3>
+        <div className='flex flex-col bg-white w-[1000px] m-auto gap-7 p-3 rounded-lg shadow-black-500 shadow-lg'>
+            <div className='flex justify-between items-center mb-7 mx-7'>
+                <h3 className='text-xl'>Restaurant Services</h3>
                 <Button
+                className='text-white font-bold'
                     onClick={() => {
                         setRestaurantServices(defaultValues)
                         setEnableEdit(state => !state)
                     }}
                 >{enableEdit ? "Cancel" : "Edit"}</Button>
             </div>            
-            <div className='flex flex-col  gap-10'>
+            <div className='flex flex-col  gap-5 mx-10'>
                 {RESTAURANT_SERVICES.map((service) => (
                     <div className='flex items-center justify-between' key={service.key}>
-                        <h1 className='flex-1'>{service.value}</h1>
+                        <h1 className='flex-1 pl-5 text-xl font-medium'>{service.value}</h1>
                         <div className='flex gap-5'>
                             {[...Array.from(["YES", "NO"])].map((item) => (
                                 <Button
+                                    variant='ghost'
                                     key={item}
                                     disabled={!enableEdit}
-                                    className={cn(restaurantServices[service.key] === item ? "bg-primary text-white" : "text-black bg-secondary hover:text-white")}
+                                    className={cn(restaurantServices[service.key] === item ? "bg-primary-500 text-white font-bold border border-primary-500" : "text-black font-bold  border-2 border-primary-500")}
                                     onClick={() => {
                                         setRestaurantServices(state => ({
                                             ...state,
@@ -96,7 +96,7 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
                 ))}
             </div>
             {enableEdit && (
-                <div className='flex gap-2'>
+                <div className='flex gap-2 text-white font-bold'>
                     <SubmitButton
                         className=""
                         onClick={onSubmit}
@@ -109,6 +109,7 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
                         onClick={() => setRestaurantServices(defaultValues)}
                     >
                         Reset
+                        <RefreshCcw></RefreshCcw>
                     </Button>
                 </div>
             )}

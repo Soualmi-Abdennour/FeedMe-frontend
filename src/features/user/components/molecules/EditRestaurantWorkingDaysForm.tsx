@@ -17,6 +17,7 @@ import { useUpdateProfileMutation } from '../../store/user.api.slice'
 import { toast } from 'sonner'
 import { mapUserDbToAppModel } from '../../utils/user.utils'
 import { setUser } from '../../store/user.slice'
+import { RefreshCcw } from 'lucide-react'
 
 interface Props {
     defaultValues: WorkingDay[]
@@ -90,23 +91,27 @@ function EditRestaurantWorkingDaysForm({ defaultValues }: Props) {
             const successResponseData = successResponse.data
             toast.success(successResponse.message)
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            setEnableEdit(false)
+
         }
     }
     return (
-        <div className='p-3 rounded-lg border-2 border-primary'>
-            <div className='flex justify-between '>
-                <h3>Working Days</h3>
+        <div className='flex flex-col bg-white w-[1000px] m-auto gap-3 p-3 rounded-lg shadow-black-500 shadow-lg'>
+            <div className='flex justify-between pb-7 items-center mx-7'>
+                <h3 className='text-xl '>Working Days</h3>
                 <Button
+                    variant='primary'
+                    className='text-white font-bold'
                     onClick={() => {
                         setSelectedDays(shallowWorkingDays)
                         setEnableEdit(state => !state)
                     }}
                 >{enableEdit ? "Cancel" : "Edit"}</Button>
             </div>
-            <form className='flex flex-col gap-6' onSubmit={handleSubmit((formData) => onSubmit(formData))}>
-                <div className='flex flex-col gap-3'>
+            <form className='flex flex-col gap-3' onSubmit={handleSubmit((formData) => onSubmit(formData))}>
+                <div className='flex flex-col gap-3 mx-10'>
                     {renderFields().map((dayField) =>
-                        <div key={dayField.day}>
+                        <div key={dayField.day} >
                             <WorkingDayField
                                 disabled={!enableEdit}
                                 {...dayField}
@@ -123,10 +128,10 @@ function EditRestaurantWorkingDaysForm({ defaultValues }: Props) {
                     )}
                 </div>
                 {enableEdit && (
-                    <div className='flex gap-2'>
+                    <div className='flex gap-2 text-white font-bold'>
                         <SubmitButton
                             className=""
-                            // disabled={!isValid || selectedDays.length === 0 || selectedDays.every(value => shallowWorkingDays.includes(value))}
+                        // disabled={!isValid || selectedDays.length === 0 || selectedDays.every(value => shallowWorkingDays.includes(value))}
                         >
                             update
                         </SubmitButton>
@@ -136,6 +141,7 @@ function EditRestaurantWorkingDaysForm({ defaultValues }: Props) {
                             type='button'
                         >
                             Reset
+                            <RefreshCcw></RefreshCcw>
                         </Button>
                     </div>
                 )}

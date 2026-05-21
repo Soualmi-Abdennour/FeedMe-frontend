@@ -385,6 +385,11 @@ export default function landinPage() {
     // </div>
     // <OnboardingProcessPage></OnboardingProcessPage>
     // <NormalUserOnboardingProcess></NormalUserOnboardingProcess>
+<<<<<<< HEAD
+=======
+    // <NormalUserEditProfilePage></NormalUserEditProfilePage>
+    <RestaurantUserEditProfilePage></RestaurantUserEditProfilePage>
+>>>>>>> style-update-profile
   )
 }
 

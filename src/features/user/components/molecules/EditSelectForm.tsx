@@ -15,6 +15,7 @@ import { UserResponse } from "@/types/api.types"
 import { toast } from "sonner"
 import { mapUserDbToAppModel } from "../../utils/user.utils"
 import { setUser } from "../../store/user.slice"
+import {RefreshCcw} from 'lucide-react'
 
 function EditSelectForm<T>({
     sectionTitle,
@@ -25,15 +26,10 @@ function EditSelectForm<T>({
 }: IEditSelectFormProps<T>) {
     const dispatch = useAppDispatch()
     const [updateProfile] = useUpdateProfileMutation()
+    const [selectedValues, setSelectedValues] = useState<T[]>(defaultValues)
+    const [enableEdit, setEnableEdit] = useState<boolean>(false)
 
     const onSubmit = async (formData: T[]) => {
-        console.log({
-            profile: {
-                [fieldToUpdate[0]]: {
-                    [fieldToUpdate[1]]: formData
-                }
-            }
-        });
         const fetchResponse = await updateProfile({
             endpoint,
             profile: {
@@ -56,25 +52,27 @@ function EditSelectForm<T>({
         else {
 
             const successResponseData = successResponse.data
-            console.log(successResponseData);
             toast.success(successResponse.message)
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            setEnableEdit(false)
+
         }
     }
-    const [selectedValues, setSelectedValues] = useState<T[]>(defaultValues)
-    const [enableEdit, setEnableEdit] = useState<boolean>(false)
+    
     return (
-        <div className='p-3 rounded-lg border-2 border-primary'>
-            <div className='flex justify-between '>
-                <h3>{sectionTitle}</h3>
+        <div className='flex flex-col bg-white w-[1000px] m-auto gap-3 p-3 rounded-lg shadow-black-500 shadow-lg'>
+            <div className='flex justify-between items-center'>
+                <h3 className="text-xl">{sectionTitle}</h3>
                 <Button
+                className="text-white font-bold"
+                variant='primary'
                     onClick={() => {
                         setSelectedValues(defaultValues)
                         setEnableEdit(state => !state)
                     }}
                 >{enableEdit ? "Cancel" : "Edit"}</Button>
             </div>
-            <div className="py-10 flex flex-col gap-5">
+            <div className="py-5 flex flex-col gap-10">
                 <SelectArea
                     areaTitle={sectionTitle}
                     selectedItemsList={selectedValues}
@@ -85,7 +83,7 @@ function EditSelectForm<T>({
                     }}
                 ></SelectArea>
                 {enableEdit && (
-                    <div className='flex gap-2'>
+                    <div className='flex gap-2 text-white font-bold'>
                         <SubmitButton
                             className=""
                             onClick={() => onSubmit(selectedValues)}
@@ -98,6 +96,7 @@ function EditSelectForm<T>({
                             onClick={() => setSelectedValues(defaultValues)}
                         >
                             Reset
+                            <RefreshCcw></RefreshCcw>
                         </Button>
                     </div>
                 )}
