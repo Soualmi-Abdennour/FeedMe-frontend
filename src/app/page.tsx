@@ -1,6 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { ChefHat, Share2, Video, MessageSquareMore } from 'lucide-react'
+import { ChefHat, MessageSquareMore, Share2, Video } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+
 
 
 export default function landinPage() {
@@ -375,5 +376,17 @@ export default function landinPage() {
         </div>
       </div>
     </div>
+
+
+
+    // <div>
+      // <VerificationProcess verificationMessages={VERIFY_PASSWORD_MESSAGES}/>
+    // <ResetPasswordPage></ResetPasswordPage>
+    // </div>
+    // <OnboardingProcessPage></OnboardingProcessPage>
+    // <NormalUserOnboardingProcess></NormalUserOnboardingProcess>
   )
 }
+
+
+

@@ -9,28 +9,26 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { INormalUserOnboardingForm, normalUserOnboardingFormSchema } from '../../schema/normalUserOnboarding.schema'
 import { setStep } from '../../store/onboarding.slice'
-import { NormalUserProfile, RestaurantUserProfile } from '@/features/user/types/user.types'
+import { NormalUserProfileAppModel, RestaurantUserProfileAppModel } from '@/features/user/types/user.types'
 import { z } from 'zod'
 
 
 type stepMetadataType={
     step:number,
-    correspondProfileField:keyof NormalUserProfile | keyof RestaurantUserProfile
+    correspondProfileField:keyof NormalUserProfileAppModel | keyof RestaurantUserProfileAppModel
 }
 
 function InformationForm<TSchema extends z.ZodType>({
     formFields,
     validationSchema,
     defaultValues,
-    stepMetadata
+    stepMetadata,
 }: {
     defaultValues: z.infer<TSchema>;
     validationSchema: TSchema;
     stepMetadata: stepMetadataType
     formFields: Omit<IFormField, "errors" | "control">[];
 }) {
-
-    console.log(defaultValues);
     
     const dispatch = useAppDispatch()
     const {
@@ -60,6 +58,7 @@ function InformationForm<TSchema extends z.ZodType>({
                 </div>))}
             <SubmitButton
                 disabled={isSubmitting}
+                className="w-full mt-13"
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting ? "Loading..." : "Continue"}

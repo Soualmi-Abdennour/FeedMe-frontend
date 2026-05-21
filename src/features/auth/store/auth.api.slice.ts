@@ -51,4 +51,4 @@ export const authApiSlice=fetchAPI.injectEndpoints({
     })
 })
 
-export const {useSingupMutation,useSigninMutation,useVerifyTokenQuery,useSendVerificationEmailMutation,useResetPasswordMutation} =authApiSlice
+export const {useSingupMutation,useSigninMutation,useLazyVerifyTokenQuery,useSendVerificationEmailMutation,useResetPasswordMutation} =authApiSlice

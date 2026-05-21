@@ -1,47 +1,65 @@
 "use client"
-import VerificationProcess from '@/components/organism/VerificationProcess'
-import { setUser } from '@/features/user/store/user.slice'
-import { useAppDispatch, useAppSelector } from '@/store/base.store'
-import { useEffect } from 'react'
-import { SUBMIT_ONBOARDING_MESSAGES } from '../../constants/submitOnboarding.constants'
-import { useOnboardMutation } from '../../store/onboarding.api.slice'
+import { useAppSelector } from '@/store/base.store'
 import SelectOnboardingRole from '../molecules/SelectOnboardingRole'
-import NormalUserOnboardingProcess from '../organism/NormalUserOnboardingProcess'
-import RestaurantUserOnboardingProcess from '../organism/RestaurantUserOnboardingProcess'
+import SubmitOnboardingProcess from '../organism/SubmitOnboardingProcess'
+import NormalUserOnboardingProcess from './NormalUserOnboardingProcess'
+import RestaurantUserOnboardingProcess from './RestaurantUserOnboardingProcess'
+import Image from 'next/image'
 
 
 function OnboardingProcessPage() {
-    const [onboard, { data, isLoading }] = useOnboardMutation()
     const { onboarding } = useAppSelector(state => state.onboarding)
-    const { step, onboardingType } = onboarding
-    const dispatch = useAppDispatch()
-
-    const handleSubmit = async () => {
-        const {status,message,data:responseData} = await onboard({
-            role: onboarding.onboardingType!,
-            profile: onboarding.profile!
-        }).unwrap()
-        if (status==="SUCCESS")
-            dispatch(setUser(responseData?.user!))
-    }
-    useEffect(() => {
-        ((step === 3 && onboardingType === "USER") || (step === 5 && onboardingType === "RESTAURANT")) && handleSubmit()
-    }, [step, onboardingType])
-
-    if (onboardingType === null || step === 0)
+    if (!onboarding || onboarding.onboardingType==="GUEST" || onboarding?.step === 0)
         return <SelectOnboardingRole></SelectOnboardingRole>
-    if ((onboardingType === "RESTAURANT" && step === 5) || (onboardingType === "USER" && step === 3)) {
-        return <VerificationProcess verificationMessages={SUBMIT_ONBOARDING_MESSAGES} queryProps={{ data, isLoading, queryFn: handleSubmit }}></VerificationProcess>
+    if (onboarding?.isOnboardingCompleted) {                
+        return <SubmitOnboardingProcess></SubmitOnboardingProcess>
     }
+
     return (
-        <div>
-            {onboarding.onboardingType === "USER" ? (
-                <NormalUserOnboardingProcess></NormalUserOnboardingProcess>
+        <div className=''>
+            {onboarding?.onboardingType === "USER" ? (
+                <div className="w-fit pt-5 mx-auto max-w-[1026px] min-w-32 flex flex-col  gap-5">
+                <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto '>
+                <h4 className='text-white'>FeedMe</h4>
+            </div>
+                <div 
+                    className=" relative shadow-1 pt-8  pb-14 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                    <Image
+                        src={'auth/bck-form.svg'}
+                        fill
+                        alt='bck'
+                        className='absolute inset-0 object-cover top-0 left-0 -z-10  rounded-tl-[32px] rounded-br-[32px]'
+                    ></Image>
+                        <div className="min-w-[320px] text-center justify-center mx-auto">
+                        <h4>Basic information</h4>
+                        
+                        <NormalUserOnboardingProcess ></NormalUserOnboardingProcess>
+                    </div>
+                </div>
+        </div>
             ) : (
-                <RestaurantUserOnboardingProcess></RestaurantUserOnboardingProcess>
+                <div className="w-fit pt-5 mx-auto max-w-[1026px] min-w-32 flex flex-col  gap-5">
+                <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto '>
+                <h4 className='text-white'>FeedMe</h4>
+            </div>
+                <div 
+                            className="relative shadow-1 pt-8 pb-14 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                    <Image
+                        src={'auth/bck-form.svg'}
+                        fill
+                        alt='bck'
+                        className='absolute inset-0 object-cover top-0 left-0 -z-10  rounded-tl-[32px] rounded-br-[32px]'
+                    ></Image>
+                    <div className="text-center justify-center pb-10 mx-auto min-w-[320px]">
+                        <h4 className='pb-5'>Basic information</h4>                        
+                        <RestaurantUserOnboardingProcess ></RestaurantUserOnboardingProcess>
+                    </div>
+                </div>
+        </div>
             )}
         </div>
     )
 }
+
 
 export default OnboardingProcessPage

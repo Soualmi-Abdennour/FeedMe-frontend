@@ -11,6 +11,9 @@ import { IResetPasswordForm, resetPasswordFormSchema } from '../../schema/resetP
 import { useResetPasswordMutation } from '../../store/auth.api.slice'
 import { setAuthState } from '../../store/auth.slice'
 import { toast } from 'sonner'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { UserResponse } from '@/types/api.types'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 
 function ResetPasswordForm() {
@@ -35,24 +38,33 @@ function ResetPasswordForm() {
         }
     })
     const onSubmit = async (formData: IResetPasswordForm) => {
-        // to get data immediatly 
-        const {status,data:responseData,message} = await resetPassword({
+        const fetchResponse = await resetPassword({
             identifier: userInState?.email!,
             password: formData.password,
             passwordConfirm: formData.passwordConfirm
-        }).unwrap()
-        if(status==="FAIL"|| status==="ERROR") {
-            toast.error(message)
+        })
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
+
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            if (errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }        
         }
         else{
-            toast.success(message)
-            dispatch(setUser(responseData?.user!))
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
             reset()
-            if(!responseData?.user?.isVerified){
-                dispatch(setAuthState({jwtToken:responseData?.jwtToken!}))
+            if (!successResponseData?.user?.isVerified) {
                 router.replace("/verify-email")
+                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
             }
-            if (!responseData?.user?.isOnboardingCompleted)
+            if (!successResponseData?.user?.isOnboardingCompleted)
                 router.replace("/onboarding")
             else
                 router.replace("/home")
@@ -61,19 +73,20 @@ function ResetPasswordForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-7 py-10'
+            className='flex flex-col gap-10'
         >
             {RESET_PASSWORD_FIELDS.map((formField) => (
                 <div key={formField.name}>
-                    <FormField {...formField} control={control} errors={errors}></FormField>
+                    <FormField {...formField} control={control} errors={errors} ></FormField>
                 </div>
             ))}
             <SubmitButton
-                className='text-white font-bold '
+                className='text-white font-bold mt-8'
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
+                variant='primary'
             >
-                {isSubmitting ? "Loading..." : "Reset Password"}
+                {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
         </form>
     )

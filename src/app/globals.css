@@ -113,4 +113,18 @@
       line-height: normal;
       font-weight: 600;
     }
+     .select-container>button {
+       border: none !important;
+       outline: none !important;
+       box-shadow: none !important;
+     }
+  
+     .select-container>button:focus,
+     .select-container>button:focus-visible,
+     .select-container>button:focus-within,
+     .select-container>button:active {
+       border: none !important;
+       outline: none !important;
+       box-shadow: none !important;
+     }
   }

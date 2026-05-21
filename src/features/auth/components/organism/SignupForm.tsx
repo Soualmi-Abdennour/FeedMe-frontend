@@ -13,11 +13,16 @@ import { useSingupMutation } from '../../store/auth.api.slice'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { UserResponse } from '@/types/api.types'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 interface SignupFormProps {
     className?: string
 }
 function SignupForm({className}: SignupFormProps) {
+    console.log("fjsdoifdsh");
+    
     const router=useRouter()
     const [signup]=useSingupMutation()
     const dispatch=useDispatch()
@@ -40,16 +45,25 @@ function SignupForm({className}: SignupFormProps) {
         }
     })
     const onSubmit=async (formData:ISignupForm)=>{
-        const {status,data:responseData,message}=await signup(formData).unwrap()
+        const fetchResponse = await signup(formData)
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
 
-        if (status === "ERROR" || status === "FAIL") {   
-            toast.error(message)                     
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            if (errorResponse.status === "ERROR" ) {   
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }
         }
         else {
-                toast.success(message)
-                dispatch(setUser(responseData?.user!))
-                reset()
-                router.replace('/verify-email')
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
+            router.replace('/verify-email')
+            reset()
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         } 
     }
     return (
@@ -69,7 +83,7 @@ function SignupForm({className}: SignupFormProps) {
             >
                 {isSubmitting?"Loading...":"Continue"}
             </SubmitButton>
-            <Button variant="secondary" className='text-primary-500 font-bold'>
+            <Button variant="secondary" className='text-primary-500 font-bold' type='button'>
                 <Link href="/sign-in">Sign in</Link>
             </Button>
         </form>

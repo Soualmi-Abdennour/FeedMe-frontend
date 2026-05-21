@@ -1,19 +1,22 @@
-import { NormalUserProfile, RestaurantUserProfile, UserRole } from "@/features/user/types/user.types"
+import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserRole } from "@/features/user/types/user.types"
 
 export type ProfileByRole = {
-    USER: NormalUserProfile
-    RESTAURANT: RestaurantUserProfile
+    GUEST:null,
+    USER: NormalUserProfileAppModel
+    RESTAURANT: RestaurantUserProfileAppModel
     ADMIN:null
 }
 
 export type OnboardingStateModel ={
     step:number
-    onboardingType: UserRole| null
+    isOnboardingCompleted:boolean
+    onboardingType: UserRole
     profile: ProfileByRole[UserRole],
 }
 export type OnboardingStepPayloadModel={
     step:number;
+    isOnboardingCompleted?: boolean;
     onboardingType?:UserRole | null
-    values: Partial<NormalUserProfile> | Partial<RestaurantUserProfile>
+    values: Partial<NormalUserProfileAppModel> | Partial<RestaurantUserProfileAppModel>
 }
 

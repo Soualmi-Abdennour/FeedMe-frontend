@@ -1,20 +1,21 @@
 "use client"
 import SubmitButton from '@/components/atoms/SubmitButton'
 import FormField from '@/components/molecules/FormField'
+import { Button } from '@/components/ui/button'
+import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
+import { UserResponse } from '@/types/api.types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
+import { toast } from 'sonner'
 import { setUser } from '../../../user/store/user.slice'
 import { SIGN_IN_FIELDS } from '../../constants/signin.constants'
 import { ISigninForm, signinFormSchema } from '../../schema/signin.schema'
 import { useSigninMutation } from '../../store/auth.api.slice'
 import { setAuthState } from '../../store/auth.slice'
-import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import ForgetPasswordPage from '../templates/ForgetPasswordPage'
-import SignupPage from '../templates/SignupPage'
 
 
 function SigninForm() {
@@ -38,23 +39,33 @@ function SigninForm() {
         }
     })
     const onSubmit = async (formData: ISigninForm) => {
-        const { status, data: responseData, message } = await signin(formData).unwrap()
-
-
-        if (status === "ERROR" || status === "FAIL") {
-            toast.error(message)
+        const fetchResponse = await signin(formData)
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: UserResponse = fetchResponse.data as UserResponse
+        if (error) {
+            const errorResponse = error.data as UserResponse
+            if (errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }
         }
         else {
-            toast.success(message)
-            dispatch(setUser(responseData?.user!))
-            reset()
+            const successResponseData = successResponse.data
+            toast.success(successResponse.message)
 
-            if (!responseData?.user.isVerified) {
+            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            reset()
+            if (!successResponseData?.user.isVerified) {
                 router.replace('/verify-email')
             }
-            else if (!responseData.user.isOnboardingCompleted) {
-                dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
+            else if (!successResponseData.user.isOnboardingCompleted) {
+                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
                 router.replace("/onboarding")
+            } else {
+                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
+                router.replace("/home")
             }
         }
     }
@@ -80,7 +91,7 @@ function SigninForm() {
             >
                 {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
-            <Button variant="secondary" className='text-primary-500 font-bold'>
+            <Button variant="secondary" className='text-primary-500 font-bold' type='button'>
                 <Link href="/sign-up">Sign up</Link>
             </Button>
         </form>

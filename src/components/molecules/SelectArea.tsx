@@ -15,21 +15,21 @@ function SelectArea<T>({
 }) {
     return (
         <div>
-            <h1 className="text-2xl mt-4">{areaTitle}</h1>
-            <div className="flex gap-10 flex-wrap border border-gray-500 p-3 rounded-sm">
+            <h1 className="text-2xl mt-4 py-5 text-left">{areaTitle}</h1>
+            <div className="flex gap-5 flex-wrap justify-start text-2xl p-3 rounded-sm">
                 {itemsList.map((item) => (
-                    <div
+                    <button
                         key={String(item)}
                         className={cn(
-                            "rounded-md border-primary border px-3 py-2 cursor-pointer whitespace-nowrap",
+                            "rounded-md border-primary-500 text-2xl border px-3 py-2 cursor-pointer whitespace-nowrap",
                             selectedItemsList.includes(item)
-                                ? "bg-primary text-white"
+                                ? "bg-primary-500 text-white"
                                 : "text-black"
                         )}
                         onClick={()=>handleSelect(item)}
                     >
-                        <h2>{String(item)}</h2>
-                    </div>
+                        <p className='font-normal text-xl '>{String(item)}</p>
+                    </button>
                 ))}
             </div>
         </div>
