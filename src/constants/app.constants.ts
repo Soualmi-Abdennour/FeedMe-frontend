@@ -5,39 +5,31 @@ import {
     PlusCircle,
     Globe,
     Settings,
+    Store,
+    ChartArea,
 } from "lucide-react";
 
-export const APP_NAVIGATION_ITEMS = [
-    {
-        label: "Publication",
-        path: "/publication",
-        icon: BookOpen,
-    },
-    {
-        label: "A & Q",
-        path: "/a-and-q",
-        icon: MessageCircleQuestion,
-    },
-    {
-        label: "Filtering",
-        path: "/filtering",
-        icon: Filter,
-    },
-    {
-        label: "Studio",
-        path: "/studio",
-        icon: PlusCircle,
-    },
-    {
-        label: "Profile",
-        path: "/profile",
-        icon: Globe,
-    },
-    {
-        label: "Setting",
-        path: "/settings/edit-profile",
-        icon: Settings,
-    },
+const SHARED_START_ITEMS = [
+    { label: "Publication", path: "/publication", icon: BookOpen },
+    { label: "A & Q", path: "/a-and-q", icon: MessageCircleQuestion },
+];
+
+const SHARED_END_ITEMS = [
+    { label: "Studio", path: "/studio", icon: PlusCircle },
+    { label: "Profile", path: "/profile", icon: Globe },
+    { label: "Setting", path: "/settings/edit-profile", icon: Settings },
+];
+
+export const USER_APP_NAVIGATION_ITEMS = [
+    ...SHARED_START_ITEMS,
+    { label: "Shop", path: "/shop", icon: Store },
+    ...SHARED_END_ITEMS,
+];
+
+export const RESTAURANT_APP_NAVIGATION_ITEMS = [
+    ...SHARED_START_ITEMS,
+    { label: "Dashboard", path: "/dashboard/order-management", icon: ChartArea },
+    ...SHARED_END_ITEMS,
 ];
 
 
@@ -149,3 +141,6 @@ export const RESTAURANT_SERVICES = [
     { key: "takeAway", value: "Special customer service" },
     { key: "parkAvailability", value: "Park Availability" }
 ] as const
+
+
+

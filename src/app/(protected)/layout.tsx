@@ -12,7 +12,7 @@ function ProtectedLayout({
     return (
         <main className={cn(' min-h-screen  relative')}>
             <AppSidebar></AppSidebar>
-            <div className='pl-16'>
+            <div className='pl-16 bg-primary-50'>
                 {children}
             </div>
         </main>

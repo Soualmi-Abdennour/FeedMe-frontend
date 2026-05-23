@@ -1,19 +1,21 @@
 "use client"
-import { APP_NAVIGATION_ITEMS } from "@/constants/app.constants";
+import {  RESTAURANT_APP_NAVIGATION_ITEMS, USER_APP_NAVIGATION_ITEMS } from "@/constants/app.constants";
 import { usePathname } from "next/navigation";
 import AppNavItem from "../molecules/AppNavItem";
 import { LogOut } from "lucide-react";
+import { useAppSelector } from "@/store/base.store";
 
 function AppSidebar() {
     const pathName = usePathname()
-
+    const {user}=useAppSelector(state=>state.user)
+    const NAV_ITEMS=user?.role==="USER" ?USER_APP_NAVIGATION_ITEMS : RESTAURANT_APP_NAVIGATION_ITEMS
     const handleLogout = () => {
         // handle logout logic
     }
 
     return (
         <aside className="
-            absolute z-0
+            absolute z-50
             group/sidebar
             h-screen bg-white border-r border-gray-200
             flex flex-col
@@ -30,7 +32,7 @@ function AppSidebar() {
                 {/* Navigation Items */}
                 <nav className="px-2">
                     <div className="flex flex-col space-y-1">
-                        {APP_NAVIGATION_ITEMS.map((item) => (
+                        {NAV_ITEMS.map((item) => (
                             <AppNavItem
                                 key={item.label}
                                 path={item.path}

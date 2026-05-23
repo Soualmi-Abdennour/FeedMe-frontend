@@ -58,7 +58,7 @@ function SelectField({
                             >
                                 {selectList?.map((selectItem) => (
                                     <SelectItem
-                                        key={selectItem.key}
+                                        key={selectItem.label}
                                         value={selectItem.value}
                                     >
                                         {selectItem.value}

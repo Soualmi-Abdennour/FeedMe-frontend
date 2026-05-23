@@ -1,3 +1,4 @@
+import { PostAppModel, PostDbModel } from "@/features/studio-and-publication/types/studio.types";
 import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserDbModel, UserRole } from "@/features/user/types/user.types";
 
 export type ApiStatus = "SUCCESS" | "FAIL" | "ERROR";
@@ -5,6 +6,12 @@ export type ApiStatus = "SUCCESS" | "FAIL" | "ERROR";
 export type UserResponseData={
     user:UserDbModel;
     jwtToken?:string
+}
+export type PostResponseData = {
+    posts: PostDbModel[]
+}
+export type SinglePostResponseData = {
+    post: PostDbModel
 }
 export type ApiError={
     field?:string;
@@ -19,6 +26,8 @@ export type ApiResponse<T> = {
 
 
 export type UserResponse=ApiResponse<UserResponseData|null>
+export type PostResponse = ApiResponse<PostResponseData | null>
+export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
 export type SendVerificationResponse=ApiResponse<null|UserResponseData>
 export type VerificationResponse=ApiResponse<null |UserResponseData>
 

@@ -65,7 +65,7 @@ function SigninForm() {
                 router.replace("/onboarding")
             } else {
                 dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
-                router.replace("/home")
+                router.replace("/publication")
             }
         }
     }

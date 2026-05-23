@@ -47,7 +47,7 @@ function VerifyEmailTokenPage() {
         if (!successResponseData?.user?.isOnboardingCompleted)
             router.replace("/onboarding")
         else
-            router.replace("/home")
+            router.replace("/publication")
     }
     const onFailFn = () => {
         router.replace("/sign-up")

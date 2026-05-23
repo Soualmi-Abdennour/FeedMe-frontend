@@ -16,7 +16,7 @@ export interface IFormField {
         |"textArea"
         | "time";
     selectList?:readonly {
-        key:string;
+        label:string;
         value:string
     }[]
     errors: any,
