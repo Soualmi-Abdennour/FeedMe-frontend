@@ -5,6 +5,9 @@ import {
     PlusCircle,
     Globe,
     Settings,
+    LayoutDashboard,
+    ClipboardList,
+    Package
 } from "lucide-react";
 
 
@@ -118,6 +121,24 @@ export const APP_NAVIGATION_ITEMS = [
         label: "A & Q",
         path: "/a-and-q",
         icon: MessageCircleQuestion,
+    },
+    {
+        label: "Dashboard",
+        path: "/dashboard",
+        icon: LayoutDashboard,
+        roles: ["RESTAURANT"], 
+        children: [
+            {
+            label: "Order Management",
+            path: "dashboard/order-management",
+            icon: ClipboardList,
+            },
+            {
+            label: "Product Management",
+            path: "dashboard/product-management",
+            icon: Package,
+            },
+        ],
     },
     {
         label: "Filtering",

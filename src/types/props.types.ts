@@ -67,9 +67,17 @@ export type VerificationProcessState = {
     }
 }
 
+export interface INavChild {
+    label: string;
+    path: string;
+    icon: LucideIcon;
+}
+
 export interface IAppNavItemProps {
     path:string
     label:string
     icon: LucideIcon
     isActive:boolean
+    roles?: string[];
+    children?: INavChild[];
 }
