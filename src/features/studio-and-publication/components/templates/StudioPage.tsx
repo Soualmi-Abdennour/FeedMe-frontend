@@ -25,13 +25,14 @@ function StudioPage() {
     const posts = data?.data?.posts ?? []
 
     return (
-        <div className='relative z-0 w-full h-screen py-24 px-32'>
-            <header className='flex items-center justify-between'>
-                <Button 
-                    variant={"secondary"}
-                    className='text-primary-500 font-bold text-lg '
-                    onClick={() => setOpenCreatePostForm(true)}>
-                    <Plus size={26} className='font-bold'></Plus>
+        <div className='relative z-0 w-full px-32 py-24 h-screen'>
+            <header className='flex justify-between max-h-[56px] items-center  '>
+                <Button
+                    onClick={() => setOpenCreatePostForm(true)}
+                    variant='secondary'
+                    className='text-primary-500 font-bold '
+                >
+                    <Plus size={26}></Plus>
                     Create Post
                 </Button>
                 <DropdownSelect
@@ -47,7 +48,7 @@ function StudioPage() {
                     }}
                 />
             </header>
-            <div className='mt-10'>
+            <div className='mt-10 h-full  overflow-y-auto'>
             {isLoading && (
                 <p className="text-center mt-10 text-gray-400">Loading ...</p>
             )}
@@ -56,7 +57,7 @@ function StudioPage() {
             )}
 
             {!isLoading && !isError && (
-                <div className='grid grid-cols-3 gap-3 w-full overflow-y-auto h-full'>
+                <div className='grid grid-cols-3 gap-3  '>
                     {posts
                         .filter(({ mediaType }) => filterOptions.includes(mediaType as PostMediaType))
                         .map(({ mediaType, media, id }) => (

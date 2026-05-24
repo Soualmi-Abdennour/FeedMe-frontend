@@ -9,7 +9,7 @@ function AppNavItem({ path, label, icon: Icon, isActive }: IAppNavItemProps) {
                 transition-all duration-200 ease-in-out cursor-pointer
                 ${isActive
                     ? 'bg-primary-400 text-white shadow-md'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    : `text-gray-600 hover:bg-gray-100 hover:text-gray-900 ${!Icon && "border - 2 border-primary-500" } `
                 }
             `}>
                 {Icon && <Icon size={20} className="shrink-0" />}

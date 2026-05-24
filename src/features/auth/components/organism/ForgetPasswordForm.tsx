@@ -47,7 +47,6 @@ function ForgetPasswordForm() {
             else {
                 toast.error(errorResponse.message)
             }
-        // }
         }
         else{
             const successResponseData = successResponse.data

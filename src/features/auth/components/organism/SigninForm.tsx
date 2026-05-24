@@ -42,7 +42,7 @@ function SigninForm() {
         const fetchResponse = await signin(formData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
-        if (error) {
+        if (error) {            
             const errorResponse = error.data as UserResponse
             if (errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")

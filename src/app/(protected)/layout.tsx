@@ -10,9 +10,9 @@ function ProtectedLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={cn(' min-h-screen  relative')}>
+        <main className={cn(' min-h-screen  relative ')}>
             <AppSidebar></AppSidebar>
-            <div className='pl-16 bg-primary-50'>
+            <div className='pl-16 bg-primary-50 h-screen'>
                 {children}
             </div>
         </main>

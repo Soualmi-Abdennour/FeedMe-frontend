@@ -9,7 +9,6 @@ import { Image as ImageIcon } from "lucide-react"
 
 function PostPreview({ media, postId, mediaType }: IPostPreviewProps) {
     const [showList, setShowList] = useState<boolean>(false)
-    console.log(media[0].previewUrl);
     
 
     return (
@@ -22,26 +21,26 @@ function PostPreview({ media, postId, mediaType }: IPostPreviewProps) {
             </button>
 
             {showList && (
-                <div className='flex flex-col gap-1 absolute top-2 right-10 z-10'>
+                <div className='flex flex-col gap-1 justify-center absolute top-3 right-16 z-10'>
                     <Link href={`/studio?action=edit&id=${postId}`}>
-                        <Button className='w-full' size="sm">Edit</Button>
+                        <Button className='w-full m-1 text-white font-medium'>Edit</Button>
                     </Link>
                     <Link href={`/studio?action=delete&id=${postId}`}>
-                        <Button size="sm">Delete</Button>
+                        <Button className='w-full m-1 text-white font-medium'>Delete</Button>
                     </Link>
                 </div>
             )}
-
-            <div className='absolute top-2 left-2 z-10'>
-                {mediaType === "VIDEO" ? (
-                    <Video size={20} className='text-white' />
-                ) : media.length > 1 ? (
-                    <div className='flex gap-1 items-center'>
-                        <Images size={20} className='text-white' />
-                        <span className='text-white text-sm font-medium'>{media.length}</span>
+            <div className='absolute items-center top-3 left-3 z-10'>
+            {
+                mediaType==="VIDEO"? (
+                    <Video size={26} className='text-white'></Video>
+                ):media.length>1?(
+                    <div className='flex gap-2'>
+                        <Images size={26} className='text-white'></Images>
+                        <h1 className='text-white text-2xl'>{media.length}</h1>
                     </div>
                 ) : (
-                    <ImageIcon size={20} className='text-white' />
+                    <ImageIcon size={26} className='text-white' />
                 )}
             </div>
 

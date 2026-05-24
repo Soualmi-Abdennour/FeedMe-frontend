@@ -10,9 +10,9 @@ import storage from 'redux-persist/lib/storage'
 // RTK QUERY SETUP 
 export const fetchAPI = createApi({
     reducerPath: "api",
-    tagTypes: ['Products', 'User','Orders','Cart',"Post" , 'Onboarding'], 
+    tagTypes: ['Products', 'User','Orders','Cart',"Post" , 'Onboarding',"Comments"], 
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8000/api",
+        baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
         prepareHeaders: (headers, { getState }) => {
             const state = getState() as RootState
             const token = state.authentication.authentication?.jwtToken          

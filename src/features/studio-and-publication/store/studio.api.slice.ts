@@ -1,10 +1,9 @@
 import { fetchAPI } from "@/store/base.store";
-import { editPostCredientials, PostResponse, SinglePostResponse } from "@/types/api.types";
-import { MyPostsResponse } from "../types/studio.types";
+import { editPostCredientials, getPostsCredentials, PostsResponse, SinglePostResponse } from "@/types/api.types";
 
 export const studioApiSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({
-        createPost: build.mutation<PostResponse, FormData>({
+        createPost: build.mutation<SinglePostResponse, FormData>({
             query: (postData) => ({
                 url: `/posts`,
                 method: "POST",
@@ -12,7 +11,7 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
             }),
             invalidatesTags: ["Post"] // ✅
         }),
-        editPost: build.mutation<PostResponse, editPostCredientials>({
+        editPost: build.mutation<SinglePostResponse, editPostCredientials>({
             query: ({ postData, id }) => ({
                 url: `/posts/${id}`,
                 method: "PATCH",
@@ -20,7 +19,7 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
             }),
             invalidatesTags: ["Post"] // ✅
         }),
-        deletePost: build.mutation<PostResponse, string>({
+        deletePost: build.mutation<SinglePostResponse, string>({
             query: (id) => ({
                 url: `/posts/${id}`,
                 method: "DELETE",
@@ -33,7 +32,7 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
             }),
             providesTags: ["Post"] // ✅
         }),
-        getMyPosts: build.query<MyPostsResponse, { cursor?: string; limit?: number }>({
+        getMyPosts: build.query<PostsResponse,getPostsCredentials >({
             query: ({ cursor, limit = 10 } = {}) => ({
                 url: `/posts/my-posts`,
                 params: {

@@ -71,7 +71,7 @@ function SelectField({
             </div>
             <p className={`mt-4 text-left text-sm ${errors[name] ? "text-red-500" : ""}`}>
                 {errors[name]?.message}
-            </p>
+            </p>            
         </>
     );
 }

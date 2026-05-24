@@ -6,7 +6,7 @@ import SubmitButton from '@/components/atoms/SubmitButton'
 import { Button } from '@/components/ui/button'
 import { useDeletePostMutation } from '../../store/studio.api.slice'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { PostResponse } from '@/types/api.types'
+import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 
 
@@ -15,10 +15,10 @@ function DeletePostForm({className,postId,onClose}:IDeletePostFormProps) {
     const handleClick=async ()=>{
         const fetchResponse = await deletePost(postId)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
-        const successResponse: PostResponse = fetchResponse.data as PostResponse
+        const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
 
         if (error) {
-            const errorResponse = error.data as PostResponse
+            const errorResponse = error.data as SinglePostResponse
             if (errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
@@ -44,16 +44,17 @@ function DeletePostForm({className,postId,onClose}:IDeletePostFormProps) {
                     ✕
                 </button>
             )}
-            <div className='flex flex-col items-center '>
-                <h1>Delete Post?</h1>
+            <div className='flex flex-col items-center gap-3 '>
+                <h4 className='text-fail-500 font-bold'>Delete Post?</h4>
                 <p>Are you sure you want to delete this post?</p>
-                <div>
-                    <SubmitButton 
+                <div className='grid grid-cols-2 justify-between gap-10 mt-5'>
+                    <Button 
+                    className='text-white font-bold bg-fail-500 hover:bg-fail-600'
                         onClick={handleClick}
                     >
                         Delete
-                    </SubmitButton>
-                    <Button onClick={onClose}>
+                    </Button>
+                    <Button onClick={onClose} variant='secondary'>
                         Cancel
                     </Button>
                 </div>

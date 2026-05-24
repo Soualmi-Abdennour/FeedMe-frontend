@@ -10,25 +10,25 @@ import {
 } from "lucide-react";
 
 const SHARED_START_ITEMS = [
-    { label: "Publication", path: "/publication", icon: BookOpen },
-    { label: "A & Q", path: "/a-and-q", icon: MessageCircleQuestion },
+    { label: "Publication", path: ["/publication"], icon: BookOpen },
+    { label: "A & Q", path: ["/a-and-q"], icon: MessageCircleQuestion },
 ];
 
 const SHARED_END_ITEMS = [
-    { label: "Studio", path: "/studio", icon: PlusCircle },
-    { label: "Profile", path: "/profile", icon: Globe },
-    { label: "Setting", path: "/settings/edit-profile", icon: Settings },
+    { label: "Studio", path: ["/studio"], icon: PlusCircle },
+    { label: "Profile", path: ["/profile"], icon: Globe },
+    { label: "Setting", path: ["/settings/edit-profile", "/settings/edit-account"], icon: Settings },
 ];
 
 export const USER_APP_NAVIGATION_ITEMS = [
     ...SHARED_START_ITEMS,
-    { label: "Shop", path: "/shop", icon: Store },
+    { label: "Shop", path: ["/shop"], icon: Store },
     ...SHARED_END_ITEMS,
 ];
 
 export const RESTAURANT_APP_NAVIGATION_ITEMS = [
     ...SHARED_START_ITEMS,
-    { label: "Dashboard", path: "/dashboard/order-management", icon: ChartArea },
+    { label: "Dashboard", path: ["/dashboard/order-management", "/dashboard/product-management"], icon: ChartArea },
     ...SHARED_END_ITEMS,
 ];
 
@@ -36,11 +36,11 @@ export const RESTAURANT_APP_NAVIGATION_ITEMS = [
 export const SETTINGS_NAVIGATION_ITEMS = [
     {
         label: "Edit Profile",
-        path: "/settings/edit-profile",
+        path: ["/settings/edit-profile"],
     },
     {
         label: "Edit Account",
-        path: "/settings/edit-account",
+        path: ["/settings/edit-account"],
     },
 ];
 

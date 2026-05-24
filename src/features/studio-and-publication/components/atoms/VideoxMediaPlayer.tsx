@@ -24,7 +24,27 @@ function VideoMediaPlayer({ media }: { media: MediaAppModel[] }) {
     }
 
     useEffect(() => () => clearTimeout(overlayTimer.current), [])
+    useEffect(() => {
+        const video = videoRef.current
+        if (!video) return
 
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {
+                        // Autoplay blocked by browser — silently ignore
+                    })
+                } else {
+                    video.pause()
+                }
+            },
+            { threshold: 0.8 }
+        )
+
+        observer.observe(video)
+        return () => observer.disconnect()
+    }, [])
+    
     return (
         <div className="relative h-full w-full" onClick={toggle}>
             <video

@@ -1,3 +1,4 @@
+import { UserAppModel, UserDbModel } from "@/features/user/types/user.types";
 import { MediaAppModel, MediaDbModel } from "./media.types";
 
 export type PostMediaType = "IMAGE" | "MULTI_IMAGE" | "VIDEO"
@@ -14,34 +15,26 @@ export type PostFormData = {
     mediaList: MediaAppModel[];
 };
 
-export type PostDbModel = {
+type PostModel = {
     id: string;
     title: string;
     description: string;
-    video: string | null;        // ← أضفناها (موجودة في الباك اند)
+    video: string | null;        
     contentType: "RECIPE" | "DISH";
-    mediaType: "IMAGE" | "VIDEO" | "NONE";  // ← عدلناها تطابق الباك اند
+    mediaType: "IMAGE" | "VIDEO" | "NONE";  
     isPinned: boolean;
     likeCount: number;
     commentCount: number;
-    userId: string;
     createdAt: Date;
     updatedAt: Date;
+}
+export type PostDbModel = PostModel & {
+    User: UserDbModel
     media: MediaDbModel[];
 }
 
-export type PostAppModel = Exclude<PostDbModel, "media"> & {
+export type PostAppModel = PostModel & {
+    user: UserAppModel
     media: MediaAppModel[]
 }
 
-// ── الجديد ────────────────────────────────────────────────────────
-export type MyPostsResponse = {
-    status: "SUCCESS" | "ERROR";
-    message: string;
-    data: {
-        results: number;
-        nextCursor: string | null;
-        posts: PostDbModel[];
-    };
-    errors: null | string;
-}

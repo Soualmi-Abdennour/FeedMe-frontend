@@ -82,6 +82,7 @@ export type UserAppModel = {
     profile?: NormalUserProfileAppModel | RestaurantUserProfileAppModel
 }
 
+
 export type NormalUserProfileAppModel = {
     userBasicInformation: {
         fullName: string

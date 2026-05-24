@@ -35,10 +35,10 @@ function AppSidebar() {
                         {NAV_ITEMS.map((item) => (
                             <AppNavItem
                                 key={item.label}
-                                path={item.path}
+                                path={item.path[0]}
                                 label={item.label}
                                 icon={item.icon}
-                                isActive={pathName === item.path || pathName.startsWith(item.path)}
+                                isActive={item.path.includes(pathName)}
                             />
                         ))}
                     </div>

@@ -20,9 +20,7 @@ import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 interface SignupFormProps {
     className?: string
 }
-function SignupForm({className}: SignupFormProps) {
-    console.log("fjsdoifdsh");
-    
+function SignupForm({className}: SignupFormProps) {    
     const router=useRouter()
     const [signup]=useSingupMutation()
     const dispatch=useDispatch()

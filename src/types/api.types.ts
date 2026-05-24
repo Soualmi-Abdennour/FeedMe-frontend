@@ -1,3 +1,4 @@
+import { CommentDbModel } from "@/features/studio-and-publication/types/publication.types";
 import { PostAppModel, PostDbModel } from "@/features/studio-and-publication/types/studio.types";
 import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserDbModel, UserRole } from "@/features/user/types/user.types";
 
@@ -7,12 +8,26 @@ export type UserResponseData={
     user:UserDbModel;
     jwtToken?:string
 }
-export type PostResponseData = {
+
+export type PostsResponseData = {
+    results: number;
+    nextCursor: string | null;
     posts: PostDbModel[]
+}
+export type PostCommentsResponseData = {
+    results: number;
+    comments: CommentDbModel[]
+}
+export type LikeResponseData={
+    isLiked:boolean
 }
 export type SinglePostResponseData = {
     post: PostDbModel
 }
+export type SingleCommentResponseData = {
+    comment: CommentDbModel
+}
+
 export type ApiError={
     field?:string;
     message:string
@@ -26,8 +41,11 @@ export type ApiResponse<T> = {
 
 
 export type UserResponse=ApiResponse<UserResponseData|null>
-export type PostResponse = ApiResponse<PostResponseData | null>
+export type PostsResponse = ApiResponse<PostsResponseData | null>
+export type PostCommentsResponse = ApiResponse<PostCommentsResponseData | null>
 export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
+export type SingleCommentResponse = ApiResponse<SingleCommentResponseData | null>
+export type LikeResponse = ApiResponse<LikeResponseData | null>
 export type SendVerificationResponse=ApiResponse<null|UserResponseData>
 export type VerificationResponse=ApiResponse<null |UserResponseData>
 
@@ -66,4 +84,19 @@ export type editAccountCredientials={
 export type deactivateAccountCredentials = {
     endpoint: "user" | "restaurant"
 }
+export type editPostCredientials ={
+    postData:FormData
+    id:string
+}
+export type getPostsCredentials = { cursor?: string; limit?: number }
+export type toggleLikeCredentials={
+    postId:string
+}
 
+export type createCommnetCredentials={
+    postId:string
+    text:string
+}
+export type getPostCommnetsCredentials={
+    postId:string
+}

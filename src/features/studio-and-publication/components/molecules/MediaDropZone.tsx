@@ -62,25 +62,25 @@ function MediaDropZone({ uploadedMedia, setUploadedMedia }: IMediaDropZoneProps)
     const canLoadMore = !hasVideo && uploadedMedia.length < 10;
 
     return (
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 mb-3">
             {(isEmpty || canLoadMore) && (
                 <div
                     {...getRootProps()}
                     className={cn(
                         "rounded-sm cursor-pointer flex justify-center items-center transition",
                         isEmpty
-                            ? "size-56 bg-gray-200 border border-orange-400"
-                            : "px-5 py-2 bg-orange-400 text-white",
+                            ? "size-56 bg-neutral-200 border text-neutral-500 hover:bg-primary-100 hover:shadow-sm  my-5"
+                            : "px-5 py-2 m-3 bg-primary-500 hover:bg-primary-600 text-white font-bold",
                         isDragActive && "opacity-70"
                     )}
                 >
                     <input {...getInputProps()} />
-                    <p>{isEmpty ? "Upload Media" : "Add more"}</p>
+                    <p className="">{isEmpty ? "Upload Media" : "Add more"}</p>
                 </div>
             )}
 
             {errorMessage && (
-                <p className="text-red-500 text-base text-center">{errorMessage}</p>
+                <p className="text-fail-500 text-base text-center">{errorMessage}</p>
             )}
         </div>
     );

@@ -1,5 +1,8 @@
+import { UserAppModel, UserDbModel } from "@/features/user/types/user.types";
 import { IPostFormSchema } from "../schema/postForm.schema";
 import { MediaAppModel } from "./media.types";
+import { PostAppModel } from "./studio.types";
+import { Dispatch, SetStateAction } from "react";
 
 export interface IMediaDropZoneProps {
     uploadedMedia:MediaAppModel[]
@@ -17,20 +20,28 @@ export interface IPostDetails {
 }
 
 export interface IPostActionsSideBar {
-    // handleSave:()=>Promise<void>;
-    // handleLike:()=>Promise<void>;
-    handleSave:()=>void;
-    handleLike:()=>void;
     toggleComments:()=>void;
     toggleDetails:()=>void;
-    likesNumber:number;
-    commentsNumber:number;
+    postId:string
+    commentsCount:number
+    likesCount:number
+}
+export interface ICommnetTextField { 
+    postId: string 
+    // commentsCount:number
+    setCommentsCount:Dispatch<SetStateAction<number>>
+}
+export interface IPostComments {
+    className ?: string,
+    postId: string 
+    // commentsCount:number
+    setCommentsCount: Dispatch<SetStateAction<number>> 
 }
 
 export interface IPostComment {
-    userName:string;
-    comment:string;
-    profileImageUrl:string;
+    text:string
+    createdAt:Date
+    user:UserAppModel
 }
 
 export interface IPostPreviewProps {

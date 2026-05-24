@@ -14,6 +14,7 @@ import { toast } from 'sonner'
 import { mapUserDbToAppModel } from '../../utils/user.utils'
 import { setUser } from '../../store/user.slice'
 import {RefreshCcw} from 'lucide-react'
+import { areObjectsEqual } from '@/utils/object.utils'
 
 
 function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUserProfileAppModel["restaurantServices"]}) {
@@ -23,19 +24,7 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
     
     const [restaurantServices, setRestaurantServices] = useState<RestaurantUserProfileAppModel["restaurantServices"]>(defaultValues)
     
-    function areObjectsEqual<T extends Record<string, any>>(obj1: T, obj2: T): boolean {
-        for (const key in obj1) {
-            if (obj1[key] !== obj2[key]) {
-                return false; 
-            }
-        }
-        return true;
-    }
     const onSubmit = async () => {
-        console.log({profile: {
-            restaurantServices
-        }});
-        
         const fetchResponse = await updateProfile({
             endpoint: "restaurant",
             profile: {
@@ -59,6 +48,7 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
             setEnableEdit(false)
         }
+        
     }
     return (
         <div className='flex flex-col bg-white w-[1000px] m-auto gap-7 p-3 rounded-lg shadow-black-500 shadow-lg'>

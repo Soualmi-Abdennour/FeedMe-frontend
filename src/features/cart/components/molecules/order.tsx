@@ -1,6 +1,5 @@
-// components/molecules/OrderActions.tsx
 import React, { useState } from "react";
-import { QuantityControl } from "../molecules/quantityController";
+import { QuantityControl } from "./quantityController";
 import { OrderSummary } from "./OrderSummary";
 
 interface Props {

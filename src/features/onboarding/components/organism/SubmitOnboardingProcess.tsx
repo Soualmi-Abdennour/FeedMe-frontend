@@ -32,7 +32,7 @@ function SubmitOnboardingProcess() {
     const onSuccessFn = (successResponse: UserResponse) => {
         const successResponseData = successResponse.data
         console.log(mapUserDbToAppModel(successResponseData?.user!));
-        router.replace(`/home`)
+        router.replace(`/publication`)
         dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         dispatch(clearOnboarding())
     }

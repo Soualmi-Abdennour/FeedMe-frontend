@@ -10,7 +10,7 @@ function SettingsLayout({
     return (
         <main className={cn(' min-h-screen flex ')}>
             <SettingsSidebar></SettingsSidebar>
-            <div className='mx-auto  bg-primary-100  flex-1 py-10'>
+            <div className='mx-auto    flex-1 py-10'>
                 {children}
             </div>
         </main>

@@ -47,7 +47,7 @@ function TextField({
         </div>
             <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                 {errors[name] && errors[name].message}
-            </p>
+            </p>            
         </>
     )
 }

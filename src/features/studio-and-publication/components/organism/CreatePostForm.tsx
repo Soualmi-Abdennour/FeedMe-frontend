@@ -4,7 +4,7 @@ import { ICreatePostFormProps, IEditPostFormProps } from '../../types/props.type
 import PostForm from './PostFrom'
 import { useCreatePostMutation } from '../../store/studio.api.slice'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { PostResponse } from '@/types/api.types'
+import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 
 
@@ -13,10 +13,10 @@ function CreatePostForm({ className, onClose }: ICreatePostFormProps) {
     const  onSubmit=async (postData:FormData)=>{
         const fetchResponse = await createPost(postData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
-        const successResponse: PostResponse = fetchResponse.data as PostResponse
+        const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
 
         if (error) {
-            const errorResponse = error.data as PostResponse
+            const errorResponse = error.data as SinglePostResponse
             if (errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
@@ -31,12 +31,12 @@ function CreatePostForm({ className, onClose }: ICreatePostFormProps) {
         }         
     }
     return (
-        <div className={cn('relative max-w-[600px] w-full flex flex-col items-center border-2 border-black bg-white p-10 gap-3', className)}>
+        <div className={cn('relative max-w-[600px] w-full flex flex-col items-center rounded-lg bg-white p-10 gap-3', className)}>
             {/* Close button */}
             
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-4 text-gray-500 hover:text-gray-900 text-xl font-bold"
+                    className="absolute top-3 right-4 text-neutral-500 hover:text-neutral-900text-xl font-bold"
                     aria-label="Close"
                 >
                     ✕
