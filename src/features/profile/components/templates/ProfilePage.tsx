@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { useProfile } from "../profile/hooks/useProfile";
-import { useUserPosts } from "../profile/hooks/useUserPosts";
-import ProfileHeader from "../profile/components/molecules/ProfileHeader";
+import { useProfile } from "../../hooks/useProfile";
+import { useUserPosts } from "../../hooks/useUserPosts";
+import ProfileHeader from "../molecules/ProfileHeader";
 import RestaurantProfileServices from "@/features/profile/components/molecules/RestaurantProfileServices";
 import ProfilePosts from "@/features/profile/components/molecules/ProfilePosts";
-import { RestaurantUserProfileAppModel } from "../user/types/user.types";
+import { RestaurantUserProfileAppModel } from "../../../user/types/user.types";
 import { Loader2, AlertCircle } from "lucide-react";
 
 type Props = {

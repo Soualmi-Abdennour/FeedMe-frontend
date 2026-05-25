@@ -3,6 +3,7 @@ import { IRestaurantEditBasicInfoForm, IRestaurantEditLocationInfoForm } from ".
 import { INormalUserEditBasicInfoForm } from "../schema/normalUserEditProfile.schema";
 import { IFormField } from "@/types/props.types";
 import { NormalUserProfileAppModel, RestaurantUserProfileAppModel } from "./user.types";
+import { PostAppModel } from "@/features/studio-and-publication/types/studio.types";
 
 type TuplePaths<T> = {
     [K in keyof T & string]: [K, keyof T[K] & string]
@@ -25,3 +26,9 @@ export interface IEditSelectFormProps<T> {
     fieldToUpdate: TuplePaths<NormalUserProfileAppModel> | TuplePaths<RestaurantUserProfileAppModel>
 
 }
+
+export interface IProfilePosts  {
+    posts: PostAppModel[];
+    isLoading: boolean;
+    isError: boolean;
+};

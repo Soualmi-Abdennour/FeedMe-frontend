@@ -20,18 +20,15 @@ export function useUserPosts(userId: string): UseUserPostsState {
         setIsLoading(true);
         setError(null);
         try {
-        // const res = await fetch(`/api/posts/user/${userId}`, {
-        //     headers: {
-        //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        // });
-        // if (!res.ok) throw new Error("Failed to fetch posts");
-        // const data: PostAppModel[] = await res.json();
-        // setPosts(data);
+        const res = await fetch(`/api/posts/user/${userId}`, {
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        if (!res.ok) throw new Error("Failed to fetch posts");
+        const data: PostAppModel[] = await res.json();
+        setPosts(data);
 
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setPosts(MOCK_POSTS_DB as any);
         } catch (err: any) {
         setError(err.message || "Something went wrong");
         } finally {

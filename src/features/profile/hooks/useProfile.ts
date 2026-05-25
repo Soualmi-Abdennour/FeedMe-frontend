@@ -19,17 +19,15 @@ useEffect(() => {
     setIsLoading(true);
     setError(null);
     try {
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        setUser(MOCK_RESTAURANT_DATA);
 
-        // const res = await fetch(`/api/users/${slug}`, {
-        //     headers: {
-        //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-        // },
-        // });
-        // if (!res.ok) throw new Error("Failed to fetch profile");
-        // const data: UserAppModel = await res.json();
-        // setUser(data);
+        const res = await fetch(`/api/users/${slug}`, {
+            headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        });
+        if (!res.ok) throw new Error("Failed to fetch profile");
+        const data: UserAppModel = await res.json();
+        setUser(data);
     } catch (err: any) {
         setError(err.message || "Something went wrong");
     } finally {
