@@ -65,18 +65,18 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
             <div className='flex flex-col  gap-5 mx-10'>
                 {RESTAURANT_SERVICES.map((service) => (
                     <div className='flex items-center justify-between' key={service.key}>
-                        <h1 className='flex-1 pl-5 text-xl font-medium'>{service.value}</h1>
+                        <h1 className='flex-1 pl-5 text-xl font-medium'>{service.label}</h1>
                         <div className='flex gap-5'>
                             {[...Array.from(["YES", "NO"])].map((item) => (
                                 <Button
                                     variant='ghost'
                                     key={item}
                                     disabled={!enableEdit}
-                                    className={cn(restaurantServices[service.key] === item ? "bg-primary-500 text-white font-bold border border-primary-500" : "text-black font-bold  border-2 border-primary-500")}
+                                    className={cn(restaurantServices[service.value] === item ? "bg-primary-500 text-white font-bold border border-primary-500" : "text-black font-bold  border-2 border-primary-500")}
                                     onClick={() => {
                                         setRestaurantServices(state => ({
                                             ...state,
-                                            [service.key]: item
+                                            [service.value]: item
                                         }))
                                     }}
                                 >{item}</Button>

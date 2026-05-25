@@ -1,6 +1,6 @@
+import { MediaType } from "./studio.types"
 
 
-export type MediaType = "IMAGE" | "VIDEO"
 export type MediaAppModel ={
     id: string                  
     previewUrl: string          

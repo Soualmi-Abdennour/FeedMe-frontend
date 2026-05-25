@@ -6,12 +6,8 @@ import RestaurantUserEditProfilePage from '../organism/RestaurantUserEditProfile
 import { UserAppModel } from '../../types/user.types'
 
 
-function EditProfilePage() {
-    
+function EditProfilePage() {   
     const {user}=useAppSelector(state=>state.user)
-    
-   
-        
     return (
         <main>
         {user?.role==="USER" ? (

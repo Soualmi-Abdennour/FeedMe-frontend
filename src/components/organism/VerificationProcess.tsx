@@ -2,7 +2,7 @@
 import { ApiResponse, ApiStatus, UserResponse, VerificationResponse } from '@/types/api.types'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { IVerificationProcessProps, VerificationProcessState,IVerificationViewProps } from '../../types/props.types'
+import { IVerificationProcessProps, IVerificationViewProps } from '../../types/props.types'
 import VerificationView from '../molecules/VerificationView'
 
 

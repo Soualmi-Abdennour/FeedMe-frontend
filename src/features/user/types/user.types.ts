@@ -22,7 +22,6 @@ export type UserDbModel = {
     passwordResetTokenHash: string | null;
     passwordChangedAt: Date;
     pendingEmail: string | null;
-
     RestaurantProfile?: RestaurantUserProfileDbModel | null
     UserProfile?: NormalUserProfileDbModel | null
 }
@@ -65,11 +64,11 @@ export type RestaurantUserProfileDbModel = {
 }
 
 
-export type UserAppModel = {
+type NormalUserAppModel={
     id: string;
     userName: string;
     email: string,
-    role: UserRole;
+    role: "USER";
     status: UserStatus;
     isVerified: boolean;
     isOnboardingCompleted: boolean;
@@ -79,9 +78,25 @@ export type UserAppModel = {
     pendingEmail: string | null;
     createdAt: Date;
     updatedAt: Date;
-    profile?: NormalUserProfileAppModel | RestaurantUserProfileAppModel
+    profile?: NormalUserProfileAppModel 
 }
-
+type RestaurantUserAppModel = {
+    id: string;
+    userName: string;
+    email: string,
+    role: "RESTAURANT";
+    status: UserStatus;
+    isVerified: boolean;
+    isOnboardingCompleted: boolean;
+    passwordChangedAt: Date;
+    isLoggedOut: boolean;
+    slug: string;
+    pendingEmail: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    profile?: RestaurantUserProfileAppModel
+}
+export type UserAppModel = NormalUserAppModel | RestaurantUserAppModel
 
 export type NormalUserProfileAppModel = {
     userBasicInformation: {
@@ -127,4 +142,13 @@ export type RestaurantUserProfileAppModel = {
     };
 }
 
-// export type EditProfileCredientials=
+export type ProfileData = {
+    displayName: string;
+    imageUrl?: string;
+    bio?: string;
+    city?: string;
+    phoneNumber?: string;
+    businessEmail?: string;
+    googleMapsLink?: string;
+    kitchenCategory?: string[];
+};

@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { editPostCredientials, getPostsCredentials, PostsResponse, SinglePostResponse } from "@/types/api.types";
+import { editPostCredientials, PostsResponse, SinglePostResponse } from "@/types/api.types";
 
 export const studioApiSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({
@@ -32,13 +32,9 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
             }),
             providesTags: ["Post"] // ✅
         }),
-        getMyPosts: build.query<PostsResponse,getPostsCredentials >({
-            query: ({ cursor, limit = 10 } = {}) => ({
+        getMyPosts: build.query<PostsResponse, void >({
+            query: () => ({
                 url: `/posts/my-posts`,
-                params: {
-                    ...(cursor && { cursor }),
-                    limit,
-                },
             }),
             providesTags: ["Post"] // ✅
         }),

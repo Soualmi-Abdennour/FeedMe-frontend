@@ -1,28 +1,20 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserAppModel } from '@/features/user/types/user.types'
 import { useAppSelector } from '@/store/base.store'
-import Image from 'next/image'
-import React, { useState } from 'react'
-import { useCreateCommentMutation } from '../../store/publication.api.slice'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { SingleCommentResponse } from '@/types/api.types'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Image from 'next/image'
+import { useState } from 'react'
 import { toast } from 'sonner'
+import { useCreateCommentMutation } from '../../store/publication.api.slice'
 import { ICommnetTextField } from '../../types/props.types'
 
 function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
-    const user=useAppSelector(state=>state.user.user) as UserAppModel
+    const user=useAppSelector(state=>state.user.user)
     const [createComment]=useCreateCommentMutation()
     const [text,setText]=useState<string>("")
-    var profileImageUrl:string=""
-    if(user.role==="USER"){
-        const profile =user.profile! as NormalUserProfileAppModel
-        profileImageUrl=profile.userBasicInformation.profileImageUrl?? ""
-    }else {
-        const profile = user.profile! as RestaurantUserProfileAppModel
-        profileImageUrl = profile.restaurantBasicInformation.restaurantLogoUrl ?? ""  
-    }
+    
     const onSubmit=async()=>{        
         const fetchResponse = await createComment({
             postId,
@@ -48,7 +40,11 @@ function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
     return (
     <div className='flex gap-3 border border-neutral-300 p-1 pr-3 bg-neutral-50 rounded-3xl items-center'>
         <div className='rounded-full size-8 bg-gray-800 shrink-0'>
-            {/* <Image src={profileImageUrl} alt='/'></Image> */}
+            <Image src={
+                user?.role==="USER"?
+                user.profile?.userBasicInformation.profileImageUrl?? "" :
+                user?.profile?.restaurantBasicInformation.restaurantLogoUrl??""
+                } alt='/'></Image>
         </div>
       <Input 
         value={text}

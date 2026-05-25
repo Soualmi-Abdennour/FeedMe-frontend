@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { editProfileCredientials, UserResponse } from "@/types/api.types";
+import { editProfileCredientials, getUserProfileCredentials, PostsResponse, UserResponse } from "@/types/api.types";
 
 
 
@@ -31,14 +31,30 @@ export const userApiSlice=fetchAPI.injectEndpoints({
         // }),
 
 
-        deleteAccount: build.mutation<UserResponse, null>({
+        deleteAccount: build.mutation<UserResponse, void>({
             query: () => ({
                 url: `/profile/delete-account`,
                 method: "DELETE",
+            })
+        }),
+
+        getUserProfile:build.query<UserResponse,getUserProfileCredentials>({
+            query:({userId})=>({
+                url:""
+            })
+        }),
+        getUserSavedPosts:build.query<PostsResponse,getUserProfileCredentials>({
+            query:({userId})=>({
+                url:""
+            })
+        }),
+        getUserLikedPosts:build.query<PostsResponse,getUserProfileCredentials>({
+            query:({userId})=>({
+                url:""
             })
         }),
     })
 })
 
 
-export const {useUpdateAccountMutation, useUpdateProfileMutation,useDeleteAccountMutation,} = userApiSlice
+export const {useUpdateAccountMutation, useUpdateProfileMutation,useDeleteAccountMutation,useGetUserLikedPostsQuery,useGetUserProfileQuery,useGetUserSavedPostsQuery} = userApiSlice

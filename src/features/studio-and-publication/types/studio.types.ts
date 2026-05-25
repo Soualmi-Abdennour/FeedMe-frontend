@@ -1,8 +1,8 @@
 import { UserAppModel, UserDbModel } from "@/features/user/types/user.types";
 import { MediaAppModel, MediaDbModel } from "./media.types";
 
+export type MediaType = "IMAGE"  | "VIDEO" |"NONE"
 export type PostMediaType = "IMAGE" | "MULTI_IMAGE" | "VIDEO"
-
 export type PostsFilterOption = {
     key: PostMediaType
     value: "Image" | "Multi-Image" | "Video"
@@ -21,7 +21,7 @@ type PostModel = {
     description: string;
     video: string | null;        
     contentType: "RECIPE" | "DISH";
-    mediaType: "IMAGE" | "VIDEO" | "NONE";  
+    mediaType: MediaType;  
     isPinned: boolean;
     likeCount: number;
     commentCount: number;

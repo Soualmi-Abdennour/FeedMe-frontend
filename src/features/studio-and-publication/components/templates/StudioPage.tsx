@@ -12,17 +12,18 @@ import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
 import { PostMediaType } from '../../types/studio.types'
 import { useGetMyPostsQuery } from '../../store/studio.api.slice'  // ← الجديد
 import { Plus } from 'lucide-react'
+import { PostsFilterOption } from '../../types/studio.types'
 
 
 
 function StudioPage() {
     const seachParams = useSearchParams()
     const router = useRouter()
-    const [filterOptions, setFilterOptions] = useState<PostMediaType[]>(['IMAGE', "MULTI_IMAGE", "VIDEO"])
+    const [filterOptions, setFilterOptions] = useState<string[]>(['Image', "Multi Image", "Video"])
     const [openCreatePostFrom, setOpenCreatePostForm] = useState<boolean>(false)
 
-    const { data, isLoading, isError } = useGetMyPostsQuery({})
-    const posts = data?.data?.posts ?? []
+const { data, isLoading, isError } = useGetMyPostsQuery()
+    const posts = data?.data?.posts ?? []    
 
     return (
         <div className='relative z-0 w-full px-32 py-24 h-screen'>
@@ -39,7 +40,7 @@ function StudioPage() {
                     menuLabel='Filter by '
                     currentValue={filterOptions}
                     selectOptions={POSTS_FILTER_OPTIONS}
-                    onChange={(value) => {
+                    onChange={(value:string) => {
                         setFilterOptions(state =>
                             state.includes(value)
                                 ? state.filter(val => val !== value)
@@ -63,7 +64,7 @@ function StudioPage() {
                         .map(({ mediaType, media, id }) => (
                             <PostPreview
                                 key={id}
-                                mediaType={mediaType as PostMediaType}
+                                mediaType={mediaType}
                                 media={convertMediaDbModelToMediaAppModel(media)}
                                 postId={id}
                             />

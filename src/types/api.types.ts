@@ -88,7 +88,7 @@ export type editPostCredientials ={
     postData:FormData
     id:string
 }
-export type getPostsCredentials = { cursor?: string; limit?: number }
+// export type getPostsCredentials = { cursor?: string; limit?: number }
 export type toggleLikeCredentials={
     postId:string
 }
@@ -99,4 +99,9 @@ export type createCommnetCredentials={
 }
 export type getPostCommnetsCredentials={
     postId:string
+}
+
+export type getUserProfileCredentials={
+    userId:string
+    // profileType:"USER"|"RESTAURANT"
 }

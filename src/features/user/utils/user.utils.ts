@@ -1,6 +1,7 @@
 import {
     NormalUserProfileAppModel,
     NormalUserProfileDbModel,
+    ProfileData,
     RestaurantUserProfileAppModel,
     RestaurantUserProfileDbModel,
     UserAppModel,
@@ -51,28 +52,64 @@ function mapRestaurantProfileToAppModel(
 }
 
 export function mapUserDbToAppModel(db: UserDbModel): UserAppModel {
-    let profile: UserAppModel["profile"]
+    let user: UserAppModel
+    if (db.role === "USER" ){
+        const profile =db.UserProfile &&  mapNormalUserProfileToAppModel(db.UserProfile)
+        return user={
+            ...db,
+            role:"USER",
+            ...(profile && {...profile})
+        }
+    }
+    else {
+        const profile =db.RestaurantProfile && mapRestaurantProfileToAppModel(db.RestaurantProfile)
+        return user = {
+        ...db,
+            role: "RESTAURANT",
+        ...(profile && { ...profile })
+        }
+    }
+}
 
-    if (db.UserProfile) {
-        profile = mapNormalUserProfileToAppModel(db.UserProfile)
-    } else if (db.RestaurantProfile) {
-        profile = mapRestaurantProfileToAppModel(db.RestaurantProfile)
+
+
+
+export function extractProfileData(user: UserAppModel): ProfileData | null {
+    if (user.role === "USER" && user.profile) {
+        const {
+            userBasicInformation: { profileImageUrl, fullName, bio, city, phoneNumber },
+            userUsagePreferences: { kitchenCategory },
+        } = user.profile as NormalUserProfileAppModel;
+
+        return {
+            displayName: fullName,
+            // imageUrl: profileImageUrl,
+            imageUrl: "",
+            bio,
+            city,
+            phoneNumber,
+            kitchenCategory,
+        };
     }
 
-    return {
-        id: db.id,
-        userName: db.userName,
-        email: db.email,
-        role: db.role,
-        status: db.status,
-        isVerified: db.isVerified,
-        isOnboardingCompleted: db.isOnboardingCompleted,
-        passwordChangedAt: db.passwordChangedAt,
-        isLoggedOut: db.isLoggedOut,
-        slug: db.slug,
-        pendingEmail: db.pendingEmail,
-        createdAt: db.createdAt,
-        updatedAt: db.updatedAt,
-        ...(profile && { profile }),
+    if (user.role === "RESTAURANT" && user.profile) {
+        const {
+            restaurantBasicInformation: { restaurantLogoUrl, restaurantName, phoneNumber, bio, businessEmail },
+            restaurantLocationAndContact: { googleMapsLink },
+            restaurantDetails: { kitchenCategory },
+        } = user.profile as RestaurantUserProfileAppModel;
+
+        return {
+            displayName: restaurantName,
+            // imageUrl: restaurantLogoUrl,
+            imageUrl: "",
+            bio,
+            phoneNumber,
+            businessEmail,
+            googleMapsLink,
+            kitchenCategory,
+        };
     }
+
+    return null;
 }

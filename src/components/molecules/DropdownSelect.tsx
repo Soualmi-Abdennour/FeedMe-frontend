@@ -6,12 +6,13 @@ import { SlidersVertical } from 'lucide-react';
 
 interface IDropdownSelect {
     menuLabel: string;
-    currentValue: PostMediaType[]
+    currentValue: string[]
     selectOptions: {
         label: string,
-        value: PostMediaType
+        key: PostMediaType
+        value: string
     }[],
-    onChange: (value: PostMediaType) => void;
+    onChange: (value: string) => void;
 }
 
 export default function DropdownSelect({ menuLabel, selectOptions, currentValue, onChange }: IDropdownSelect) {
@@ -54,7 +55,7 @@ export default function DropdownSelect({ menuLabel, selectOptions, currentValue,
                             <span className="text-xs text-neutral-400">{menuLabel}</span>
                             <span className="text-sm text-neutral-900">
                                 {currentValue.length > 0
-                                    ? currentValue.map(v => v.toLowerCase()).join(", ")
+                                    ? currentValue.join(", ")
                                     : "None selected"}
                             </span>
                         </div>
@@ -63,7 +64,7 @@ export default function DropdownSelect({ menuLabel, selectOptions, currentValue,
                     <ul className="py-1">
                         {selectOptions.map((opt) => (
                             <li
-                                key={opt.value}
+                                key={opt.key}
                                 onClick={() => onChange(opt.value)}
                                 className={`
                                     flex items-center gap-3 px-4 py-2.5 cursor-pointer text-sm

@@ -46,12 +46,12 @@ function PostPreview({ media, postId, mediaType }: IPostPreviewProps) {
 
             {mediaType === "VIDEO" ? (
                 <video
-                    src={media[0].previewUrl}
+                    src={media?.[0]?.previewUrl}
                     className='absolute inset-0 w-full h-full object-cover'
                 />
             ) : (
                 <Image
-                    src={media[0].previewUrl}
+                    src={media?.[0]?.previewUrl|| "/placeholder.png"}
                     fill
                     alt=''
                     className='object-cover'

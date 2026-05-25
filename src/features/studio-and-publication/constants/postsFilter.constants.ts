@@ -2,15 +2,18 @@ import { PostMediaType } from "../types/studio.types";
 
 export const POSTS_FILTER_OPTIONS=[
     {
-        value: "IMAGE" as PostMediaType,
+        key: "IMAGE" as PostMediaType,
+        value:"Image",
         label:"Image"
     },
     {
-        value: "MULTI_IMAGE" as PostMediaType,
-        label:"Multi-Image"
+        key: "MULTI_IMAGE" as PostMediaType,
+        value:"Multi Image",
+        label:"Multi Image"
     },
     {
-        value: "VIDEO" as PostMediaType,
+        key: "VIDEO" as PostMediaType,
+        value:"Video",
         label:"Video"
     }
 ] 

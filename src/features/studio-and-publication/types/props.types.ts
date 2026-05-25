@@ -1,8 +1,8 @@
-import { UserAppModel, UserDbModel } from "@/features/user/types/user.types";
+import { UserAppModel } from "@/features/user/types/user.types";
+import { Dispatch, SetStateAction } from "react";
 import { IPostFormSchema } from "../schema/postForm.schema";
 import { MediaAppModel } from "./media.types";
-import { PostAppModel } from "./studio.types";
-import { Dispatch, SetStateAction } from "react";
+import { MediaType } from "./studio.types";
 
 export interface IMediaDropZoneProps {
     uploadedMedia:MediaAppModel[]
@@ -28,13 +28,11 @@ export interface IPostActionsSideBar {
 }
 export interface ICommnetTextField { 
     postId: string 
-    // commentsCount:number
     setCommentsCount:Dispatch<SetStateAction<number>>
 }
 export interface IPostComments {
     className ?: string,
     postId: string 
-    // commentsCount:number
     setCommentsCount: Dispatch<SetStateAction<number>> 
 }
 
@@ -46,7 +44,7 @@ export interface IPostComment {
 
 export interface IPostPreviewProps {
     media:MediaAppModel[],
-    mediaType:"IMAGE"|"MULTI_IMAGE"|"VIDEO"
+    mediaType: MediaType
     postId:string
 } 
 export interface IPostFormProps {
