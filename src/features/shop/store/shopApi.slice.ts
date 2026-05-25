@@ -11,6 +11,7 @@ interface BackendProduct {
   image: string;
   preparingTime: number;
   category: string | string[];
+  quantityAvailable?: number;
   restaurant?: {
     id: string;
     restaurantName: string;
@@ -58,6 +59,7 @@ export const shopApiSlice = fetchAPI.injectEndpoints({
             category: Array.isArray(p.category) 
               ? p.category[0]?.toLowerCase() 
               : (p.category?.toLowerCase() || 'all'),
+            quantityAvailable: p.quantityAvailable ?? 0,
             preparationTime: p.preparingTime,
             
             seller: {

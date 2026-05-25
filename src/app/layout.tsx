@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import '../features/Q&A/styles/qa.css'
 import StoreProvider from './StoreProvider'
 import RouteGuardProvider from './RouteGuardProvider'
 import { Toaster } from '@/components/ui/sonner'

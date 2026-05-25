@@ -1,0 +1,1714 @@
+--- File: src/features/Q&A/component/atoms/AvatarAtom.tsx ---
+
+interface AvatarAtomProps {
+  name: string | null;
+  avatarUrl: string | null;
+  size?: "sm" | "md" | "lg";
+}
+
+const sizeMap = {
+  sm: "h-8 w-8",
+  md: "h-10 w-10",
+  lg: "h-12 w-12",
+};
+
+export function AvatarAtom({ name, avatarUrl, size = "md" }: AvatarAtomProps) {
+  const initials = (name || "?")
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+
+  return (
+    <Avatar className={sizeMap[size]}>
+      {avatarUrl && <AvatarImage src={avatarUrl} alt={name || "User"} />}
+      <AvatarFallback className="bg-orange-500 text-white font-semibold">
+        {initials}
+      </AvatarFallback>
+    </Avatar>
+  );
+}
+
+
+--- File: src/features/Q&A/component/atoms/Button.tsx ---
+ * ATOM: Button
+ * 
+ * Rôle: Bouton réutilisable avec plusieurs variantes.
+ * Utilisé dans: Formulaires, Actions, Navigation
+ * 
+ * Props:
+ * - children: Contenu du bouton
+ * - variant: Style du bouton ("primary", "secondary", "outline", "ghost")
+ * - size: Taille du bouton ("sm", "md", "lg")
+ * - onClick?: Fonction appelée au clic
+ * - disabled?: Désactiver le bouton
+ * - icon?: Icône avant le texte (optionnel)
+ * - className?: Classes Tailwind supplémentaires
+ */
+
+interface ButtonProps {
+  children: React.ReactNode;
+  variant?: "primary" | "secondary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  onClick?: () => void;
+  disabled?: boolean;
+  icon?: React.ReactNode;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+}
+
+export default function Button({
+  children,
+  variant = "primary",
+  size = "md",
+  onClick,
+  disabled = false,
+  icon,
+  className = "",
+  type = "button",
+}: ButtonProps) {
+  const variantClasses = {
+    primary:
+      "bg-orange-500 hover:bg-orange-600 text-white disabled:bg-gray-600 disabled:text-gray-400",
+    secondary:
+      "bg-gray-700 hover:bg-gray-600 text-white disabled:bg-gray-800 disabled:text-gray-500",
+    outline:
+      "border border-gray-600 hover:bg-gray-800 text-gray-300 disabled:opacity-50 disabled:text-gray-600",
+    ghost: "hover:bg-gray-800 text-gray-300 disabled:opacity-50 disabled:text-gray-600",
+  };
+
+  const sizeClasses = {
+    sm: "px-3 py-1 text-sm",
+    md: "px-4 py-2 text-base",
+    lg: "px-6 py-3 text-lg",
+  };
+
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`inline-flex items-center gap-2 rounded-lg font-medium transition-colors duration-200 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+    >
+      {icon && <span>{icon}</span>}
+      {children}
+    </button>
+  );
+}
+
+
+--- File: src/features/Q&A/component/atoms/Icon.tsx ---
+ * ATOM: Icon
+ * 
+ * Rôle: Affiche des icônes réutilisables avec plusieurs variantes.
+ * Utilisé dans: Boutons, Badges, Listes, Navigation
+ * 
+ * Props:
+ * - name: Nom de l'icône (heart, comment, search, etc.)
+ * - size: Taille de l'icône ("sm", "md", "lg")
+ * - filled?: Si true, l'icône est remplie
+ * - className?: Classes Tailwind supplémentaires
+ */
+
+import React from 'react';
+import {
+  Home,
+  MessageSquareText,   // Questions
+  CircleHelp,            // Help / FAQ
+  Bookmark,              // Save later
+  CheckCircle2,          // Correct answer
+  Bell,
+  User,
+  Settings,
+  LogOut,
+  Search,
+  Menu,
+  FileText,
+  Briefcase,
+  Heart,
+  Inbox,
+} from 'lucide-react';
+
+interface IconProps {
+  name: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'black' | 'gray' | 'orange' | 'green' | 'white';
+  className?: string;
+    filled?: boolean;
+
+}
+
+const iconMap = {
+  home: Home,
+
+  // Q&A
+  questions: MessageSquareText,
+  'my-questions': CircleHelp,
+  answers: Inbox,
+
+  // Actions
+  'save-later': Bookmark,
+  correct: CheckCircle2,
+
+  // General
+  bell: Bell,
+  user: User,
+  settings: Settings,
+  'log-out': LogOut,
+  search: Search,
+  menu: Menu,
+  'file-text': FileText,
+  briefcase: Briefcase,
+  heart: Heart,
+};
+
+export const Icon: React.FC<IconProps> = ({
+  name,
+  size = 'md',
+  color = 'black',
+  className = '',
+  filled = false
+}) => {
+  const sizeStyles = {
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5',
+    lg: 'w-6 h-6',
+    xl: 'w-8 h-8',
+  };
+
+  const colorStyles = {
+    black: 'text-black',
+    gray: 'text-gray-500',
+    orange: 'text-orange-500',
+    green: 'text-emerald-500',
+    white: 'text-white',
+  };
+
+  const IconComponent = iconMap[name as keyof typeof iconMap];
+
+  if (!IconComponent) return null;
+
+  return (
+    <IconComponent
+      className={`${sizeStyles[size]} ${colorStyles[color]} transition-all duration-200 ${className}`}
+      strokeWidth={2}
+      fill={filled ? "currentColor" : "none"}
+    />
+  );
+};
+
+--- File: src/features/Q&A/component/atoms/Input.tsx ---
+ * ATOM: Input
+ * 
+ * Rôle: Champ d'entrée réutilisable pour les formulaires.
+ * Utilisé dans: Recherche, Formulaires, Filtres
+ * 
+ * Props:
+ * - placeholder: Texte d'indication
+ * - value: Valeur actuelle
+ * - onChange: Fonction appelée lors du changement
+ * - type: Type d'input ("text", "email", "password", "search")
+ * - icon?: Icône avant le texte (optionnel)
+ * - className?: Classes Tailwind supplémentaires
+ */
+import { useState, useEffect } from "react";
+
+interface InputProps {
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  type?: "text" | "email" | "password" | "search";
+  icon?: React.ReactNode;
+  className?: string;
+}
+
+export default function Input({
+  placeholder,
+  value,
+  onChange,
+  type = "text",
+  icon,
+  className = "",
+}: InputProps) {
+  const [localValue, setLocalValue] = useState(value ?? "");
+
+  // keep localValue in sync when parent provides a value (controlled)
+  useEffect(() => {
+    setLocalValue(value ?? "");
+  }, [value]);
+  return (
+    <div className="relative flex items-center w-full">
+      {icon && (
+        <span className="absolute left-4 text-[#8B6F63]">
+          {icon}
+        </span>
+      )}
+
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value ?? localValue}
+        onChange={(e) => {
+          const v = e.target.value;
+          if (onChange) onChange(v);
+          else setLocalValue(v);
+        }}
+   className={`
+  w-full
+  px-4
+  py-3
+  ${icon ? "pl-11" : ""}
+  rounded-xl
+  border
+  shadow-sm
+  transition-all
+  focus:outline-none
+  focus:ring-2
+  ${className}
+`}
+      />
+    </div>
+  );
+}
+
+--- File: src/features/Q&A/component/atoms/Text.tsx ---
+ * ATOM: Text
+ * 
+ * Rôle: Composant de typographie réutilisable pour différents niveaux de texte.
+ * Utilisé dans: Titres, Descriptions, Corps de texte
+ * 
+ * Props:
+ * - children: Contenu du texte
+ * - variant: Type de texte ("h1", "h2", "h3", "body", "small", "caption")
+ * - color?: Couleur du texte ("primary", "secondary", "muted")
+ * - className?: Classes Tailwind supplémentaires
+ */
+
+interface TextProps {
+  children: React.ReactNode;
+  variant?: "h1" | "h2" | "h3" | "body" | "small" | "caption";
+  color?: "primary" | "secondary" | "muted";
+  className?: string;
+}
+
+export default function Text({
+  children,
+  variant = "body",
+  color = "primary",
+  className = "",
+}: TextProps) {
+  const variantClasses = {
+    h1: "text-3xl font-bold",
+    h2: "text-2xl font-bold",
+    h3: "text-xl font-semibold",
+    body: "text-base font-normal",
+    small: "text-sm font-normal",
+    caption: "text-xs font-normal",
+  };
+
+ const colorClasses = {
+  primary: "text-[#3D2A22]",
+  secondary: "text-[#6F564B]",
+  muted: "text-gray-500",
+};
+
+  const Tag = variant.startsWith("h") ? (variant as any) : "p";
+
+  return (
+    <Tag
+      className={`${variantClasses[variant]} ${colorClasses[color]} ${className}`}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+
+/**
+ * MOLECULE: ActionBar
+ * 
+ * Rôle: Barre d'actions pour les questions et réponses (likes, commentaires, etc.).
+ * Composée de: Icon (atom) + Text (atom) + Button (atom)
+ * Utilisé dans: QuestionCard, AnswerCard
+ * 
+ * Props:
+ * - likes: Nombre de likes
+ * - comments: Nombre de commentaires
+ * - onLike?: Fonction appelée au clic sur like
+ * - onComment?: Fonction appelée au clic sur commentaire
+ * - onReply?: Fonction appelée au clic sur répondre
+ * - isLiked?: Si true, le like est actif
+ */
+
+import { Icon } from "../atoms/Icon";
+import Text from "../atoms/Text";
+import { Bookmark, Check } from "lucide-react";
+
+interface ActionBarProps {
+  likes: number;
+  comments?: number;
+  onLike?: () => void;
+  onComment?: () => void;
+  onReply?: () => void;
+  isLiked?: boolean;
+  isSaved?: boolean;
+}
+
+export default function ActionBar({
+  likes,
+  comments = 0,
+  onLike,
+  onComment,
+  onReply,
+  isLiked = false,
+  isSaved = false,
+}: ActionBarProps) {
+  return (
+    <div className="flex items-center gap-6 py-2 mt-3 border-t border-gray-700">
+      {/* Like Button */}
+      <button
+        onClick={onLike}
+        className={`flex items-center gap-2 hover:text-orange-500 transition-colors ${isLiked ? 'text-orange-500' : 'text-gray-400'}`}
+      >
+        <Icon
+        name="heart"
+        filled={isLiked}
+        color={isLiked ? "orange" : "gray"}
+        />
+        
+              <Text variant="small" className={isLiked ? "text-orange-500" : "text-gray-400"}>{likes}</Text>
+      </button>
+
+      {/* Comment Button */}
+      {comments !== undefined && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onComment?.();
+          }}
+          className="flex items-center gap-2 hover:text-orange-500 transition-colors text-gray-400"
+        >
+          <Icon name="comment" />
+          <Text variant="small" className="text-gray-400">View answers ({comments})</Text>
+        </button>
+      )}
+
+      {/* Reply Button */}
+      {onReply && (
+        <button
+          onClick={(event) => {
+            event.stopPropagation();
+            onReply?.();
+          }}
+          className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-sm font-medium transition-all ${
+            isSaved
+              ? "bg-green-50 text-green-700 border-green-200"
+              : "bg-[#FFF8F4] text-[#5C4338] border-[#F1D8CC] hover:bg-[#FFEFE6]"
+          }`}
+        >
+          {isSaved ? <Check size={16} /> : <Bookmark size={16} />}
+<span>{isSaved ? "Reply Later" : "Reply Later"}</span> 
+      </button>
+      )}
+    </div>
+  );
+}
+
+--- File: src/features/Q&A/component/molecules/AnswerInput.tsx ---
+import { useState } from "react";
+
+interface AnswerInputProps {
+  questionId: string;
+  onSubmit: (questionId: string, text: string) => void; //"غادي تناديها ملي تبعث الجواب
+}
+
+export function AnswerInput({ questionId, onSubmit }: AnswerInputProps) {
+  const [text, setText] = useState("");
+
+  const handleSubmit = () => {
+    onSubmit(questionId, text.trim());
+    setText("");
+  };
+
+return (
+    <div className="flex flex-col gap-2 pt-3">
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Write your answer..."
+        rows={3}
+        className="w-full border border-[#F1D8CC] rounded-xl px-4 py-3 text-sm resize-none bg-[#FFF5F0] focus:outline-none focus:ring-2 focus:ring-orange-200 text-[#2D1F1A] placeholder:text-[#8B6F63]"
+      />
+      <div className="flex justify-end">
+        <button
+          onClick={handleSubmit}
+          disabled={text.trim().length < 3}
+          className="bg-orange-500 hover:bg-orange-600 disabled:opacity-40 text-white text-sm font-medium px-5 py-2 rounded-xl transition-colors"
+        >
+          Publish answer
+        </button>
+      </div>
+    </div>
+  );
+}
+--- File: src/features/Q&A/component/molecules/QuestionCard.tsx ---
+/**
+ * MOLECULE: QuestionCard
+ * 
+ * Rôle: Affiche une question avec ses infos (auteur, titre, description, actions).
+ * Composée de: UserHeader (molecule) + Text (atom) + ActionBar (molecule)
+ * Utilisé dans: QuestionsSection, QuestionsList
+ * 
+ * Props:
+ * - title: Titre de la question
+ * - description: Description/contenu de la question
+ * - username: Nom de l'auteur
+ * - userInitials: Initiales de l'auteur
+ * - userBg: Couleur de fond de l'avatar
+ * - date: Date de création
+ * - likes: Nombre de likes
+ * - answersCount: Nombre de réponses
+ * - onLike?: Fonction appelée au clic sur like
+ * - onClick?: Fonction appelée au clic sur la question
+ */
+
+import { useState } from "react";
+import UserHeader from "./UserHeader";
+import ActionBar from "./ActionBar";
+import Text from "../atoms/Text";
+import { AnswerModel } from "../../type/qa.types";
+import { AnswerList } from "../organism/AnswerList";
+
+interface QuestionCardProps {
+  title: string;
+  description: string;
+  username: string;
+  userInitials: string;
+  userBg: string;
+  date: string;
+  likes: number;
+  answersCount: number;
+  isLiked?: boolean;
+  isSaved?: boolean;
+  questionId: string;
+  answers: AnswerModel[];
+
+  onLike?: () => void;
+  onReply?: () => void;
+  onClick?: () => void;
+  onSubmitAnswer: (questionId: string, text: string) => void;
+  onLikeAnswer: (questionId: string, answerId: string) => void;
+}
+
+export default function QuestionCard({
+  title,
+  description,
+  username,
+  userInitials,
+  userBg,
+  date,
+  likes,
+  answersCount,
+  isLiked = false,
+  isSaved = false,
+  questionId,
+  answers,
+  onLike,
+  onReply,
+  onClick,
+  onSubmitAnswer,
+  onLikeAnswer,
+}: QuestionCardProps) {
+  const [showAnswers, setShowAnswers] = useState(false);
+
+  return (
+    <div
+      onClick={onClick}
+      className="
+        bg-white
+        border
+        border-[#F1D8CC]
+        rounded-2xl
+        p-5
+        cursor-pointer
+      "
+    >
+      {/* USER HEADER */}
+      <div className="flex items-start justify-between">
+        <UserHeader
+          username={username}
+          initials={userInitials}
+          backgroundColor={userBg}
+          date={date}
+        />
+
+        <button className="text-[#8B6F63] hover:text-[#3D2A22] transition-colors" onClick={(e) => e.stopPropagation()}>
+          ⋯
+        </button>
+      </div>
+
+      {/* CONTENT */}
+      <div className="mt-4">
+        <Text
+          variant="h3"
+          className="font-bold text-[#3D2A22]"
+        >
+          {title}
+        </Text>
+
+        <Text
+          variant="body"
+          className="mt-2 text-[#6F564B]"
+        >
+          {description}
+        </Text>
+      </div>
+
+      {/* ACTIONS */}
+      <ActionBar
+        likes={likes}
+        comments={answersCount}
+        isLiked={isLiked}
+        isSaved={isSaved}
+        onLike={onLike}
+        onReply={onReply}
+        onComment={() => setShowAnswers((prev) => !prev)}
+      />
+
+      {/* INLINE ANSWERS */}
+      {showAnswers && (
+        <AnswerList
+          questionId={questionId}
+          answers={answers}
+          onSubmitAnswer={onSubmitAnswer}
+          onLikeAnswer={onLikeAnswer}
+        />
+      )}
+    </div>
+  );
+}
+--- File: src/features/Q&A/component/molecules/SearchBar.tsx ---
+/**
+ * MOLECULE: SearchBar
+ * 
+ * Rôle: Barre de recherche avec icône et placeholder.
+ * Composée de: Input (atom) + Icon (atom)
+ * Utilisé dans: Header, Sidebar
+ * 
+ * Props:
+ * - placeholder: Texte d'indication
+ * - value: Valeur actuelle
+ * - onChange: Fonction appelée lors du changement
+ * - onSearch?: Fonction appelée au submit
+ */
+
+import Input from "../atoms/Input";
+import {Icon} from "../atoms/Icon";
+
+interface SearchBarProps {
+  placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  onSearch?: () => void;
+}
+
+export default function SearchBar({
+  placeholder = "Search...",
+  value,
+  onChange,
+  onSearch,
+}: SearchBarProps) {
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      onSearch?.();
+    }
+  };
+
+  return (
+    <div onKeyPress={handleKeyPress}>
+      <Input
+        type="search"
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        icon={<Icon name="search" />}
+        className="w-full bg-[#F4E6D2] placeholder:text-gray-500 border-gray-300"
+      />
+    </div>
+  );
+}
+
+--- File: src/features/Q&A/component/molecules/UserHeader.tsx ---
+/**
+ * MOLECULE: UserHeader
+ * 
+ * Rôle: Combine Avatar + Nom d'utilisateur + Date pour afficher l'en-tête d'une question/réponse.
+ * Composée de: Avatar (atom) + Text (atom)
+ * Utilisé dans: QuestionCard, AnswerCard
+ * 
+ * Props:
+ * - username: Nom de l'utilisateur
+ * - initials: Initiales de l'utilisateur
+ * - backgroundColor: Couleur de fond de l'avatar
+ * - date: Date de création
+ * - handle?: Pseudo/handle de l'utilisateur (optionnel)
+ */
+
+import { AvatarAtom } from "../atoms/AvatarAtom";
+import Text from "../atoms/Text";
+
+interface UserHeaderProps {
+  username: string;
+  initials: string;
+  backgroundColor: string;
+  date: string;
+  handle?: string;
+}
+
+export default function UserHeader({
+  username,
+  initials,
+  backgroundColor,
+  date,
+  handle,
+}: UserHeaderProps) {
+  return (
+    <div className="flex items-center gap-3">
+      <AvatarAtom name={username} avatarUrl={null} size="md" />
+      <div className="flex flex-col">
+        <div className="flex items-center gap-2">
+          <Text variant="body" className="font-semibold text-white">
+            {username}
+          </Text>
+          {handle && (
+            <Text variant="small" color="muted" className="text-gray-500">
+              @{handle}
+            </Text>
+          )}
+        </div>
+        <Text variant="small" color="muted" className="text-gray-500">
+          {date}
+        </Text>
+      </div>
+    </div>
+  );
+
+
+--- File: src/features/Q&A/component/organism/AnswerList.tsx ---
+import { AnswerModel } from "../../type/qa.types";
+import { AvatarAtom } from "../atoms/AvatarAtom";
+import { AnswerInput } from "../molecules/AnswerInput";
+import { Icon } from "../atoms/Icon";
+import { Smartphone } from "lucide-react";
+interface AnswerListProps {
+  questionId: string;
+  answers: AnswerModel[];
+  onSubmitAnswer: (questionId: string, text: string) => void;
+  onLikeAnswer: (questionId: string, answerId: string) => void;
+}
+
+export function AnswerList({
+  questionId,
+  answers,
+  onSubmitAnswer,
+  onLikeAnswer,
+}: AnswerListProps
+  ) {
+  return (
+    <div className="mt-4 border-t border-[#F1D8CC] pt-4 flex flex-col gap-3">
+      {answers.length === 0 ? (
+        <p className="text-sm text-[#8B6F63] italic">
+          No answers found. Be the first to answer!
+        </p>
+      ) : (
+        answers.map((answer) => (
+          <div
+            key={answer.id}
+            className="flex gap-3 bg-[#FFF5F0] rounded-xl p-3 border border-[#F1D8CC]"
+          >
+            <AvatarAtom
+              avatarUrl={answer.author.avatarUrl}
+              name={answer.author.username}
+              size={"sm"}
+            />
+            <div className="flex-1">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-sm font-medium text-[#3D2A22]">
+                  {answer.author.username}
+                </span>
+                <span className="text-xs text-[#8B6F63]">
+                  {new Date(answer.createdAt).toLocaleDateString("fr-FR")}
+                </span>
+              </div>
+              <p className="text-sm text-[#2D1F1A] leading-relaxed">
+                {answer.content}
+              </p>
+              <button
+                onClick={() => onLikeAnswer(questionId, answer.id)}
+                className={`mt-2 text-xs flex items-center gap-1 transition-colors ${
+                  answer.isLiked
+                    ? "text-orange-500"
+                    : "text-[#8B6F63] hover:text-orange-400"
+                }`}
+              >
+       <Icon
+    name="heart"
+    size="sm"
+    filled={answer.isLiked}
+    color={answer.isLiked ? "orange" : "gray"}
+  />
+  <span>{answer.likesCount}</span>
+                </button>
+            </div>
+          </div>
+        ))
+      )}
+
+      <AnswerInput questionId={questionId} onSubmit={onSubmitAnswer} />
+    </div>
+}
+
+--- File: src/features/Q&A/component/organism/Header.tsx ---
+/**
+ * ORGANISM: Header
+ * 
+ * Rôle: En-tête principal du site avec titre, recherche et bouton CTA.
+ * Composée de: SearchBar (molecule) + Button (atom) + Text (atom)
+ * Utilisé dans: MainLayout
+ * 
+ * Props:
+ * - onSearch?: Function called when searching
+ * - onAskQuestion?: Function called when the "Ask a question" button is clicked
+ * - searchValue?: Current search value
+ */
+
+import SearchBar from "../molecules/SearchBar";
+import Button from "../atoms/Button";
+import Text from "../atoms/Text";
+import { Pencil } from "lucide-react";
+
+interface HeaderProps {
+  onSearch?: (query: string) => void;
+  onAskQuestion: () => void;
+  searchValue?: string;
+}
+export default function Header({
+  onSearch,
+  onAskQuestion,
+  searchValue,
+}: HeaderProps) {
+  const handleAskQuestion = () => {
+    onAskQuestion();
+  };
+
+  return (
+    <header className="bg-white border-b border-[#F1D8CC] py-6 px-6 shadow-sm">
+      <div className="max-w-7xl mx-auto">
+
+        {/* TOP BAR */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <Text variant="h2" className="text-[#3D2A22] font-bold">
+    Q&A: Ask questions, find answers!
+            </Text>
+
+            <Text
+              variant="body"
+              className="text-[#8B6F63] mt-1"
+            >
+    Share your cooking questions and learn together.
+            </Text>
+          </div>
+
+         
+        </div>
+
+        {/* SEARCH + CTA */}
+        <div className="flex gap-4 items-center">
+          <div className="flex-1">
+            <SearchBar
+              value={searchValue}
+              onChange={onSearch}
+              placeholder="Search..."
+            />
+          </div>
+
+          <Button
+            variant="primary"
+            size="md"
+            onClick={handleAskQuestion}
+            icon={<Pencil size={18} />}
+          >
+            Ask a question
+          </Button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+--- File: src/features/Q&A/component/organism/QuestionList.tsx ---
+import { AnswerModel, QuestionModel } from '../../type/qa.types';
+import  QuestionCard from '../molecules/QuestionCard';
+
+interface Props {
+  questions: QuestionModel[];
+  answersMap: Record<string, AnswerModel[]>;
+  onLike: (id: string) => void;
+  onSaveLater: (id: string) => void;
+  onSubmitAnswer: (questionId: string, text: string) => void;
+  onViewAnswers: (questionId: string) => void;
+  onLikeAnswer: (questionId: string, answerId: string) => void;
+}
+
+export const QuestionList = ({ questions, answersMap, onLike, onSaveLater, onSubmitAnswer, onViewAnswers, onLikeAnswer }: Props) => (
+  <div className="question-list">
+    {questions.length === 0 ? (
+      <div className="empty-state">No questions found.</div>
+    ) : (
+      questions.map((q) => (
+        <QuestionCard
+          key={q.id}
+          title={q.title}
+          description={q.description ?? ""}
+          username={q.author?.username ?? "Utilisateur"}
+          userInitials={(q.author?.username ?? "").split(" ").map((n: string) => n[0] || "").join("").toUpperCase().slice(0, 2)}
+          userBg=""
+          date={q.createdAt}
+          likes={q.likesCount ?? 0}
+          answersCount={q.answersCount ?? 0}
+          isLiked={q.isLiked ?? false}
+          isSaved={q.isSavedForLater ?? false}
+          questionId={q.id}
+          answers={answersMap[q.id] || []}
+          onLike={() => onLike(q.id)}
+          onReply={() => onSaveLater(q.id)}
+          onClick={() => onViewAnswers(q.id)}
+          onSubmitAnswer={onSubmitAnswer}
+          onLikeAnswer={onLikeAnswer}
+        />
+      ))
+    )}
+  </div>
+);
+
+
+--- File: src/features/Q&A/component/organism/QuestionModal.tsx ---
+interface QuestionModalProps {
+  open: boolean;
+  title: string;
+  content: string;
+  onClose: () => void;
+  onChangeTitle: (value: string) => void;
+  onChangeContent: (value: string) => void;
+  onSubmit: () => void;
+}
+
+export default function QuestionModal({
+  open,
+  title,
+  content,
+  onClose,
+  onChangeTitle,
+  onChangeContent,
+  onSubmit,
+}: QuestionModalProps) {
+  if (!open) return null;
+///ida ja props open = true from (header -> page ) then the modal will be rendered and the user can interact with it
+  return (
+    <div
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white w-[500px] rounded-xl p-6 shadow-xl"
+        onClick={(event) => event.stopPropagation()}
+      >
+        <h2 className="text-xl font-bold mb-4 text-black">
+          Ask a Question
+        </h2>
+
+        <input
+          value={title}
+          onChange={(e) => onChangeTitle(e.target.value)}
+          placeholder="Question title"
+          className="w-full border rounded p-2 mb-3"
+        /> 
+  {
+        /** on a deja 
+         * const [title, setTitle] = useState("");
+<Modal
+   title={title}
+   onChangeTitle={setTitle}
+/> */}
+        <textarea
+          value={content}
+          onChange={(e) => onChangeContent(e.target.value)}
+          placeholder="Describe your question"
+          className="w-full border rounded p-2 min-h-[120px] mb-4"
+        />
+
+        <div className="flex justify-end gap-2">
+          <button
+            onClick={onClose}
+            className="border px-4 py-2 rounded"
+          >
+            Cancel
+          </button>
+
+          <button
+            onClick={onSubmit}
+            className="bg-orange-500 text-white px-4 py-2 rounded"
+          >
+            Publish
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+--- File: src/features/Q&A/component/organism/Sidebar.tsx ---
+/**
+ * ORGANISM: Sidebar
+ * 
+ * Rôle: Barre latérale de navigation simplifiée (sans catégories).
+ * Composée de: Button (atom) x N
+ * Utilisé dans: MainLayout
+ * 
+ * Props:
+ * - onQuestionsClick?: Fonction appelée au clic sur "الأسئلة"
+ * - onMyQuestionsClick?: Fonction appelée au clic sur "أسئلتي"
+ * - onAnswersClick?: Fonction appelée au clic sur "أجوبتي"
+ * - onRecentClick?: Fonction appelée au clic sur "أحب لاحقاً"
+ */
+import Button from "../atoms/Button";
+import Text from "../atoms/Text";
+
+import {
+  HelpCircle,
+  User,
+  MessageCircle,
+  Clock,
+} from "lucide-react";
+
+type QATab = 'all' | 'my-questions' | 'my-answers' | 'answer-later';
+
+interface SidebarProps {
+  activeTab: QATab;
+  onQuestionsClick?: () => void;
+  onMyQuestionsClick?: () => void;
+  onAnswersClick?: () => void;
+  onRecentClick?: () => void;
+}
+
+export default function Sidebar({
+  activeTab,
+  onQuestionsClick,
+  onMyQuestionsClick,
+  onAnswersClick,
+  onRecentClick,
+}: SidebarProps) {
+  return (
+    <aside className="bg-white rounded-2xl p-6 h-fit sticky top-4 w-full max-w-xs">
+      
+      <Text variant="h3" className="font-bold mb-5 text-[#3D2A22]">
+        Q&A Navigation
+      </Text>
+
+      <nav className="space-y-3">
+
+        <Button
+          variant={activeTab === 'all' ? 'primary' : 'ghost'}
+          size="md"
+          onClick={onQuestionsClick}
+          className={`w-full justify-start ${activeTab === 'all' ? '' : 'text-[#5C4338] hover:bg-[#FFF5F0]'}`}
+          icon={<HelpCircle size={18} />}
+        >
+          <span className="text-lg">Questions</span>
+        </Button>
+
+        <Button
+          variant={activeTab === 'my-questions' ? 'primary' : 'ghost'}
+          size="md"
+          onClick={onMyQuestionsClick}
+          className={`w-full justify-start ${activeTab === 'my-questions' ? '' : 'text-[#5C4338] hover:bg-[#FFF5F0]'}`}
+          icon={<User size={18} />}
+        >
+          <span className="text-lg">My Questions</span>
+        </Button>
+
+        <Button
+          variant={activeTab === 'my-answers' ? 'primary' : 'ghost'}
+          size="md"
+          onClick={onAnswersClick}
+          className={`w-full justify-start ${activeTab === 'my-answers' ? '' : 'text-[#5C4338] hover:bg-[#FFF5F0]'}`}
+          icon={<MessageCircle size={18} />}
+        >
+          <span className="text-lg">My Answers</span>
+        </Button>
+
+        <Button
+          variant={activeTab === 'answer-later' ? 'primary' : 'ghost'}
+          size="md"
+          onClick={onRecentClick}
+          className={`w-full justify-start ${activeTab === 'answer-later' ? '' : 'text-[#5C4338] hover:bg-[#FFF5F0]'}`}
+          icon={<Clock size={18} />}
+        >
+          <span className="text-lg">Saved for Later</span>
+        </Button>
+
+      </nav>
+    </aside>
+  );
+}
+
+--- File: src/features/Q&A/component/template/QAPage.tsx ---
+'use client';
+
+import { useState, useMemo } from "react";
+
+// ORGANISMS
+import Header from "../organism/Header";
+import Sidebar from "../organism/Sidebar";
+import { QuestionList } from "../organism/QuestionList";
+import QuestionModal from "../organism/QuestionModal";
+// mock DATA and TYPES
+import { MOCK_QUESTIONS,MOCK_ANSWERS } from "../../constant/qa.mock";
+import { QANavTab, QuestionModel,AnswerModel } from "../../type/qa.types";
+
+
+
+
+export default function QAPage() {
+
+  // ================= STATE =================
+  const [questions, setQuestions] = useState<QuestionModel[]>(MOCK_QUESTIONS);
+  const [search, setSearch] = useState("");
+  const [activeTab, setActiveTab] = useState<QANavTab>("all");
+
+const [answersMap, setAnswersMap] = useState<Record<string, AnswerModel[]>>(MOCK_ANSWERS);
+
+
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [newTitle, setNewTitle] = useState("");
+const [newContent, setNewContent] = useState("");
+const [successToastVisible, setSuccessToastVisible] = useState(false);
+
+  const MY_USER_ID = "me";
+
+  // ================= FILTER =================
+  const filtered = useMemo(() => {
+    let list = questions;
+
+    if (activeTab === "my-questions")
+      list = list.filter(q => q.author.id === MY_USER_ID);
+
+    if (activeTab === "my-answers")
+      list = list.filter(q => q.isAnsweredByMe);
+ 
+    if (activeTab === "answer-later")
+      list = list.filter(q => q.isSavedForLater);
+
+    if (search.trim()) {
+      const s = search.toLowerCase();
+      list = list.filter(
+        q =>
+          q.title.toLowerCase().includes(s) ||
+          q.description?.toLowerCase().includes(s)
+      );
+    }
+
+    return list;
+  }, [questions, search, activeTab]);
+
+  // ================= ACTIONS =================
+
+
+
+/***************************** */
+
+const handleSubmitAnswer = (questionId: string, text: string) => {
+  const newAnswer: AnswerModel = {
+    id: crypto.randomUUID(),
+    content: text,
+    author: { id: MY_USER_ID, username: "Vous", handle: "@vous", avatarUrl: null },
+    createdAt: new Date().toISOString(),
+    likesCount: 0,
+    isLiked: false,
+  };
+          setAnswersMap((prev) => ({
+    ...prev,
+    [questionId]: [...(prev[questionId] ?? []), newAnswer],
+  }));
+
+  setQuestions((prev) =>
+    prev.map((q) =>
+      q.id === questionId
+        ? { ...q, answersCount: q.answersCount + 1, isAnsweredByMe: true }
+        : q
+    )
+  );
+};
+
+const handleViewAnswers = (questionId: string) => {
+  // toggle or navigate to answers view; for now, just log and expand inline
+  console.log("view answers", questionId);
+};
+
+const handleLikeAnswer = (questionId: string, answerId: string) => {
+  setAnswersMap((prev) => ({
+    ...prev,
+    [questionId]: (prev[questionId] ?? []).map((a) =>
+      a.id === answerId
+        ? { ...a, isLiked: !a.isLiked, likesCount: a.isLiked ? a.likesCount - 1 : a.likesCount + 1 }
+        : a
+    ),
+  }));
+};
+
+const handleCreateQuestion = () => {
+ 
+  const now = new Date().toISOString();
+
+  const newQuestion: QuestionModel = {
+    id: crypto.randomUUID(),
+    title: newTitle,
+    description: newContent,
+    author: {
+      id: MY_USER_ID,
+      username: "Vous",
+      handle: "@vous",
+      avatarUrl: null,
+    },
+    createdAt: now,
+    likesCount: 0,
+    answersCount: 0,
+    isLiked: false,
+    isAnsweredByMe: false,
+    isSavedForLater: false,
+  };
+
+  setQuestions((prev) => [newQuestion, ...prev]);
+  setNewTitle("");
+  setNewContent("");
+  setIsModalOpen(false);
+  setSuccessToastVisible(true);
+  window.setTimeout(() => setSuccessToastVisible(false), 3000);
+  console.log(successToastVisible);
+
+};
+
+
+
+
+
+  const handleLike = (id: string) => {
+    setQuestions(prev =>
+      prev.map(q =>
+        q.id === id
+          ? {
+              ...q,
+              isLiked: !q.isLiked,
+              likesCount: q.isLiked
+                ? q.likesCount - 1
+                : q.likesCount + 1,
+            }
+          : q
+      )
+    );
+  };
+
+  const handleSaveLater = (id: string) => {
+    setQuestions(prev =>
+      prev.map(q =>
+        q.id === id
+          ? { ...q, isSavedForLater: !q.isSavedForLater }
+          : q
+      )
+    );
+  };
+
+ return (
+  <div className="min-h-screen w-full bg-[#FFF5F0] flex text-[#2D1F1A]">
+
+    {/* SIDEBAR */}
+    <div className="w-[260px] bg-white border-r border-[#F1D8CC] shadow-sm">
+      <Sidebar
+        activeTab={activeTab}
+        onQuestionsClick={() => setActiveTab("all")}
+        onMyQuestionsClick={() => setActiveTab("my-questions")}
+        onAnswersClick={() => setActiveTab("my-answers")}
+        onRecentClick={() => setActiveTab("answer-later")}
+      />
+    </div>
+
+    {/* MAIN CONTENT */}
+    <div className="flex-1 flex flex-col">
+
+      {/* HEADER */}
+      <div className="border-b border-[#F1D8CC] bg-white shadow-sm">
+        <Header
+          searchValue={search}
+          onSearch={setSearch}
+          onAskQuestion={() => setIsModalOpen(true)}
+        />
+      </div>
+
+      {/* PAGE BODY */}
+      <div className="px-6 md:px-10 py-8 flex justify-center">
+
+        <div className="w-full max-w-5xl space-y-6">
+
+          {/* TITLE */}
+          <div>
+            <h1 className="text-3xl font-bold text-[#3D2A22]">
+              Q&A: Ask your questions
+            </h1>
+
+            <p className="text-sm text-[#8B6F63] mt-2">
+              Share your cooking questions and get help from the community.
+            </p>
+          </div>
+
+          {/* QUESTION CARD CONTAINER */}
+          <div className="bg-white rounded-2xl border border-[#F1D8CC] shadow-md p-6">
+
+            <QuestionList
+                questions={filtered}
+                answersMap={answersMap}
+                onLike={handleLike}
+                onSaveLater={handleSaveLater}
+              onSubmitAnswer={handleSubmitAnswer}
+              onLikeAnswer={handleLikeAnswer}
+              onViewAnswers={handleViewAnswers}
+
+            />
+
+          </div>
+        </div>
+      </div>
+
+      <QuestionModal
+          open={isModalOpen} // open = true from header -> page sooo setopenmodal mahe open=true => the modal will be rendered
+          title={newTitle}
+          content={newContent}
+          onClose={() => setIsModalOpen(false)}
+          onChangeTitle={setNewTitle}
+          onChangeContent={setNewContent}
+          onSubmit={handleCreateQuestion}
+        />
+
+      <div
+        className={`fixed bottom-6 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 rounded-full border border-[#D4D4D8] bg-[#111827] px-5 py-3 text-center text-sm text-white shadow-xl transition-opacity duration-300 ${successToastVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        aria-live="polite"
+      >
+        Question added successfully
+      </div>
+
+
+
+
+    </div>
+  </div>
+);
+}
+
+--- File: src/features/Q&A/constant/qa.mock.ts ---
+import { QuestionModel, AnswerModel } from '../type/qa.types';
+
+export const MOCK_QUESTIONS: QuestionModel[] = [
+  {
+    id: '1',
+    title: 'Secret du Couscous',
+    description: 'Comment réussir un Couscous parfaitement graine par graine ?',
+    author: { id: 'u1', username: 'Messaoud', handle: '@messaoud', avatarUrl: null },
+    createdAt: '2025-04-30',
+    likesCount: 12,
+    answersCount: 3,
+    isLiked: false,
+    isAnsweredByMe: true,
+    isSavedForLater: false,
+  },
+  {
+    id: '2',
+    title: 'Recette Chorba',
+    description: 'Quelle est la meilleure recette de la chorba frik authentique ?',
+    author: { id: 'u2', username: 'Ahmed', handle: '@ahmed', avatarUrl: null },
+    createdAt: '2025-04-29',
+    likesCount: 8,
+    answersCount: 1,
+    isLiked: false,
+    isAnsweredByMe: false,
+    isSavedForLater: false,
+  },
+  {
+    id: '3',
+    title: 'Pâte Feuilletée Maison',
+    description: 'Astuces pour réussir la pâte feuilletée maison comme un pro ?',
+    author: { id: 'me', username: 'Sara', handle: '@sara', avatarUrl: null },
+    createdAt: '2025-04-28',
+    likesCount: 15,
+    answersCount: 5,
+    isLiked: false,
+    isAnsweredByMe: false,
+    isSavedForLater: false,
+  },
+];
+
+export const MOCK_ANSWERS: Record<string, AnswerModel[]> = {
+  '1': [
+    {
+      id: 'a1',
+      content: 'Il faut bien aérer la semoule entre chaque cuisson !',
+      author: { id: 'u3', username: 'Sara', handle: '@sara', avatarUrl: null },
+      createdAt: '2025-04-30',
+      likesCount: 4,
+    },
+     {
+      id: 'a2',
+      content: 'Il faut  entre chaque cuisson !',
+      author: { id: 'u3', username: 'ahmmed', handle: '@ahmmed', avatarUrl: null },
+      createdAt: '2025-04-30',
+      likesCount: 4,
+    },
+     {
+      id: 'a3',
+      content: 'Il faut bien  !',
+      author: { id: 'u3', username: 'wafaa', handle: '@wafaa', avatarUrl: null },
+      createdAt: '2025-04-30',
+      likesCount: 4,
+    },
+  ],
+};
+
+
+--- File: src/features/Q&A/type/qa.types.ts ---
+export interface QAAuthorModel {
+  id: string;
+  username: string;
+  handle: string;
+  avatarUrl: string | null;
+}
+
+export interface AnswerModel {
+  id: string;
+  content: string;
+  author: QAAuthorModel;
+  createdAt: string;
+  likesCount: number;
+  isLiked?: boolean;
+}
+
+export interface QuestionModel {
+  id: string;
+  title: string;
+  description?: string;
+  author: QAAuthorModel;
+  createdAt: string;
+  likesCount: number;
+  answersCount: number;
+  isLiked?: boolean;
+  isAnsweredByMe?: boolean;
+  isSavedForLater?: boolean;
+}
+
+export interface QuestionsResponse {
+  data: QuestionModel[];
+  nextCursor: string | null;
+  results: number;
+}
+
+export type QANavTab = 'all' | 'my-questions' | 'my-answers' | 'answer-later';
+
+--- File: src/features/Q&A/styles/qa.css ---
+.qa-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 1.5rem;
+  padding: 2rem;
+  min-height: 100vh;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.qa-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.qa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.qa-header h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.qa-header p {
+  margin: 0.5rem 0 0;
+  color: hsl(var(--muted-foreground));
+  max-width: 44rem;
+}
+
+.qa-header button {
+  padding: 0.95rem 1.2rem;
+  border: none;
+  border-radius: 0.9rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  color: inherit;
+  outline: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.question-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.question-card {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1.15rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.card-top > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  color: hsl(var(--muted-foreground));
+  font-size: 0.9rem;
+}
+
+.card-top span:first-child {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+
+.question-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.25;
+}
+
+.question-card p {
+  margin: 0;
+  color: hsl(var(--muted-foreground));
+  line-height: 1.6;
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.card-actions button,
+.like-btn {
+  border: 1px solid hsl(var(--border));
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  background: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.like-btn.liked {
+  border-color: hsl(var(--primary));
+  background: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+}
+
+.avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-weight: 700;
+}
+
+.empty-state {
+  padding: 1.5rem;
+  border: 1px dashed hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--muted) / 0.24);
+  color: hsl(var(--muted-foreground));
+}
+
+.qa-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-title {
+  margin: 0;
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: none;
+  border-radius: 0.9rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nav-item span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.nav-item.active {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  font-weight: 700;
+}
+
+.nav-item.active span {
+  background: hsl(var(--primary-foreground));
+  color: hsl(var(--primary));
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.modal {
+  display: grid;
+  gap: 1rem;
+  width: min(560px, 100%);
+  padding: 1.75rem;
+  border-radius: 1.25rem;
+  background: hsl(var(--card));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.14);
+}
+
+.modal h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  background: hsl(var(--card));
+  color: inherit;
+  outline: none;
+}
+
+.modal textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.modal-actions button {
+  min-width: 120px;
+  padding: 0.95rem 1rem;
+  border: none;
+  border-radius: 0.85rem;
+  cursor: pointer;
+}
+
+.modal-actions button:first-child {
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  color: inherit;
+}
+
+.modal-actions button:last-child {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+@media (max-width: 900px) {
+  .qa-layout {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .qa-header {
+    flex-direction: column;
+  }
+
+  .qa-sidebar {
+    order: -1;
+  }
+}
+
+
