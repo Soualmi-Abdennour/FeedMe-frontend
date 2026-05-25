@@ -7,15 +7,14 @@ export interface ProductModel {
     name: string;
     price: number;
     description: string;
-    preparationTime: string;
+    preparingTime: string;  
     category: ProductCategory | string;
     image: string;
 }
-
 export interface ProductsResponse {
-    data: { results: number; items: ProductModel[] };
+    status: string;
+    data: { results: number; products: ProductModel[] };
 }
-
 export interface AddProductPayload {
     name: string;
     price: number;

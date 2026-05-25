@@ -4,6 +4,8 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { ProductModel } from "../../types/product.types";
 
+const BASE_URL = "http://localhost:8000";
+
 interface ProductCardProps {
     product: ProductModel;
     onEdit: (product: ProductModel) => void;
@@ -13,6 +15,12 @@ interface ProductCardProps {
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onDelete }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    const imageUrl = product.image
+        ? product.image.startsWith("http")
+            ? product.image
+            : `${BASE_URL}${product.image}`
+        : "/placeholder-product.png";
 
     useEffect(() => {
     const handleOutside = (e: MouseEvent) => {
@@ -26,7 +34,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onDel
 
     return (
     <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm border border-neutral-100">
-      {/* 3-dot menu */}
         <div ref={menuRef} className="absolute top-2 right-2 z-10">
         <button
             onClick={() => setMenuOpen((prev) => !prev)}
@@ -54,17 +61,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onEdit, onDel
         )}
         </div>
 
-      {/* Image */}
         <div className="relative w-full h-36">
         <Image
-            src={product.image || "/placeholder-product.png"}
+            src={imageUrl}
             alt={product.name}
             fill
             className="object-cover"
         />
         </div>
 
-      {/* Info */}
         <div className="p-3">
         <p className="text-sm font-semibold text-neutral-800 truncate">{product.name}</p>
         <p className="text-sm font-bold text-primary-500 mt-0.5">{product.price} DA</p>

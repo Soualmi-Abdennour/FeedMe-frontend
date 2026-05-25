@@ -3,41 +3,41 @@ import { ProductModel, ProductsResponse, AddProductPayload, UpdateProductPayload
 
 export const productManagementApiSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({
-    getProducts: build.query<ProductModel[], void>({
-        query: () => "/products",
-        transformResponse: (response: ProductsResponse) => response.data?.items || [],
-        providesTags: ["Products"],
-    }),
-    addProduct: build.mutation<ProductModel, AddProductPayload>({
-        query: (payload) => {
-        const formData = new FormData();
-        formData.append("name", payload.name);
-        formData.append("price", String(payload.price));
-        formData.append("description", payload.description);
-        formData.append("preparationTime", payload.preparationTime);
-        formData.append("category", payload.category);
-        if (payload.image) formData.append("image", payload.image);
-        return { url: "/products", method: "POST", body: formData };
-        },
-        invalidatesTags: ["Products"],
-    }),
-    updateProduct: build.mutation<ProductModel, UpdateProductPayload>({
-        query: ({ id, ...payload }) => {
-        const formData = new FormData();
-        formData.append("name", payload.name);
-        formData.append("price", String(payload.price));
-        formData.append("description", payload.description);
-        formData.append("preparationTime", payload.preparationTime);
-        formData.append("category", payload.category);
-        if (payload.image) formData.append("image", payload.image);
-        return { url: `/products/${id}`, method: "PUT", body: formData };
-        },
-        invalidatesTags: ["Products"],
-    }),
-    deleteProduct: build.mutation<void, string>({
-        query: (id) => ({ url: `/products/${id}`, method: "DELETE" }),
-        invalidatesTags: ["Products"],
-    }),
+        getProducts: build.query<ProductModel[], void>({
+            query: () => "/products",
+            transformResponse: (response: ProductsResponse) => response.data?.products || [],
+            providesTags: ["Products"],
+        }),
+        addProduct: build.mutation<ProductModel, AddProductPayload>({
+            query: (payload) => {
+                const formData = new FormData();
+                formData.append("name", payload.name);
+                formData.append("price", String(payload.price));
+                formData.append("description", payload.description);
+                formData.append("preparingTime", String(parseInt(payload.preparationTime)));
+                formData.append("category", JSON.stringify([payload.category]));
+                if (payload.image) formData.append("image", payload.image);
+                return { url: "/products", method: "POST", body: formData };
+            },
+            invalidatesTags: ["Products"],
+        }),
+        updateProduct: build.mutation<ProductModel, UpdateProductPayload>({
+            query: ({ id, ...payload }) => {
+                const formData = new FormData();
+                formData.append("name", payload.name);
+                formData.append("price", String(payload.price));
+                formData.append("description", payload.description);
+                formData.append("preparingTime", String(parseInt(payload.preparationTime)));
+                formData.append("category", JSON.stringify([payload.category]));
+                if (payload.image) formData.append("image", payload.image);
+                return { url: `/products/${id}`, method: "PATCH", body: formData };
+            },
+            invalidatesTags: ["Products"],
+        }),
+        deleteProduct: build.mutation<void, string>({
+            query: (id) => ({ url: `/products/${id}`, method: "DELETE" }),
+            invalidatesTags: ["Products"],
+        }),
     }),
 });
 

@@ -2,68 +2,57 @@
 
 import React, { useState } from "react";
 import { ProductModel, AddProductPayload } from "../../types/product.types";
-import { MOCK_PRODUCTS } from "../../constants/product.mock"; // adjust path
 import { ProductGrid } from "../organisms/ProductGrid";
 import { ProductFormModal } from "../molecules/ProductFormModal";
 import { DeleteProductModal } from "../molecules/DeleteProductModal";
+import {
+  useGetProductsQuery,
+  useAddProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} from "../../store/productManagementApi.slice";
 
 export const ProductManagementTemplate: React.FC = () => {
-  const [products, setProducts] = useState<ProductModel[]>(MOCK_PRODUCTS);
-  const [isLoading] = useState(false);
-
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editTarget,   setEditTarget]   = useState<ProductModel | null>(null);
+  const [editTarget, setEditTarget] = useState<ProductModel | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<ProductModel | null>(null);
 
-  // ✅ Add
-  const handleAdd = (payload: AddProductPayload) => {
-    const newProduct: ProductModel = {
-      id: `prod-${Date.now()}`,
-      name: payload.name,
-      price: payload.price,
-      description: payload.description,
-      preparationTime: payload.preparationTime,
-      category: payload.category,
-      image: payload.image
-        ? URL.createObjectURL(payload.image)
-        : "/placeholder-product.png",
-    };
-    setProducts((prev) => [newProduct, ...prev]);
-    setShowAddModal(false);
+  const { data: products = [], isLoading } = useGetProductsQuery();
+  const [addProduct] = useAddProductMutation();
+  const [updateProduct] = useUpdateProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleAdd = async (payload: AddProductPayload) => {
+    try {
+      await addProduct(payload).unwrap();
+      setShowAddModal(false);
+    } catch (error) {
+      console.error("Failed to create product:", error);
+    }
   };
 
-  const handleEdit = (payload: AddProductPayload) => {
+  const handleEdit = async (payload: AddProductPayload) => {
     if (!editTarget) return;
-    setProducts((prev) =>
-      prev.map((p) =>
-        p.id === editTarget.id
-          ? {
-              ...p,
-              name: payload.name,
-              price: payload.price,
-              description: payload.description,
-              preparationTime: payload.preparationTime,
-              category: payload.category,
-              image: payload.image
-                ? URL.createObjectURL(payload.image)
-                : p.image,
-            }
-          : p
-      )
-    );
-    setEditTarget(null);
+    try {
+      await updateProduct({ id: editTarget.id, ...payload }).unwrap();
+      setEditTarget(null);
+    } catch (error) {
+      console.error("Failed to update product:", error);
+    }
   };
 
-  // ✅ Delete
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!deleteTarget) return;
-    setProducts((prev) => prev.filter((p) => p.id !== deleteTarget.id));
-    setDeleteTarget(null);
+    try {
+      await deleteProduct(deleteTarget.id).unwrap();
+      setDeleteTarget(null);
+    } catch (error) {
+      console.error("Failed to delete product:", error);
+    }
   };
 
   return (
-    <div className="flex-1 p-6 bg-[#fdf6f0`] min-h-screen">
-      {/* Header */}
+    <div className="flex-1 p-6 bg-[#fdf6f0] min-h-screen">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-neutral-800">Product management:</h1>
         <button
