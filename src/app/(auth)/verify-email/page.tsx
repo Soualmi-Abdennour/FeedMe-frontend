@@ -2,3 +2,4 @@ import VerifyEmailTokenPage from "@/features/auth/components/templates/VerifyEma
 
 
 export default VerifyEmailTokenPage
+

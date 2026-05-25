@@ -45,10 +45,10 @@ export type VerificationState = "LOADING" | "ERROR" | "FAIL" | "SUCCESS" | "DEFA
 
 export interface IVerificationProcessProps {
     verificationMessages:VerificationProcessState;
-    onSuccessFn?: (verificationResponse:UserResponse) => void | Promise<UserResponse>;
-    onFailFn?: (verificationResponse?:UserResponse) => void | Promise<UserResponse>;
-    onErrorFn?: (verificationResponse?: UserResponse) => void | Promise<UserResponse>;
-    queryFn?:()=>Promise<UserResponse>
+    onSuccessFn: (verificationResponse:UserResponse) => void | Promise<UserResponse>;
+    onFailFn: (verificationResponse?:UserResponse) => void | Promise<UserResponse>;
+    onErrorFn: (verificationResponse?: UserResponse) => void | Promise<UserResponse>;
+    queryFn:()=>Promise<UserResponse>
 }
 export interface IVerificationViewProps {
     title?: string,

@@ -20,7 +20,7 @@ export type PostDbModel = {
     description: string;
     video: string | null;        // ← أضفناها (موجودة في الباك اند)
     contentType: "RECIPE" | "DISH";
-    mediaType: "IMAGE" | "VIDEO" | "NONE";  // ← عدلناها تطابق الباك اند
+    mediaType: "IMAGE"|"MULTI_IMAGE"|"VIDEO";  // ← عدلناها تطابق الباك اند
     isPinned: boolean;
     likeCount: number;
     commentCount: number;

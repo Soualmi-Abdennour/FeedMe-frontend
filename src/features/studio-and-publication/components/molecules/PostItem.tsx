@@ -61,7 +61,7 @@ function PostItem({post} : {post:PostDbModel}) {
 
                 {/* Follow button */}
                 <Button
-                    variant="outline"
+                    variant={"primary"}
                     size="sm"
                     className="shrink-0 rounded-full border-white/40 bg-white/10 text-white backdrop-blur-sm hover:bg-white hover:text-black transition-all"
                 >
