@@ -10,7 +10,8 @@ import storage from 'redux-persist/lib/storage'
 // RTK QUERY SETUP 
 export const fetchAPI = createApi({
     reducerPath: "api",
-    tagTypes: ['Products', 'User', 'Onboarding'], 
+    // 🔽 تم تحديث السطر بالأسفل وإضافة التاجز هنا 🔽
+    tagTypes: ['Products', 'User', 'Onboarding', 'Questions', 'Answers'], 
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:8000/api",
         prepareHeaders: (headers, { getState }) => {

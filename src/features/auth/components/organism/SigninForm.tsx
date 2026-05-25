@@ -52,6 +52,10 @@ function SigninForm() {
                 dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
                 router.replace("/onboarding")
             }
+            else{
+                dispatch(setAuthState({ jwtToken: responseData?.jwtToken! }))
+                router.replace("/Q&A")
+            }
         }
     }
     return (
