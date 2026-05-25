@@ -1,22 +1,4 @@
-/**
- * MOLECULE: QuestionCard
- * 
- * Rôle: Affiche une question avec ses infos (auteur, titre, description, actions).
- * Composée de: UserHeader (molecule) + Text (atom) + ActionBar (molecule)
- * Utilisé dans: QuestionsSection, QuestionsList
- * 
- * Props:
- * - title: Titre de la question
- * - description: Description/contenu de la question
- * - username: Nom de l'auteur
- * - userInitials: Initiales de l'auteur
- * - userBg: Couleur de fond de l'avatar
- * - date: Date de création
- * - likes: Nombre de likes
- * - answersCount: Nombre de réponses
- * - onLike?: Fonction appelée au clic sur like
- * - onClick?: Fonction appelée au clic sur la question
- */import { useState } from "react";
+import { useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import UserHeader from "./UserHeader";
 import ActionBar from "./ActionBar";
@@ -24,6 +6,7 @@ import Text from "../atoms/Text";
 import { AnswerModel } from "../../type/qa.types";
 import { AnswerList } from "../organism/AnswerList";
 import QuestionMenu from "./QuestionMenu";
+import { useGetQuestionCommentsQuery } from "@/features/Q&A/store/qa.api"; // 👈 إضافة
 
 interface QuestionCardProps {
   title: string;
@@ -68,6 +51,13 @@ export default function QuestionCard({
   const [menuOpen, setMenuOpen] = useState(false);
 
   const isOwner = authorId === currentUserId;
+
+  // 👈 جلب الكومنتات عند الضغط على View answers فقط
+  const { data: commentsData } = useGetQuestionCommentsQuery(questionId, {
+    skip: !showAnswers
+  });
+
+  const fetchedAnswers = commentsData?.data?.comments ?? [];
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}/qa/${questionId}`);
@@ -150,7 +140,7 @@ export default function QuestionCard({
       {showAnswers && (
         <AnswerList
           questionId={questionId}
-          answers={answers}
+          answers={fetchedAnswers} // 👈 بدل answers
           onSubmitAnswer={isClosed ? () => {} : onSubmitAnswer}
           onLikeAnswer={onLikeAnswer}
           isClosed={isClosed}

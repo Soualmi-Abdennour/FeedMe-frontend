@@ -12,7 +12,8 @@ import QuestionModal from "../organism/QuestionModal";
 import { QANavTab, QuestionModel } from "../../type/qa.types";
 import {
   useGetQuestionsQuery,
-  useGetMyQuestionsQuery, // 👈 أضفنا الـ Hook الخاص بجلب أسئلتك مباشرة من الباك إند
+  useGetMyQuestionsQuery,
+  useGetSavedQuestionsQuery, 
   useCreateQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
@@ -20,7 +21,8 @@ import {
   useTogglePinMutation,
   useSaveQuestionMutation,
   useUnsaveQuestionMutation,
-} from "../../store/qa.api"; 
+  useCreateCommentMutation, // 👈 إضافة
+} from "@/features/Q&A/store/qa.api";
 
 export default function QAPage() {
   // ================= STATE =================
@@ -35,15 +37,17 @@ export default function QAPage() {
   const [successToastVisible, setSuccessToastVisible] = useState(false);
 
   // ================= RTK QUERY HOOKS =================
-  // 1. جلب كل الأسئلة (للتبويب العام)
   const { data: allResponseData, isLoading: isAllLoading } = useGetQuestionsQuery({
     limit: 20,
     cursor: currentCursor,
-  }, { skip: activeTab === "my-questions" }); // تخطي الطلب إذا كنا في تبويب أسئلتي لتوفير الأداء
+  }, { skip: activeTab === "my-questions" || activeTab === "answer-later" });
 
-  // 2. جلب أسئلتي المخصصة (يستدعي الـ Route: /questions/my الخاص بك)
   const { data: myResponseData, isLoading: isMyLoading } = useGetMyQuestionsQuery(undefined, {
     skip: activeTab !== "my-questions"
+  });
+
+  const { data: savedResponseData, isLoading: isSavedLoading } = useGetSavedQuestionsQuery(undefined, {
+    skip: activeTab !== "answer-later"
   });
 
   const [createQuestion] = useCreateQuestionMutation();
@@ -53,28 +57,32 @@ export default function QAPage() {
   const [togglePin] = useTogglePinMutation();
   const [saveQuestion] = useSaveQuestionMutation();
   const [unsaveQuestion] = useUnsaveQuestionMutation();
+  const [createComment] = useCreateCommentMutation(); // 👈 إضافة
 
-  // تحديد القائمة النشطة بناءً على التبويب الحالي
+  // ================= SELECT LIST BASED ON TAB =================
   const questionsList: QuestionModel[] = useMemo(() => {
     if (activeTab === "my-questions") {
       return myResponseData?.data?.questions || [];
     }
+    if (activeTab === "answer-later") {
+      return savedResponseData?.data?.savedQuestions || [];
+    }
     return allResponseData?.data?.questions || [];
-  }, [activeTab, allResponseData, myResponseData]);
+  }, [activeTab, allResponseData, myResponseData, savedResponseData]);
 
-  const isLoading = activeTab === "my-questions" ? isMyLoading : isAllLoading;
-  const nextCursor = activeTab === "my-questions" ? null : (allResponseData?.data?.nextCursor || null);
+  const isLoading = 
+    activeTab === "my-questions" ? isMyLoading : 
+    activeTab === "answer-later" ? isSavedLoading : 
+    isAllLoading;
+
+  const nextCursor = (activeTab === "my-questions" || activeTab === "answer-later") ? null : (allResponseData?.data?.nextCursor || null);
 
   // ================= FILTER & SEARCH =================
   const filtered = useMemo(() => {
     let list = questionsList;
 
-    // ملاحظة: الباك إند يفلتر "my-questions" تلقائياً عبر السيرفر الآن، لذا لا حاجة لفلترتها بالـ id هنا
     if (activeTab === "my-answers")
       list = list.filter(q => q.isAnsweredByMe);
- 
-    if (activeTab === "answer-later")
-      list = list.filter(q => q.isSavedForLater);
 
     if (search.trim()) {
       const s = search.toLowerCase();
@@ -149,9 +157,8 @@ export default function QAPage() {
 
   const handleSaveLater = async (id: string) => {
     const question = questionsList.find(q => q.id === id);
-    if (!question) return;
     try {
-      if (question.isSavedForLater) {
+      if (activeTab === "answer-later" || question?.isSavedForLater) {
         await unsaveQuestion(id).unwrap();
       } else {
         await saveQuestion(id).unwrap();
@@ -161,11 +168,19 @@ export default function QAPage() {
     }
   };
 
+  // 👈 إضافة دالة إرسال الكومنت
+  const handleSubmitAnswer = async (questionId: string, text: string) => {
+    if (text.length < 3) return;
+    try {
+      await createComment({ questionId, text }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="min-h-screen w-full bg-[#FFF5F0] flex text-[#2D1F1A]">
-      {/* MAIN CONTENT */}
       <div className="flex-1 flex flex-col">
-        {/* HEADER */}
         <div className="border-b border-[#F1D8CC] bg-white shadow-sm">
           <Header
             searchValue={search}
@@ -174,7 +189,6 @@ export default function QAPage() {
           />
         </div>
 
-        {/* PAGE BODY */}
         <div className="px-6 md:px-10 py-8 flex justify-center">
           <div className="w-full max-w-5xl space-y-6">
             <div>
@@ -184,13 +198,11 @@ export default function QAPage() {
               </p>
             </div>
 
-            {/* QUESTION CARD CONTAINER */}
             <div className="space-y-6">
               {isLoading && questionsList.length === 0 ? (
                 <div className="text-center py-10 text-[#8B6F63]">Loading questions...</div>
               ) : activeTab === "my-questions" ? (
                 <>
-                  {/* PINNED SECTION */}
                   {pinnedQuestions.length > 0 && (
                     <div className="bg-white rounded-2xl border border-orange-200 shadow-md p-6">
                       <div className="flex items-center gap-2 mb-4">
@@ -206,11 +218,11 @@ export default function QAPage() {
                       <QuestionList
                         questions={pinnedQuestions}
                         answersMap={{}}
-                        currentUserId="" // اتركها فارغة، الباك إند يتعرف على المعرّف من الـ Token تلقائياً
+                        currentUserId="" 
                         activeTab={activeTab}
                         onLike={handleLike}
                         onSaveLater={handleSaveLater}
-                        onSubmitAnswer={() => {}}
+                        onSubmitAnswer={handleSubmitAnswer} // 👈
                         onLikeAnswer={() => {}}
                         onEdit={handleEdit}
                         onPin={handlePin}
@@ -221,7 +233,6 @@ export default function QAPage() {
                     </div>
                   )}
 
-                  {/* ALL MY QUESTIONS SECTION */}
                   <div className="bg-white rounded-2xl border border-[#F1D8CC] shadow-md p-6">
                     <div className="flex items-center gap-2 mb-4">
                       <h2 className="text-base font-semibold text-[#3D2A22]">All my questions</h2>
@@ -235,7 +246,7 @@ export default function QAPage() {
                       activeTab={activeTab}
                       onLike={handleLike}
                       onSaveLater={handleSaveLater}
-                      onSubmitAnswer={() => {}}
+                      onSubmitAnswer={handleSubmitAnswer} // 👈
                       onLikeAnswer={() => {}}
                       onEdit={handleEdit}
                       onPin={handlePin}
@@ -246,7 +257,6 @@ export default function QAPage() {
                   </div>
                 </>
               ) : (
-                /* ALL OTHER TABS */
                 <div className="bg-white rounded-2xl border border-[#F1D8CC] shadow-md p-6">
                   <QuestionList
                     questions={filtered}
@@ -255,7 +265,7 @@ export default function QAPage() {
                     activeTab={activeTab}
                     onLike={handleLike}
                     onSaveLater={handleSaveLater}
-                    onSubmitAnswer={() => {}}
+                    onSubmitAnswer={handleSubmitAnswer} // 👈
                     onLikeAnswer={() => {}}
                     onEdit={handleEdit}
                     onPin={handlePin}
@@ -266,7 +276,6 @@ export default function QAPage() {
                 </div>
               )}
 
-              {/* PAGINATION BUTTON */}
               {nextCursor && (
                 <div className="flex justify-center mt-4">
                   <button 
@@ -282,7 +291,6 @@ export default function QAPage() {
         </div>
       </div>
 
-      {/* SIDEBAR */}
       <div className="w-[260px] bg-white border-l border-[#F1D8CC] shadow-sm">
         <Sidebar
           activeTab={activeTab}

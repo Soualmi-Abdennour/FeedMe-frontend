@@ -27,11 +27,11 @@ export const QuestionList = ({
       <div className="text-center py-10 text-[#8B6F63]">No questions found.</div>
     ) : (
       questions.map((q) => {
-        // 🔍 طباعة السؤال في الـ Console لمعاينته بالمتصفح وقراءة الحقول الحقيقية
+        // لتجاوز قيود الأنواع الصارمة بشكل آمن أثناء قراءة العلاقات المتداخلة
+        const rawQ = q as any;
 
-        // حماية قصوى ومؤقتة لاستخراج البيانات مهما كان هيكلها لمنع التجمد الشاشة الحمراء
-        const authorId = q?.User?.id || (q as any)?.author?.id || q?.userId || (q as any)?.UserId || "";
-        const displayName = q?.User?.UserProfile?.fullName || q?.User?.userName || (q as any)?.author?.username || "User";
+        const authorId = rawQ?.User?.id || rawQ?.author?.id || q?.userId || rawQ?.UserId || "";
+        const displayName = rawQ?.User?.UserProfile?.fullName || rawQ?.User?.userName || rawQ?.author?.username || "User";
 
         const initials = displayName
           .split(" ")
@@ -39,6 +39,9 @@ export const QuestionList = ({
           .join("")
           .toUpperCase()
           .slice(0, 2);
+
+        // ضبط حالة الحفظ للتبويب الحالي
+        const isQuestionSaved = activeTab === "answer-later" ? true : (q?.isSavedForLater ?? false);
 
         return (
           <QuestionCard
@@ -48,15 +51,17 @@ export const QuestionList = ({
             currentUserId={currentUserId}
             activeTab={activeTab}
             title={q?.title || "No Title"}
-            description={(q as any)?.content || q?.description || q?.title || ""} 
+            // الاعتماد المباشر على حقل content القادم من السيرفر
+            description={rawQ?.content || q?.description || ""} 
             username={displayName}
             userInitials={initials}
             userBg=""
             date={q?.createdAt}
-            likes={(q as any)?.likeCount ?? q?.likesCount ?? 0}
-            answersCount={(q as any)?.commentCount ?? q?.answersCount ?? 0}
+            // مطابقة دقيقة لحقول الـ Counts القادمة من الباك إند
+            likes={rawQ?.likeCount ?? 0}
+            answersCount={rawQ?.commentCount ?? 0}
             isLiked={q?.isLiked ?? false}
-            isSaved={q?.isSavedForLater ?? false}
+            isSaved={isQuestionSaved} 
             isPinned={q?.isPinned ?? false}
             isSolved={q?.isSolved ?? false} 
             isClosed={q?.isClosed ?? false} 
