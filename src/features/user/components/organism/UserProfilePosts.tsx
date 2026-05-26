@@ -3,7 +3,7 @@ import ProfilePosts from '../molecules/ProfilePosts'
 import { useGetMyPostsQuery } from '@/features/studio-and-publication/store/studio.api.slice'
 import { convertPostDbModelToPostAppModel } from '@/features/studio-and-publication/utils/post.utils'
 
-function UserProfilePosts({userId}:{userId:string}) {
+function UserProfilePosts() {
     const {data,isError,isLoading}=useGetMyPostsQuery()
       const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) :[] 
   return (

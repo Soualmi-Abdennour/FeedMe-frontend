@@ -21,6 +21,8 @@ function PostWrapper({post}:{post:PostAppModel}) {
                 postId={post.id}
                 commentsCount={commentsCount}
                 likesCount={post.likeCount}
+                isLiked={!!post.isLiked}
+                isSaved={!!post.isSaved}
             ></PostActionsSideBar>
             <>
                 {itemToShow==="DETAILS" &&(

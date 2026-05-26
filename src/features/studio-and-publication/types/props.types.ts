@@ -25,6 +25,8 @@ export interface IPostActionsSideBar {
     postId:string
     commentsCount:number
     likesCount:number
+    isLiked:boolean
+    isSaved:boolean
 }
 export interface ICommnetTextField { 
     postId: string 
@@ -46,6 +48,7 @@ export interface IPostPreviewProps {
     media:MediaAppModel[],
     mediaType: MediaType
     postId:string
+    sameUser?:boolean
 } 
 export interface IPostFormProps {
     defaultValues?:IPostFormSchema & {

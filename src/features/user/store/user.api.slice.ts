@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { editProfileCredientials, getUserProfileCredentials, PostsResponse, UserResponse } from "@/types/api.types";
+import { editProfileCredientials, getOtherUserPostsCredentials, getUserProfileCredentials, PostsResponse, UserResponse } from "@/types/api.types";
 
 
 
@@ -40,21 +40,26 @@ export const userApiSlice=fetchAPI.injectEndpoints({
 
         getUserProfile:build.query<UserResponse,getUserProfileCredentials>({
             query:({userId})=>({
-                url:""
+                url: `/profile/${userId}`,
             })
         }),
-        getUserSavedPosts:build.query<PostsResponse,getUserProfileCredentials>({
+        getOtherUserPosts:build.query<PostsResponse,getOtherUserPostsCredentials>({
             query:({userId})=>({
-                url:""
+                url: `/posts/other-posts/${userId}`
+            }),
+        }),
+        getUserSavedPosts:build.query<PostsResponse,void>({
+            query:()=>({
+                url:"/posts/saved"
             })
         }),
-        getUserLikedPosts:build.query<PostsResponse,getUserProfileCredentials>({
-            query:({userId})=>({
-                url:""
+        getUserLikedPosts:build.query<PostsResponse,void>({
+            query:()=>({
+                url:"/posts/liked"
             })
         }),
     })
 })
 
 
-export const {useUpdateAccountMutation, useUpdateProfileMutation,useDeleteAccountMutation,useGetUserLikedPostsQuery,useGetUserProfileQuery,useGetUserSavedPostsQuery} = userApiSlice
+export const {useGetOtherUserPostsQuery,useUpdateAccountMutation, useUpdateProfileMutation,useDeleteAccountMutation,useGetUserLikedPostsQuery,useGetUserProfileQuery,useGetUserSavedPostsQuery} = userApiSlice

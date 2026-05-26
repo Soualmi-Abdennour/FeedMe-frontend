@@ -2,10 +2,12 @@ import { UserAppModel, UserDbModel } from "@/features/user/types/user.types";
 import { MediaAppModel, MediaDbModel } from "./media.types";
 
 export type MediaType = "IMAGE"  | "VIDEO" |"NONE"
-export type PostMediaType = "IMAGE" | "MULTI_IMAGE" | "VIDEO"
+export type PostFilterOptionKey = "IMAGE" | "MULTI_IMAGE" | "VIDEO"
+export type PostsFilterOptionValue = "Image" | "Multi-Image" | "Video"
 export type PostsFilterOption = {
-    key: PostMediaType
-    value: "Image" | "Multi-Image" | "Video"
+    key: PostFilterOptionKey
+    value: PostsFilterOptionValue
+    label:string
 }
 
 export type PostFormData = {
@@ -27,6 +29,8 @@ type PostModel = {
     commentCount: number;
     createdAt: Date;
     updatedAt: Date;
+    isLiked?:boolean;
+    isSaved?:boolean
 }
 export type PostDbModel = PostModel & {
     User: UserDbModel

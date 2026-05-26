@@ -1,16 +1,45 @@
 "use client"
 import {  RESTAURANT_APP_NAVIGATION_ITEMS, USER_APP_NAVIGATION_ITEMS } from "@/constants/app.constants";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AppNavItem from "../molecules/AppNavItem";
 import { LogOut } from "lucide-react";
-import { useAppSelector } from "@/store/base.store";
+import { useAppDispatch, useAppSelector } from "@/store/base.store";
+import { useLogoutMutation } from "@/features/auth/store/auth.api.slice";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { ApiResponse } from "@/types/api.types";
+import { toast } from "sonner";
+import { clearUser } from "@/features/user/store/user.slice";
+import { clearAuthState } from "@/features/auth/store/auth.slice";
 
 function AppSidebar() {
     const pathName = usePathname()
+    const dispatch=useAppDispatch()
+    const router=useRouter()
+    const [logout]=useLogoutMutation()
     const {user}=useAppSelector(state=>state.user)
     const NAV_ITEMS=user?.role==="USER" ?USER_APP_NAVIGATION_ITEMS : RESTAURANT_APP_NAVIGATION_ITEMS
-    const handleLogout = () => {
-        // handle logout logic
+    const handleLogout = async () => {
+        const fetchResponse = await logout()
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: ApiResponse<null> = fetchResponse.data as ApiResponse<null>
+
+        if (error) {
+            const errorResponse = error.data as ApiResponse<null>
+            if (errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.message)
+            }
+        }
+        else {
+            toast.success(successResponse.message)
+            router.replace("/")
+            setTimeout(() => {
+                dispatch(clearUser())   
+                dispatch(clearAuthState())
+            }, 2000);
+        }
     }
 
     return (

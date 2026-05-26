@@ -1,18 +1,13 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { PostMediaType } from '@/features/studio-and-publication/types/studio.types';
-import { SlidersVertical } from 'lucide-react';
+import { PostsFilterOption, PostsFilterOptionValue } from '@/features/studio-and-publication/types/studio.types';
+import { ChevronDown, SlidersVertical } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 interface IDropdownSelect {
     menuLabel: string;
-    currentValue: string[]
-    selectOptions: {
-        label: string,
-        key: PostMediaType
-        value: string
-    }[],
-    onChange: (value: string) => void;
+    currentValue: PostsFilterOptionValue[]
+    selectOptions: PostsFilterOption[],
+    onChange: (value: PostsFilterOptionValue) => void;
 }
 
 export default function DropdownSelect({ menuLabel, selectOptions, currentValue, onChange }: IDropdownSelect) {

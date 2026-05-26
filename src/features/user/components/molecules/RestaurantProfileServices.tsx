@@ -16,6 +16,8 @@ const SERVICE_LABELS: Record<keyof RestaurantUserProfileAppModel["restaurantServ
 // RESTAURANT_SERVICES
 
 function RestaurantProfileServices( {profile} : {profile:RestaurantUserProfileAppModel}) {
+  console.log(profile);
+  
   const { restaurantServices, restaurantDetails } = profile;
   return (
     <div className="gap-6 p-6 border-b border-border grid grid-cols-2">

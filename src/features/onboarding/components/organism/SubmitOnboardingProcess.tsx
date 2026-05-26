@@ -34,7 +34,9 @@ function SubmitOnboardingProcess() {
         console.log(mapUserDbToAppModel(successResponseData?.user!));
         router.replace(`/publication`)
         dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
-        dispatch(clearOnboarding())
+        setTimeout(() => {
+            dispatch(clearOnboarding())            
+        }, 2000);
     }
     const onFailFn = () => {
         router.replace("/sign-in")

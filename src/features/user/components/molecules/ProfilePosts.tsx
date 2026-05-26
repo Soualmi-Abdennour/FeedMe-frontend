@@ -6,7 +6,7 @@ import { Loader2, ImageOff } from "lucide-react";
 import { IProfilePosts } from "@/features/user/types/props.types";
 
 
-function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
+function ProfilePosts({ posts, isLoading, isError,sameUser=true }: IProfilePosts) {
     return (
         <div className="p-4">
             {/* <h2 className="text-sm font-semibold text-foreground mb-3">Publications</h2> */}
@@ -22,21 +22,21 @@ function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
                 </div>
             )}
             {!isLoading && !isError && (
-
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1 ">
                     {posts.map(({ id, mediaType, media }) => (
                         <PostPreview
                             key={id}
                             mediaType={mediaType}
                             media={media}
                             postId={id}
+                            sameUser={sameUser}
                         />
                     ))
                     }
                     {posts.length === 0 && (
-                        <div className="flex flex-col items-center justify-center py-16 gap-2 text-muted-foreground">
+                        <div className="flex flex-col items-center justify-center py-16 gap-2 text-muted-foreground col-span-3">
                             <ImageOff className="w-8 h-8" />
-                            <p className="text-sm">No publications yet</p>
+                            <p className="text-sm">No Posts</p>
                         </div>
                     )}
                 </div>

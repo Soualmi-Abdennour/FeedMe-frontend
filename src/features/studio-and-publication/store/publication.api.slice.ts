@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { createCommnetCredentials, getPostCommnetsCredentials, getPostsCredentials, LikeResponse, PostCommentsResponse, PostsResponse, SingleCommentResponse, toggleLikeCredentials } from "@/types/api.types";
+import { createCommnetCredentials, getPostCommnetsCredentials, getPostsCredentials, LikeResponse, PostCommentsResponse, PostsResponse, SaveResponse, SingleCommentResponse, toggleLikeCredentials, togglesSaveCredentials } from "@/types/api.types";
 
 export const publicationSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({   
@@ -15,6 +15,12 @@ export const publicationSlice = fetchAPI.injectEndpoints({
         toggleLike:build.mutation<LikeResponse,toggleLikeCredentials>({
             query:({postId})=>({
                 url: `/posts/${postId}/toggle-like`,
+                method:"POST"
+            })
+        }),
+        toggleSave:build.mutation<SaveResponse,togglesSaveCredentials>({
+            query:({postId})=>({
+                url: `/posts/toggleSavePost/${postId}`,
                 method:"POST"
             })
         }),
@@ -39,5 +45,6 @@ export const {
     useToggleLikeMutation,
     useGetPublicationPostsQuery,
     useCreateCommentMutation,
-    useGetPostCommentsQuery
+    useGetPostCommentsQuery,
+    useToggleSaveMutation,
 } = publicationSlice

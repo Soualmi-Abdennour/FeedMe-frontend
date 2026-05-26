@@ -14,16 +14,16 @@ function SameUserProfilePage() {
 
     const renderTab=():React.ReactNode=>{
         if(currentTab==='MY_POSTS')
-            return <UserProfilePosts userId={user?.id!}></UserProfilePosts>
-        else if(currentTab==='SAVED_POSTS')
-            return <UserProfileSavedPosts userId={user?.id!}></UserProfileSavedPosts>
+            return <UserProfilePosts></UserProfilePosts>
+        else if(currentTab==='SAVED_POSTS')            
+            return <UserProfileSavedPosts ></UserProfileSavedPosts>
         else if(currentTab==='LIKED_POSTS')
-            return <UserProfileLikedPosts userId={user?.id!}></UserProfileLikedPosts>
+            return <UserProfileLikedPosts ></UserProfileLikedPosts>
     }
 
     return (
         <div className="relative z-0 w-full h-screen overflow-y-scroll">
-            <ProfileHeader user={user!} isOwnProfile={true} />
+            <ProfileHeader user={user!} sameUser={true} />
             <div>
                 <ProfilePostsNavBar navItems={MY_PROFILE_NAV_ITEMS} currentTab={currentTab} setCurrentTab={setCurrentTab}></ProfilePostsNavBar>
                 {renderTab()}

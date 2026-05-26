@@ -1,13 +1,11 @@
 "use client"
-import { Button } from '@/components/ui/button'
-import { Bookmark, Heart, MessageCircleMore, ReceiptText } from 'lucide-react'
-import React, { useState } from 'react'
-import { IPostActionsSideBar } from '../../types/props.types'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { LikeResponse, UserResponse } from '@/types/api.types'
-import { useToggleLikeMutation } from '../../store/publication.api.slice'
+import { LikeResponse } from '@/types/api.types'
 import { cn } from '@/utils/shadcn.utils'
-import { toast } from 'sonner'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { Bookmark, Heart, MessageCircleMore, ReceiptText } from 'lucide-react'
+import { useState } from 'react'
+import { useToggleLikeMutation, useToggleSaveMutation } from '../../store/publication.api.slice'
+import { IPostActionsSideBar } from '../../types/props.types'
 
 
 function PostActionsSideBar({
@@ -15,12 +13,17 @@ function PostActionsSideBar({
     toggleDetails,
     likesCount,
     commentsCount,
-    postId
+    postId,
+    isLiked:isAlreadyLiked,
+    isSaved:isAlreadySaved
  
 }:IPostActionsSideBar) {
-    const [isLiked,setIsLiked]=useState<boolean>(false)
+    const [isLiked, setIsLiked] = useState<boolean>(isAlreadyLiked)
+    const [isSaved, setIsSaved] = useState<boolean>(isAlreadySaved)
     const [likeCount,setLikeCount]=useState<number>(likesCount)
     const [toggleLike] = useToggleLikeMutation()
+    const [toggleSave]=useToggleSaveMutation()
+
     const handleLike = async () => {
         const previousIsLiked = isLiked;
         const previousLikeCount = likeCount;
@@ -44,6 +47,23 @@ function PostActionsSideBar({
             setLikeCount(prev => prev + (serverIsLiked ? 1 : -1));
         }
     };
+    const handleSave = async () => {
+        const previousIsSaved = isSaved;
+        setIsSaved(!previousIsSaved);
+        const fetchResponse = await toggleSave({ postId });
+        const error = fetchResponse.error as FetchBaseQueryError;
+        const successResponse = fetchResponse.data as LikeResponse;
+
+        if (error) {
+            setIsSaved(previousIsSaved);
+            return;
+        }
+
+        const serverIsSaved = successResponse?.data?.isLiked;
+        if (serverIsSaved !== undefined && serverIsSaved !== !previousIsSaved) {
+            setIsSaved(serverIsSaved);
+        }
+    };
     return (
         <div className='flex flex-col items-center gap-5'>
             <button 
@@ -65,11 +85,11 @@ function PostActionsSideBar({
                 <span className="text-xs font-medium text-black/80">{commentsCount}</span>
             </button>
             <button 
-                // onClick={handleSave}
+                onClick={handleSave}
                 className="flex flex-col items-center gap-1 group"
             >
                 <div className="flex size-10 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm transition group-hover:bg-black/20">
-                    <Bookmark className="size-5 text-black" />
+                    <Bookmark fill={isSaved ? "orange" : "none"} className={cn("size-5 text-black")} />
                 </div>
             </button>
             <button 

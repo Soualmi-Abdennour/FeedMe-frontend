@@ -16,7 +16,7 @@ export const MY_PROFILE_NAV_ITEMS = [
 ] 
 export const OTHER_PROFILE_NAV_ITEMS = [
     {
-        tabName: "OTHER_POSTS",
+        tabName: "POSTS",
         icon: Play,
     },
     // we have this navbar only for restaurant user

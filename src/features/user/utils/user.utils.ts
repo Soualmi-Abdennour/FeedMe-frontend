@@ -53,20 +53,21 @@ function mapRestaurantProfileToAppModel(
 
 export function mapUserDbToAppModel(db: UserDbModel): UserAppModel {
     let user: UserAppModel
+    const {UserProfile,RestaurantProfile,...rest}=db
     if (db.role === "USER" ){
         const profile =db.UserProfile &&  mapNormalUserProfileToAppModel(db.UserProfile)
         return user={
-            ...db,
+            ...rest,
             role:"USER",
-            ...(profile && {...profile})
+            ...(profile && {profile: {...profile}})
         }
     }
     else {
         const profile =db.RestaurantProfile && mapRestaurantProfileToAppModel(db.RestaurantProfile)
         return user = {
-        ...db,
+        ...rest,
             role: "RESTAURANT",
-        ...(profile && { ...profile })
+            ...(profile && { profile: { ...profile } })
         }
     }
 }

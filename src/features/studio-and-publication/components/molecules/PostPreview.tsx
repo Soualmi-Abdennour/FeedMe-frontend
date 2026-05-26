@@ -7,20 +7,17 @@ import { IPostPreviewProps } from '../../types/props.types'
 import Image from 'next/image'
 import { Image as ImageIcon } from "lucide-react"
 
-function PostPreview({ media, postId, mediaType }: IPostPreviewProps) {
+function PostPreview({ media, postId, mediaType,sameUser=true}: IPostPreviewProps) {    
     const [showList, setShowList] = useState<boolean>(false)
-    
-
     return (
         <div className='relative flex items-center justify-center w-full aspect-[9/16] overflow-hidden rounded-xl bg-black'>
-            <button
+            {sameUser && <button
                 className='absolute top-2 right-2 z-10'
                 onClick={() => setShowList(state => !state)}
             >
                 <EllipsisVertical className='size-6 text-white' />
-            </button>
-
-            {showList && (
+            </button>}
+            {showList  && (
                 <div className='flex flex-col gap-1 justify-center absolute top-3 right-16 z-10'>
                     <Link href={`/studio?action=edit&id=${postId}`}>
                         <Button className='w-full m-1 text-white font-medium'>Edit</Button>

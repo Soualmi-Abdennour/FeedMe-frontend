@@ -21,6 +21,9 @@ export type PostCommentsResponseData = {
 export type LikeResponseData={
     isLiked:boolean
 }
+export type SaveResponseData={
+    isSaved:boolean
+}
 export type SinglePostResponseData = {
     post: PostDbModel
 }
@@ -46,6 +49,7 @@ export type PostCommentsResponse = ApiResponse<PostCommentsResponseData | null>
 export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
 export type SingleCommentResponse = ApiResponse<SingleCommentResponseData | null>
 export type LikeResponse = ApiResponse<LikeResponseData | null>
+export type SaveResponse = ApiResponse<SaveResponseData | null>
 export type SendVerificationResponse=ApiResponse<null|UserResponseData>
 export type VerificationResponse=ApiResponse<null |UserResponseData>
 
@@ -88,8 +92,11 @@ export type editPostCredientials ={
     postData:FormData
     id:string
 }
-// export type getPostsCredentials = { cursor?: string; limit?: number }
+export type getPostsCredentials = { cursor?: string; limit?: number }
 export type toggleLikeCredentials={
+    postId:string
+}
+export type togglesSaveCredentials={
     postId:string
 }
 
@@ -102,6 +109,10 @@ export type getPostCommnetsCredentials={
 }
 
 export type getUserProfileCredentials={
+    userId:string
+    // profileType:"USER"|"RESTAURANT"
+}
+export type getOtherUserPostsCredentials={
     userId:string
     // profileType:"USER"|"RESTAURANT"
 }

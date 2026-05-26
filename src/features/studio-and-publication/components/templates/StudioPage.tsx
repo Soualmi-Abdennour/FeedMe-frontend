@@ -9,21 +9,21 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import EditPostForm from '../organism/EditPostForm'
 import DeletePostForm from '../organism/DeletePostForm'
 import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
-import { PostMediaType } from '../../types/studio.types'
 import { useGetMyPostsQuery } from '../../store/studio.api.slice'  // ← الجديد
 import { Plus } from 'lucide-react'
-import { PostsFilterOption } from '../../types/studio.types'
+import { PostsFilterOption, PostsFilterOptionValue } from '../../types/studio.types'
+import { convertPostDbModelToPostAppModel } from '../../utils/post.utils'
+import { filterPosts } from '../../utils/filter.utils'
 
 
 
 function StudioPage() {
     const seachParams = useSearchParams()
     const router = useRouter()
-    const [filterOptions, setFilterOptions] = useState<string[]>(['Image', "Multi Image", "Video"])
+    const [filterOptions, setFilterOptions] = useState<PostsFilterOptionValue[]>(['Image', "Multi-Image", "Video"])
     const [openCreatePostFrom, setOpenCreatePostForm] = useState<boolean>(false)
-
-const { data, isLoading, isError } = useGetMyPostsQuery()
-    const posts = data?.data?.posts ?? []    
+    const { data, isLoading, isError } = useGetMyPostsQuery()
+    const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) :[] 
 
     return (
         <div className='relative z-0 w-full px-32 py-24 h-screen'>
@@ -40,7 +40,7 @@ const { data, isLoading, isError } = useGetMyPostsQuery()
                     menuLabel='Filter by '
                     currentValue={filterOptions}
                     selectOptions={POSTS_FILTER_OPTIONS}
-                    onChange={(value:string) => {
+                    onChange={(value: PostsFilterOptionValue) => {
                         setFilterOptions(state =>
                             state.includes(value)
                                 ? state.filter(val => val !== value)
@@ -56,21 +56,20 @@ const { data, isLoading, isError } = useGetMyPostsQuery()
             {isError && (
                 <p className="text-center mt-10 text-red-400 ">Error while getting the posts</p>
             )}
-
             {!isLoading && !isError && (
-                <div className='grid grid-cols-3 gap-3  '>
-                    {posts
-                        .filter(({ mediaType }) => filterOptions.includes(mediaType as PostMediaType))
+                <div className='grid grid-cols-3 gap-3 '>
+                        {filterPosts({ posts, selectFilterOptions: filterOptions })
                         .map(({ mediaType, media, id }) => (
                             <PostPreview
                                 key={id}
                                 mediaType={mediaType}
-                                media={convertMediaDbModelToMediaAppModel(media)}
+                                media={media}
                                 postId={id}
+                                sameUser={true}
                             />
                         ))
                     }
-                    {posts.length === 0 && (
+                        {posts.length === 0 && (
                         <p className="col-span-3 text-center mt-10 text-gray-400  ">
                             No posts are available
                         </p>

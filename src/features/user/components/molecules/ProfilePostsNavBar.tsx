@@ -17,13 +17,14 @@ function ProfilePostsNavBar({
         setCurrentTab: Dispatch<SetStateAction<string>>
 }) {
     return (
-        <div className='flex w-full justify-between'>
+        <div className='flex w-full justify-between gap-5'>
             {navItems.map(({tabName,icon:Icon}) => (
                 <Button key={tabName} 
                     variant={currentTab===tabName?"primary":"ghost"}
                     onClick={()=>setCurrentTab(tabName)}
+                    className='w-full h-fit'
                 >
-                    <Icon size={30}/>
+                    <Icon size={50}/>
                 </Button>
             ))}
         </div>

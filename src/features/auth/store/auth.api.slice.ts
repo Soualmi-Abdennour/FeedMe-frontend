@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { resetPasswordCredentials, SendVerificationResponse, sendVerificationTokenCredientials, UserResponse, VerificationResponse, verifyTokenCredientials } from "@/types/api.types";
+import { ApiResponse, resetPasswordCredentials, SendVerificationResponse, sendVerificationTokenCredientials, UserResponse, VerificationResponse, verifyTokenCredientials } from "@/types/api.types";
 import { ISigninForm } from "../schema/signin.schema";
 import { ISignupForm } from "../schema/signup.schema";
 
@@ -22,6 +22,12 @@ export const authApiSlice=fetchAPI.injectEndpoints({
                 url:"authentication/sign-in",
                 method:"POST",
                 body:signinCredientials
+            })
+        }),
+        logout:build.mutation<ApiResponse<null>,void>({
+            query:()=>({
+                url:"authentication/sign-out",
+                method:"POST"
             })
         }),
         verifyToken:build.query<VerificationResponse,verifyTokenCredientials>({
@@ -48,4 +54,4 @@ export const authApiSlice=fetchAPI.injectEndpoints({
     })
 })
 
-export const {useSingupMutation,useSigninMutation,useLazyVerifyTokenQuery,useSendVerificationEmailMutation,useResetPasswordMutation} =authApiSlice
+export const {useLogoutMutation,useSingupMutation,useSigninMutation,useLazyVerifyTokenQuery,useSendVerificationEmailMutation,useResetPasswordMutation} =authApiSlice
