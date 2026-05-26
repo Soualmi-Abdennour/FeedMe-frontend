@@ -1,13 +1,3 @@
-import React from 'react'
+import { ProductManagementTemplate } from "@/features/order-management/components/templates/ProductManagementTemplate";
 
-interface Props {}
-
-function Page(props: Props) {
-    const {} = props
-
-    return (
-        <div></div>
-    )
-}
-
-export default Page
+export default ProductManagementTemplate

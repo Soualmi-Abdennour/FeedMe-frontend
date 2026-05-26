@@ -96,6 +96,7 @@ function AppSidebar() {
             </div>
         </aside>
     );
+    
 }
 
 export default AppSidebar;
