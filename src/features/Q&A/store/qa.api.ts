@@ -55,7 +55,7 @@ export const qaApi = createApi({
     }),
 
     togglePin: builder.mutation<void, string>({
-      query: (id) => ({ url: `/questions/pin/${id}`, method: "GET" }),
+      query: (id) => ({ url: `/questions/pin/${id}`, method: "PATCH" }),
       invalidatesTags: ["Questions"],
     }),
 
@@ -68,15 +68,38 @@ export const qaApi = createApi({
       query: (questionId) => ({ url: `/questions/save/${questionId}`, method: "DELETE" }),
       invalidatesTags: ["Questions"],
     }),
+
     getQuestionComments: builder.query<{ data: { results: number; comments: any[] } }, string>({
-  query: (questionId) => `/questions/${questionId}/comments`,
+      query: (questionId) => `/questions/${questionId}/comments`,
+      providesTags: ["Questions"],
+    }),
+
+    createComment: builder.mutation<void, { questionId: string; text: string }>({
+      query: ({ questionId, text }) => ({ 
+        url: `/questions/${questionId}/comments`, 
+        method: "POST", 
+        body: { text } 
+      }),
+      invalidatesTags: ["Questions"],
+    }),
+
+    markAsSolved: builder.mutation<void, string>({
+      query: (id) => ({ url: `/questions/${id}/solve`, method: "PATCH" }),
+      invalidatesTags: ["Questions"],
+    }),
+
+    closeQuestion: builder.mutation<void, string>({
+      query: (id) => ({ url: `/questions/${id}/close`, method: "PATCH" }),
+      invalidatesTags: ["Questions"],
+    }),
+    getMyAnsweredQuestions: builder.query<{ status: string; data: { questions: QuestionModel[] } }, void>({
+  query: () => "/questions/my/answered",
   providesTags: ["Questions"],
 }),
-createComment: builder.mutation<void, { questionId: string; text: string }>({
-  query: ({ questionId, text }) => ({ 
-    url: `/questions/${questionId}/comments`, 
-    method: "POST", 
-    body: { text } 
+deleteComment: builder.mutation<void, { questionId: string; commentId: string }>({
+  query: ({ questionId, commentId }) => ({ 
+    url: `/questions/comments/${commentId}`, 
+    method: "DELETE" 
   }),
   invalidatesTags: ["Questions"],
 }),
@@ -95,8 +118,10 @@ export const {
   useTogglePinMutation,
   useSaveQuestionMutation,
   useUnsaveQuestionMutation,
-  
-    useCreateCommentMutation,
-
-
+  useCreateCommentMutation,
+  useMarkAsSolvedMutation,   
+  useCloseQuestionMutation,
+useGetMyAnsweredQuestionsQuery,  
+useDeleteCommentMutation,
+ 
 } = qaApi;

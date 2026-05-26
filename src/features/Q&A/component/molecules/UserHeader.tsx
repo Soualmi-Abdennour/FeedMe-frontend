@@ -46,8 +46,15 @@ export default function UserHeader({
           )}
         </div>
         <Text variant="small" color="muted" className="text-gray-500">
-          {date}
-        </Text>
+ {new Date(date).toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short", 
+  year: "numeric",
+})} {new Date(date).toLocaleTimeString("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+})}
+</Text>
       </div>
     </div>
   );

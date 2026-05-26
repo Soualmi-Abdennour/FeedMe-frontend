@@ -10,10 +10,12 @@ import QuestionModal from "../organism/QuestionModal";
 
 // TYPES & RTK QUERY HOOKS
 import { QANavTab, QuestionModel } from "../../type/qa.types";
+import { useAppSelector } from "@/store/base.store";
 import {
   useGetQuestionsQuery,
   useGetMyQuestionsQuery,
-  useGetSavedQuestionsQuery, 
+  useGetSavedQuestionsQuery,
+  useGetMyAnsweredQuestionsQuery, // 👈 إضافة
   useCreateQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
@@ -21,7 +23,9 @@ import {
   useTogglePinMutation,
   useSaveQuestionMutation,
   useUnsaveQuestionMutation,
-  useCreateCommentMutation, // 👈 إضافة
+  useCreateCommentMutation,
+  useMarkAsSolvedMutation,
+  useCloseQuestionMutation,
 } from "@/features/Q&A/store/qa.api";
 
 export default function QAPage() {
@@ -36,11 +40,22 @@ export default function QAPage() {
   const [newContent, setNewContent] = useState("");
   const [successToastVisible, setSuccessToastVisible] = useState(false);
 
+  const token = useAppSelector(state => state.authentication.authentication?.jwtToken);
+  const currentUserId = useMemo(() => {
+    if (!token) return "";
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.id || payload.userId || payload.sub || "";
+    } catch {
+      return "";
+    }
+  }, [token]);
+
   // ================= RTK QUERY HOOKS =================
   const { data: allResponseData, isLoading: isAllLoading } = useGetQuestionsQuery({
     limit: 20,
     cursor: currentCursor,
-  }, { skip: activeTab === "my-questions" || activeTab === "answer-later" });
+  }, { skip: activeTab === "my-questions" || activeTab === "answer-later" || activeTab === "my-answers" });
 
   const { data: myResponseData, isLoading: isMyLoading } = useGetMyQuestionsQuery(undefined, {
     skip: activeTab !== "my-questions"
@@ -50,6 +65,11 @@ export default function QAPage() {
     skip: activeTab !== "answer-later"
   });
 
+  // 👈 إضافة
+  const { data: answeredResponseData, isLoading: isAnsweredLoading } = useGetMyAnsweredQuestionsQuery(undefined, {
+    skip: activeTab !== "my-answers"
+  });
+
   const [createQuestion] = useCreateQuestionMutation();
   const [updateQuestion] = useUpdateQuestionMutation();
   const [deleteQuestion] = useDeleteQuestionMutation();
@@ -57,7 +77,9 @@ export default function QAPage() {
   const [togglePin] = useTogglePinMutation();
   const [saveQuestion] = useSaveQuestionMutation();
   const [unsaveQuestion] = useUnsaveQuestionMutation();
-  const [createComment] = useCreateCommentMutation(); // 👈 إضافة
+  const [createComment] = useCreateCommentMutation();
+  const [markAsSolved] = useMarkAsSolvedMutation();
+  const [closeQuestion] = useCloseQuestionMutation();
 
   // ================= SELECT LIST BASED ON TAB =================
   const questionsList: QuestionModel[] = useMemo(() => {
@@ -67,22 +89,23 @@ export default function QAPage() {
     if (activeTab === "answer-later") {
       return savedResponseData?.data?.savedQuestions || [];
     }
+    if (activeTab === "my-answers") { // 👈 إضافة
+      return answeredResponseData?.data?.questions || [];
+    }
     return allResponseData?.data?.questions || [];
-  }, [activeTab, allResponseData, myResponseData, savedResponseData]);
+  }, [activeTab, allResponseData, myResponseData, savedResponseData, answeredResponseData]);
 
   const isLoading = 
     activeTab === "my-questions" ? isMyLoading : 
-    activeTab === "answer-later" ? isSavedLoading : 
+    activeTab === "answer-later" ? isSavedLoading :
+    activeTab === "my-answers" ? isAnsweredLoading : // 👈 إضافة
     isAllLoading;
 
-  const nextCursor = (activeTab === "my-questions" || activeTab === "answer-later") ? null : (allResponseData?.data?.nextCursor || null);
+  const nextCursor = (activeTab === "my-questions" || activeTab === "answer-later" || activeTab === "my-answers") ? null : (allResponseData?.data?.nextCursor || null);
 
   // ================= FILTER & SEARCH =================
   const filtered = useMemo(() => {
     let list = questionsList;
-
-    if (activeTab === "my-answers")
-      list = list.filter(q => q.isAnsweredByMe);
 
     if (search.trim()) {
       const s = search.toLowerCase();
@@ -95,7 +118,7 @@ export default function QAPage() {
     }
 
     return list;
-  }, [questionsList, search, activeTab]);
+  }, [questionsList, search]);
 
   const pinnedQuestions = useMemo(() => filtered.filter(q => q.isPinned), [filtered]);
   const unpinnedQuestions = useMemo(() => filtered.filter(q => !q.isPinned), [filtered]);
@@ -112,7 +135,6 @@ export default function QAPage() {
 
   const handleCreateQuestion = async () => {
     if (newTitle.trim().length < 5) return;
-
     try {
       if (editingQuestionId) {
         await updateQuestion({ id: editingQuestionId, title: newTitle, content: newContent }).unwrap();
@@ -120,7 +142,6 @@ export default function QAPage() {
       } else {
         await createQuestion({ title: newTitle, content: newContent }).unwrap();
       }
-
       setNewTitle("");
       setNewContent("");
       setIsModalOpen(false);
@@ -168,11 +189,26 @@ export default function QAPage() {
     }
   };
 
-  // 👈 إضافة دالة إرسال الكومنت
   const handleSubmitAnswer = async (questionId: string, text: string) => {
     if (text.length < 3) return;
     try {
       await createComment({ questionId, text }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleMarkSolved = async (id: string) => {
+    try {
+      await markAsSolved(id).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCloseQuestion = async (id: string) => {
+    try {
+      await closeQuestion(id).unwrap();
     } catch (error) {
       console.error(error);
     }
@@ -214,20 +250,19 @@ export default function QAPage() {
                         <h2 className="text-base font-semibold text-orange-700">Pinned questions</h2>
                         <span className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">{pinnedQuestions.length}</span>
                       </div>
-
                       <QuestionList
                         questions={pinnedQuestions}
                         answersMap={{}}
-                        currentUserId="" 
+                        currentUserId={currentUserId}
                         activeTab={activeTab}
                         onLike={handleLike}
                         onSaveLater={handleSaveLater}
-                        onSubmitAnswer={handleSubmitAnswer} // 👈
+                        onSubmitAnswer={handleSubmitAnswer}
                         onLikeAnswer={() => {}}
                         onEdit={handleEdit}
                         onPin={handlePin}
-                        onMarkSolved={() => {}}
-                        onCloseQuestion={() => {}}
+                        onMarkSolved={handleMarkSolved}
+                        onCloseQuestion={handleCloseQuestion}
                         onDelete={handleDelete}
                       />
                     </div>
@@ -238,20 +273,19 @@ export default function QAPage() {
                       <h2 className="text-base font-semibold text-[#3D2A22]">All my questions</h2>
                       <span className="text-xs bg-[#FFF5F0] text-[#8B6F63] px-2 py-0.5 rounded-full border border-[#F1D8CC]">{unpinnedQuestions.length}</span>
                     </div>
-
                     <QuestionList
                       questions={unpinnedQuestions}
                       answersMap={{}}
-                      currentUserId=""
+                      currentUserId={currentUserId}
                       activeTab={activeTab}
                       onLike={handleLike}
                       onSaveLater={handleSaveLater}
-                      onSubmitAnswer={handleSubmitAnswer} // 👈
+                      onSubmitAnswer={handleSubmitAnswer}
                       onLikeAnswer={() => {}}
                       onEdit={handleEdit}
                       onPin={handlePin}
-                      onMarkSolved={() => {}}
-                      onCloseQuestion={() => {}}
+                      onMarkSolved={handleMarkSolved}
+                      onCloseQuestion={handleCloseQuestion}
                       onDelete={handleDelete}
                     />
                   </div>
@@ -261,16 +295,16 @@ export default function QAPage() {
                   <QuestionList
                     questions={filtered}
                     answersMap={{}}
-                    currentUserId=""
+                    currentUserId={currentUserId}
                     activeTab={activeTab}
                     onLike={handleLike}
                     onSaveLater={handleSaveLater}
-                    onSubmitAnswer={handleSubmitAnswer} // 👈
+                    onSubmitAnswer={handleSubmitAnswer}
                     onLikeAnswer={() => {}}
                     onEdit={handleEdit}
                     onPin={handlePin}
-                    onMarkSolved={() => {}}
-                    onCloseQuestion={() => {}}
+                    onMarkSolved={handleMarkSolved}
+                    onCloseQuestion={handleCloseQuestion}
                     onDelete={handleDelete}
                   />
                 </div>

@@ -154,11 +154,7 @@ export default function QuestionMenu({
             label="View profile"
             onClick={onViewProfile}
           />
-          <MenuItem
-            icon={<Link size={iconSize} />}
-            label="Copy link"
-            onClick={onCopyLink}
-          />
+       
         </>
       )}
     </div>

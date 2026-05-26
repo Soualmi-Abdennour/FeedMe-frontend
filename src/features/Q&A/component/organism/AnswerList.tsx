@@ -1,11 +1,12 @@
-import { AnswerModel } from "../../type/qa.types";
 import { AvatarAtom } from "../atoms/AvatarAtom";
 import { AnswerInput } from "../molecules/AnswerInput";
-import { Icon } from "../atoms/Icon";
+import { useDeleteCommentMutation } from "@/features/Q&A/store/qa.api";
+import { useAppSelector } from "@/store/base.store";
+import { useMemo } from "react";
 
 interface AnswerListProps {
   questionId: string;
-  answers: any[]; // 👈 any لأن الباك يرجع شكل مختلف
+  answers: any[];
   onSubmitAnswer: (questionId: string, text: string) => void;
   onLikeAnswer: (questionId: string, answerId: string) => void;
   isClosed?: boolean;
@@ -18,6 +19,26 @@ export function AnswerList({
   onLikeAnswer,
   isClosed = false,
 }: AnswerListProps) {
+
+  const token = useAppSelector(state => state.authentication.authentication?.jwtToken);
+  const currentUserId = useMemo(() => {
+    if (!token) return "";
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      return payload.id || payload.userId || payload.sub || "";
+    } catch { return ""; }
+  }, [token]);
+
+  const [deleteComment] = useDeleteCommentMutation();
+
+  const handleDelete = async (commentId: string) => {
+    try {
+      await deleteComment({ questionId, commentId }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="mt-4 border-t border-[#F1D8CC] pt-4 flex flex-col gap-3">
       {answers.length === 0 ? (
@@ -26,46 +47,38 @@ export function AnswerList({
         </p>
       ) : (
         answers.map((answer) => {
-          // 👈 نستخرج البيانات بشكل مرن
           const rawAnswer = answer as any;
           const username = rawAnswer?.user?.UserProfile?.fullName || rawAnswer?.user?.userName || rawAnswer?.author?.username || "User";
           const avatarUrl = rawAnswer?.user?.UserProfile?.profilePicture || rawAnswer?.author?.avatarUrl || null;
           const content = rawAnswer?.text || rawAnswer?.content || "";
           const createdAt = rawAnswer?.createdAt || "";
-          const likesCount = rawAnswer?.likesCount ?? rawAnswer?.likeCount ?? 0;
-          const isLiked = rawAnswer?.isLiked ?? false;
+          const commentUserId = rawAnswer?.userId || rawAnswer?.user?.id || "";
+          const isOwner = commentUserId === currentUserId;
 
           return (
             <div
               key={answer.id}
               className="flex gap-3 bg-[#FFF5F0] rounded-xl p-3 border border-[#F1D8CC]"
             >
-              <AvatarAtom
-                avatarUrl={avatarUrl}
-                name={username}
-                size="sm"
-              />
+              <AvatarAtom avatarUrl={avatarUrl} name={username} size="sm" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-[#3D2A22]">
-                    {username}
-                  </span>
-                  <span className="text-xs text-[#8B6F63]">
-                    {new Date(createdAt).toLocaleDateString("fr-FR")}
-                  </span>
+                  <span className="text-sm font-medium text-[#3D2A22]">{username}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-[#8B6F63]">
+                      {new Date(createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}
+                    </span>
+                    {isOwner && (
+                      <button
+                        onClick={() => handleDelete(answer.id)}
+                        className="text-xs text-red-400 hover:text-red-600 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <p className="text-sm text-[#2D1F1A] leading-relaxed">
-                  {content}
-                </p>
-                <button
-                  onClick={() => onLikeAnswer(questionId, answer.id)}
-                  className={`mt-2 text-xs flex items-center gap-1 transition-colors ${
-                    isLiked ? "text-orange-500" : "text-[#8B6F63] hover:text-orange-400"
-                  }`}
-                >
-                  <Icon name="heart" size="sm" filled={isLiked} color={isLiked ? "orange" : "gray"} />
-                  <span>{likesCount}</span>
-                </button>
+                <p className="text-sm text-[#2D1F1A] leading-relaxed">{content}</p>
               </div>
             </div>
           );
