@@ -1,6 +1,6 @@
 import { cn } from '@/utils/shadcn.utils';
 import { IStatusBadgeProps } from '../../types/props.types';
-import type { OrderStatus } from '../../types/request.types';
+import type { OrderStatus } from '../../types/order.types';
 import { ORDER_STATUS } from '../../constants/order.constants';
 
 

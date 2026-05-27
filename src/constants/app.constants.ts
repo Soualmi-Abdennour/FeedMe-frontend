@@ -148,5 +148,5 @@ export const RESTAURANT_SERVICES = [
     {key:"PARK_AVAILABILITY", value: "parkAvailability", label: "Park Availability" }
 ] as const
 
-
+export const CONTENT_TYPE = [{ key: "RECIPE", label: "Recipe", value: "RECIPE" }, { key: "DISH", label: "Dish", value: "DISH" }]
 

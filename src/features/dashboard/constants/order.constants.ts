@@ -4,3 +4,8 @@ export const ORDER_STATUS = {
   ACCEPTED: { label: 'ACCEPTED', className: 'bg-blue-100   text-blue-700   border border-blue-300'   },
   CONFIRMED:{ label: 'CONFIRMED',className: 'bg-purple-100 text-purple-700 border border-purple-300' },
 };
+
+export const ORDERS_PAGE_TABS = [
+  { label: 'Order Complete', value: 'complete' },
+  { label: 'Order Pending', value: 'pending' },
+];

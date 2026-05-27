@@ -39,7 +39,7 @@ function TextField({
                         type="text"
                         disabled={disabled}
                         autoFocus={autoFocus}
-                        className={` bg-transparent w-full outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
+                        className={` bg-transparent w-full outline-none border-none text-sm text-neutral-900 placeholder:text-neutral-400`}
                     ></Input>
                 )}
             >

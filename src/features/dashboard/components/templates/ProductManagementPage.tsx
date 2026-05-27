@@ -10,9 +10,10 @@ import {
   useAddProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
-} from "../../store/productManagementApi.slice";
+} from "../../store/productManagement.api.slice";
+import { Button } from "@/components/ui/button";
 
-export const ProductManagementTemplate: React.FC = () => {
+export const ProductManagementPage: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editTarget, setEditTarget] = useState<ProductModel | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<ProductModel | null>(null);
@@ -52,16 +53,17 @@ export const ProductManagementTemplate: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 p-6 bg-[#fdf6f0] min-h-screen">
+    <div className="flex-1 p-6  h-full">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-neutral-800">Product management:</h1>
-        <button
+        <Button
           onClick={() => setShowAddModal(true)}
+          variant={"ghost"}
           className="flex items-center gap-2 px-5 py-2 border-2 border-primary-400 text-primary-500 rounded-full text-sm font-semibold hover:bg-primary-50 transition"
         >
           <span className="text-lg leading-none">+</span>
           Add product
-        </button>
+        </Button>
       </div>
 
       <ProductGrid

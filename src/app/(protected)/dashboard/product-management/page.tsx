@@ -1,3 +1,3 @@
-import { ProductManagementTemplate } from "@/features/dashboard/components/templates/ProductManagementTemplate";
+import { ProductManagementPage } from "@/features/dashboard/components/templates/ProductManagementPage";
 
-export default ProductManagementTemplate
+export default ProductManagementPage

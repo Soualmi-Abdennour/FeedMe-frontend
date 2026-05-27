@@ -1,6 +1,7 @@
 import React from 'react'
 import { IPostDetails } from '../../types/props.types'
 import { cn } from '@/utils/shadcn.utils'
+import { CONTENT_TYPE } from '@/constants/app.constants'
 
 
 function PostDetails({postTitle,postDescription,contentType,className}:IPostDetails) {
@@ -20,7 +21,7 @@ function PostDetails({postTitle,postDescription,contentType,className}:IPostDeta
                 </div>
                 <div className='flex gap-2 items-center'>
                     <h6 className='mb-1 font-bold'>Content type:</h6>
-                    <p className='font-normal text-sm text-[#404040]'>{contentType}</p>
+                    <p className='font-normal text-sm text-[#404040]'>{CONTENT_TYPE.find((item)=>item.key===contentType)?.label}</p>
                 </div>              
             </div>
         </div>

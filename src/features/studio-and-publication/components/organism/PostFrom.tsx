@@ -11,9 +11,10 @@ import { IPostFormProps } from '../../types/props.types'
 import { buildPostFormData } from '../../utils/media.utils'
 import MediaDropZone from '../molecules/MediaDropZone'
 import MediaPreviewGallery from '../molecules/MediaPreviewGallery'
+import { Button } from '@/components/ui/button'
 
 
-function PostForm({ defaultValues,onSubmit  }: IPostFormProps) {
+function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
     const [mediaList, setMediaList] = useState<MediaAppModel[]>(defaultValues?.mediaList?? [])
     const {
         handleSubmit,
@@ -40,7 +41,7 @@ function PostForm({ defaultValues,onSubmit  }: IPostFormProps) {
         await onSubmit(postData)
     }
     return (
-        <div className='grid grid-cols-1 justify-center '>
+        <div className='grid grid-cols-1 justify-center w-full '>
             {mediaList && (
                 <MediaPreviewGallery uploadedMedia={mediaList} setUploadedMedia={setMediaList} className=''/>
             )}
@@ -51,9 +52,21 @@ function PostForm({ defaultValues,onSubmit  }: IPostFormProps) {
                         <FormField {...formField} control={control} errors={errors} />
                     </div>
                 ))}
-                <SubmitButton disabled={mediaList.length === 0 || !isValid}  className='text-white font-bold w-full' >
-                    Create Post
-                </SubmitButton>
+                <div className="flex gap-3 mt-1">
+                    <Button 
+                        type='button'
+                        variant={"ghost"}
+                        onClick={onClose}
+                        className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
+                            Cancel
+                    </Button>
+                    <Button disabled={mediaList.length === 0 || !isValid} 
+                        type='submit'
+                        className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
+                        Create Post
+                    </Button>
+                </div>
+
             </form>
         </div>
     )

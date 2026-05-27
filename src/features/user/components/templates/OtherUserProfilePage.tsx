@@ -14,7 +14,7 @@ function OtherUserProfilePage({userId}:{userId:string}) {
 
     if(isLoading) {
         return (
-            <div className="flex items-center justify-center py-16 h-screen">
+            <div className="flex items-center justify-center py-16 h-full">
                 <Loader2 className="w-6 h-6 animate-spin text-orange-500" />
             </div>
         )
@@ -22,7 +22,7 @@ function OtherUserProfilePage({userId}:{userId:string}) {
     if (isError)
     {
         return (
-            <div className="flex flex-col items-center justify-center py-16 gap-2 text-muted-foreground h-screen">
+            <div className="flex flex-col items-center justify-center py-16 gap-2 text-muted-foreground h-full">
                 <Ban className="w-8 h-8" ></Ban>
                 <p className="text-sm">Failed to load Profile</p>
             </div>
@@ -40,7 +40,7 @@ function OtherUserProfilePage({userId}:{userId:string}) {
             }
         }
         return (
-            <div className="relative z-0 w-full h-screen overflow-y-scroll">
+            <div className="relative z-0 w-full h-full overflow-y-scroll">
                 <ProfileHeader user={user!} />
                 <div>
                     {user?.role === "USER" ? (

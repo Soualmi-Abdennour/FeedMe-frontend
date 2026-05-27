@@ -1,15 +1,9 @@
-import RequestRow from '../molecules/orderRow';
-import type { OrderModel } from '../../types/request.types';
+import { IRequestTableProps } from '../../types/props.types';
+import RequestRow from '../molecules/OrderRow';
 
-interface RequestTableProps {
-  requests?: OrderModel[];
-  onConfirm: (id: string) => void;
-  onDelete: (id: string) => void;
-  isCompleted?: boolean;
-  onRowClick?: (order: OrderModel) => void;
-}
 
-export default function RequestTable({ requests = [], onConfirm, onDelete, isCompleted, onRowClick }: RequestTableProps) {
+
+export default function OrdersTable({ requests = [], onConfirm, onDelete, isCompleted, onRowClick }: IRequestTableProps) {
   return (
     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
       <table className="w-full">
@@ -21,7 +15,7 @@ export default function RequestTable({ requests = [], onConfirm, onDelete, isCom
             {!isCompleted && <th className="px-6 py-4 text-left text-sm font-semibold text-gray-400">Actions</th>}
           </tr>
         </thead>
-        <tbody>
+        <tbody className='overflow-y-auto'>
           {requests.length === 0 ? (
             <tr>
               <td colSpan={isCompleted ? 3 : 4} className="px-6 py-12 text-center text-sm text-gray-400">

@@ -8,9 +8,9 @@ function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={cn(' min-h-screen flex ')}>
+        <main className={cn(' h-full flex ')}>
             <DashboardSideBar></DashboardSideBar>
-            <div className='mx-auto    flex-1 py-10'>
+            <div className='mx-auto h-full flex-1 '>
                 {children}
             </div>
         </main>

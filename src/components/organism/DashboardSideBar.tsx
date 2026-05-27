@@ -7,7 +7,7 @@ import AppNavItem from "../molecules/AppNavItem";
 function DashboardSideBar() {
     const pathName = usePathname()
     return (
-        <aside className="w-52 h-screen bg-white border-r border-gray-200 pt-5 ">
+        <aside className="w-52 h-full bg-white border-r border-gray-200 pt-5 ">
             <nav className="flex-1 px-4">
                 <div className="flex flex-col space-y-2">
                     {DASHBOARD_NAVIGATION_ITEMS.map((item) => (

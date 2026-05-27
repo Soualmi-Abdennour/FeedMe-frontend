@@ -44,7 +44,7 @@ function AppSidebar() {
 
     return (
         <aside className="
-            absolute z-[999]
+            absolute z-50
             group/sidebar
             h-screen bg-white border-r border-gray-200
             flex flex-col

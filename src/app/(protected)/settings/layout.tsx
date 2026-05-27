@@ -8,9 +8,9 @@ function SettingsLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={cn(' min-h-screen flex ')}>
+        <main className={cn(' h-full flex ')}>
             <SettingsSidebar></SettingsSidebar>
-            <div className='mx-auto    flex-1 py-10'>
+            <div className='mx-auto flex-1 py-10'>
                 {children}
             </div>
         </main>

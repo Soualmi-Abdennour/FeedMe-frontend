@@ -50,7 +50,7 @@ function SelectField({
                                 autoFocus={autoFocus}
                             >
                                 <SelectValue
-                                    className={` bg-transparent w-full outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
+                                    className={` bg-transparent text-sm w-full outline-none border-none text-neutral-900 placeholder:text-neutral-400`}
                                     placeholder={placeholder} />
                             </SelectTrigger>
 

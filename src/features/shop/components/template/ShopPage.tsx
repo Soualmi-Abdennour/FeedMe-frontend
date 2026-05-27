@@ -39,22 +39,22 @@ export default function ShopPage() {
     setActive(tempActive);
   };
 
- const handleAddToCart = async () => {
-  if (!selectedProduct) return;
-  try {
-    await addToCart(selectedProduct.id).unwrap();
-    setToastVisible(true);
-    setSelectedProduct(null);
-    setTimeout(() => setToastVisible(false),  1000); // ✅
-  } catch (err) {
-    console.error("Failed to add to cart:", err);
-  }
-};
+  const handleAddToCart = async () => {
+    if (!selectedProduct) return;
+    try {
+      await addToCart(selectedProduct.id).unwrap();
+      setToastVisible(true);
+      setSelectedProduct(null);
+      setTimeout(() => setToastVisible(false), 1000); // ✅
+    } catch (err) {
+      console.error("Failed to add to cart:", err);
+    }
+  };
   const filteredProducts = useMemo(() => {
     let result = products.filter((product) => {
-      const matchesCategory = 
-        active.includes('all') || 
-active.some(cat => cat.toLowerCase() === product.category?.toLowerCase())
+      const matchesCategory =
+        active.includes('all') ||
+        active.some(cat => cat.toLowerCase() === product.category?.toLowerCase())
       const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
       return matchesCategory && matchesSearch;
     });
@@ -69,24 +69,23 @@ active.some(cat => cat.toLowerCase() === product.category?.toLowerCase())
   }, [products, active, search, sort]);
 
   if (isError) return (
-    <div className="flex h-screen items-center justify-center text-red-500">
+    <div className="flex h-full items-center justify-center text-red-500">
       Error fetching products. Please try again later.
     </div>
   );
 
   return (
-    <div className="min-h-screen w-full  px-4 md:px-10 py-8">
+    <div className="h-full w-full flex flex-col px-4 md:px-10 py-8">
       <ShopHeader />
-      
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 shrink-0">     
         <FilterSection search={search} onSearch={setSearch} sort={sort} onSort={setSort} />
         <CategoryBar active={tempActive} onSelect={handleSelectCategory} onApply={handleApply} />
       </div>
 
       <SuccessToast visible={toastVisible} onDismiss={() => setToastVisible(false)} />
-
-      <ProductGrid isLoading={isLoading} products={filteredProducts} onProductClick={setSelectedProduct} />
-
+      <div className='flex-1 overflow-y-auto min-h-0'>  
+        <ProductGrid isLoading={isLoading} products={filteredProducts} onProductClick={setSelectedProduct} />
+      </div>
       {selectedProduct && (
         <ProductDetailPopup
           product={selectedProduct}

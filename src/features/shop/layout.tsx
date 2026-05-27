@@ -4,7 +4,7 @@ export default function ShopLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-full">
 
       {/* Sidebar simulée */}
       <div className="w-[160px] bg-white 

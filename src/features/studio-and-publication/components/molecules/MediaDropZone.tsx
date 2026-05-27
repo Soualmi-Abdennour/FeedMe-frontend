@@ -62,20 +62,31 @@ function MediaDropZone({ uploadedMedia, setUploadedMedia }: IMediaDropZoneProps)
     const canLoadMore = !hasVideo && uploadedMedia.length < 10;
 
     return (
-        <div className="flex flex-col items-center gap-2 mb-3">
+        <div className="w-full flex flex-col items-center justify-center gap-2 mb-3 "
+>
             {(isEmpty || canLoadMore) && (
                 <div
                     {...getRootProps()}
                     className={cn(
-                        "rounded-sm cursor-pointer flex justify-center items-center transition",
+                        "w-full   rounded-xl flex items-center justify-center cursor-pointer overflow-hidden ",
                         isEmpty
-                            ? "size-56 bg-neutral-200 border text-neutral-500 hover:bg-primary-100 hover:shadow-sm  my-5"
-                            : "px-5 py-2 m-3 bg-primary-500 hover:bg-primary-600 text-white font-bold",
+                            ? "h-36 border-2 border-dashed border-neutral-300 hover:border-orange-400 transition text-neutral-500 hover:shadow-sm "
+                            : "px-5 py-2 m-3 bg-primary-500 hover:bg-primary-600 text-white font-bold text-sm",
                         isDragActive && "opacity-70"
                     )}
                 >
                     <input {...getInputProps()} />
-                    <p className="">{isEmpty ? "Upload Media" : "Add more"}</p>
+                    {isEmpty?  (
+                        <div className="flex  flex-col items-center gap-1 text-neutral-400">
+                            <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                                    d="M4 16l4-4 4 4 4-6 4 6M4 20h16M4 4h16" />
+                            </svg>
+                            <span className="text-xs">Add Media</span>
+                        </div>
+                    ):(
+                        <p className="">Add more</p>
+                    )}
                 </div>
             )}
 

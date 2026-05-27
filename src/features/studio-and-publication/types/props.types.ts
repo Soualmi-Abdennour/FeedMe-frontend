@@ -55,6 +55,7 @@ export interface IPostFormProps {
         mediaList:MediaAppModel[]
     };
     onSubmit:(postData:FormData)=>Promise<void>
+    onClose:()=>void
 }
 export interface ICreatePostFormProps {
     className?: string;

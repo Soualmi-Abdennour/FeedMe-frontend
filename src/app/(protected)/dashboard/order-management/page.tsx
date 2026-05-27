@@ -1,3 +1,3 @@
-import RequestManagementPage from '@/features/dashboard/components/templates/RequestManagementPage';
+import OrderManagementPage from '@/features/dashboard/components/templates/OrderManagementPage';
 
-export default RequestManagementPage
+export default OrderManagementPage

@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { OrderModel } from "../types/request.types";
+import { OrderModel } from "../types/order.types";
 
 interface OrdersResponse {
   data: {
@@ -23,24 +23,24 @@ export const orderManagementApiSlice = fetchAPI.injectEndpoints({
       providesTags: ['Orders'],
     }),
     updateOrderStatus: build.mutation<void, string>({
-  query: (orderId) => ({
-    url: `/orders/${orderId}/status`,
-    method: 'PATCH',
-  }),
-  invalidatesTags: ['Orders'],
-}),
-rejectOrder: build.mutation<void, string>({
-  query: (orderId) => ({
-    url: `/orders/${orderId}`,
-    method: 'DELETE',
-  }),
-  invalidatesTags: ['Orders'],
-}),
+      query: (orderId) => ({
+        url: `/orders/${orderId}/status`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Orders'],
+    }),
+    rejectOrder: build.mutation<void, string>({
+      query: (orderId) => ({
+        url: `/orders/${orderId}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Orders'],
+    }),
   }),
 });
-export const { 
+export const {
   useGetIncomingOrdersQuery,
-    useRejectOrderMutation,
+  useRejectOrderMutation,
 
   useGetAcceptedOrdersQuery,
   useUpdateOrderStatusMutation,

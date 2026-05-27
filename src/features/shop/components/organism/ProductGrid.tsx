@@ -15,7 +15,7 @@ export default function ProductGrid({ products, isLoading,onProductClick  }: Pro
   return (
     <div className="grid grid-cols-4 gap-4">
       {isLoading
-        ? Array.from({ length: 8 }).map((_, i) => ( // Show 8 skeletons while loading
+        ? Array.from({ length: 8 }).map((_, i) => ( 
             <SkeletonCard key={i} />
           ))
         : products.map((product) => (

@@ -23,15 +23,15 @@ function StudioPage() {
     const [filterOptions, setFilterOptions] = useState<PostsFilterOptionValue[]>(['Image', "Multi-Image", "Video"])
     const [openCreatePostFrom, setOpenCreatePostForm] = useState<boolean>(false)
     const { data, isLoading, isError } = useGetMyPostsQuery()
-    const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) :[] 
+    const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) : []
 
     return (
-        <div className='relative z-0 w-full px-32 py-24 h-screen'>
+        <div className='relative z-0 w-full px-32 py-24 h-full'>
             <header className='flex justify-between max-h-[56px] items-center  '>
                 <Button
                     onClick={() => setOpenCreatePostForm(true)}
-                    variant='secondary'
-                    className='text-primary-500 font-bold '
+                    variant="ghost"
+                    className="flex items-center gap-2 px-5 py-2 border-2 border-primary-400 text-primary-500 rounded-full text-sm font-semibold hover:bg-primary-50 transition"
                 >
                     <Plus size={26}></Plus>
                     Create Post
@@ -50,39 +50,39 @@ function StudioPage() {
                 />
             </header>
             <div className='mt-10 h-full  overflow-y-auto'>
-            {isLoading && (
-                <p className="text-center mt-10 text-gray-400">Loading ...</p>
-            )}
-            {isError && (
-                <p className="text-center mt-10 text-red-400 ">Error while getting the posts</p>
-            )}
-            {!isLoading && !isError && (
-                <div className='grid grid-cols-3 gap-3 '>
+                {isLoading && (
+                    <p className="text-center mt-10 text-gray-400">Loading ...</p>
+                )}
+                {isError && (
+                    <p className="text-center mt-10 text-red-400 ">Error while getting the posts</p>
+                )}
+                {!isLoading && !isError && (
+                    <div className='grid grid-cols-3 gap-3 '>
                         {filterPosts({ posts, selectFilterOptions: filterOptions })
-                        .map(({ mediaType, media, id }) => (
-                            <PostPreview
-                                key={id}
-                                mediaType={mediaType}
-                                media={media}
-                                postId={id}
-                                sameUser={true}
-                            />
-                        ))
-                    }
+                            .map(({ mediaType, media, id }) => (
+                                <PostPreview
+                                    key={id}
+                                    mediaType={mediaType}
+                                    media={media}
+                                    postId={id}
+                                    sameUser={true}
+                                />
+                            ))
+                        }
                         {posts.length === 0 && (
-                        <p className="col-span-3 text-center mt-10 text-gray-400  ">
-                            No posts are available
-                        </p>
-                    )}
-                </div>
-            )}
+                            <p className="col-span-3 text-center mt-10 text-gray-400  ">
+                                No posts are available
+                            </p>
+                        )}
+                    </div>
+                )}
             </div>
             {openCreatePostFrom && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
                     onClick={() => setOpenCreatePostForm(false)}
                 >
-                    <div onClick={(e) => e.stopPropagation()}>
+                    <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-2xl shadow-xl w-full max-w-md  p-6 flex flex-col gap-4">
                         <CreatePostForm onClose={() => setOpenCreatePostForm(false)} />
                     </div>
                 </div>

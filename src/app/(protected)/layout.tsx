@@ -11,11 +11,11 @@ function ProtectedLayout({
     children: React.ReactNode
 }) {
     return (
-        <main className={cn('min-h-screen relative')}>
+        <main className={cn('h-screen relative z-0')}>
             <AppSidebar />
             <div className='pl-20 bg-primary-50 h-screen flex flex-col'>
                 <AppHeader />
-                <div className='flex-1 mt-3 overflow-y-auto'>
+                <div className='flex-1 mt-3 overflow-y-auto h-[calc(100%-68px)]'>
                     {children}
                 </div>
             </div>

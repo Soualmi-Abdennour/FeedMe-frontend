@@ -1,25 +1,19 @@
 "use client";
 
-import React from "react";
-import { ProductModel } from "../../types/product.types";
+import { IProductGridProps } from "../../types/props.types";
 import { ProductCard } from "../atoms/ProductCard";
 
-interface ProductGridProps {
-    products: ProductModel[];
-    isLoading: boolean;
-    onEdit: (product: ProductModel) => void;
-    onDelete: (product: ProductModel) => void;
-}
 
-export const ProductGrid: React.FC<ProductGridProps> = ({
+
+export const ProductGrid = ({
     products,
     isLoading,
     onEdit,
     onDelete,
-}) => {
+}: IProductGridProps) => {
     if (isLoading) {
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-6 overflow-y-auto">
         {Array.from({ length: 8 }).map((_, i) => (
             <div key={i} className="bg-neutral-100 rounded-2xl h-52 animate-pulse" />
         ))}

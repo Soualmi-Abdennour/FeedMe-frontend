@@ -31,18 +31,20 @@ function CreatePostForm({ className, onClose }: ICreatePostFormProps) {
         }         
     }
     return (
-        <div className={cn('relative max-w-[600px] w-full flex flex-col items-center rounded-lg bg-white p-10 gap-3', className)}>
+        <div className={cn('relative  w-full flex flex-col items-start gap-4 justify-center rounded-lg bg-white ', className)}>
             {/* Close button */}
             
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-4 text-neutral-500 hover:text-neutral-900text-xl font-bold"
+                    className="absolute top-0 right-0 text-neutral-500 hover:text-neutral-900 text-xl font-bold"
                     aria-label="Close"
                 >
                     ✕
                 </button>
-            
-            <PostForm onSubmit={onSubmit}></PostForm>
+            <h2 className="text-base font-bold text-neutral-800">
+                Create Post :
+            </h2>
+            <PostForm onSubmit={onSubmit} onClose={onClose}></PostForm>
         </div>
     )
 }

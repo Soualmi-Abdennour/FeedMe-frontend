@@ -1,19 +1,13 @@
 "use client";
 
 import { Check, Trash2 } from 'lucide-react';
-import StatusBadge from '../atoms/StatusBadge';
-import type { OrderModel } from '../../types/request.types';
 import { useState } from 'react';
+import { IOrderRowProps } from '../../types/props.types';
+import StatusBadge from '../atoms/StatusBadge';
 
-interface OrderRowProps {
-  order: OrderModel;
-  onConfirm: (id: string) => void;
-  onDelete: (id: string) => void;
-  isCompleted?: boolean;
-  onRowClick?: (order: OrderModel) => void;
-}
 
-export default function OrderRow({ order, onConfirm, onDelete, isCompleted, onRowClick }: OrderRowProps) {
+
+export default function OrderRow({ order, onConfirm, onDelete, isCompleted, onRowClick }: IOrderRowProps) {
   const [sliding, setSliding] = useState(false);
 
   const handleRowClick = (e: React.MouseEvent) => {

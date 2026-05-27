@@ -1,16 +1,17 @@
+import { CONTENT_TYPE } from "@/constants/app.constants";
 import { IFormField } from "@/types/props.types";
 
 export const POST_FORM_FIELDS: Omit<IFormField, "errors" | "control">[] = [
     {
         name: "title",
-        label: "Title",
+        label: "Post Title",
         type: "text",
         autoFocus: false,
         placeholder: "Your post title"
     },
     {
         name: "description",
-        label: "Description",
+        label: "Post Description",
         type: "textArea",
         placeholder: "Something about your post..."
     },
@@ -19,6 +20,6 @@ export const POST_FORM_FIELDS: Omit<IFormField, "errors" | "control">[] = [
         label: "Content Type",
         type: "select",
         placeholder: "Select Content Type",
-        selectList: [{ value: "RECIPE", label: "Recipe" }, { value: "DISH", label: "Dish" }]
+        selectList: CONTENT_TYPE
     },
 ]

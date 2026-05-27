@@ -2,22 +2,20 @@
 
 import { useState } from 'react';
 import TabToggle from '../atoms/TabToggle';
-import RequestTable from '../organisms/RequestTable';
+import OrdersTable from '../organisms/OrdersTable';
 import OrderDetailPopup from '../molecules/OrderDetailPopup';
-import type { OrderModel } from '../../types/request.types';
-import { 
-  useGetIncomingOrdersQuery, 
+import type { OrderModel } from '../../types/order.types';
+import {
+  useGetIncomingOrdersQuery,
   useGetAcceptedOrdersQuery,
   useUpdateOrderStatusMutation,
   useRejectOrderMutation
-} from '../../store/orderManagementApi.slice';
+} from '../../store/orderManagement.api.slice';
+import { ORDERS_PAGE_TABS } from '../../constants/order.constants';
 
-const TABS = [
-  { label: 'Order Complete', value: 'complete' },
-  { label: 'Order Pending', value: 'pending' },
-];
 
-export default function RequestManagementPage() {
+
+export default function OrderManagementPage() {
   const [activeTab, setActiveTab] = useState('pending');
   const [selectedOrder, setSelectedOrder] = useState<OrderModel | null>(null);
 
@@ -26,7 +24,6 @@ export default function RequestManagementPage() {
   const [rejectOrder] = useRejectOrderMutation();
   const [updateOrderStatus] = useUpdateOrderStatusMutation();
 
-  // فلتر يدوي للتأكد من صحة البيانات
   const pendingOrders = incomingOrders.filter(o => o.status === 'PENDING');
   const completedOrders = acceptedOrders.filter(o => o.status === 'ACCEPTED');
 
@@ -53,14 +50,14 @@ export default function RequestManagementPage() {
   );
 
   return (
-    <div className="p-8 min-h-screen bg-[#fdf6f0]">
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Request management:</h1>
+    <div className="p-8 h-full border-2">
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-6">Order management:</h1>
 
       <div className="flex justify-center mb-6">
-        <TabToggle tabs={TABS} active={activeTab} onChange={setActiveTab} />
+        <TabToggle tabs={ORDERS_PAGE_TABS} active={activeTab} onChange={setActiveTab} />
       </div>
 
-      <RequestTable
+      <OrdersTable
         requests={filtered}
         onConfirm={handleConfirm}
         onDelete={handleDelete}
