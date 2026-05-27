@@ -5,20 +5,20 @@ import { CartSection } from '../organism/CartTotale';
 import { useGetCartQuery, useClearCartMutation } from '../../store/cartApiSlice';
 import { useRouter } from 'next/navigation';
 
-export const CartTemplate = () => {
+function CartPage() {
   const router = useRouter();
   const [clearCart] = useClearCartMutation();
   const { data, isLoading, isError, refetch } = useGetCartQuery(undefined);
   const groups = data?.data?.allCartGroups || [];
 
- const handleClearCart = async () => {
-  try {
-    await clearCart().unwrap();
-    refetch(); 
-  } catch (error) {
-    console.error("Failed to clear cart:", error);
-  }
-};
+  const handleClearCart = async () => {
+    try {
+      await clearCart().unwrap();
+      refetch();
+    } catch (error) {
+      console.error("Failed to clear cart:", error);
+    }
+  };
 
   if (isLoading) return <div className="text-center py-20">Loading cart...</div>;
 
@@ -43,7 +43,7 @@ export const CartTemplate = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] py-12 px-4">
+    <div className="  py-12 px-4">
       <div className="max-w-6xl mx-auto">
 
         <div className="flex items-center justify-between mb-10">
@@ -70,3 +70,5 @@ export const CartTemplate = () => {
     </div>
   );
 };
+
+export default CartPage

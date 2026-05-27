@@ -1,4 +1,3 @@
-// src/features/order-management/store/orderManagementApi.slice.ts
 import { fetchAPI } from "@/store/base.store";
 import { OrderModel } from "../types/request.types";
 

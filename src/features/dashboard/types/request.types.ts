@@ -5,7 +5,7 @@ export interface OrderProduct {
   name: string;
   image: string;
   price: string;
-    description?: string; // ✅
+  description?: string; 
 
 }
 

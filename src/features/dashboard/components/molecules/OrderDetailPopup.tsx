@@ -1,35 +1,22 @@
 'use client';
 
 import { X } from 'lucide-react';
-import type { OrderModel } from '../../types/request.types';
+import Image from "next/image";
+import { IOrderDetailPopupProps } from '../../types/props.types';
 
-const BASE_URL = "http://localhost:8000";
+// const BASE_URL = "http://localhost:8000";
 
-interface OrderDetailPopupProps {
-  order: OrderModel;
-  onClose: () => void;
-}
 
-export default function OrderDetailPopup({ order, onClose }: OrderDetailPopupProps) {
+
+export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupProps) {
   const unitPrice = parseFloat(order.product?.price ?? '0');
   const quantity = order.quantity ?? 1;
   const totalPrice = unitPrice * quantity;
 
-  const imageUrl = order.product?.image
-    ? order.product.image.startsWith('http')
-      ? order.product.image
-      : `${BASE_URL}/${order.product.image.replace(/^\//, '')}`
-    : null;
-
-  const avatarUrl = order.user?.avatar
-    ? order.user.avatar.startsWith('http')
-      ? order.user.avatar
-      : `${BASE_URL}/${order.user.avatar.replace(/^\//, '')}`
-    : null;
-
+  
   return (
     <>
-      <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
+      <div className="fixed inset-0 z-50  bg-black/60 backdrop-blur-sm" onClick={onClose} />
 
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-3xl flex flex-col md:flex-row overflow-hidden">
@@ -44,8 +31,14 @@ export default function OrderDetailPopup({ order, onClose }: OrderDetailPopupPro
           {/* Image */}
           <div className="w-full md:w-[45%] flex-shrink-0 bg-white p-4">
             <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
-              {imageUrl ? (
-                <img src={imageUrl} alt={order.product?.name} className="w-full h-full object-cover" />
+              {order.product.image ? (
+                <Image 
+                  // src={order.product.image}
+                  src={"/"}
+                  alt={order.product?.name} 
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
                   No image
@@ -61,8 +54,14 @@ export default function OrderDetailPopup({ order, onClose }: OrderDetailPopupPro
             <div className="flex items-center gap-3 border border-gray-200 rounded-xl px-4 py-3">
               <span className="text-sm font-bold text-gray-800 whitespace-nowrap">Account holder:</span>
               <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
-                {avatarUrl ? (
-                  <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+                {order.user.avatar ? (
+                  <Image
+                    src={"/"}
+                    // src={order.user.avatar}
+                    alt="" 
+                    width={100}
+                    height={100}
+                    className="w-full h-full object-cover" />
                 ) : (
                   order.user?.userName?.[0]?.toUpperCase() ?? '?'
                 )}

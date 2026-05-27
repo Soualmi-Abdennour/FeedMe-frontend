@@ -2,13 +2,27 @@
 import { Button } from '@/components/ui/button'
 import { EllipsisVertical, Images, Video } from 'lucide-react'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IPostPreviewProps } from '../../types/props.types'
 import Image from 'next/image'
 import { Image as ImageIcon } from "lucide-react"
 
 function PostPreview({ media, postId, mediaType,sameUser=true}: IPostPreviewProps) {    
     const [showList, setShowList] = useState<boolean>(false)
+    const menuRef = useRef<HTMLDivElement>(null);
+    
+    
+    
+        useEffect(() => {
+            const handleOutside = (e: MouseEvent) => {
+                if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                    setShowList(false);
+                }
+            };
+            document.addEventListener("mousedown", handleOutside);
+            return () => document.removeEventListener("mousedown", handleOutside);
+        }, []);
+
     return (
         <div className='relative flex items-center justify-center w-full aspect-[9/16] overflow-hidden rounded-xl bg-black'>
             {sameUser && <button
@@ -17,13 +31,13 @@ function PostPreview({ media, postId, mediaType,sameUser=true}: IPostPreviewProp
             >
                 <EllipsisVertical className='size-6 text-white' />
             </button>}
-            {showList  && (
-                <div className='flex flex-col gap-1 justify-center absolute top-3 right-16 z-10'>
+            {showList &&sameUser && (
+                <div ref={menuRef} className="absolute top-8 right-2 mt-1 w-28 bg-white rounded-xl shadow-lg  border-neutral-100 overflow-hidden z-20 border-2">
                     <Link href={`/studio?action=edit&id=${postId}`}>
-                        <Button className='w-full m-1 text-white font-medium'>Edit</Button>
+                        <button className="w-full text-left px-4 py-2  text-sm font-medium text-gray-700 hover:bg-neutral-50">Edit</button>
                     </Link>
                     <Link href={`/studio?action=delete&id=${postId}`}>
-                        <Button className='w-full m-1 text-white font-medium'>Delete</Button>
+                        <button className="w-full text-left font-medium px-4 py-2 text-sm text-fail-500 hover:bg-fail-50">Delete</button>
                     </Link>
                 </div>
             )}

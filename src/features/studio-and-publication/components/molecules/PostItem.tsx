@@ -32,7 +32,7 @@ function PostItem({post} : {post:PostAppModel}) {
     }
 
     return (
-        <div className="relative h-[600px] w-[387px] overflow-hidden rounded-2xl bg-black shadow-2xl">
+        <div className="relative h-full w-[387px] overflow-hidden rounded-2xl  shadow-xl">
 
             <div className="absolute inset-0">{renderMedia()}</div>
 

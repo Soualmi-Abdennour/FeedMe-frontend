@@ -43,6 +43,16 @@ export const SETTINGS_NAVIGATION_ITEMS = [
         path: ["/settings/edit-account"],
     },
 ];
+export const DASHBOARD_NAVIGATION_ITEMS = [
+    {
+        label: "Manage Orders",
+        path: ["/dashboard/order-management"],
+    },
+    {
+        label: "Manage Products",
+        path: ["/dashboard/product-management"],
+    },
+];
 
 // Usage Goals
 export const USAGE_GOAL = [

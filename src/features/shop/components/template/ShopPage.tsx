@@ -75,7 +75,7 @@ active.some(cat => cat.toLowerCase() === product.category?.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen w-full bg-[#FFF5F0] px-4 md:px-10 py-8">
+    <div className="min-h-screen w-full  px-4 md:px-10 py-8">
       <ShopHeader />
       
       <div className="flex flex-col gap-6">

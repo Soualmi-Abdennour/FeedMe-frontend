@@ -22,7 +22,7 @@ function SameUserProfilePage() {
     }
 
     return (
-        <div className="relative z-0 w-full h-screen overflow-y-scroll">
+        <div className="relative z-0 w-full overflow-y-scroll">
             <ProfileHeader user={user!} sameUser={true} />
             <div>
                 <ProfilePostsNavBar navItems={MY_PROFILE_NAV_ITEMS} currentTab={currentTab} setCurrentTab={setCurrentTab}></ProfilePostsNavBar>

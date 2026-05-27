@@ -10,9 +10,9 @@ import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 
 
-function DeletePostForm({className,postId,onClose}:IDeletePostFormProps) {
-    const [deletePost]=useDeletePostMutation()
-    const handleClick=async ()=>{
+function DeletePostForm({ className, postId, onClose }: IDeletePostFormProps) {
+    const [deletePost] = useDeletePostMutation()
+    const handleClick = async () => {
         const fetchResponse = await deletePost(postId)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
@@ -30,11 +30,10 @@ function DeletePostForm({className,postId,onClose}:IDeletePostFormProps) {
             const successResponseData = successResponse.data
             toast.success(successResponse.message)
             onClose()
-        }   
+        }
     }
     return (
-        <div className={cn('relative max-w-[600px] w-full flex flex-col items-center border-2 border-black bg-white p-10 gap-3', className)}>
-            {/* Close button */}
+        <div className={cn(className = "relative ", className)}>
             {onClose && (
                 <button
                     onClick={onClose}
@@ -44,18 +43,27 @@ function DeletePostForm({className,postId,onClose}:IDeletePostFormProps) {
                     ✕
                 </button>
             )}
-            <div className='flex flex-col items-center gap-3 '>
-                <h4 className='text-fail-500 font-bold'>Delete Post?</h4>
-                <p>Are you sure you want to delete this post?</p>
-                <div className='grid grid-cols-2 justify-between gap-10 mt-5'>
-                    <Button 
-                    className='text-white font-bold bg-fail-500 hover:bg-fail-600'
+            <div className="bg-white rounded-2xl shadow-xl w-full max-w-sm mx-4 p-6 flex flex-col gap-4">
+                <h2 className="text-neutral-800 text-base font-bold  text-center">
+                    Delete post?
+                </h2>                
+                <p className="text-sm text-neutral-500 text-center">
+                    Are you sure you want to delete this post?
+                </p>
+                <div className="flex gap-3 mt-1">
+                    <Button
+                        onClick={onClose}
+                        variant={"ghost"}
+                        className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        variant={"fail"}
+                        className="flex-1 py-2 rounded-full bg-fail-500 text-white text-sm font-semibold hover:bg-fail-600 transition disabled:opacity-60"
                         onClick={handleClick}
                     >
                         Delete
-                    </Button>
-                    <Button onClick={onClose} variant='secondary'>
-                        Cancel
                     </Button>
                 </div>
             </div>

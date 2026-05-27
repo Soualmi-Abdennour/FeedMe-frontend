@@ -1,3 +1,3 @@
-import { ProductManagementTemplate } from "@/features/order-management/components/templates/ProductManagementTemplate";
+import { ProductManagementTemplate } from "@/features/dashboard/components/templates/ProductManagementTemplate";
 
 export default ProductManagementTemplate

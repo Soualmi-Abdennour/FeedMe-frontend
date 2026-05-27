@@ -1,6 +1,7 @@
 "use client";
 
 export const OrderSummary = ({ total, onCompletePurchase }: { total: number; onCompletePurchase: () => void }) => {
+  
   return (
     <div className="bg-white rounded-[2rem] p-6 border border-gray-50 
     shadow-[0_15px_40px_rgba(0,0,0,0.04)] flex flex-col gap-6 w-full">

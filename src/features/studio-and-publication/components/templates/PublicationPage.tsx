@@ -113,7 +113,7 @@ export default function ReelsPage() {
     }, [])
 
     return (
-        <div className="relative w-full h-screen overflow-hidden">
+        <div className="relative w-full h-full overflow-hidden">
             <div
                 ref={containerRef}
                 className="w-full h-full overflow-y-scroll overflow-x-hidden"

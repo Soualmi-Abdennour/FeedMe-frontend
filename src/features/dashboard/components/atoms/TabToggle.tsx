@@ -1,15 +1,6 @@
-interface Tab { //one element 
-  label: string;
-  value: string;
-}
+import { ITabToggleProps } from "../../types/props.types";
 
-interface TabToggleProps {
-  tabs: Tab[]; //list of tabs 
-  active: string; //tab selected 
-  onChange: (value: string) => void; //function to call when tab changes, it receives the value of the selected tab
-}
-
-export default function TabToggle({ tabs, active, onChange }: TabToggleProps) {
+export default function TabToggle({ tabs, active, onChange }: ITabToggleProps) {
   return (
     <div className="flex gap-3">
       {tabs.map((tab) => {
@@ -17,7 +8,7 @@ export default function TabToggle({ tabs, active, onChange }: TabToggleProps) {
         return (
           <button
             key={tab.value}
-            onClick={() => onChange(tab.value)} // call onChange with the value of the selected tab when clicked . to pass the value of the selected tab to the parent component
+            onClick={() => onChange(tab.value)} 
             className={`
               px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 border
               ${isActive

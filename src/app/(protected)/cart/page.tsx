@@ -1,9 +1,5 @@
-"use client";
 
-import { CartTemplate } from '../../../features/cart/components/template/CartTemplate';
+import CartPage from '../../../features/cart/components/template/CartPage';
 
-  
 
- export default function Page() {
-   return <CartTemplate />;
- }
+export default CartPage
