@@ -19,7 +19,7 @@ const onboardingSlice = createSlice({
     initialState,
     reducers: {
         setStep: (state: IOnboardingState, action: PayloadAction<OnboardingStepPayloadModel>) => {
-            const { step, onboardingType, values,isOnboardingCompleted } = action.payload
+            const { step, onboardingType, values,isOnboardingCompleted,avatarImageFile } = action.payload
             if(!state.onboarding){
                 state.onboarding = {
                     step: 0,
@@ -34,6 +34,9 @@ const onboardingSlice = createSlice({
             }
             if (onboardingType) {
                 state.onboarding.onboardingType = onboardingType
+            }
+            if (avatarImageFile){
+                state.onboarding.avatarImageFile=avatarImageFile
             }
             if (state.onboarding.onboardingType === "USER") {
                 state.onboarding.profile = {

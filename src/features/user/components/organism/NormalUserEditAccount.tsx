@@ -13,10 +13,13 @@ function NormalUserEditAccount() {
                 defaultValues={{
                     userName: user?.userName ?? "",   
                     email: user?.email ?? "",
+                    currentPassword: "",
+                    newPassword: "",
+                    newPasswordConfirm: "",
                 }}
             />
             <NotificationsToggle /> 
-            <DangerZoneSection endpoint="user" /> 
+            <DangerZoneSection/> 
         </div>
     )
 }

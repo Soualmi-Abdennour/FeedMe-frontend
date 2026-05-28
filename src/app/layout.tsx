@@ -6,6 +6,8 @@ import "./globals.css"
 import StoreProvider from './StoreProvider'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/utils/shadcn.utils'
+import { Button } from '@/components/ui/button'
+import SubmitButton from '@/components/atoms/SubmitButton'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -21,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className,`min-h-screen` )}>
+      <body className={cn(inter.className,`min-h-screen ` )}>
         <StoreProvider>
           <div>
             {children}

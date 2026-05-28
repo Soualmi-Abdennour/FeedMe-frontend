@@ -14,14 +14,15 @@ type Props = {
 
 function ProfileHeader({ user, sameUser = false }: Props) {
     const profileData = extractProfileData(user)
+    console.log(profileData?.imageUrl);
+    
     return (
         <div className="flex flex-col gap-7 p-6 border-b border-border m-7 rounded-md shadow-lg ">
             <div className="flex items-start justify-between gap-4 ">
                 <div className="flex items-center gap-4">
-                    <div className="w-20 h-20 relative rounded-full overflow-hidden bg-muted border border-border flex-shrink-0">
+                    <div className="w-20 h-20 relative rounded-full overflow-hidden  border border-border flex-shrink-0">
                         <Image
-                            // src={profileData?.imageUrl ?? "/e"}
-                            src={"/e"}
+                            src={profileData?.imageUrl ? profileData.imageUrl: "/default/default-profile-image.png"}
                             alt={"Profile picture"}
                             width={100}
                             height={100}

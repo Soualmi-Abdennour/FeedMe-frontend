@@ -1,3 +1,4 @@
+import { MediaAppModel } from "@/features/studio-and-publication/types/media.types";
 import { CommentDbModel } from "@/features/studio-and-publication/types/publication.types";
 import { PostAppModel, PostDbModel } from "@/features/studio-and-publication/types/studio.types";
 import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserDbModel, UserRole } from "@/features/user/types/user.types";
@@ -68,13 +69,12 @@ export type resetPasswordCredentials = {
 }
 export type onboardingCredientials={
     endpoint:"user"|"restaurant",
-    role:UserRole,
-    profile: NormalUserProfileAppModel | RestaurantUserProfileAppModel
+    data:FormData
 }
 
 export type editProfileCredientials ={
     endpoint:"user"|"restaurant"
-    profile: Partial<NormalUserProfileAppModel | RestaurantUserProfileAppModel>
+    data:FormData
 }
 export type editAccountCredientials={
     userName:string

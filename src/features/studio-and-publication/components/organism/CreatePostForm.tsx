@@ -32,7 +32,6 @@ function CreatePostForm({ className, onClose }: ICreatePostFormProps) {
     }
     return (
         <div className={cn('relative  w-full flex flex-col items-start gap-4 justify-center rounded-lg bg-white ', className)}>
-            {/* Close button */}
             
                 <button
                     onClick={onClose}

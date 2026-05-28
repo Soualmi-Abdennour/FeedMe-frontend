@@ -10,8 +10,8 @@ function SettingsLayout({
     return (
         <main className={cn(' h-full flex ')}>
             <SettingsSidebar></SettingsSidebar>
-            <div className='mx-auto flex-1 py-10'>
-                {children}
+            <div className='mx-auto h-full flex-1 flex flex-col '>
+                    {children}
             </div>
         </main>
     )

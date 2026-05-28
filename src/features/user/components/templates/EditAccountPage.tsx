@@ -8,6 +8,7 @@ interface Props {}
 function EditAccountPage(props: Props) {
     const { user } = useAppSelector(state => state.user)
 
+    // fix this
     if (!user?.profile) return (
         <h1>Loading...</h1>
     )

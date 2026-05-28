@@ -21,7 +21,10 @@ import { setAuthState } from '@/features/auth/store/auth.slice'
 interface Props {
     defaultValues: {
         userName: string   
-        email: string      
+        email: string  
+        currentPassword:string,
+        newPassword:string,
+        newPasswordConfirm:string,    
     }
 }
 
@@ -38,13 +41,7 @@ function EditAccountForm({ defaultValues }: Props) {
     } = useForm<EditAccountFormValues>({
         resolver: zodResolver(editAccountSchema),
         mode: "onChange",
-        defaultValues: {
-            userName: defaultValues.userName,
-            email: defaultValues.email,
-            currentPassword: "",
-            newPassword: "",
-            newPasswordConfirm: "",
-        },
+        defaultValues
     })
 
     const onSubmit = async (formData: EditAccountFormValues) => {
@@ -78,7 +75,7 @@ function EditAccountForm({ defaultValues }: Props) {
                 <Button
                 className='w-[110px] text-white font-medium text-lg'
                     onClick={() => {
-                        reset()
+                        reset(defaultValues)
                         setEnableEdit(state => !state)
                     }}
                 >
@@ -121,7 +118,7 @@ function EditAccountForm({ defaultValues }: Props) {
                             type='button'
                             className='w-[145px]  text-white font-bold'
                             disabled={!isDirty}
-                            onClick={() => reset()}
+                            onClick={() => reset(defaultValues)}
                         >
                             Reset
                             <RefreshCcw></RefreshCcw>

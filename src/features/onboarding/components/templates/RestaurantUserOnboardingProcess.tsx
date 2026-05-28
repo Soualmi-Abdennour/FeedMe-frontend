@@ -11,6 +11,7 @@ import { setStep } from '../../store/onboarding.slice'
 import InformationForm from '../molecules/InformationForm'
 import RestaurantSelectForm from '../organism/RestaurantSelectForm'
 import RestaurantServicesForm from '../organism/RestaurantServicesForm'
+import InformationFormWithImageUploader from '../molecules/InformationFormWithImageUploader'
 
 
 function RestaurantUserOnboardingProcess() {
@@ -30,26 +31,13 @@ function RestaurantUserOnboardingProcess() {
 
     } as RestaurantUserProfileAppModel["restaurantLocationAndContact"]
 
-    const currentStepComponent = (): React.ReactNode => {
+
+    const currentStepComponent = (): { stepTitle: string, component: React.ReactNode } => {
         if (onboarding?.step === 1)
-            return (
-                <div className='flex  flex-col'>
-                    <div className='relative'>
-                        <Button
-                            variant="ghost"
-                            className='absolute top-[-70px] left-[-80px] size-[70px] text-neutral-800 font-bold'
-                            onClick={() => {
-                                dispatch(setStep({
-                                    step: onboarding?.step! - 1,
-                                    values: {}
-                                }))
-                            }}
-                        >
-                            <ArrowLeft></ArrowLeft>
-                        </Button>
-                    </div>
-                    <div className='bg-primary-300 rounded-full size-[70px] mx-auto my-5'></div>
-                    <InformationForm
+            return {
+                stepTitle: "Restaurant Basic Information",
+                component: (
+                    <InformationFormWithImageUploader
                         key={"step-1"}
                         formFields={RESTAURANT_USER_ONBOARDING_FORM_FIELDS.slice(0, 3)}
                         defaultValues={defaultRestaurantBasicInformation}
@@ -58,29 +46,18 @@ function RestaurantUserOnboardingProcess() {
                             phoneNumber: true,
                             businessEmail: true
                         })}
+                        defaultAvatarImageFile={onboarding.avatarImageFile}
                         stepMetadata={{
                             step: 2,
                             correspondProfileField: "restaurantBasicInformation"
                         }}
-                    ></InformationForm>
-
-                </div>
-            )
+                    ></InformationFormWithImageUploader>
+                )
+            }
         if (onboarding?.step === 2)
-            return (
-                <div className='relative'>
-                    <Button
-                        variant="ghost"
-                        className='absolute top-[-70px] left-[-80px] size-[70px] text-neutral-800 font-bold'
-                        onClick={() => {
-                            dispatch(setStep({
-                                step: onboarding?.step! - 1,
-                                values: {}
-                            }))
-                        }}
-                    >
-                        <ArrowLeft></ArrowLeft>
-                    </Button>
+            return {
+                stepTitle: "Location and Contact",
+                component: (
                     <InformationForm
                         key={"step-2"}
                         formFields={RESTAURANT_USER_ONBOARDING_FORM_FIELDS.slice(3)}
@@ -96,48 +73,43 @@ function RestaurantUserOnboardingProcess() {
                             correspondProfileField: "restaurantLocationAndContact"
                         }}
                     ></InformationForm>
-                </div>
-            )
+                )
+            }
         if (onboarding?.step === 3)
-            return (
-                <div className='relative '>
-                    <Button
-                        variant="ghost"
-                        className='absolute top-[-70px] left-[-70px] size-[70px] text-neutral-800 font-bold'
-                        onClick={() => {
-                            dispatch(setStep({
-                                step: onboarding?.step! - 1,
-                                values: {}
-                            }))
-                        }}
-                    >
-                        <ArrowLeft></ArrowLeft>
-                    </Button>
-                    <RestaurantSelectForm></RestaurantSelectForm>
-                </div>
-            )
+            return {
+                stepTitle: "Restaurant Usage Prefrences",
+                component: (<RestaurantSelectForm></RestaurantSelectForm>)
+            }
         if (onboarding?.step === 4)
-            return (
-                <div className='relative'>
-                    <Button
-                        variant="ghost"
-                        className='absolute top-[-100px] left-[-70px] size-[70px] text-neutral-800 font-bold'
-                        onClick={() => {
-                            dispatch(setStep({
-                                step: onboarding?.step! - 1,
-                                values: {}
-                            }))
-                        }}
-                    >
-                        <ArrowLeft></ArrowLeft>
-                    </Button>
-                    <RestaurantServicesForm></RestaurantServicesForm>
-                </div>
-            )
+            return {
+                stepTitle: "Restaurant Services",
+                component: (<RestaurantServicesForm></RestaurantServicesForm>)
+            }
+        return {
+            stepTitle: "",
+            component: null
+        }
     }
-
+    const { stepTitle, component } = currentStepComponent()
     return (
-        currentStepComponent()
+        <div>
+            <Button
+                variant='ghost'
+                className='absolute z-10 left-0 top-0 size-[100px] text-neutral-800 font-bold'
+                onClick={() => {
+                    dispatch(setStep({
+                        step: onboarding?.step! - 1,
+                        values: {}
+                    }))
+                }}
+            >
+                <ArrowLeft size={100}></ArrowLeft>
+            </Button>
+            <div className="text-center justify-center pb-10 mx-auto min-w-[320px]">
+                <h4 className='pb-5'>{stepTitle}</h4>
+                {component}
+            </div>
+        </div>
     )
 }
 

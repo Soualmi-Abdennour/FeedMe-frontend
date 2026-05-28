@@ -15,7 +15,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { UserResponse } from '@/types/api.types'
 import { useUpdateProfileMutation } from '../../store/user.api.slice'
 import { toast } from 'sonner'
-import { mapUserDbToAppModel } from '../../utils/user.utils'
+import { buildEditProfileFormData, mapUserDbToAppModel } from '../../utils/user.utils'
 import { setUser } from '../../store/user.slice'
 import { RefreshCcw } from 'lucide-react'
 
@@ -67,14 +67,21 @@ function EditRestaurantWorkingDaysForm({ defaultValues }: Props) {
         }
     }
     const onSubmit = async (formData: IRestaurantWorkingDaysFormOutput) => {
-        const fetchResponse = await updateProfile({
-            endpoint: "restaurant",
-            profile: {
-                restaurantDetails: {
-                    kitchenCategory: profile.restaurantDetails.kitchenCategory,
-                    workingDays: formData
+        
+        const data=buildEditProfileFormData({
+            data: {
+                profile: {
+                    restaurantDetails: {
+                        kitchenCategory: profile.restaurantDetails.kitchenCategory,
+                        workingDays: formData
+                    }
                 }
             }
+        })
+
+        const fetchResponse = await updateProfile({
+            endpoint: "restaurant",
+            data
         })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse

@@ -1,7 +1,6 @@
 "use client"
 
 import { cn } from '@/utils/shadcn.utils';
-import { Button } from '../ui/button';
 
 function SelectArea<T>({
     areaTitle,
@@ -9,28 +8,28 @@ function SelectArea<T>({
     selectedItemsList,
     handleSelect,
 }: {
-    areaTitle: string;
+    areaTitle?: string;
     itemsList: T[];
     selectedItemsList: T[];
-    handleSelect:(value:T)=>void
+    handleSelect: (value: T) => void
 }) {
     return (
         <div>
-            <div className="flex gap-5 flex-wrap m-3 p-3 rounded-sm">
+            {areaTitle && <h1 className="text-2xl mt-4 py-5 text-left">{areaTitle}</h1> }
+            <div className="flex gap-5 flex-wrap justify-start text-2xl p-3 rounded-sm">
                 {itemsList.map((item) => (
-                    <Button
-                        variant='secondary'
+                    <button
                         key={String(item)}
                         className={cn(
-                            "rounded-md font-normal border-primary border px-3 py-2 cursor-pointer whitespace-nowrap",
+                            "rounded-md border-primary-500 text-2xl border px-3 py-2 cursor-pointer whitespace-nowrap",
                             selectedItemsList.includes(item)
                                 ? "bg-primary-500 text-white"
                                 : "text-black"
                         )}
-                        onClick={()=>handleSelect(item)}
+                        onClick={() => handleSelect(item)}
                     >
-                        <h2 className='text-xl'>{String(item)}</h2>
-                    </Button>
+                        <p className='font-normal text-xl '>{String(item)}</p>
+                    </button>
                 ))}
             </div>
         </div>

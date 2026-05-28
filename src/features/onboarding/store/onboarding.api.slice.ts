@@ -9,10 +9,10 @@ import { onboardingCredientials, UserResponse } from "@/types/api.types";
 export const onboardingApiSlice=fetchAPI.injectEndpoints({
     endpoints:(build)=>({
         onboard: build.mutation<UserResponse, onboardingCredientials>({
-            query:({endpoint,...onboardingCredientials})=>({
-                url: `/authentication/${endpoint}/onboarding`,
+            query:({endpoint,data})=>({
+                url: `/authentication/onboarding/${endpoint}`,
                 method:"PATCH",
-                body: onboardingCredientials
+                body: data
             })
         })
 })

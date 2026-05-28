@@ -32,7 +32,6 @@ function RestaurantServicesForm() {
     }
     return (
         <div>
-            <h1 className='text-xl my-7 pb-5'>Restaurant services:</h1>
             <div className='flex flex-col  gap-5'>
                 {RESTAURANT_SERVICES.map((service) => (
                     <div className='flex items-center justify-between' key={service.label}>

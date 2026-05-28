@@ -10,22 +10,35 @@ import VerificationProcess from '@/components/organism/VerificationProcess'
 import { SUBMIT_ONBOARDING_MESSAGES } from '../../constants/submitOnboarding.constants'
 import { useRouter } from 'next/navigation'
 import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
+import { buildOnboardingFormData } from '../../utils/onboarding.utils'
 
 function SubmitOnboardingProcess() {
     const [onboard] = useOnboardMutation()
     const router = useRouter()
     const dispatch = useAppDispatch()
     const { onboarding } = useAppSelector(state => state.onboarding)
-    const handleSubmit = useCallback(async (): Promise<UserResponse> => {
+    
+    const handleSubmit = useCallback(async (): Promise<UserResponse>  => {
         const endpoint: onboardingCredientials["endpoint"] = onboarding?.onboardingType === "USER" ? "user" : "restaurant"
+        const {onboardingType,profile,avatarImageFile } = onboarding!
+        const formData = buildOnboardingFormData({
+            onboardingType,profile,avatarImageFile
+        })
+        console.log(formData.entries().forEach((value)=>{
+            console.log(value);
+            
+        }));
+        
         const fetchResponse = await onboard({
             endpoint,
-            role: onboarding?.onboardingType!,
-            profile: onboarding?.profile!
+            data:formData
         })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         const errorResponse: UserResponse = error?.data as UserResponse
+        console.log(error);
+        console.log(successResponse);
+        
         return successResponse ?? errorResponse
     }, [onboard, onboarding?.isOnboardingCompleted, dispatch])
 

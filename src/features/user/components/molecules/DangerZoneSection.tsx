@@ -43,7 +43,7 @@ function DangerZoneSection() {
     }
 
     const handleDelete = async () => {
-        const fetchResponse = await deleteAccount(null)
+        const fetchResponse = await deleteAccount()
         const error = fetchResponse.error as FetchBaseQueryError
         const successResponse = fetchResponse.data as UserResponse
 

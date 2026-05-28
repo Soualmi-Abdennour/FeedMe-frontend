@@ -15,19 +15,26 @@ import { useUpdateProfileMutation } from '../../store/user.api.slice';
 import { setUser } from '../../store/user.slice';
 import { IEditInformationFormProps } from '../../types/props.types';
 import { buildEditProfileFormData, mapUserDbToAppModel } from '../../utils/user.utils';
+import ProfileImageDropZone from './ProfileImageDropZone';
+import { MediaAppModel } from '@/features/studio-and-publication/types/media.types';
+import { convertMediaDbModelToMediaAppModel } from '@/features/studio-and-publication/utils/media.utils';
+import { ProfileImage } from '../../types/user.types';
 
 
-function EditInformationForm<FormSchema extends z.ZodType>({
+function EditInformationFormWithImageUploader<FormSchema extends z.ZodType>({
     formFields,
     validationSchema,
     defaultValues,
     fieldToUpdate,
     endpoint
-}: IEditInformationFormProps<FormSchema>) {
+}: IEditInformationFormProps<FormSchema>) {    
     const dispatch = useAppDispatch()
     const [updateProfile] = useUpdateProfileMutation()
     const [enableEdit, setEnableEdit] = useState<boolean>(false)
-
+    const [profileImage, setProfileImage] = useState<ProfileImage>({
+        previewUrl: defaultValues.profileImageUrl ?? defaultValues.restaurantLogoUrl,
+        imageFile:undefined
+    })
     const {
         handleSubmit,
         control,
@@ -38,20 +45,23 @@ function EditInformationForm<FormSchema extends z.ZodType>({
         mode: "onChange",
         defaultValues
     })
-    const onSubmit = async (formData: z.infer<FormSchema>) => {   
+    const prevProfileImageUrl = defaultValues.profileImageUrl ?? defaultValues.restaurantLogoUrl
+    const onSubmit = async (formData: z.infer<FormSchema>) => {
         const data=buildEditProfileFormData({
-            data: {
-                profile: {
-                    [fieldToUpdate]: {
+            data:{
+                profile:{
+                    [fieldToUpdate]:{
                         ...formData
                     }
-                }},
-                fieldToUpdate
-            })    
-        data.entries().forEach((value) => {
+                },
+                avatarImageFile:profileImage?.imageFile
+            },
+            fieldToUpdate
+        })
+        data.entries().forEach((value)=>{
             console.log(value);
-
-        }) 
+            
+        })
         const fetchResponse = await updateProfile({
             endpoint,
             data
@@ -79,33 +89,50 @@ function EditInformationForm<FormSchema extends z.ZodType>({
             <div className='flex justify-between items-center gap-7 mx-5 '>
                 <h3 className='text-xl pt-2'>Basic Information</h3>
                 <Button
-                className=' justify-end text-white font-bold'
+                    className=' justify-end text-white font-bold'
                     onClick={() => {
                         reset(defaultValues)
+                        setProfileImage({
+                            previewUrl: prevProfileImageUrl,
+                                imageFile:undefined
+                            }
+                        )
                         setEnableEdit(state => !state)
                     }}
                 >{enableEdit ? "Cancel" : "Edit"}</Button>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-7 mx-20'>
-                <div className=' gap-8'>
+                <div className='flex gap-10'>
+                <div className='my-5 shrink-0'>
+                    <ProfileImageDropZone profileImage={profileImage} setProfileImage={setProfileImage} disabled={!enableEdit} ></ProfileImageDropZone>
+                </div>
+                <div className='flex-1'>
                     {formFields.map((formField) => (
                         <div key={formField.name} >
                             <FormField {...formField} disabled={!enableEdit} control={control} errors={errors}></FormField>
                         </div>
                     ))}
                 </div>
+                </div>
                 {enableEdit && (
                     <div className='flex text-white gap-2 font-bold'>
                         <SubmitButton
-                            disabled={!isDirty || isSubmitting}
+                            disabled={(!isDirty && prevProfileImageUrl===profileImage.previewUrl) || isSubmitting }
                             state={isSubmitting ? "LOADING" : "DEFAULT"}
                         >
                             {isSubmitting ? "Loading..." : "Update"}
                         </SubmitButton>
                         <Button
                             type='button'
-                            disabled={!isDirty}
-                            onClick={() => reset(defaultValues)}
+                            disabled={!isDirty && prevProfileImageUrl === profileImage.previewUrl}
+                            onClick={() => {
+                                reset(defaultValues)
+                                setProfileImage({
+                                    previewUrl: prevProfileImageUrl,
+                                    imageFile: undefined
+                                }
+                                )
+                            }}
                             variant='primary'
                         >
                             Reset
@@ -118,4 +145,4 @@ function EditInformationForm<FormSchema extends z.ZodType>({
     )
 }
 
-export default EditInformationForm
+export default EditInformationFormWithImageUploader

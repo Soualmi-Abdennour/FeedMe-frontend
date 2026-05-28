@@ -13,9 +13,9 @@ import { useUpdateProfileMutation } from "../../store/user.api.slice"
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { UserResponse } from "@/types/api.types"
 import { toast } from "sonner"
-import { mapUserDbToAppModel } from "../../utils/user.utils"
+import { buildEditProfileFormData, mapUserDbToAppModel } from "../../utils/user.utils"
 import { setUser } from "../../store/user.slice"
-import {RefreshCcw} from 'lucide-react'
+import { RefreshCcw } from 'lucide-react'
 
 function EditSelectForm<T>({
     sectionTitle,
@@ -30,19 +30,29 @@ function EditSelectForm<T>({
     const [enableEdit, setEnableEdit] = useState<boolean>(false)
 
     const onSubmit = async (formData: T[]) => {
+        fieldToUpdate[0]
+        const data = buildEditProfileFormData({
+            data: {
+                profile: {
+                    [fieldToUpdate[0]]: {
+                        [fieldToUpdate[1]]: formData
+                    }
+                }
+            },
+        })
+        data.entries().forEach((value)=>{
+            console.log(value);
+            
+        })
         const fetchResponse = await updateProfile({
             endpoint,
-            profile: {
-                [fieldToUpdate[0]]: {
-                    [fieldToUpdate[1]]: formData
-                }
-            }
+            data
         })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (errorResponse.status === "ERROR" ) {   
+            if (errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {
@@ -58,14 +68,14 @@ function EditSelectForm<T>({
 
         }
     }
-    
+
     return (
         <div className='flex flex-col bg-white w-[1000px] m-auto gap-3 p-3 rounded-lg shadow-black-500 shadow-lg'>
             <div className='flex justify-between items-center'>
-                <h3 className="text-xl">{sectionTitle}</h3>
+                <h3 className="pl-3 text-xl">{sectionTitle}</h3>
                 <Button
-                className="text-white font-bold"
-                variant='primary'
+                    className="text-white font-bold"
+                    variant='primary'
                     onClick={() => {
                         setSelectedValues(defaultValues)
                         setEnableEdit(state => !state)
@@ -74,7 +84,6 @@ function EditSelectForm<T>({
             </div>
             <div className="py-5 flex flex-col gap-10">
                 <SelectArea
-                    areaTitle={sectionTitle}
                     selectedItemsList={selectedValues}
                     itemsList={enableEdit ? itemsList : selectedValues}
                     handleSelect={(value) => {

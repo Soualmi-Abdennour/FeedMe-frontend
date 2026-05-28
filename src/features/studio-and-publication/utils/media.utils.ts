@@ -61,7 +61,7 @@ export function convertFileToMediaAppModel(files: File[]): MediaAppModel[] {
 export function convertMediaDbModelToMediaAppModel(mediaList: MediaDbModel[]): MediaAppModel[] {
     return mediaList.map((media) => ({
         id: media.id,
-        previewUrl: `http://127.0.0.1:8000${media.url}`,
+        previewUrl: `${process.env.NEXT_PUBLIC_BACKEND_ORIGIN}${media.url}`,
         type: media.type,
         source: "EXISTING"
     }))

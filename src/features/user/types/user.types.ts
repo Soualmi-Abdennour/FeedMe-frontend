@@ -1,3 +1,4 @@
+import { MediaAppModel } from "@/features/studio-and-publication/types/media.types";
 import { KithcenCategory, ServiceStatus, UsageGoal, WeekDay, Wilaya, WorkingDay } from "@/types/app.types"
 
 export type UserRole = "USER" | "RESTAURANT" | "ADMIN" | "GUEST"
@@ -152,3 +153,12 @@ export type ProfileData = {
     googleMapsLink?: string;
     kitchenCategory?: string[];
 };
+
+export type EditProfileFormData = {
+    profile: Partial<NormalUserProfileAppModel | RestaurantUserProfileAppModel>
+    avatarImageFile?: File
+}
+export type ProfileImage = {
+    imageFile?: File
+    previewUrl?: string 
+}

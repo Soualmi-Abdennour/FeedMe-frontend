@@ -1,12 +1,14 @@
 import {
+    EditProfileFormData,
     NormalUserProfileAppModel,
     NormalUserProfileDbModel,
     ProfileData,
     RestaurantUserProfileAppModel,
     RestaurantUserProfileDbModel,
     UserAppModel,
-    UserDbModel,
+    UserDbModel
 } from "..//types/user.types"
+import { AccountFields } from "../types/props.types"
 
 function mapNormalUserProfileToAppModel(
     db: NormalUserProfileDbModel
@@ -17,7 +19,7 @@ function mapNormalUserProfileToAppModel(
             phoneNumber: db.phoneNumber,
             ...(db.city && { city: db.city }),
             ...(db.bio && { bio: db.bio }),
-            ...(db.profilePicture && { profileImageUrl: db.profilePicture }),
+            ...(db.profilePicture && { profileImageUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN + db.profilePicture }),
         },
         userUsagePreferences: {
             ...(db.usageGoal?.length && { usageGoal: db.usageGoal }),
@@ -33,7 +35,8 @@ function mapRestaurantProfileToAppModel(
         restaurantBasicInformation: {
             restaurantName: db.restaurantName,
             phoneNumber: db.phoneNumber,
-            ...(db.restaurantLogoUrl && { restaurantLogoUrl: db.restaurantLogoUrl }),
+            restaurantLogoUrl:undefined,
+            ...(db.restaurantLogoUrl && { restaurantLogoUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN+db.restaurantLogoUrl }),
             ...(db.businessEmail && { businessEmail: db.businessEmail }),
             ...(db.bio && { bio: db.bio }),
         },
@@ -84,8 +87,7 @@ export function extractProfileData(user: UserAppModel): ProfileData | null {
 
         return {
             displayName: fullName,
-            // imageUrl: profileImageUrl,
-            imageUrl: "",
+            imageUrl: profileImageUrl,
             bio,
             city,
             phoneNumber,
@@ -102,8 +104,7 @@ export function extractProfileData(user: UserAppModel): ProfileData | null {
 
         return {
             displayName: restaurantName,
-            // imageUrl: restaurantLogoUrl,
-            imageUrl: "",
+            imageUrl: restaurantLogoUrl,
             bio,
             phoneNumber,
             businessEmail,
@@ -113,4 +114,47 @@ export function extractProfileData(user: UserAppModel): ProfileData | null {
     }
 
     return null;
+}
+
+
+export function buildEditProfileFormData({data,fieldToUpdate}:{data: EditProfileFormData,fieldToUpdate?: keyof Pick<NormalUserProfileAppModel, "userBasicInformation"> | keyof Pick<RestaurantUserProfileAppModel, "restaurantBasicInformation"|"restaurantLocationAndContact" >| AccountFields}
+): FormData {
+    const formData = new FormData();
+
+    if (fieldToUpdate==="userBasicInformation" || fieldToUpdate==="restaurantBasicInformation") {
+        formData.append("avatarImageFile", data.avatarImageFile ?? "");
+    }
+
+    if (data.profile) {
+        appendToFormData(formData, data.profile, "profile");
+    }
+
+    return formData;
+}
+
+function appendToFormData(formData: FormData, value: unknown, key: string): void {
+    if (value === null || value === undefined) {
+        return;
+    }
+
+    if (value instanceof File || value instanceof Blob) {
+        formData.append(key, value);
+        return;
+    }
+
+    if (Array.isArray(value)) {
+        // value.forEach((item, index) => appendToFormData(formData, item, `${key}[${index}]`));
+        value.forEach((item, index) => appendToFormData(formData, item, `${key}`));
+        return;
+    }
+
+    if (typeof value === "object") {
+        Object.entries(value).forEach(([field, val]) =>
+            // appendToFormData(formData, val, `${key}[${field}]`)
+            appendToFormData(formData, val, `${key}-${field}`)
+        );
+        return;
+    }
+
+    formData.append(key, String(value));
 }

@@ -9,10 +9,10 @@ import { editProfileCredientials, getOtherUserPostsCredentials, getUserProfileCr
 export const userApiSlice=fetchAPI.injectEndpoints({
     endpoints:(build)=>({
         updateProfile: build.mutation<UserResponse,editProfileCredientials>({
-            query:({endpoint,profile})=>({
+            query:({endpoint,data})=>({
                 url: `/profile/${endpoint}/edit-profile`,
                 method:"PATCH",
-                body:{profile}
+                body:data
             })
         }),
         updateAccount: build.mutation<UserResponse,any>({

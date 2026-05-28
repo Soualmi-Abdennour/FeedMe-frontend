@@ -8,6 +8,7 @@ import EditInformationForm from '../molecules/EditInformationForm'
 import EditRestaurantServicesForm from '../molecules/EditRestaurantServicesForm'
 import EditRestaurantWorkingDaysForm from '../molecules/EditRestaurantWorkingDaysForm'
 import EditSelectForm from '../molecules/EditSelectForm'
+import EditInformationFormWithImageUploader from '../molecules/EditInformationFormWithImageUploader'
 
 
 
@@ -18,14 +19,14 @@ function RestaurantUserEditProfilePage() {
     const { restaurantBasicInformation, restaurantDetails, restaurantLocationAndContact, restaurantServices } = profile as RestaurantUserProfileAppModel
     return (
         <div className='flex flex-col gap-10 mx-10'>
-            <EditInformationForm
+            <EditInformationFormWithImageUploader
                 endpoint={"restaurant"}
                 fieldToUpdate={"restaurantBasicInformation"}
                 formFields={EDIT_RESTAURANT_USER_BASIC_INFORMATION_FORM_FIELDS}
                 defaultValues={restaurantBasicInformation}
                 validationSchema={restaurantEditBasicInfoFormSchema}
             >
-            </EditInformationForm>
+            </EditInformationFormWithImageUploader>
             <EditInformationForm
                 endpoint={"restaurant"}
                 fieldToUpdate={"restaurantLocationAndContact"}

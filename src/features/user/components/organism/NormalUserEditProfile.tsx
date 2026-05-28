@@ -1,18 +1,12 @@
 "use client"
 import { KITCHEN_CATEGORY, USAGE_GOAL } from '@/constants/app.constants'
-import { useAppDispatch, useAppSelector } from '@/store/base.store'
-import { UserResponse } from '@/types/api.types'
-import { KithcenCategory, UsageGoal } from '@/types/app.types'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { toast } from 'sonner'
+import { useAppSelector } from '@/store/base.store'
 import { EDIT_NORMAL_USER_INFORMAION_FORM_FIELDS } from '../../constants/normalUserEditProfile.constants'
-import { useUpdateProfileMutation } from '../../store/user.api.slice'
-import { setUser } from '../../store/user.slice'
+import { normalUserEditBasicInfoFormSchema } from '../../schema/normalUserEditProfile.schema'
 import { NormalUserProfileAppModel } from '../../types/user.types'
-import { mapUserDbToAppModel } from '../../utils/user.utils'
 import EditInformationForm from '../molecules/EditInformationForm'
 import EditSelectForm from '../molecules/EditSelectForm'
-import { normalUserEditBasicInfoFormSchema } from '../../schema/normalUserEditProfile.schema'
+import EditInformationFormWithImageUploader from '../molecules/EditInformationFormWithImageUploader'
 
 interface Props { }
 
@@ -24,14 +18,14 @@ function NormalUserEditProfilePage(props: Props) {
     
     return (
         <div className='flex flex-col gap-10'>
-            <EditInformationForm
+            <EditInformationFormWithImageUploader
                 fieldToUpdate={"userBasicInformation"}
                 endpoint={"user"}
                 formFields={EDIT_NORMAL_USER_INFORMAION_FORM_FIELDS}
                 defaultValues={userBasicInformation}
                 validationSchema={normalUserEditBasicInfoFormSchema}
             >
-            </EditInformationForm>
+            </EditInformationFormWithImageUploader>
             <EditSelectForm
                 endpoint={"user"}
                 fieldToUpdate={["userUsagePreferences", "usageGoal"]}

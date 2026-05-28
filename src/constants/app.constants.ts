@@ -144,7 +144,7 @@ export const RESTAURANT_SERVICES = [
     {key:"DELIVERY", value: "delivery", label: "Delivery" },
     {key:"RESERVATION", value: "reservation", label: "Reservation" },
     {key:"DINE_IN", value: "dineIn", label: "Dine in" },
-    {key:"SPECIAL_CUSTOMER_SERVICE", value: "takeAway", label: "Special customer service" },
+    {key:"TAKE_AWAY", value: "takeAway", label: "Take Away" },
     {key:"PARK_AVAILABILITY", value: "parkAvailability", label: "Park Availability" }
 ] as const
 

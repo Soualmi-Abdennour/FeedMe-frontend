@@ -11,12 +11,15 @@ function RestaurantUserEditAccount() {
         <div className='flex flex-col gap-10  bg-white p-10 w-[512px] mx-auto rounded-md'>
             <EditAccountForm
                 defaultValues={{
-                    userName: user?.userName ?? "",   
+                    userName: user?.userName ?? "",
                     email: user?.email ?? "",
+                    currentPassword: "",
+                    newPassword: "",
+                    newPasswordConfirm: "",
                 }}
             />
             <NotificationsToggle /> 
-            <DangerZoneSection endpoint="user" /> 
+            <DangerZoneSection/> 
         </div>
     )
 }
