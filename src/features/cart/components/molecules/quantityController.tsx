@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { CircleMinus, CirclePlus } from 'lucide-react';
+import { IQuantityControl } from '../../types/props.types';
 
-interface Props {
-  initialQty?: number;
-  min?: number;
-  max?: number;
-  onApply: (qty: number) => void;
-}
+
 
 export const QuantityControl = ({
   initialQty = 1,
   min = 1,
   max = 99,
   onApply,
-}: Props) => {
+}: IQuantityControl) => {
   const [qty, setQty] = useState(initialQty);
 
-  // ← التعديل الوحيد
   useEffect(() => {
     setQty(initialQty);
   }, [initialQty]);

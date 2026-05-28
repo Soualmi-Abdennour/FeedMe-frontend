@@ -22,7 +22,7 @@ function ProfileHeader({ user, sameUser = false }: Props) {
                 <div className="flex items-center gap-4">
                     <div className="w-20 h-20 relative rounded-full overflow-hidden  border border-border flex-shrink-0">
                         <Image
-                            src={profileData?.imageUrl ? profileData.imageUrl: "/default/default-profile-image.png"}
+                            src={profileData?.imageUrl ?? "/default/default-profile-image.png"}
                             alt={"Profile picture"}
                             width={100}
                             height={100}

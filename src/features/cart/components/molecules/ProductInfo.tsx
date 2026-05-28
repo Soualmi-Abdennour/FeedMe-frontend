@@ -1,41 +1,34 @@
-// components/molecules/ProductInfo.tsx
+import { IProductInfo } from "../../types/props.types";
 
-interface Props {
-  name: string;
-  price: number;
-  description: string;
-}
+export const ProductInfo = ({ name, price, description }: IProductInfo) => (
+  <div className="flex flex-col gap-2 w-full max-w-2xl">
+    <div className="flex items-center gap-2 w-full">
+      <div className="flex flex-1 items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
+        <span className="text-[11px] font-bold text-gray-950 whitespace-nowrap">
+          Product name:
+        </span>
+        <span className="text-[11px] text-gray-600 truncate">
+          {name}
+        </span>
+      </div>
 
-export const ProductInfo = ({ name, price, description }: Props) => (
-<div className="flex flex-col gap-2 w-full max-w-2xl">
-  <div className="flex items-center gap-2 w-full">
-    
-    <div className="flex flex-1 items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
-      <span className="text-[11px] font-bold text-gray-950 whitespace-nowrap">
-        Product name:
-      </span>
-      <span className="text-[11px] text-gray-600 truncate">
-        {name}
-      </span>
+      <div className="flex flex-[0.5] items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
+        <span className="text-[11px] font-bold text-gray-950 whitespace-nowrap">
+          Price:
+        </span>
+        <span className="text-[11px] text-gray-800 font-bold">
+          {price} DA
+        </span>
+      </div>
     </div>
 
-    <div className="flex flex-[0.5] items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
-      <span className="text-[11px] font-bold text-gray-950 whitespace-nowrap">
-        Price:
+    <div className="bg-white border border-gray-200 rounded-lg px-3 py-1.5 shadow-sm">
+      <span className="text-[11px] font-bold text-gray-950 block mb-0.5">
+        Description:
       </span>
-      <span className="text-[11px] text-gray-800 font-bold">
-        {price} DA
-      </span>
+      <p className="text-[10px] text-gray-500 leading-tight">
+        {description}
+      </p>
     </div>
   </div>
-
-  <div className="bg-white border border-gray-200 rounded-lg px-3 py-1.5 shadow-sm">
-    <span className="text-[11px] font-bold text-gray-950 block mb-0.5">
-      Description:
-    </span>
-    <p className="text-[10px] text-gray-500 leading-tight">
-      {description}
-    </p>
-  </div>
-</div>
 );

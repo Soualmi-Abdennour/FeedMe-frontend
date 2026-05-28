@@ -1,8 +1,8 @@
 "use client";
 
 import { ShoppingCart, ArrowLeft, Trash2 } from 'lucide-react';
-import { CartSection } from '../organism/CartTotale';
-import { useGetCartQuery, useClearCartMutation } from '../../store/cartApiSlice';
+import { CartSection } from '../organism/CartSection';
+import { useGetCartQuery, useClearCartMutation } from '../../store/cart.api.slice';
 import { useRouter } from 'next/navigation';
 
 function CartPage() {

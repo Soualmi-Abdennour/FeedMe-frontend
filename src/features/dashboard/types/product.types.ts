@@ -2,7 +2,7 @@ import { KITCHEN_CATEGORY } from "@/constants/app.constants";
 
 export type ProductCategory = typeof KITCHEN_CATEGORY[number]["key"];
 
-export interface ProductModel {
+export interface ProductAppModel {
     id: string;
     name: string;
     price: number;
@@ -13,7 +13,7 @@ export interface ProductModel {
 }
 export interface ProductsResponse {
     status: string;
-    data: { results: number; products: ProductModel[] };
+    data: { results: number; products: ProductAppModel[] };
 }
 export interface AddProductPayload {
     name: string;

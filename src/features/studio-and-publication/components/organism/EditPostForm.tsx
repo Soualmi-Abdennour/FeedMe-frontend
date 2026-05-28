@@ -55,6 +55,7 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
                         contentType: successResponse.data.post.contentType,
                         mediaList: convertMediaDbModelToMediaAppModel(successResponse.data.post.media),
                     }}
+                    onClose={onClose}
                     onSubmit={onSubmit}
                 />
             ) : (

@@ -1,18 +1,8 @@
 import React from 'react';
+import { ISearchBarInputProps } from '../../types/props.types';
 
-interface InputProps {
-  type?: 'text' | 'email' | 'password' | 'number' | 'search';
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void; 
-  disabled?: boolean;
-  className?: string;
-  icon?: React.ReactNode;
-  iconPosition?: 'left' | 'right';
-}
 
-export const Input: React.FC<InputProps> = ({
+export const SearchBarInput: React.FC<ISearchBarInputProps> = ({
   type = 'text',
   placeholder = '',
   value,

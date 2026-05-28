@@ -78,3 +78,32 @@ export interface IAppNavItemProps {
     icon?: LucideIcon
     isActive: boolean
 }
+
+export interface IAvatarProps {
+  src: string;
+  alt: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  className?: string;
+  fallback?: string;
+}
+
+export interface IIconProps {
+    name: string;
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+    color?: 'black' | 'gray' | 'orange' | 'white';
+    className?: string;
+}
+
+export interface ISuccessToastProps {
+    message?: string;
+    visible: boolean;
+    onDismiss?: () => void;
+    duration?: number;
+}
+
+export interface IToast {
+    message: string;
+    visible: boolean;
+    onHide: () => void;
+    duration?: number;
+}

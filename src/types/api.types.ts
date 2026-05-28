@@ -1,7 +1,7 @@
-import { MediaAppModel } from "@/features/studio-and-publication/types/media.types";
+import { ProductDbModel } from "@/features/shop/types/shop.types";
 import { CommentDbModel } from "@/features/studio-and-publication/types/publication.types";
-import { PostAppModel, PostDbModel } from "@/features/studio-and-publication/types/studio.types";
-import { NormalUserProfileAppModel, RestaurantUserProfileAppModel, UserDbModel, UserRole } from "@/features/user/types/user.types";
+import { PostDbModel } from "@/features/studio-and-publication/types/studio.types";
+import { UserDbModel } from "@/features/user/types/user.types";
 
 export type ApiStatus = "SUCCESS" | "FAIL" | "ERROR";
 
@@ -9,7 +9,11 @@ export type UserResponseData={
     user:UserDbModel;
     jwtToken?:string
 }
-
+export type ProductsResponseData= {
+    products: ProductDbModel[];
+    nextCursor: string | null;
+    results: number;
+}
 export type PostsResponseData = {
     results: number;
     nextCursor: string | null;
@@ -46,6 +50,7 @@ export type ApiResponse<T> = {
 
 export type UserResponse=ApiResponse<UserResponseData|null>
 export type PostsResponse = ApiResponse<PostsResponseData | null>
+export type ProductsResponse = ApiResponse<ProductsResponseData | null>
 export type PostCommentsResponse = ApiResponse<PostCommentsResponseData | null>
 export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
 export type SingleCommentResponse = ApiResponse<SingleCommentResponseData | null>
@@ -115,4 +120,9 @@ export type getUserProfileCredentials={
 export type getOtherUserPostsCredentials={
     userId:string
     // profileType:"USER"|"RESTAURANT"
+}
+export type getProductsCredentials ={
+    category?: string;
+    sortBy?: 'price' | 'random' | 'preparationTime';
+    cursor?: string;
 }

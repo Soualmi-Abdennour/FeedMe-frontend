@@ -1,21 +1,13 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { ISortSelectProps } from '../../types/props.types';
+import { SORT_OPTIONS } from '../../constants/shop.constants';
 
-interface SortSelectProps {
-  value: 'price_desc' | 'price_asc' | 'time_asc' | 'time_desc' | 'random' | null;
-  onChange: (value: 'price_desc' | 'price_asc' | 'time_asc' | 'time_desc' | 'random') => void;
-}
 
-export default function SortSelect({ value, onChange }: SortSelectProps) {
+
+export default function SortSelect({ value, onChange }: ISortSelectProps) {
   const [open, setOpen] = useState(false); 
-  const options: { label: string; value: 'price_desc' | 'price_asc' | 'time_asc' | 'time_desc' | 'random' }[] = [
-    { label: 'Random', value: 'random' },
-    { label: 'Price Descending', value: 'price_desc' },
-    { label: 'Price Ascending', value: 'price_asc' },
-    { label: 'Time Descending', value: 'time_desc' },
-    { label: 'Time Ascending', value: 'time_asc' }
-  ];
   const ref = useRef<HTMLDivElement>(null); //kat reference l-div dyal component bach tdetect clicks outside
 
   useEffect(() => { //Hadi logic bach close dropdown ila clickit f chi place kharej.
@@ -30,7 +22,7 @@ export default function SortSelect({ value, onChange }: SortSelectProps) {
 
   //Kat7ssb label li yban fl bouton te3 dropdown selon la valeur sélectionnée.
   const currentLabel = value  
-    ? options.find(opt => opt.value === value)?.label 
+    ? SORT_OPTIONS.find(opt => opt.value === value)?.label 
     : 'Order by type';
   return (
     <div ref={ref} className="relative ${className}">
@@ -50,17 +42,16 @@ export default function SortSelect({ value, onChange }: SortSelectProps) {
           {currentLabel}
         </span>
         
-        <ChevronDown //icon ChevronDown katrotate ila open = true
+        <ChevronDown
           size={16} 
           className={`text-gray-400 transition-transform duration-300 ${open ? 'rotate-180' : 'rotate-0'}`} 
         />
 
       </button>
 
-      {/* Liste des options  */}
       {open && (
         <ul className="absolute w-full mt-1 bg-white border-2 border-[#FFBD97] rounded-lg shadow-lg z-20 py-1 overflow-hidden">
-          {options.map((opt) => (
+          {SORT_OPTIONS.map((opt) => (
             <li
               key={opt.value}
               onClick={() => {

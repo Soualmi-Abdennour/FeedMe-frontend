@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ProductModel, AddProductPayload } from "../../types/product.types";
+import { ProductAppModel, AddProductPayload } from "../../types/product.types";
 import { ProductGrid } from "../organisms/ProductGrid";
 import { ProductFormModal } from "../molecules/ProductFormModal";
 import { DeleteProductModal } from "../molecules/DeleteProductModal";
@@ -15,8 +15,8 @@ import { Button } from "@/components/ui/button";
 
 export const ProductManagementPage: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editTarget, setEditTarget] = useState<ProductModel | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<ProductModel | null>(null);
+  const [editTarget, setEditTarget] = useState<ProductAppModel | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<ProductAppModel | null>(null);
 
   const { data: products = [], isLoading } = useGetProductsQuery();
   const [addProduct] = useAddProductMutation();

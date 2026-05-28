@@ -1,19 +1,14 @@
-// components/organisms/CartItem.tsx
 "use client";
 import React from 'react';
-// ✅ حذف: import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { ProductInfo } from '../molecules/ProductInfo';
-import { QuantityControl } from '../molecules/quantityController';
-import { CartItem as CartItemType } from '../../types/order';
+import { QuantityControl } from '../molecules/QuantityController';
+import { ICartItem } from '../../types/props.types';
+import Image from 'next/image';
 
-interface Props {
-  item: CartItemType;
-  onApply: (qty: number) => void;
-  onDelete?: (id: string) => void;
-}
 
-export const CartItem = ({ item, onApply, onDelete }: Props) => {
+
+export const CartItem = ({ item, onApply, onDelete }: ICartItem) => {
   const handleDelete = () => {
     if (onDelete) onDelete(item.id);
   };
@@ -31,13 +26,14 @@ export const CartItem = ({ item, onApply, onDelete }: Props) => {
         <Trash2 size={14} strokeWidth={2} />
       </button>
 
-      {/* ✅ img عادي بدل next/image */}
       <div className="relative w-28 h-28 rounded-2xl overflow-hidden flex-shrink-0">
-        <img
+        <Image
           src={item.image}
           alt={item.productName}
           className="object-cover w-full h-full"
-        />
+          width={112}
+          height={112}
+          />
         <div className="absolute bottom-1.5 left-1.5 bg-black/60 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
           {item.price} DA
         </div>

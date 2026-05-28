@@ -2,16 +2,11 @@
 
 import SkeletonCard from '@/features/shop/components/atoms/SkeletonCard';
 import ProductCard from '@/features/shop/components/molecules/ProductCard';
-import type { ProductModel } from '@/features/shop/types/shop.types';
+import { IProductGridProps } from '../../types/props.types';
 
-interface ProductGridProps {
-  products: ProductModel[];
-  isLoading: boolean;
-    onProductClick: (product: ProductModel) => void;
 
-}
 
-export default function ProductGrid({ products, isLoading,onProductClick  }: ProductGridProps) {
+export default function ProductGrid({ products, isLoading,onProductClick  }: IProductGridProps) {
   return (
     <div className="grid grid-cols-4 gap-4">
       {isLoading

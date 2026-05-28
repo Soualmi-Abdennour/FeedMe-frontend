@@ -4,7 +4,6 @@ import { X } from 'lucide-react';
 import Image from "next/image";
 import { IOrderDetailPopupProps } from '../../types/props.types';
 
-// const BASE_URL = "http://localhost:8000";
 
 
 

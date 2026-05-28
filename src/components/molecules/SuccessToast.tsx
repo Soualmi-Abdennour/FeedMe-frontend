@@ -2,20 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
+import { ISuccessToastProps } from '@/types/props.types';
 
-interface SuccessToastProps {
-  message?: string;
-  visible: boolean;
-  onDismiss?: () => void;
-  duration?: number;
-}
+
 
 export default function SuccessToast({
   message = 'The operation was completed successfully',
   visible,
   onDismiss,
   duration = 3500,
-}: SuccessToastProps) {
+}: ISuccessToastProps) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {

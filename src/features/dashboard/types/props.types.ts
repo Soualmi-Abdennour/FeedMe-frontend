@@ -1,10 +1,10 @@
-import { AddProductPayload, ProductModel } from "./product.types";
+import { AddProductPayload, ProductAppModel } from "./product.types";
 import { OrderModel, OrderStatus } from "./order.types";
 
 export interface IProductCardProps {
-    product: ProductModel;
-    onEdit: (product: ProductModel) => void;
-    onDelete: (product: ProductModel) => void;
+    product: ProductAppModel;
+    onEdit: (product: ProductAppModel) => void;
+    onDelete: (product: ProductAppModel) => void;
 }
 
 export interface IStatusBadgeProps {
@@ -21,7 +21,7 @@ export interface ITabToggleProps {
 }
 
 export interface IDeleteProductModalProps {
-    product: ProductModel | null;
+    product: ProductAppModel | null;
     isLoading?: boolean;
     onConfirm: () => void;
     onCancel: () => void;
@@ -45,13 +45,13 @@ export interface IProductFormModalProps {
     onClose: () => void;
     onSubmit: (payload: AddProductPayload) => void;
     isLoading?: boolean;
-    editProduct?: ProductModel | null;
+    editProduct?: ProductAppModel | null;
 }
 export interface IProductGridProps {
-    products: ProductModel[];
+    products: ProductAppModel[];
     isLoading: boolean;
-    onEdit: (product: ProductModel) => void;
-    onDelete: (product: ProductModel) => void;
+    onEdit: (product: ProductAppModel) => void;
+    onDelete: (product: ProductAppModel) => void;
 }
 export interface IRequestTableProps {
     requests?: OrderModel[];

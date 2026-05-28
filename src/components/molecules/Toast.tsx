@@ -1,14 +1,9 @@
-// components/atoms/Toast.tsx
+import { IToast } from '@/types/props.types';
 import { useEffect, useState } from 'react';
 
-interface Props {
-  message: string;
-  visible: boolean;
-  onHide: () => void;
-  duration?: number;
-}
 
-export const Toast = ({ message, visible, onHide, duration = 3000 }: Props) => {
+
+export const Toast = ({ message, visible, onHide, duration = 3000 }: IToast) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {

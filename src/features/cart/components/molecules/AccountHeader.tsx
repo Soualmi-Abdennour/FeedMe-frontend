@@ -1,13 +1,9 @@
-// components/molecules/AccountHeader.tsx
-import { Avatar } from "../atoms/avatar";
+import { Avatar } from "@/components/atoms/Avatar";
+import { IAccountHeader } from "../../types/props.types";
 
-interface Props {
-  fullName: string;
-  userName: string;
-  avatarSrc: string;
-}
 
-export const AccountHeader = ({ fullName, userName, avatarSrc }: Props) => (
+
+export const AccountHeader = ({ fullName, userName, avatarSrc }: IAccountHeader) => (
   <div className="flex items-center top-10 right-16 gap-4 p-2 pl-4 bg-white border border-gray-200 rounded-2xl shadow-sm w-fit">
   {/* Label */}
   <span className="text-sm font-bold text-gray-900">
@@ -20,7 +16,7 @@ export const AccountHeader = ({ fullName, userName, avatarSrc }: Props) => (
       src={avatarSrc}
       alt={fullName}
       size="md"
-      className="border border-gray-100 shadow-sm" // إضافة لمسة بسيطة للافاتار
+      className="border border-gray-100 shadow-sm" 
       fallback={fullName[0].toUpperCase()}
     />
     

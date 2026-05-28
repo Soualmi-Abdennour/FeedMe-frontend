@@ -1,14 +1,14 @@
 import { fetchAPI } from "@/store/base.store";
-import { ProductModel, ProductsResponse, AddProductPayload, UpdateProductPayload } from "../types/product.types";
+import { ProductAppModel, ProductsResponse, AddProductPayload, UpdateProductPayload } from "../types/product.types";
 
 export const productManagementApiSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({
-        getProducts: build.query<ProductModel[], void>({
+        getProducts: build.query<ProductAppModel[], void>({
             query: () => "/products",
             transformResponse: (response: ProductsResponse) => response.data?.products || [],
             providesTags: ["Products"],
         }),
-        addProduct: build.mutation<ProductModel, AddProductPayload>({
+        addProduct: build.mutation<ProductAppModel, AddProductPayload>({
             query: (payload) => {
                 const formData = new FormData();
                 formData.append("name", payload.name);
@@ -21,7 +21,7 @@ export const productManagementApiSlice = fetchAPI.injectEndpoints({
             },
             invalidatesTags: ["Products"],
         }),
-        updateProduct: build.mutation<ProductModel, UpdateProductPayload>({
+        updateProduct: build.mutation<ProductAppModel, UpdateProductPayload>({
             query: ({ id, ...payload }) => {
                 const formData = new FormData();
                 formData.append("name", payload.name);

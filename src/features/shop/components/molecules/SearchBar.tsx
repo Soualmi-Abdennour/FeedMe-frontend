@@ -1,16 +1,11 @@
 import React from 'react';
-import { Input } from '../atoms/Input';
-import { Icon } from '../atoms/Icon';
+import { SearchBarInput } from '../atoms/SearchBarInput';
+import { Icon } from '../../../../components/atoms/Icon';
+import { ISearchBarProps } from '../../types/props.types';
 
-interface SearchBarProps {
-  value?: string;
-  onChange?: (value: string) => void;
-  onSearch?: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-}
 
-export const SearchBar: React.FC<SearchBarProps> = ({
+
+export const SearchBar: React.FC<ISearchBarProps> = ({
   value = '',
   onChange,
   onSearch,
@@ -30,7 +25,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <div className={className}>
-      <Input //call Input component
+      <SearchBarInput //call Input component
         type="search"
         placeholder={placeholder}
         value={value}

@@ -5,23 +5,31 @@ import FilterSection from '@/features/shop/components/molecules/FilterSection';
 import CategoryBar from '@/features/shop/components/molecules/CategoryBar';
 import ProductGrid from '@/features/shop/components/organism/ProductGrid';
 import ProductDetailPopup from '@/features/shop/components/molecules/ProductDetailPopup';
-import SuccessToast from '@/features/shop/components/atoms/SuccessToast';
-import type { ProductModel } from '@/features/shop/types/shop.types';
+import SuccessToast from '@/components/molecules/SuccessToast';
+import type { ProductAppModel } from '@/features/shop/types/shop.types';
 import { useState, useMemo } from 'react';
-import { useGetAllProductsQuery, useAddToCartMutation } from '../../store/shopApi.slice';
+import { useGetAllProductsQuery, useAddToCartMutation } from '../../store/shop.api.slice';
+import { mapProductDbToAppModel } from '../../utils/shop.utils';
 
 export default function ShopPage() {
-  const { data: products = [], isLoading, isError } = useGetAllProductsQuery();
+  const { data, isLoading, isError } = useGetAllProductsQuery();
   const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
-
   const [active, setActive] = useState<string[]>(['all']);
   const [tempActive, setTempActive] = useState<string[]>(['all']);
   const [sort, setSort] = useState<'price_desc' | 'price_asc' | 'time_asc' | 'time_desc' | 'random' | null>(null);
   const [search, setSearch] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState<ProductModel | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductAppModel | null>(null);
   const [toastVisible, setToastVisible] = useState(false);
+  const products = useMemo(
+    () =>
+      data?.data?.products
+        ? data.data.products.map((product) =>
+          mapProductDbToAppModel(product)
+        )
+        : [],
+    [data]
+  );
 
-  // الدوال المفقودة التي كنت تحتاجها
   const handleSelectCategory = (value: string) => {
     setTempActive((prev) => {
       if (value === 'all') return ['all'];

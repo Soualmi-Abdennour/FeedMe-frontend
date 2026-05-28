@@ -35,7 +35,6 @@ function mapRestaurantProfileToAppModel(
         restaurantBasicInformation: {
             restaurantName: db.restaurantName,
             phoneNumber: db.phoneNumber,
-            restaurantLogoUrl:undefined,
             ...(db.restaurantLogoUrl && { restaurantLogoUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN+db.restaurantLogoUrl }),
             ...(db.businessEmail && { businessEmail: db.businessEmail }),
             ...(db.bio && { bio: db.bio }),

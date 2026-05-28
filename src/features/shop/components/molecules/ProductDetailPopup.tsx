@@ -1,15 +1,11 @@
 'use client';
 
-import { X, ShoppingCart } from 'lucide-react';
-import type { ProductModel } from '@/features/shop/types/shop.types';
+import { ShoppingCart, X } from 'lucide-react';
+import { IProductDetailPopupProps } from '../../types/props.types';
 
-interface ProductDetailPopupProps {
-  product: ProductModel;
-  onClose: () => void;
-  onAddToCart: () => void;
-}
 
-export default function ProductDetailPopup({ product, onClose, onAddToCart }: ProductDetailPopupProps) {
+
+export default function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
   const formatTime = (min: number) =>
     min >= 60 ? `${Math.floor(min / 60)}h ${min % 60}min` : `${min}min`;
 

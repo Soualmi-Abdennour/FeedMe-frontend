@@ -7,6 +7,19 @@ import {
     Settings,
     Store,
     ChartArea,
+    ShoppingCart,
+    Bell,
+    User,
+    LogOut,
+    Search,
+    Star,
+    ChevronDown,
+    Menu,
+    Home,
+    FileText,
+    HelpCircle,
+    Briefcase,
+    Heart,
 } from "lucide-react";
 
 const SHARED_START_ITEMS = [
@@ -150,3 +163,19 @@ export const RESTAURANT_SERVICES = [
 
 export const CONTENT_TYPE = [{ key: "RECIPE", label: "Recipe", value: "RECIPE" }, { key: "DISH", label: "Dish", value: "DISH" }]
 
+export const ICON_MAP = {
+  'shopping-cart': ShoppingCart,
+  'bell': Bell,
+  'user': User,
+  'settings': Settings,
+  'log-out': LogOut,
+  'search': Search,
+  'star': Star,
+  'chevron-down': ChevronDown,
+  'menu': Menu,
+  'home': Home,
+  'file-text': FileText,
+  'help-circle': HelpCircle,
+  'briefcase': Briefcase,
+  'heart': Heart,
+};

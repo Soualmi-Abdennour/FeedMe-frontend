@@ -3,15 +3,11 @@
 import { SlidersHorizontal } from 'lucide-react';
 import { SearchBar } from '@/features/shop/components/molecules/SearchBar';
 import SortSelect from '@/features/shop/components/atoms/SortSelect';
+import { IFilterSectionProps } from '../../types/props.types';
 
-interface FilterSectionProps {
-  search: string;
-  onSearch: (value: string) => void;
-  sort: 'price_desc' | 'price_asc' | 'time_asc' | 'time_desc' | 'random' | null;
-  onSort: (value: 'price_desc' | 'price_asc' | 'time_asc' | 'time_desc' | 'random') => void;
-}
 
-export default function FilterSection({ search, onSearch, sort, onSort }: FilterSectionProps) {
+
+export default function FilterSection({ search, onSearch, sort, onSort }: IFilterSectionProps) {
   return (
     <div className="flex items-center gap-3 mb-4 ">
       <div className="flex-1">

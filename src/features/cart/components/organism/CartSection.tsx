@@ -1,18 +1,15 @@
 "use client";
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { usePlaceOrderMutation, useRemoveCartItemMutation, useUpdateCartItemMutation } from '../../store/cart.api.slice';
+import { ICartSection } from '../../types/props.types';
 import { AccountHeader } from '../molecules/AccountHeader';
 import { OrderSummary } from '../molecules/OrderSummary';
-import { CartItem } from '../organism/CartItem';
-import { Toast } from '../atoms/Toast';
-import { CartGroup } from '../../types/order';
-import { useUpdateCartItemMutation, usePlaceOrderMutation, useRemoveCartItemMutation } from '../../store/cartApiSlice';
+import { CartItem } from './CartItem';
+import { Toast } from '@/components/molecules/Toast';
 
-interface Props {
-  group: CartGroup;
-  onRemoveGroup: () => void;
-}
 
-export const CartSection = ({ group, onRemoveGroup }: Props) => {
+
+export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
   const [updateCartItem] = useUpdateCartItemMutation();
   const [removeCartItem] = useRemoveCartItemMutation();
   const [placeOrder] = usePlaceOrderMutation();
@@ -26,20 +23,20 @@ export const CartSection = ({ group, onRemoveGroup }: Props) => {
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(timerRef.current), []);
 
-const handleCompletePurchase = async () => {
-  try {
-    await placeOrder({ restaurantProfileId: group.accountId }).unwrap();
-    
-    setShowToast(true);
+  const handleCompletePurchase = async () => {
+    try {
+      await placeOrder({ restaurantProfileId: group.accountId }).unwrap();
 
-    timerRef.current = setTimeout(() => {
-      setItems([]);
-      onRemoveGroup();
-    }, 2000); 
-  } catch (err) {
-    console.error("Failed to complete purchase:", err);
-  }
-};
+      setShowToast(true);
+
+      timerRef.current = setTimeout(() => {
+        setItems([]);
+        onRemoveGroup();
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to complete purchase:", err);
+    }
+  };
 
   const total = useMemo(() => {
     return items.reduce(
