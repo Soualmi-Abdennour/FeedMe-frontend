@@ -28,7 +28,7 @@ export const fetchAPI = createApi({
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ["user", "authentication"] 
+    whitelist: ["user", "authentication","onboarding"] 
 }
 
 const rootReducer = combineReducers({

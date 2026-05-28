@@ -144,6 +144,12 @@ export default function ReelsPage() {
                         <EndOfFeed />
                     </ReelSnapItem>
                 )}
+                {/* no reels in the db  */}
+                {reels.length === 0 && (
+                    <ReelSnapItem>
+                        <EndOfFeed />
+                    </ReelSnapItem>
+                )}
 
                 <div ref={sentinelRef} className="h-1 w-full" aria-hidden />
             </div>
