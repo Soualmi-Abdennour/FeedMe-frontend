@@ -40,6 +40,7 @@ export interface IPostComments {
 
 export interface IPostComment {
     text:string
+    commentId:string
     createdAt:Date
     user:UserAppModel
 }
@@ -52,7 +53,7 @@ export interface IPostPreviewProps {
 } 
 export interface IPostFormProps {
     defaultValues?:IPostFormSchema & {
-        mediaList:MediaAppModel[]
+    mediaList:MediaAppModel[]
     };
     onSubmit:(postData:FormData)=>Promise<void>
     onClose:()=>void

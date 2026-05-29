@@ -66,7 +66,7 @@ export  function QuestionMenu({
             icon={isPinned ? <PinOff size={iconSize} /> : <Pin size={iconSize} />}
             label={isPinned ? "Unpin" : "Pin"}
             onClick={onPin}
-            disabled={!isInMyQuestions} // only allow pinning/unpinning from My Questions tab
+            disabled={!isInMyQuestions} 
             hint={!isInMyQuestions ? "Only available in My Questions tab" : undefined}
           />
 

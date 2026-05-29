@@ -19,7 +19,7 @@ function mapNormalUserProfileToAppModel(
             phoneNumber: db.phoneNumber,
             ...(db.city && { city: db.city }),
             ...(db.bio && { bio: db.bio }),
-            ...(db.profilePicture && { profileImageUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN + db.profilePicture }),
+            ...(db.profilePicture && { profileImageUrl:db.profilePicture }),
         },
         userUsagePreferences: {
             ...(db.usageGoal?.length && { usageGoal: db.usageGoal }),
@@ -35,7 +35,7 @@ function mapRestaurantProfileToAppModel(
         restaurantBasicInformation: {
             restaurantName: db.restaurantName,
             phoneNumber: db.phoneNumber,
-            ...(db.restaurantLogoUrl && { restaurantLogoUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN+db.restaurantLogoUrl }),
+            ...(db.restaurantLogoUrl && { restaurantLogoUrl: db.restaurantLogoUrl }),
             ...(db.businessEmail && { businessEmail: db.businessEmail }),
             ...(db.bio && { bio: db.bio }),
         },

@@ -20,36 +20,36 @@ import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 interface SignupFormProps {
     className?: string
 }
-function SignupForm({className}: SignupFormProps) {    
-    const router=useRouter()
-    const [signup]=useSingupMutation()
-    const dispatch=useDispatch()
+function SignupForm({ className }: SignupFormProps) {
+    const router = useRouter()
+    const [signup] = useSingupMutation()
+    const dispatch = useDispatch()
     const {
         handleSubmit,
         control,
         reset,
-        formState:{
+        formState: {
             errors,
             isSubmitting
         }
-    }=useForm<ISignupForm>({
-        resolver:zodResolver(signupFormSchema),
-        mode:"onChange",
-        defaultValues:{
-            userName:process.env.NODE_ENV==="development"?"fieldmarschall":"",
-            email:process.env.NODE_ENV==="development"?"abdousoualmi16@gmail.com":"",
-            password:process.env.NODE_ENV==="development"?"Anything+13":"",
-            passwordConfirm:process.env.NODE_ENV==='development'?"Anything+13":""
+    } = useForm<ISignupForm>({
+        resolver: zodResolver(signupFormSchema),
+        mode: "onChange",
+        defaultValues: {
+            userName: process.env.NODE_ENV === "development" ? "fieldmarschall" : "",
+            email: process.env.NODE_ENV === "development" ? "abdousoualmi16@gmail.com" : "",
+            password: process.env.NODE_ENV === "development" ? "Anything+13" : "",
+            passwordConfirm: process.env.NODE_ENV === 'development' ? "Anything+13" : ""
         }
     })
-    const onSubmit=async (formData:ISignupForm)=>{
+    const onSubmit = async (formData: ISignupForm) => {
         const fetchResponse = await signup(formData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
 
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (errorResponse.status === "ERROR" ) {   
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {
@@ -62,14 +62,14 @@ function SignupForm({className}: SignupFormProps) {
             router.replace('/verify-email')
             reset()
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
-        } 
+        }
     }
     return (
-        <form 
+        <form
             onSubmit={handleSubmit(onSubmit)}
             className='max-w-[320px] mx-auto flex flex-col gap-3'
         >
-            {SIGN_UP_FIELDS.map((formField)=>(
+            {SIGN_UP_FIELDS.map((formField) => (
                 <div key={formField.name}>
                     <FormField {...formField} control={control} errors={errors}></FormField>
                 </div>
@@ -79,11 +79,13 @@ function SignupForm({className}: SignupFormProps) {
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
                 className='mt-4 text-white font-bold'
             >
-                {isSubmitting?"Loading...":"Continue"}
+                {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
-            <Button variant="secondary" className='text-primary-500 font-bold' type='button'>
-                <Link href="/sign-in">Sign in</Link>
-            </Button>
+            <Link href="/sign-in" >
+                <Button variant="secondary" className='text-primary-500 font-bold w-full' type='button'>
+                    Sign in
+                </Button>
+            </Link>
         </form>
     )
 }

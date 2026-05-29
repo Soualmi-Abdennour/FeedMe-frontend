@@ -112,8 +112,7 @@ export default function QAPage() {
       list = list.filter(
         q =>
           q.title.toLowerCase().includes(s) ||
-          (q as any).content?.toLowerCase().includes(s) ||
-          q.description?.toLowerCase().includes(s)
+          q.content?.toLowerCase().includes(s)
       );
     }
 
@@ -129,7 +128,7 @@ export default function QAPage() {
     if (!q) return;
     setEditingQuestionId(questionId);   
     setNewTitle(q.title);              
-    setNewContent((q as any).content || q.description || ""); 
+    setNewContent((q).content || q.content || ""); 
     setIsModalOpen(true);              
   };
 
@@ -225,7 +224,7 @@ export default function QAPage() {
           onRecentClick={() => setActiveTab("answer-later")}
         />
       </div>
-      
+
       <div className="flex-1 flex flex-col">
         <div className="border-b border-[#F1D8CC] bg-white shadow-sm">
           <QAPageHeader

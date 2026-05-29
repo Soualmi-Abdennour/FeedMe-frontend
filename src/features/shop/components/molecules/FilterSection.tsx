@@ -14,7 +14,7 @@ export  function FilterSection({ search, onSearch, sort, onSort }: IFilterSectio
         <ShopSearchBar
           value={search}
           onChange={onSearch}
-          onSearch={(v) => console.log(v)}
+          // onSearch={}
           placeholder="Search"
             className="w-[440px] h-[56px]" // fixed width & height
 

@@ -1,4 +1,4 @@
-import { useGetQuestionCommentsQuery } from "@/features/Q&A/store/qa.api.slice"; // 👈 إضافة
+import { useGetQuestionCommentsQuery } from "@/features/Q&A/store/qa.api.slice"; 
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import {TextLabel} from "../atoms/TextLabel";
@@ -23,7 +23,6 @@ export default function QuestionCard({
 
   const isOwner = authorId === currentUserId;
 
-  // 👈 جلب الكومنتات عند الضغط على View answers فقط
   const { data: commentsData } = useGetQuestionCommentsQuery(questionId, {
     skip: !showAnswers
   });
@@ -84,7 +83,7 @@ export default function QuestionCard({
                 onMarkSolved={() => { onMarkSolved(questionId); setMenuOpen(false); }}
                 onClose={() => { onClose(questionId); setMenuOpen(false); }}
                 onDelete={() => { onDelete(questionId); setMenuOpen(false); }}
-                onViewProfile={() => { console.log("view profile", authorId); setMenuOpen(false); }}
+                onViewProfile={() => { setMenuOpen(false); }}
                 onCopyLink={handleCopyLink}
                 onDismiss={() => setMenuOpen(false)}
               />
@@ -111,7 +110,7 @@ export default function QuestionCard({
       {showAnswers && (
         <AnswerList
           questionId={questionId}
-          answers={fetchedAnswers} // 👈 بدل answers
+          answers={fetchedAnswers}
           onSubmitAnswer={isClosed ? () => {} : onSubmitAnswer}
           onLikeAnswer={onLikeAnswer}
           isClosed={isClosed}

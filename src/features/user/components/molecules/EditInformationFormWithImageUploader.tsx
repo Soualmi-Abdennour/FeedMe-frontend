@@ -35,7 +35,6 @@ function EditInformationFormWithImageUploader<FormSchema extends z.ZodType>({
         previewUrl: defaultValues.profileImageUrl ?? defaultValues.restaurantLogoUrl,
         imageFile:undefined
     })
-    console.log(profileImage);
     
     const {
         handleSubmit,
@@ -60,10 +59,7 @@ function EditInformationFormWithImageUploader<FormSchema extends z.ZodType>({
             },
             fieldToUpdate
         })
-        data.entries().forEach((value)=>{
-            console.log(value);
-            
-        })
+        
         const fetchResponse = await updateProfile({
             endpoint,
             data
@@ -72,7 +68,7 @@ function EditInformationFormWithImageUploader<FormSchema extends z.ZodType>({
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {

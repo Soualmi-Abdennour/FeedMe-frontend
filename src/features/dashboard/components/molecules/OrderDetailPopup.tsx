@@ -32,8 +32,7 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
             <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
               {order.product.image ? (
                 <Image 
-                  // src={order.product.image}
-                  src={"/"}
+                  src={order.product.image}
                   alt={order.product?.name} 
                   width={100}
                   height={100}
@@ -55,8 +54,7 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
               <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
                 {order.user.avatar ? (
                   <Image
-                    src={"/"}
-                    // src={order.user.avatar}
+                    src={order.user.avatar}
                     alt="" 
                     width={100}
                     height={100}

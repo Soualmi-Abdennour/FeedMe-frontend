@@ -1,16 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 import { cn } from '@/utils/shadcn.utils'
-// import AuthRouteGuard from './AuthRouteGuard'
-interface Props { }
 
-function AuthLayout({
+function Layout({
     children,
 }: {
     children: React.ReactNode
 }) {
     return (
-        // <AuthRouteGuard>
             <main className={cn(' min-h-screen bg-auth-gradient relative')}>
                 <Image
                     src={'/auth/auth-bck.png'}
@@ -22,8 +19,7 @@ function AuthLayout({
                     {children}
                 </div>
             </main>
-        // </AuthRouteGuard>
     )
 }
 
-export default AuthLayout
+export default Layout

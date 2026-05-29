@@ -24,11 +24,6 @@ function SubmitOnboardingProcess() {
         const formData = buildOnboardingFormData({
             onboardingType,profile,avatarImageFile
         })
-        console.log(formData.entries().forEach((value)=>{
-            console.log(value);
-            
-        }));
-        
         const fetchResponse = await onboard({
             endpoint,
             data:formData
@@ -36,15 +31,12 @@ function SubmitOnboardingProcess() {
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         const errorResponse: UserResponse = error?.data as UserResponse
-        console.log(error);
-        console.log(successResponse);
         
         return successResponse ?? errorResponse
     }, [onboard, onboarding?.isOnboardingCompleted, dispatch])
 
     const onSuccessFn = (successResponse: UserResponse) => {
         const successResponseData = successResponse.data
-        console.log(mapUserDbToAppModel(successResponseData?.user!));
         router.replace(`/publication`)
         dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         setTimeout(() => {

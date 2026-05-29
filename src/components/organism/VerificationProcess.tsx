@@ -58,10 +58,7 @@ function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onError
     }
     useEffect(() => {  
         const updateVerificationState=async()=>{
-            const verificationResponse =await queryFn()
-            console.log("from use effect");
-            
-
+            const verificationResponse =await queryFn()            
             setVerificationResponse(verificationResponse)
         }
         updateVerificationState()      

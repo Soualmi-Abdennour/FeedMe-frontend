@@ -48,8 +48,8 @@ function MediaDropZone({ uploadedMedia, setUploadedMedia }: IMediaDropZoneProps)
             "video/mp4": [".mp4"],
         },
         validator: (file:File) => {
-            if (file.size > 10 * 1024 * 1024) {
-                return { code: "file-too-large", message: "File must be less than 10MB" };
+            if (file.size > 100 * 1024 * 1024) {
+                return { code: "file-too-large", message: "File must be less than 100MB" };
             }
             return null;
         },

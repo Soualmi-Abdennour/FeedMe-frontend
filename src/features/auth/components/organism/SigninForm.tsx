@@ -44,7 +44,7 @@ function SigninForm() {
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {
@@ -91,9 +91,11 @@ function SigninForm() {
             >
                 {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>
-            <Button variant="secondary" className='text-primary-500 font-bold' type='button'>
-                <Link href="/sign-up">Sign up</Link>
+            <Link href="/sign-up" >
+            <Button variant="secondary" className='text-primary-500 font-bold w-full' type='button'>
+                Sign up
             </Button>
+        </Link>
         </form>
     )
 }

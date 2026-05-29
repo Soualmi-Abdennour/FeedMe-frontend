@@ -24,7 +24,7 @@ function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
         const successResponse: SingleCommentResponse = fetchResponse.data as SingleCommentResponse
         if (error) {
             const errorResponse = error.data as SingleCommentResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {

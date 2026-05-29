@@ -8,8 +8,8 @@ export const postFormSchema = z.object({
 
     description: z
         .string()
-        .min(100, "Description must be at least 100 characters")
-        .max(1000, "Description must be at most 1000 characters"),
+        .min(50, "Description must be at least 50 characters")
+        .max(5000, "Description must be at most 5000 characters"),
     contentType:z.enum(
             ["RECIPE","DISH"]
         ),

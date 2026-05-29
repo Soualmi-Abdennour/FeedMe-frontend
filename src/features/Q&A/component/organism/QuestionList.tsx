@@ -12,13 +12,10 @@ export const QuestionList = ({
     {!questions || questions.length === 0 ? (
       <div className="text-center py-10 text-[#8B6F63]">No questions found.</div>
     ) : (
-      questions.map((q) => {
-        // لتجاوز قيود الأنواع الصارمة بشكل آمن أثناء قراءة العلاقات المتداخلة
-        const rawQ = q as any;
-        // q.author.id
-        // q?.userId ||
-        const authorId = rawQ?.User?.id || rawQ?.author?.id || rawQ?.UserId || "";
-        const displayName = rawQ?.User?.UserProfile?.fullName || rawQ?.User?.userName || rawQ?.author?.username || "User";
+      questions.map((question) => {
+        
+        const authorId = question.userId ?? "";
+        const displayName = question.User.userName ?? "User";
 
         const initials = displayName
           .split(" ")
@@ -28,33 +25,33 @@ export const QuestionList = ({
           .slice(0, 2);
 
         // ضبط حالة الحفظ للتبويب الحالي
-        const isQuestionSaved = activeTab === "answer-later" ? true : (q?.isSavedForLater ?? false);
+        const isQuestionSaved = activeTab === "answer-later" ? true : (question?.isSavedForLater ?? false);
 
         return (
           <QuestionCard
-            key={q?.id}
-            questionId={q?.id}
+            key={question.id}
+            questionId={question.id}
             authorId={authorId}
             currentUserId={currentUserId}
             activeTab={activeTab}
-            title={q?.title || "No Title"}
+            title={question.title ?? "No Title"}
             // الاعتماد المباشر على حقل content القادم من السيرفر
-            description={rawQ?.content || q?.description || ""} 
+            description={question.content ?? ""} 
             username={displayName}
             userInitials={initials}
             userBg=""
-            date={q?.createdAt}
+            date={question.createdAt}
             // مطابقة دقيقة لحقول الـ Counts القادمة من الباك إند
-            likes={rawQ?.likeCount ?? 0}
-            answersCount={rawQ?.commentCount ?? 0}
-            isLiked={q?.isLiked ?? false}
+            likes={question.likeCount ?? 0}
+            answersCount={question.commentCount ?? 0}
+            isLiked={question.isLiked ?? false}
             isSaved={isQuestionSaved} 
-            isPinned={q?.isPinned ?? false}
-            isSolved={q?.isSolved ?? false} 
-            isClosed={q?.isClosed ?? false} 
-            answers={answersMap[q?.id] ?? []}
-            onLike={() => onLike(q?.id)}
-            onReply={() => onSaveLater(q?.id)}
+            isPinned={question.isPinned ?? false}
+            isSolved={question.isSolved ?? false} 
+            isClosed={question.isClosed ?? false} 
+            answers={answersMap[question.id] ?? []}
+            onLike={() => onLike(question.id)}
+            onReply={() => onSaveLater(question.id)}
             onSubmitAnswer={onSubmitAnswer}
             onLikeAnswer={onLikeAnswer}
             onEdit={onEdit}

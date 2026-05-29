@@ -31,10 +31,7 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
                 restaurantServices
             }
         }})   
-        data.entries().forEach((value)=>{
-            console.log(value);
-
-        })
+        
         const fetchResponse = await updateProfile({
             endpoint: "restaurant",
             data
@@ -43,7 +40,7 @@ function EditRestaurantServicesForm({defaultValues}:{defaultValues:RestaurantUse
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {

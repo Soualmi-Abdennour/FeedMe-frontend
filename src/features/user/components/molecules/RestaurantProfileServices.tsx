@@ -16,7 +16,6 @@ const SERVICE_LABELS: Record<keyof RestaurantUserProfileAppModel["restaurantServ
 // RESTAURANT_SERVICES
 
 function RestaurantProfileServices( {profile} : {profile:RestaurantUserProfileAppModel}) {
-  console.log(profile);
   
   const { restaurantServices, restaurantDetails } = profile;
   return (

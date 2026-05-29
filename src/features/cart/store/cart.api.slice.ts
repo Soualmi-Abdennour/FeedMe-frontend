@@ -1,4 +1,3 @@
-// src/features/cart/store/cartApi.slice.ts
 import { fetchAPI } from "@/store/base.store";
 
 export const cartApiSlice = fetchAPI.injectEndpoints({
@@ -39,7 +38,7 @@ export const cartApiSlice = fetchAPI.injectEndpoints({
 }),
 
   placeOrder: build.mutation({
-  query: ({ restaurantProfileId }) => ({  // ✅ destructure هون
+  query: ({ restaurantProfileId }) => ({  
     url: '/orders',
     method: 'POST',
     body: { restaurantProfileId },

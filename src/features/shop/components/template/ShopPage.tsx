@@ -11,7 +11,7 @@ import { useState, useMemo } from 'react';
 import { useGetAllProductsQuery, useAddToCartMutation } from '../../store/shop.api.slice';
 import { mapProductDbToAppModel } from '../../utils/shop.utils';
 
-export  function ShopPage() {
+export default function ShopPage() {
   const { data, isLoading, isError } = useGetAllProductsQuery();
   const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
   const [active, setActive] = useState<string[]>(['all']);

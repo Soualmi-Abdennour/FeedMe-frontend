@@ -14,7 +14,7 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
     const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
     const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
     
-    const [editPost] = useEditPostMutation()
+    const [editPost,{isLoading}] = useEditPostMutation()
     const onSubmit = async (postData: FormData) => {
         const fetchResponse = await editPost({ postData, id: postId })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
@@ -22,7 +22,7 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
 
         if (error) {
             const errorResponse = error.data as SinglePostResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             } else {
                 toast.error(errorResponse.message)
@@ -32,7 +32,19 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
             onClose()
         }
     }
-
+    if (isLoading || fetchResponse.isLoading) {
+        return (
+            <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
+                <div className="text-center">
+                    <h3 className="text-lg font-semibold">Processing request</h3>
+                    <p className="text-sm text-muted-foreground">
+                        Please wait a moment...
+                    </p>
+                </div>
+            </div>
+        )
+    }
     return (
         <div className={cn('relative max-w-[600px] w-full flex flex-col items-center border-2 border-black bg-white p-10 gap-3', className)}>
             <button

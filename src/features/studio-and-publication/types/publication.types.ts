@@ -8,7 +8,7 @@ type CommentModel={
     updatedAt: Date
 }
 export type CommentDbModel =CommentModel & {
-    User:UserDbModel
+    user:UserDbModel
 }
 export type CommentAppModel = CommentModel & {
     user:UserAppModel

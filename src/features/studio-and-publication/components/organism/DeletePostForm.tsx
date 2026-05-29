@@ -11,7 +11,7 @@ import { toast } from 'sonner'
 
 
 function DeletePostForm({ className, postId, onClose }: IDeletePostFormProps) {
-    const [deletePost] = useDeletePostMutation()
+    const [deletePost,{isLoading}] = useDeletePostMutation()
     const handleClick = async () => {
         const fetchResponse = await deletePost(postId)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
@@ -19,7 +19,7 @@ function DeletePostForm({ className, postId, onClose }: IDeletePostFormProps) {
 
         if (error) {
             const errorResponse = error.data as SinglePostResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {
@@ -27,11 +27,23 @@ function DeletePostForm({ className, postId, onClose }: IDeletePostFormProps) {
             }
         }
         else {
-            const successResponseData = successResponse.data
             toast.success(successResponse.message)
             onClose()
         }
     }
+     if (isLoading) {
+            return (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
+                    <div className="text-center">
+                        <h3 className="text-lg font-semibold">Processing request</h3>
+                        <p className="text-sm text-muted-foreground">
+                            Please wait a moment...
+                        </p>
+                    </div>
+                </div>
+            )
+        }
     return (
         <div className={cn(className = "relative ", className)}>
             {onClose && (

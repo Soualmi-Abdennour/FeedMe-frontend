@@ -4,6 +4,6 @@ import { CommentAppModel, CommentDbModel } from "../types/publication.types";
 export function convertCommentDbModelToAppModel(comment:CommentDbModel):CommentAppModel{
     return {
         ...comment,
-        user:mapUserDbToAppModel(comment.User)
+        user:mapUserDbToAppModel(comment.user)
     }
 }

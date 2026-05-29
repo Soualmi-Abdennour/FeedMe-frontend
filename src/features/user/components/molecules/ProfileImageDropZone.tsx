@@ -52,13 +52,12 @@ function ProfileImageDropZone({ profileImage, setProfileImage, disabled = false 
         },
         maxFiles: 1,
         validator: (file: File) => {
-            if (file.size > 10 * 1024 * 1024) {
-                return { code: "file-too-large", message: "File must be less than 10MB" };
+            if (file.size > 100 * 1024 * 1024) {
+                return { code: "file-too-large", message: "File must be less than 100MB" };
             }
             return null;
         },
     });
-    console.log(profileImage.previewUrl);
 
     return (
         <div className="flex flex-col items-center gap-2">

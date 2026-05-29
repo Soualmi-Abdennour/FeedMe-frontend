@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { createCommnetCredentials, getPostCommnetsCredentials, getPostsCredentials, LikeResponse, PostCommentsResponse, PostsResponse, SaveResponse, SingleCommentResponse, toggleLikeCredentials, togglesSaveCredentials } from "@/types/api.types";
+import { createCommnetCredentials, deleteCommnetCredentials, getPostCommnetsCredentials, getPostsCredentials, LikeResponse, PostCommentsResponse, PostsResponse, SaveResponse, SingleCommentResponse, toggleLikeCredentials, togglesSaveCredentials } from "@/types/api.types";
 
 export const publicationSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({   
@@ -32,6 +32,13 @@ export const publicationSlice = fetchAPI.injectEndpoints({
             }),     
             invalidatesTags:["Comments"]   
         }),
+        deleteComment:build.mutation<SingleCommentResponse,deleteCommnetCredentials>({
+            query:({commentId})=>({
+                url: `/posts/comments/${commentId}`,
+                method:"DELETE"
+            }),
+            invalidatesTags:["Comments"]
+        }),
         getPostComments:build.query<PostCommentsResponse,getPostCommnetsCredentials>({
             query:({postId})=>({
                 url: `/posts/${postId}/comments`,
@@ -47,4 +54,5 @@ export const {
     useCreateCommentMutation,
     useGetPostCommentsQuery,
     useToggleSaveMutation,
+    useDeleteCommentMutation
 } = publicationSlice

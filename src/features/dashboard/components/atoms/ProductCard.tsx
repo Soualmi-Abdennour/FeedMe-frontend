@@ -52,8 +52,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: IProductCardProps) =>
 
             <div className="relative w-full h-36">
                 <Image
-                    // src={product.image}
-                    src={"/"}
+                    src={product.image}
                     alt={product.name}
                     fill
                     className="object-cover"

@@ -6,7 +6,7 @@ export function mapProductDbToAppModel(p: ProductDbModel): ProductAppModel {
         name: p.name,
         price: parseFloat(p.price),
         description: p.description,
-        imageUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN + p.image,
+        imageUrl: p.image,
         category: Array.isArray(p.category)
             ? p.category[0]?.toLowerCase()
             : p.category?.toLowerCase() ?? "all",
@@ -16,7 +16,7 @@ export function mapProductDbToAppModel(p: ProductDbModel): ProductAppModel {
             id: p.restaurant?.id ?? "unknown",
             username:
                 p.restaurant?.restaurantName ?? p.restaurant?.User?.userName ?? "Seller",
-            // ...(p.restaurant?.restaurantLogoUrl && { avatarUrl: process.env.NEXT_PUBLIC_BACKEND_ORIGIN + p.restaurant.restaurantLogoUrl }),
+            ...(p.restaurant?.restaurantLogoUrl && { avatarUrl:  p.restaurant.restaurantLogoUrl }),
         },
     };
 }

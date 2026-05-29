@@ -53,7 +53,7 @@ function EditAccountForm({ defaultValues }: Props) {
 
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (errorResponse.status === "ERROR") {
+            if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something went wrong.")
             } else {
                 toast.error(errorResponse.message)

@@ -14,7 +14,6 @@ type Props = {
 
 function ProfileHeader({ user, sameUser = false }: Props) {
     const profileData = extractProfileData(user)
-    console.log(profileData?.imageUrl);
     
     return (
         <div className="flex flex-col gap-7 p-6 border-b border-border m-7 rounded-md shadow-lg ">

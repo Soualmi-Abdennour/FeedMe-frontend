@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { cn } from '@/utils/shadcn.utils'
 import AppSidebar from '@/components/organism/AppSideBar'
 import AppHeader from '@/components/organism/AppHeader'
-// import ProtectedRouteGuard from './ProtectedRouteGuard'
+import ProtectedRouteGuard from './ProtectedRouteGuard'
 
 function ProtectedLayout({
     children,
@@ -11,7 +11,7 @@ function ProtectedLayout({
     children: React.ReactNode
 }) {
     return (
-        // <ProtectedRouteGuard>
+        <ProtectedRouteGuard>
             <main className={cn('h-screen relative z-0 ')}>
                 <AppSidebar />
                 <div className='pl-20 bg-primary-50 h-screen flex flex-col '>
@@ -21,7 +21,7 @@ function ProtectedLayout({
                     </div>
                 </div>
             </main>
-        // </ProtectedRouteGuard>
+        </ProtectedRouteGuard>
     )
 }
 

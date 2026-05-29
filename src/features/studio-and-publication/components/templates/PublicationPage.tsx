@@ -31,7 +31,7 @@ export default function ReelsPage() {
     const successResponse: PostsResponse = fetchResponse.data as PostsResponse
     if(error){               
         const errorResponse=error.data as PostsResponse
-            if ( errorResponse.status === "ERROR") {
+        if (error.status || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {

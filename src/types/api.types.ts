@@ -5,7 +5,6 @@ import { PostDbModel } from "@/features/studio-and-publication/types/studio.type
 import { UserDbModel } from "@/features/user/types/user.types";
 
 export type ApiStatus = "SUCCESS" | "FAIL" | "ERROR";
-
 export type UserResponseData={
     user:UserDbModel;
     jwtToken?:string
@@ -44,7 +43,7 @@ export type SinglePostResponseData = {
     post: PostDbModel
 }
 export type SingleCommentResponseData = {
-    comment: CommentDbModel
+    comment?: CommentDbModel
 }
 
 export type ApiError={
@@ -122,13 +121,15 @@ export type createCommnetCredentials={
     postId:string
     text:string
 }
+export type deleteCommnetCredentials={
+    commentId:string
+}
 export type getPostCommnetsCredentials={
     postId:string
 }
 
 export type getUserProfileCredentials={
     userId:string
-    // profileType:"USER"|"RESTAURANT"
 }
 export type getOtherUserPostsCredentials={
     userId:string
