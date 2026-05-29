@@ -1,12 +1,12 @@
 'use client';
 
-import SkeletonCard from '@/features/shop/components/atoms/SkeletonCard';
-import ProductCard from '@/features/shop/components/molecules/ProductCard';
+import {SkeletonCard} from '@/features/shop/components/atoms/SkeletonCard';
+import {ProductCard} from '@/features/shop/components/molecules/ProductCard';
 import { IProductGridProps } from '../../types/props.types';
 
 
 
-export default function ProductGrid({ products, isLoading,onProductClick  }: IProductGridProps) {
+export  function ProductGrid({ products, isLoading,onProductClick  }: IProductGridProps) {
   return (
     <div className="grid grid-cols-4 gap-4">
       {isLoading

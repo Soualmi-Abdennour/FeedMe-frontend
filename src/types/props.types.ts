@@ -109,3 +109,14 @@ export interface IToast {
     onHide: () => void;
     duration?: number;
 }
+
+export interface IButtonWithIconProps {
+    children: React.ReactNode;
+    variant?: "primary" | "secondary" | "outline" | "ghost";
+    size?: "sm" | "md" | "lg";
+    onClick?: () => void;
+    disabled?: boolean;
+    icon?: React.ReactNode;
+    className?: string;
+    type?: "button" | "submit" | "reset";
+}

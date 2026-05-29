@@ -13,24 +13,18 @@
  * - className?: Classes Tailwind supplémentaires
  */
 import { useState, useEffect } from "react";
+import { IQASearchBarInputProps } from "../../types/props.types";
 
-interface InputProps {
-  placeholder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-  type?: "text" | "email" | "password" | "search";
-  icon?: React.ReactNode;
-  className?: string;
-}
 
-export default function SearchBarInput({
+
+export function QASearchBarInput({
   placeholder,
   value,
   onChange,
   type = "text",
   icon,
   className = "",
-}: InputProps) {
+}: IQASearchBarInputProps) {
   const [localValue, setLocalValue] = useState(value ?? "");
 
   // keep localValue in sync when parent provides a value (controlled)

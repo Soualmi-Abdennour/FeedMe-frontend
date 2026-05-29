@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 
 
-export default function ProductCard({ product }: { product: ProductAppModel }) {
+export  function ProductCard({ product }: { product: ProductAppModel }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-sm transition-shadow">
 

@@ -1,6 +1,6 @@
 import { IMenuItemProps } from "../../types/props.types";
 
-export default function MenuItem({ icon, label, onClick, danger = false, disabled = false, hint }: IMenuItemProps) {
+export  function MenuItem({ icon, label, onClick, danger = false, disabled = false, hint }: IMenuItemProps) {
   return (
     <button
       onClick={(e) => { e.stopPropagation(); if (!disabled) onClick(); }}

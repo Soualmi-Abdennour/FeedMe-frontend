@@ -1,10 +1,7 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { IAvatarAtomProps } from "../../types/props.types";
 
-interface AvatarAtomProps {
-  name: string | null;
-  avatarUrl: string | null;
-  size?: "sm" | "md" | "lg";
-}
+
 
 const sizeMap = {
   sm: "h-8 w-8",
@@ -12,7 +9,7 @@ const sizeMap = {
   lg: "h-12 w-12",
 };
 
-export function AvatarAtom({ name, avatarUrl, size = "md" }: AvatarAtomProps) {
+export function AvatarAtom({ name, avatarUrl, size = "md" }: IAvatarAtomProps) {
   const initials = (name || "?")
     .split(" ")
     .map((n) => n[0])

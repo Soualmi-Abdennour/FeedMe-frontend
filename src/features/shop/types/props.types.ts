@@ -33,7 +33,7 @@ export interface IProductDetailPopupProps {
     onAddToCart: () => void;
 }
 
-export interface ISearchBarInputProps {
+export interface IShopSearchBarInputProps {
     type?: 'text' | 'email' | 'password' | 'number' | 'search';
     placeholder?: string;
     value?: string;
@@ -45,7 +45,7 @@ export interface ISearchBarInputProps {
     iconPosition?: 'left' | 'right';
 }
 
-export interface ISearchBarProps {
+export interface IShopSearchBarProps {
     value?: string;
     onChange?: (value: string) => void;
     onSearch?: (value: string) => void;

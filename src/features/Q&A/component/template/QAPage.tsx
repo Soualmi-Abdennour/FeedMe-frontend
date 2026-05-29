@@ -3,10 +3,10 @@
 import { useState, useMemo } from "react";
 
 // ORGANISMS
-import Header from "../organism/QAPageHeader";
-import Sidebar from "../organism/QASidebar";
+import {QAPageHeader} from "../organism/QAPageHeader";
+import {QASidebar} from "../organism/QASidebar";
 import { QuestionList } from "../organism/QuestionList";
-import QuestionModal from "../organism/QuestionModal";
+import {QuestionModal} from "../organism/QuestionModal";
 
 // TYPES & RTK QUERY HOOKS
 import { QANavTab, QuestionModel } from "../../types/qa.types";
@@ -216,9 +216,19 @@ export default function QAPage() {
 
   return (
     <div className="min-h-screen w-full bg-[#FFF5F0] flex text-[#2D1F1A]">
+      <div className="w-[260px] bg-white border-l border-[#F1D8CC] shadow-sm">
+        <QASidebar
+          activeTab={activeTab}
+          onQuestionsClick={() => { setActiveTab("all"); setCurrentCursor(null); }}
+          onMyQuestionsClick={() => setActiveTab("my-questions")}
+          onAnswersClick={() => setActiveTab("my-answers")}
+          onRecentClick={() => setActiveTab("answer-later")}
+        />
+      </div>
+      
       <div className="flex-1 flex flex-col">
         <div className="border-b border-[#F1D8CC] bg-white shadow-sm">
-          <Header
+          <QAPageHeader
             searchValue={search}
             onSearch={setSearch}
             onAskQuestion={() => setIsModalOpen(true)}
@@ -325,15 +335,7 @@ export default function QAPage() {
         </div>
       </div>
 
-      <div className="w-[260px] bg-white border-l border-[#F1D8CC] shadow-sm">
-        <Sidebar
-          activeTab={activeTab}
-          onQuestionsClick={() => { setActiveTab("all"); setCurrentCursor(null); }}
-          onMyQuestionsClick={() => setActiveTab("my-questions")}
-          onAnswersClick={() => setActiveTab("my-answers")}
-          onRecentClick={() => setActiveTab("answer-later")}
-        />
-      </div>
+      
 
       <QuestionModal
         open={isModalOpen}

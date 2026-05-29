@@ -1,17 +1,17 @@
 'use client';
 
-import ShopHeader from '@/features/shop/components/molecules/ShopHeader';
-import FilterSection from '@/features/shop/components/molecules/FilterSection';
-import CategoryBar from '@/features/shop/components/molecules/CategoryBar';
-import ProductGrid from '@/features/shop/components/organism/ProductGrid';
-import ProductDetailPopup from '@/features/shop/components/molecules/ProductDetailPopup';
-import SuccessToast from '@/components/molecules/SuccessToast';
+import {ShopHeader} from '@/features/shop/components/molecules/ShopHeader';
+import {FilterSection} from '@/features/shop/components/molecules/FilterSection';
+import {CategoryBar} from '@/features/shop/components/molecules/CategoryBar';
+import {ProductGrid} from '@/features/shop/components/organism/ProductGrid';
+import {ProductDetailPopup} from '@/features/shop/components/molecules/ProductDetailPopup';
+import {SuccessToast} from '@/components/molecules/SuccessToast';
 import type { ProductAppModel } from '@/features/shop/types/shop.types';
 import { useState, useMemo } from 'react';
 import { useGetAllProductsQuery, useAddToCartMutation } from '../../store/shop.api.slice';
 import { mapProductDbToAppModel } from '../../utils/shop.utils';
 
-export default function ShopPage() {
+export  function ShopPage() {
   const { data, isLoading, isError } = useGetAllProductsQuery();
   const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
   const [active, setActive] = useState<string[]>(['all']);

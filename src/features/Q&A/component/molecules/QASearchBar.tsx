@@ -1,18 +1,18 @@
 
 
-import type { KeyboardEvent } from "react";
-import SearchBarInput from "../atoms/SearchBarInput";
 import { Icon } from "@/components/atoms/Icon";
-import { ISearchBarProps } from "../../types/props.types";
+import type { KeyboardEvent } from "react";
+import { IQASearchBarProps } from "../../types/props.types";
+import { QASearchBarInput } from "../atoms/QASearchBarInput";
 
 
 
-export default function SearchBar({
+export  function QASearchBar({
   placeholder = "Search...",
   value,
   onChange,
   onSearch,
-}: ISearchBarProps) {
+}: IQASearchBarProps) {
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "Enter") {
       onSearch?.();
@@ -21,7 +21,7 @@ export default function SearchBar({
 
   return (
     <div onKeyDown={handleKeyDown}>
-      <SearchBarInput
+      <QASearchBarInput
         type="search"
         placeholder={placeholder}
         value={value}

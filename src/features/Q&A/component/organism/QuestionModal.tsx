@@ -1,6 +1,6 @@
 import { IQuestionModalProps } from "../../types/props.types";
 
-export default function QuestionModal({
+export  function QuestionModal({
   open,
   title,
   content,

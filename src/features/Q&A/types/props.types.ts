@@ -70,7 +70,7 @@ export interface IMenuItemProps {
     hint?: string;
 }
 
-export interface ISearchBarProps {
+export interface IQASearchBarProps {
     placeholder?: string;
     value?: string;
     onChange?: (value: string) => void;
@@ -134,3 +134,27 @@ export interface ISidebarProps {
     onRecentClick?: () => void;
 }
 
+export interface IActionBarProps {
+    likes: number;
+    comments?: number;
+    onLike?: () => void;
+    onComment?: () => void;
+    onReply?: () => void;
+    isLiked?: boolean;
+    isSaved?: boolean;
+}
+
+export interface IQASearchBarInputProps {
+    placeholder?: string;
+    value?: string;
+    onChange?: (value: string) => void;
+    type?: "text" | "email" | "password" | "search";
+    icon?: React.ReactNode;
+    className?: string;
+}
+
+export interface IAvatarAtomProps {
+    name: string | null;
+    avatarUrl: string | null;
+    size?: "sm" | "md" | "lg";
+}

@@ -6,7 +6,7 @@ import { SORT_OPTIONS } from '../../constants/shop.constants';
 
 
 
-export default function SortSelect({ value, onChange }: ISortSelectProps) {
+export  function SortSelect({ value, onChange }: ISortSelectProps) {
   const [open, setOpen] = useState(false); 
   const ref = useRef<HTMLDivElement>(null); //kat reference l-div dyal component bach tdetect clicks outside
 

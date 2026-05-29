@@ -1,17 +1,17 @@
 'use client';
 
 import { SlidersHorizontal } from 'lucide-react';
-import { SearchBar } from '@/features/shop/components/molecules/SearchBar';
-import SortSelect from '@/features/shop/components/atoms/SortSelect';
+import { ShopSearchBar } from '@/features/shop/components/molecules/ShopSearchBar';
+import {SortSelect} from '@/features/shop/components/atoms/SortSelect';
 import { IFilterSectionProps } from '../../types/props.types';
 
 
 
-export default function FilterSection({ search, onSearch, sort, onSort }: IFilterSectionProps) {
+export  function FilterSection({ search, onSearch, sort, onSort }: IFilterSectionProps) {
   return (
     <div className="flex items-center gap-3 mb-4 ">
       <div className="flex-1">
-        <SearchBar
+        <ShopSearchBar
           value={search}
           onChange={onSearch}
           onSearch={(v) => console.log(v)}

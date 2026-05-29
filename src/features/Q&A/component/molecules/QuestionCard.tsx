@@ -1,11 +1,11 @@
 import { useGetQuestionCommentsQuery } from "@/features/Q&A/store/qa.api.slice"; // 👈 إضافة
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
-import Text from "../atoms/ActionBarText";
+import {TextLabel} from "../atoms/TextLabel";
 import { AnswerList } from "../organism/AnswerList";
-import ActionBar from "./ActionBar";
-import QuestionMenu from "./QuestionMenu";
-import UserHeader from "./UserHeader";
+import {ActionBar} from "./ActionBar";
+import {QuestionMenu} from "./QuestionMenu";
+import {UserHeader} from "./UserHeader";
 import { IQuestionCardProps } from "../../types/props.types";
 
 
@@ -94,8 +94,8 @@ export default function QuestionCard({
       </div>
 
       <div className="mt-4">
-        <Text variant="h3" className="font-bold text-[#3D2A22]">{title}</Text>
-        <Text variant="body" className="mt-2 text-[#6F564B]">{description}</Text>
+        <TextLabel variant="h3" className="font-bold text-[#3D2A22]">{title}</TextLabel>
+        <TextLabel variant="body" className="mt-2 text-[#6F564B]">{description}</TextLabel>
       </div>
 
       <ActionBar

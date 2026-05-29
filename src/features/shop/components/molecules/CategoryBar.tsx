@@ -7,7 +7,7 @@ import { ICategoryBarProps } from '../../types/props.types';
 
 
 
-export default function CategoryBar({ active, onSelect, onApply }: ICategoryBarProps) {
+export  function CategoryBar({ active, onSelect, onApply }: ICategoryBarProps) {
   return (
     <div className="flex items-center gap-4 mb-8">
       <div className="flex gap-3 overflow-x-auto scrollbar-hide flex-1 py-1">

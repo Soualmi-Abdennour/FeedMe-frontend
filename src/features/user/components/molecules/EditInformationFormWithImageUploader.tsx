@@ -35,6 +35,8 @@ function EditInformationFormWithImageUploader<FormSchema extends z.ZodType>({
         previewUrl: defaultValues.profileImageUrl ?? defaultValues.restaurantLogoUrl,
         imageFile:undefined
     })
+    console.log(profileImage);
+    
     const {
         handleSubmit,
         control,

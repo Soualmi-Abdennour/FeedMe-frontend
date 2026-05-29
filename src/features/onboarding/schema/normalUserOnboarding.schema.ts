@@ -1,4 +1,4 @@
-import { ALGERIA_STATES, KITCHEN_CATEGORY, USAGE_GOAL, WEEK_DAYS } from "@/constants/app.constants";
+import { ALGERIA_STATES } from "@/constants/app.constants";
 import { Wilaya } from "@/types/app.types";
 import { z } from "zod";
 
@@ -10,13 +10,7 @@ export const normalUserOnboardingFormSchema=z.object({
         ALGERIA_STATES.map(state => state.value) as [Wilaya, ...Wilaya[]],
     ).optional(),
     phoneNumber: z.string().regex(/^(0)(5|6|7)[0-9]{8}$/, "Invalid Algerian phone number"),
-    bio: z.string().max(500, "You have only 500 character").optional(),
-    // usageGoal: z.enum(
-    //     USAGE_GOAL.map(day => day.value) as [string, ...string[]]
-    // ).optional(),
-    // kitchenCategory:z.enum(
-    //     KITCHEN_CATEGORY.map(day => day.value) as [string, ...string[]]
-    // ).optional()
+    bio: z.string().max(500, "You have only 500 character").optional().or(z.literal("")),
 })
 
 export type INormalUserOnboardingForm = z.infer<typeof normalUserOnboardingFormSchema>

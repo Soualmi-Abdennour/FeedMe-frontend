@@ -6,7 +6,7 @@ import { ISuccessToastProps } from '@/types/props.types';
 
 
 
-export default function SuccessToast({
+export  function SuccessToast({
   message = 'The operation was completed successfully',
   visible,
   onDismiss,

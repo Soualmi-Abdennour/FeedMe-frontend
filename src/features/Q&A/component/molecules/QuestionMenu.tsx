@@ -12,13 +12,13 @@ import {
   LockOpen,
 } from "lucide-react";
 import { IQuestionMenuProps } from "../../types/props.types";
-import MenuItem from "./MenuItem";
+import {MenuItem} from "./MenuItem";
 
 
 
 
 
-export default function QuestionMenu({
+export  function QuestionMenu({
   isOwner,
   isInMyQuestions,
   hasAnswers,

@@ -2,7 +2,7 @@
  * ORGANISM: Header
  * 
  * Rôle: En-tête principal du site avec titre, recherche et bouton CTA.
- * Composée de: SearchBar (molecule) + Button (atom) + Text (atom)
+ * Composée de: SearchBar (molecule) + Button (atom) + TextLabel (atom)
  * Utilisé dans: MainLayout
  * 
  * Props:
@@ -11,14 +11,14 @@
  * - searchValue?: Current search value
  */
 
-import SearchBar from "../molecules/SearchBar";
-import Button from "../atoms/Button";
-import Text from "../atoms/ActionBarText";
+import { QASearchBar } from "../molecules/QASearchBar";
+import {TextLabel} from "../atoms/TextLabel";
 import { Pencil } from "lucide-react";
 import { IHeaderProps } from "../../types/props.types";
+import { ButtonWithIcon } from "@/components/molecules/ButtonWithIcon";
 
 
-export default function QAPageHeader({
+export  function QAPageHeader({
   onSearch,
   onAskQuestion,
   searchValue,
@@ -34,16 +34,16 @@ export default function QAPageHeader({
         {/* TOP BAR */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <Text variant="h2" className="text-[#3D2A22] font-bold">
+            <TextLabel variant="h2" className="text-[#3D2A22] font-bold">
               Q&A: Ask questions, find answers!
-            </Text>
+            </TextLabel>
 
-            <Text
+            <TextLabel
               variant="body"
               className="text-[#8B6F63] mt-1"
             >
               Share your cooking questions and learn together.
-            </Text>
+            </TextLabel>
           </div>
 
 
@@ -52,21 +52,21 @@ export default function QAPageHeader({
         {/* SEARCH + CTA */}
         <div className="flex gap-4 items-center">
           <div className="flex-1">
-            <SearchBar
+            <QASearchBar
               value={searchValue}
               onChange={onSearch}
               placeholder="Search..."
             />
           </div>
 
-          <Button
+          <ButtonWithIcon
             variant="primary"
             size="md"
             onClick={handleAskQuestion}
             icon={<Pencil size={18} />}
           >
             Ask a question
-          </Button>
+          </ButtonWithIcon>
         </div>
       </div>
     </header>

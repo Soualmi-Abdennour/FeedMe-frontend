@@ -1,7 +1,7 @@
 import { IActionBarTextProps } from "../../types/props.types";
 
 
-export default function ActionBarText({
+export  function TextLabel({
   children,
   variant = "body",
   color = "primary",

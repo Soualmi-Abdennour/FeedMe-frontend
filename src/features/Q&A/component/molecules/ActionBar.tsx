@@ -1,18 +1,11 @@
-import ActionBarText from "../atoms/ActionBarText";
 import { Icon } from "@/components/atoms/Icon"
 import { Bookmark, Check, } from "lucide-react";
+import { TextLabel } from "../atoms/TextLabel";
+import { IActionBarProps } from "../../types/props.types";
 
-interface ActionBarProps {
-  likes: number;
-  comments?: number;
-  onLike?: () => void;
-  onComment?: () => void;
-  onReply?: () => void;
-  isLiked?: boolean;
-  isSaved?: boolean;
-}
 
-export default function ActionBar({
+
+export  function ActionBar({
   likes,
   comments = 0,
   onLike,
@@ -20,7 +13,7 @@ export default function ActionBar({
   onReply,
   isLiked = false,
   isSaved = false,
-}: ActionBarProps) {
+}: IActionBarProps) {
   return (
     <div className="flex items-center gap-6 py-2 mt-3 border-t border-gray-700">
       {/* Like Button */}
@@ -34,7 +27,7 @@ export default function ActionBar({
         color={isLiked ? "red" : "gray"}
         />
         
-        <ActionBarText variant="small" className={isLiked ? "text-orange-500" : "text-gray-400"}>{likes}</ActionBarText>
+        <TextLabel variant="small" className={isLiked ? "text-orange-500" : "text-gray-400"}>{likes}</TextLabel>
       </button>
 
       {/* Comment Button */}
@@ -47,7 +40,7 @@ export default function ActionBar({
           className="flex items-center gap-2 hover:text-orange-500 transition-colors text-gray-400"
         >
           <Icon name="comment" />
-          <ActionBarText variant="small" className="text-gray-400">View answers ({comments})</ActionBarText>
+          <TextLabel variant="small" className="text-gray-400">View answers ({comments})</TextLabel>
         </button>
       )}
 

@@ -58,6 +58,7 @@ function ProfileImageDropZone({ profileImage, setProfileImage, disabled = false 
             return null;
         },
     });
+    console.log(profileImage.previewUrl);
 
     return (
         <div className="flex flex-col items-center gap-2">

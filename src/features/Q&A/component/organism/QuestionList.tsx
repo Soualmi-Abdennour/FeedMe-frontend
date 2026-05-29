@@ -1,5 +1,4 @@
 import { IQuestionList } from '../../types/props.types';
-import { AnswerModel, QuestionModel } from '../../types/qa.types';
 import QuestionCard from '../molecules/QuestionCard';
 
 

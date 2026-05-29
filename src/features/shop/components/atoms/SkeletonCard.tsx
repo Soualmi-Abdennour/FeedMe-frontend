@@ -1,4 +1,4 @@
-export default function SkeletonCard() {
+export  function SkeletonCard() {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden animate-pulse">
       <div className="flex items-center gap-2 px-3 pt-3 pb-2">

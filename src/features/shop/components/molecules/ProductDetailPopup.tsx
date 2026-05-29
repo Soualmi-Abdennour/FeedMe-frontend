@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 
 
-export default function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
+export  function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
   const formatTime = (min: number) =>
     min >= 60 ? `${Math.floor(min / 60)}h ${min % 60}min` : `${min}min`;
 

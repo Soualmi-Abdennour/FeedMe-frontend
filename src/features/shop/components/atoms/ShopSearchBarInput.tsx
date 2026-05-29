@@ -1,13 +1,13 @@
 import React from 'react';
-import { ISearchBarInputProps } from '../../types/props.types';
+import { IShopSearchBarInputProps } from '../../types/props.types';
 
 
-export const SearchBarInput: React.FC<ISearchBarInputProps> = ({
+export const ShopSearchBarInput: React.FC<IShopSearchBarInputProps> = ({
   type = 'text',
   placeholder = '',
   value,
   onChange,
-    onKeyDown, 
+  onKeyDown, 
   disabled = false,
   className = '',
   icon,

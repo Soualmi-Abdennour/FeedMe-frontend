@@ -22,7 +22,7 @@ export function buildOnboardingFormData(data: OnboardingFormData): FormData {
 }
 
 function appendToFormData(formData: FormData, value: unknown, key: string): void {
-    if (value === null || value === undefined) {
+    if (value === null || value === undefined || String(value).length===0) {
         return;
     }
 

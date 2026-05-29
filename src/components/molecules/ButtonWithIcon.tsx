@@ -1,17 +1,8 @@
+import { IButtonWithIconProps } from "@/types/props.types";
 
 
-interface ButtonProps {
-  children: React.ReactNode;
-  variant?: "primary" | "secondary" | "outline" | "ghost";
-  size?: "sm" | "md" | "lg";
-  onClick?: () => void;
-  disabled?: boolean;
-  icon?: React.ReactNode;
-  className?: string;
-  type?: "button" | "submit" | "reset";
-}
 
-export default function Button({
+export function ButtonWithIcon({
   children,
   variant = "primary",
   size = "md",
@@ -20,7 +11,7 @@ export default function Button({
   icon,
   className = "",
   type = "button",
-}: ButtonProps) {
+}: IButtonWithIconProps) {
   const variantClasses = {
     primary:
       "bg-orange-500 hover:bg-orange-600 text-white disabled:bg-gray-600 disabled:text-gray-400",

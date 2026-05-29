@@ -12,8 +12,8 @@ export const restaurantOnboardingFormSchema = z.object({
     businessEmail: z
         .string()
         .email("Invalid email address")
-        .optional(),
-        // .or(z.literal("")),
+        .optional()
+        .or(z.literal("")),
 
     phoneNumber: z
         .string()
@@ -27,8 +27,8 @@ export const restaurantOnboardingFormSchema = z.object({
     street: z
         .string()
         .max(150, "Street name too long")
-        .optional(),
-        // .or(z.literal("")),
+        .optional()
+        .or(z.literal("")),
 
     postalCode: z
         .string()
