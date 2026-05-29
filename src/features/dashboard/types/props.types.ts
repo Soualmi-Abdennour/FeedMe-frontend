@@ -53,8 +53,8 @@ export interface IProductGridProps {
     onEdit: (product: ProductAppModel) => void;
     onDelete: (product: ProductAppModel) => void;
 }
-export interface IRequestTableProps {
-    requests?: OrderModel[];
+export interface IOrdersTableProps {
+    orders?: OrderModel[];
     onConfirm: (id: string) => void;
     onDelete: (id: string) => void;
     isCompleted?: boolean;

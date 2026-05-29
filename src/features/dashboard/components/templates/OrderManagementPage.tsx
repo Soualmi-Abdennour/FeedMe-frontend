@@ -58,7 +58,7 @@ export default function OrderManagementPage() {
       </div>
 
       <OrdersTable
-        requests={filtered}
+        orders={filtered}
         onConfirm={handleConfirm}
         onDelete={handleDelete}
         isCompleted={activeTab === 'complete'}

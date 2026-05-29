@@ -90,11 +90,14 @@ export const restaurantWorkingDaysFormSchema = z.object({
     Thursday: workingDaySchema,
     Friday: workingDaySchema,
     Saturday: workingDaySchema,
-}).transform(data =>
-    Object.entries(data).map(([day, times]) => {
-        const weekDay = day as WeekDay
-        return { day: weekDay, ...times }
-    })
+}).transform((data) =>
+    Object.entries(data)
+        .filter(([, times]) => times !== undefined)
+        .map(([day, times]) => ({
+            day: day as WeekDay,
+            from: times.from,
+            to: times.to,
+        }))
 )
 export type IRestaurantWorkingDaysFormInput = z.input<typeof restaurantWorkingDaysFormSchema>;
 // use this for useForm<T> and defaultValues

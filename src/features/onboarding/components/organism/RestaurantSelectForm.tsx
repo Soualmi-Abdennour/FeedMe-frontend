@@ -1,14 +1,14 @@
 "use client"
 import { KITCHEN_CATEGORY } from "@/constants/app.constants"
+import { RestaurantUserProfileAppModel } from "@/features/user/types/user.types"
 import { useAppDispatch, useAppSelector } from "@/store/base.store"
-import { KithcenCategory, WeekDay, WorkingDay } from "@/types/app.types"
+import { KithcenCategory, WeekDay } from "@/types/app.types"
+import { toggleValue } from "@/utils/state.utils"
 import { useState } from "react"
 import SelectArea from "../../../../components/molecules/SelectArea"
-import { IRestaurantWorkingDaysFormInput,IRestaurantWorkingDaysFormOutput } from "../../schema/restaurantUserOnboarding.schema"
+import { IRestaurantWorkingDaysFormOutput } from "../../schema/restaurantUserOnboarding.schema"
 import { setStep } from "../../store/onboarding.slice"
 import WorkingDaysForm from "../molecules/WorkingDaysForm"
-import { toggleValue } from "@/utils/state.utils"
-import { RestaurantUserProfileAppModel } from "@/features/user/types/user.types"
 
 function RestaurantSelectForm() {
     const dispatch = useAppDispatch()
@@ -20,8 +20,6 @@ function RestaurantSelectForm() {
     const allowSubmit = (kitchenCategory.length > 0 && selectedDays.length > 0)
 
     const onSubmit = (formData: IRestaurantWorkingDaysFormOutput) => {
-              
-          
         dispatch(setStep({
             step: 4,
             values: {

@@ -88,11 +88,13 @@ export interface IAvatarProps {
 }
 
 export interface IIconProps {
-    name: string;
-    size?: 'sm' | 'md' | 'lg' | 'xl';
-    color?: 'black' | 'gray' | 'orange' | 'white';
-    className?: string;
+  name: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'black' | 'gray' | 'orange' | 'green' | 'white' | 'red';
+  className?: string;
+  filled?: boolean;
 }
+
 
 export interface ISuccessToastProps {
     message?: string;

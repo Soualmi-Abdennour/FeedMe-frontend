@@ -2,10 +2,9 @@
 import React from 'react';
 import { Trash2 } from 'lucide-react';
 import { ProductInfo } from '../molecules/ProductInfo';
-import { QuantityControl } from '../molecules/QuantityController';
 import { ICartItem } from '../../types/props.types';
 import Image from 'next/image';
-
+import { QuantitiyController } from '../molecules/QuantityController';
 
 
 export const CartItem = ({ item, onApply, onDelete }: ICartItem) => {
@@ -45,7 +44,7 @@ export const CartItem = ({ item, onApply, onDelete }: ICartItem) => {
           price={item.price}
           description={item.description}
         />
-        <QuantityControl
+        <QuantitiyController
           initialQty={item.qty}
           onApply={onApply}
         />

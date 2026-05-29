@@ -7,7 +7,7 @@ import StatusBadge from '../atoms/StatusBadge';
 
 
 
-export default function OrderRow({ order, onConfirm, onDelete, isCompleted, onRowClick }: IOrderRowProps) {
+export  function OrderRow({ order, onConfirm, onDelete, isCompleted, onRowClick }: IOrderRowProps) {
   const [sliding, setSliding] = useState(false);
 
   const handleRowClick = (e: React.MouseEvent) => {

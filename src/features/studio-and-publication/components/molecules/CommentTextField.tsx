@@ -11,7 +11,7 @@ import { useCreateCommentMutation } from '../../store/publication.api.slice'
 import { ICommnetTextField } from '../../types/props.types'
 
 function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
-    const user=useAppSelector(state=>state.user.user)
+    const user=useAppSelector(state=>state.user.user!)
     const [createComment]=useCreateCommentMutation()
     const [text,setText]=useState<string>("")
     
@@ -37,14 +37,16 @@ function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
             setText("")
         }
     }
+    let profileImageUrl
+    if (user.role === "USER") {
+        profileImageUrl = user.profile?.userBasicInformation.profileImageUrl
+    } else {
+        profileImageUrl = user.profile?.restaurantBasicInformation.restaurantLogoUrl
+    }
     return (
     <div className='flex gap-3 border border-neutral-300 p-1 pr-3 bg-neutral-50 rounded-3xl items-center'>
-        <div className='rounded-full size-8 bg-gray-800 shrink-0'>
-            <Image src={
-                user?.role==="USER"?
-                user.profile?.userBasicInformation.profileImageUrl?? "" :
-                user?.profile?.restaurantBasicInformation.restaurantLogoUrl??""
-                } alt='/'></Image>
+        <div className='rounded-full size-8  shrink-0 overflow-hidden'>
+            <Image src={profileImageUrl?? "/default/default-profile-image.png"} alt='/' width={32} height={32} className=' w-full h-full object-cover'></Image>
         </div>
       <Input 
         value={text}

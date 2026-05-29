@@ -12,7 +12,7 @@ export interface IProductInfo {
     description: string;
 }
 
-export interface IQuantityControl {
+export interface IQuantityControllerProps {
   initialQty?: number;
   min?: number;
   max?: number;

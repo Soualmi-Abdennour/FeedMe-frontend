@@ -24,7 +24,7 @@ import {
 
 const SHARED_START_ITEMS = [
     { label: "Publication", path: ["/publication"], icon: BookOpen },
-    { label: "A & Q", path: ["/a-and-q"], icon: MessageCircleQuestion },
+    { label: "Q & A", path: ["/q-and-a"], icon: MessageCircleQuestion },
 ];
 
 const SHARED_END_ITEMS = [

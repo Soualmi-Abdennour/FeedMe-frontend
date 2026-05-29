@@ -42,7 +42,7 @@ function SigninForm() {
         const fetchResponse = await signin(formData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
-        if (error) {            
+        if (error) {
             const errorResponse = error.data as UserResponse
             if (errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
@@ -80,7 +80,7 @@ function SigninForm() {
                 </div>
             ))}
             <button
-            className='text-neutral-500 cursor-pointer hover:text-orange-500/50 self-end'
+                className='text-neutral-500 cursor-pointer hover:text-orange-500/50 self-end'
             >
                 <a href="/forget-password">Forget password?</a>
             </button>

@@ -1,3 +1,4 @@
+import { QuestionModel } from "@/features/Q&A/types/qa.types";
 import { ProductDbModel } from "@/features/shop/types/shop.types";
 import { CommentDbModel } from "@/features/studio-and-publication/types/publication.types";
 import { PostDbModel } from "@/features/studio-and-publication/types/studio.types";
@@ -14,6 +15,16 @@ export type ProductsResponseData= {
     nextCursor: string | null;
     results: number;
 }
+export type QuestionsResponseData ={
+    questions: QuestionModel[];
+    nextCursor?: string | null;
+    results?: number;
+}
+export type QuestionCommentsResponseData = {
+    results: number; 
+    comments: any[] 
+}
+
 export type PostsResponseData = {
     results: number;
     nextCursor: string | null;
@@ -51,6 +62,8 @@ export type ApiResponse<T> = {
 export type UserResponse=ApiResponse<UserResponseData|null>
 export type PostsResponse = ApiResponse<PostsResponseData | null>
 export type ProductsResponse = ApiResponse<ProductsResponseData | null>
+export type QuestionsResponse = ApiResponse<QuestionsResponseData | null>
+export type QuestionCommentsResponse = ApiResponse<QuestionCommentsResponseData | null>
 export type PostCommentsResponse = ApiResponse<PostCommentsResponseData | null>
 export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
 export type SingleCommentResponse = ApiResponse<SingleCommentResponseData | null>

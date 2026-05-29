@@ -2,7 +2,7 @@ import { RestaurantUserProfileAppModel } from '@/features/user/types/user.types'
 import { useAppSelector } from '@/store/base.store'
 import { WeekDay, WorkingDay } from '@/types/app.types'
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Resolver, useForm } from 'react-hook-form'
 import { IRestaurantWorkingDaysFormInput,IRestaurantWorkingDaysFormOutput,restaurantWorkingDaysFormSchema } from '../../schema/restaurantUserOnboarding.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { RESTAURANT_WORKING_DAYS_FORM } from '../../constants/restauratnUserOnboarding.constants'
@@ -35,9 +35,12 @@ function WorkingDaysForm({onSubmit,selectedDays,setSelectedDays,allowSubmit,defa
         getValues,
         unregister,
         formState: { errors,isSubmitting }
-    } = useForm<IRestaurantWorkingDaysFormInput,any,IRestaurantWorkingDaysFormOutput>({
-        resolver: zodResolver(restaurantWorkingDaysFormSchema),
-        mode: "onChange",
+    } = useForm<IRestaurantWorkingDaysFormInput,any, IRestaurantWorkingDaysFormOutput>({
+        resolver: zodResolver(restaurantWorkingDaysFormSchema) as unknown as Resolver<
+        IRestaurantWorkingDaysFormInput,
+        any,
+        IRestaurantWorkingDaysFormOutput> ,
+               mode: "onChange",
         defaultValues:transformDefaultValues()
 })
 const toggleFieldDefaultValue=(day:WeekDay)=>{

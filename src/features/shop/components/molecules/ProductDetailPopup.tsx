@@ -2,6 +2,7 @@
 
 import { ShoppingCart, X } from 'lucide-react';
 import { IProductDetailPopupProps } from '../../types/props.types';
+import Image from 'next/image';
 
 
 
@@ -31,10 +32,12 @@ export default function ProductDetailPopup({ product, onClose, onAddToCart }: IP
 <div className="w-full md:w-[45%] flex-shrink-0 bg-white p-4">
   <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
     {product.imageUrl ? (
-      <img
+      <Image
         src={product.imageUrl}
         alt={product.name}
         className="w-full h-full object-cover"
+        width={100}
+        height={100}
       />
     ) : (
       <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
@@ -53,7 +56,7 @@ export default function ProductDetailPopup({ product, onClose, onAddToCart }: IP
               </span>
               <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
                 {product.seller.avatarUrl ? (
-                  <img src={product.seller.avatarUrl} alt="" className="w-full h-full object-cover" />
+                  <Image src={product.seller.avatarUrl} alt="" className="w-full h-full object-cover" width={40} height={40} />
                 ) : (
                   product.seller.username[0].toUpperCase()
                 )}

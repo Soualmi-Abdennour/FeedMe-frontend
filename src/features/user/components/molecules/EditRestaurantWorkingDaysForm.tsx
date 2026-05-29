@@ -2,7 +2,7 @@ import { RestaurantUserProfileAppModel } from '@/features/user/types/user.types'
 import { useAppDispatch, useAppSelector } from '@/store/base.store'
 import { TimeString, WeekDay, WorkingDay } from '@/types/app.types'
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Resolver, useForm } from 'react-hook-form'
 import { IRestaurantWorkingDaysFormInput, IRestaurantWorkingDaysFormOutput, restaurantWorkingDaysFormSchema } from '../../schema/restaurantUserEditProfile.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { EDIT_RESTAURANT_USER_WORKING_DAYS_FORM } from '../../constants/restaurantUserEditProfile.constants'
@@ -44,8 +44,11 @@ function EditRestaurantWorkingDaysForm({ defaultValues }: Props) {
         reset,
         unregister,
         formState: { errors, isSubmitting, isValid }
-    } = useForm<IRestaurantWorkingDaysFormInput, any, IRestaurantWorkingDaysFormOutput>({
-        resolver: zodResolver(restaurantWorkingDaysFormSchema),
+    } = useForm<IRestaurantWorkingDaysFormInput,any, IRestaurantWorkingDaysFormOutput>({
+        resolver: zodResolver(restaurantWorkingDaysFormSchema) as unknown as Resolver<
+        IRestaurantWorkingDaysFormInput,
+        any,
+        IRestaurantWorkingDaysFormOutput>,
         mode: "onChange",
         // reValidateMode:"onChange",
         defaultValues: transformDefaultValues(),

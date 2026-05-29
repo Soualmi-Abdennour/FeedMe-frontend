@@ -5,39 +5,15 @@ import CommentTextField from './CommentTextField'
 import { IPostComments } from '../../types/props.types'
 import { convertCommentDbModelToAppModel } from '../../utils/comment.utils'
 
-const COMMENTS = [
-    {
-        userName: "almando19",
-        profileImageUrl: "/",
-        comment: "this is a good dish"
-    },
-    {
-        userName: "yoo_fj",
-        profileImageUrl: "/",
-        comment: "I don't like how it appears in the photo"
-    },
-    {
-        userName: "fieldmarschall",
-        profileImageUrl: "/",
-        comment: "please subscribe to my channel"
-    },
-    {
-        userName: "xxx_00",
-        profileImageUrl: "/",
-        comment: "..."
-    },
-    {
-        userName: "M_I_L",
-        profileImageUrl: "/",
-        comment: "How to order this?"
-    }
-]
+
 
 function PostComments({ className, postId,setCommentsCount }: IPostComments) {
     const fetchResponse = useGetPostCommentsQuery({ postId })
     const { data, isLoading, isError } = fetchResponse    
     
     const comments = data?.data?.comments.map(comment=>convertCommentDbModelToAppModel(comment)) ?? []
+    console.log(comments);
+    
     return (
         <div className={cn('flex gap-8 flex-col max-h-[444px] w-[346px] bg-[#F8F8F8] rounded-md p-6 ', className)}>
             <h4 className='text-center  font-normal text-lg'>Post Comments</h4>

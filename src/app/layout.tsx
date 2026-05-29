@@ -3,11 +3,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 // @ts-ignore 
 import "./globals.css"
-import StoreProvider from './StoreProvider'
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/utils/shadcn.utils'
-import { Button } from '@/components/ui/button'
-import SubmitButton from '@/components/atoms/SubmitButton'
+import StoreProvider from './StoreProvider'
 
 
 const inter = Inter({ subsets: ['latin'] })
