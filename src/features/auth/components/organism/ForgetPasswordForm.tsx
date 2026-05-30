@@ -35,7 +35,7 @@ function ForgetPasswordForm() {
         }
     })
     const onSubmit = async (formData: IForgetPasswordForm) => {
-        const fetchResponse = await forgetPassword({ identifier: formData.identifier, endpoint: "/forget-password" })
+        const fetchResponse = await forgetPassword({ identifier: formData.identifier, endpoint: "forget-password" })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         
