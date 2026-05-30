@@ -13,7 +13,7 @@ import { useSingupMutation } from '../../store/auth.api.slice'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { UserResponse } from '@/types/api.types'
+import { ApiError, UserResponse } from '@/types/api.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
@@ -47,13 +47,13 @@ function SignupForm({ className }: SignupFormProps) {
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
 
-        if (error) {
-            const errorResponse = error.data as UserResponse
-            if (error.status || errorResponse.status === "ERROR") {
+        if (error) {                        
+            const errorResponse = error.data as UserResponse            
+            if (!errorResponse || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
-            else {
-                toast.error(errorResponse.message)
+            else {                
+                toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
             }
         }
         else {

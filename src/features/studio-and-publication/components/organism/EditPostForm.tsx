@@ -20,14 +20,15 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
 
-        if (error) {
-            const errorResponse = error.data as SinglePostResponse
-            if (error.status || errorResponse.status === "ERROR") {
-                toast.error("Something Went wrong.")
-            } else {
-                toast.error(errorResponse.message)
-            }
-        } else {
+        if (error) {                        
+                    const errorResponse = error.data as SinglePostResponse            
+                    if (!errorResponse || errorResponse.status === "ERROR") {
+                        toast.error("Something Went wrong.")
+                    }
+                    else {                
+                        toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
+                    }
+                } else {
             toast.success(successResponse.message)
             onClose()
         }

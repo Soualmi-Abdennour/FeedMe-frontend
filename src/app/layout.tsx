@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'FeedMe',
   description: 'Food community app for Algeria',
+  icons:{
+    icon:"/logo.svg"
+  }
 }
 
 export default function RootLayout({

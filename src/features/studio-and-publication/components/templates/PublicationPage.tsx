@@ -29,16 +29,15 @@ export default function ReelsPage() {
     const {data,isFetching,isLoading}=fetchResponse
     const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
     const successResponse: PostsResponse = fetchResponse.data as PostsResponse
-    if(error){               
-        const errorResponse=error.data as PostsResponse
-        if (error.status || errorResponse.status === "ERROR") {
-                toast.error("Something Went wrong.")
+    if (error) {                        
+                const errorResponse = error.data as PostsResponse            
+                if (!errorResponse || errorResponse.status === "ERROR") {
+                    toast.error("Something Went wrong.")
+                }
+                else {                
+                    toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
+                }
             }
-            else {
-                toast.error(errorResponse.message)
-            }    
-        }
-
     useEffect(() => {
         if (!successResponse || isFetching) return
         const posts = successResponse.data!.posts.map((post) => convertPostDbModelToPostAppModel(post))

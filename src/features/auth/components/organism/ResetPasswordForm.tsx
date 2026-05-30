@@ -48,12 +48,12 @@ function ResetPasswordForm() {
 
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (error.status || errorResponse.status === "ERROR") {
+            if (!errorResponse || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {
-                toast.error(errorResponse.message)
-            }        
+                toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+            }
         }
         else{
             const successResponseData = successResponse.data
