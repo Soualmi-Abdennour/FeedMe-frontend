@@ -54,8 +54,16 @@ function AppSidebar() {
         ">
             {/* Logo */}
             <div className="p-3 flex items-center justify-center h-[72px] shrink-0">
-                <div className="w-10 h-10 bg-orange-500 rounded-lg shrink-0" />
-            </div>
+<div className="w-10 h-10  rounded-full shrink-0">
+                    <Image 
+                        src={"/logo.svg"}
+                        alt="FeedMe logo"
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover rounded-full"
+                    >
+                    </Image>
+                </div>            </div>
 
             <div className="flex-1 flex flex-col justify-between overflow-hidden">
                 {/* Navigation Items */}
