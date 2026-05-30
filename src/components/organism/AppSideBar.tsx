@@ -10,6 +10,7 @@ import { ApiResponse } from "@/types/api.types";
 import { toast } from "sonner";
 import { clearUser } from "@/features/user/store/user.slice";
 import { clearAuthState } from "@/features/auth/store/auth.slice";
+import Image from "next/image";
 
 function AppSidebar() {
     const pathName = usePathname()
