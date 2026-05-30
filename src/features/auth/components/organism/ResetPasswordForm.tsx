@@ -59,12 +59,12 @@ function ResetPasswordForm() {
             const successResponseData = successResponse.data
             toast.success(successResponse.message)
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
             reset()
             if (!successResponseData?.user?.isVerified) {
                 router.replace("/verify-email")
-                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
             }
-            if (!successResponseData?.user?.isOnboardingCompleted)
+            else if (!successResponseData?.user?.isOnboardingCompleted)
                 router.replace("/onboarding")
             else
                 router.replace("/publication")
