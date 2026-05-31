@@ -5,12 +5,13 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-react'
 
-const VISIBLE_COUNT = 3 // how many items are visible at a time
+const VISIBLE_COUNT = 1 // how many items are visible at a time
 
 function MediaPreviewGallery({ uploadedMedia, setUploadedMedia, className }: IMediaGalleryProps) {
     const [startIndex, setStartIndex] = useState(0)
     const itemRef = useRef<HTMLDivElement>(null)
     const [itemWidth, setItemWidth] = useState(0)
+    const CONTAINER_WIDTH = 400
 
     // Measure the actual rendered width (including gap) of one item
     useLayoutEffect(() => {
@@ -24,19 +25,19 @@ function MediaPreviewGallery({ uploadedMedia, setUploadedMedia, className }: IMe
     const canGoPrev = startIndex > 0
     const canGoNext = startIndex < uploadedMedia.length - VISIBLE_COUNT
 
-    const offsetPx = startIndex * itemWidth
+    const offsetPx = startIndex * CONTAINER_WIDTH
 
     return (
         <div className="w-full   relative z-0 justify-center">
             {canGoPrev && <button
-                className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 -translate-x-1/2   rounded-full  text-primary-500 "
+                className="absolute bg-white left-4 top-1/2 -translate-y-1/2 z-10 -translate-x-1/2  rounded-full  text-primary-500 "
                 onClick={() => setStartIndex(i => i - 1)}
             >
                 <ChevronLeft size={38} />
             </button>}
 
             {canGoNext && <button
-                className="absolute -right-3 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 rounded-full  text-primary-500 "
+                className="absolute bg-white -right-7 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 rounded-full  text-primary-500 "
                 onClick={() => setStartIndex(i => i + 1)}
             >
                 <ChevronRight size={38} />
@@ -46,15 +47,16 @@ function MediaPreviewGallery({ uploadedMedia, setUploadedMedia, className }: IMe
                 className="overflow-hidden mx-auto"
             >
                 <div
-                    className={cn('flex gap-2 w-fit  transition-transform duration-300', className)}
+                    className={cn('flex  w-fit  transition-transform duration-300', className)}
                     style={{ transform: `translateX(-${offsetPx}px)` }}
                 >
                     {uploadedMedia.map((media, index) =>
                         media.type === "IMAGE" ? (
                             <div
                                 key={media.previewUrl}
+                                style={{ width: `${CONTAINER_WIDTH}px` }}
                                 ref={index === 0 ? itemRef : undefined}
-                                className="h-40 w-32 shrink-0 relative shadow-sm rounded-md overflow-hidden"
+                                className="h-96 w-full shrink-0 relative shadow-sm rounded-md overflow-hidden"
                             >
                                 <button className='absolute rounded-full bg-primary-500 top-1 right-1 z-10 text-white p-1'
                                     onClick={() => setUploadedMedia(previousMediaList => previousMediaList.filter((prevMedia) => prevMedia.id !== media.id))}
@@ -63,6 +65,7 @@ function MediaPreviewGallery({ uploadedMedia, setUploadedMedia, className }: IMe
                                 </button>
                                 <Image
                                     src={media.previewUrl}
+                                    
                                     alt="preview"
                                     fill
                                     className="object-cover"
@@ -72,7 +75,7 @@ function MediaPreviewGallery({ uploadedMedia, setUploadedMedia, className }: IMe
                             <div
                                 key={media.previewUrl}
                                 ref={index === 0 ? itemRef : undefined}
-                                className="h-40 w-32 shrink-0 relative shadow-sm rounded-md overflow-hidden"
+                                className="h-96 w-full shrink-0 relative shadow-sm rounded-md overflow-hidden"
                             >
                                     <button className='absolute rounded-full bg-primary-500 top-1 right-1 z-10 text-white p-1'
                                         onClick={() => setUploadedMedia(previousMediaList => previousMediaList.filter((prevMedia) => prevMedia.id !== media.id))}

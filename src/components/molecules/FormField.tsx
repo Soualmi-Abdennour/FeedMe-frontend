@@ -5,6 +5,7 @@ import PasswordField from '../atoms/PasswordField'
 import SelectField from '../atoms/SelectField'
 import TextAreaField from '../atoms/TextAreaField'
 import TimeField from '../atoms/TimeField'
+import TextAreaAutoSizeField from '../atoms/TextAreaAutoSizeField'
 
 function FormField(props: IFormField) {
     const { type } = props
@@ -17,6 +18,8 @@ function FormField(props: IFormField) {
             return <SelectField {...props}></SelectField>
         if(type==="textArea")
             return <TextAreaField {...props}></TextAreaField>
+        if(type==="textAreaAutoSize")
+            return <TextAreaAutoSizeField {...props}></TextAreaAutoSizeField>
         if(type==="time")
             return <TimeField {...props}></TimeField>
         else

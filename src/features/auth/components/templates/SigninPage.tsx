@@ -6,12 +6,12 @@ import React from 'react'
 
 function SigninPage() {
     return (
-        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5    ">
-            <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto'>
-                <h4 className='text-white'>FeedMe</h4>
+        <div className="max-w-[512px] py-5 mx-auto  w-full flex flex-col  gap-5    ">
+            <div className=' px-4 bg-transparent rounded-md mx-auto'>
+            <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
             </div>
             <div 
-                className="relative shadow-1 pt-[80px] pb-[130px] px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                className="relative shadow-1 pt-[50px] pb-[60px] px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
                 <Image
                     src={'auth/bck-form.svg'}
                     fill

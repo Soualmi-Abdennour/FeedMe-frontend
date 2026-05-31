@@ -66,9 +66,9 @@ function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessP
                 ></Image>
                 <div className="flex flex-col justify-center items-center mx-10 absolute ">
                     <h3>Check your email ?</h3>
-                    <p className="text-center text-neutral-500 pb-20 pt-5 ">
+                    <p className="text-center text-neutral-500 pb-20 pt-15 ">
                         {displayMessageWithEmail[0]}
-                        <span className="bg-red-500">{user?.email}</span>
+                        <span className="text-fail-500 font-bold">{user?.email}</span>
                         {displayMessageWithEmail[1]}
                     </p>
                     {cooldown > 0 && <p>Resend the link in: {cooldown} seconds</p>}
