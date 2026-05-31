@@ -15,14 +15,12 @@ import {
   useGetQuestionsQuery,
   useGetMyQuestionsQuery,
   useGetSavedQuestionsQuery,
-  useGetMyAnsweredQuestionsQuery, // 👈 إضافة
+  useGetMyAnsweredQuestionsQuery, 
   useCreateQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
   useToggleLikeMutation,
   useTogglePinMutation,
-  useSaveQuestionMutation,
-  useUnsaveQuestionMutation,
   useCreateCommentMutation,
   useMarkAsSolvedMutation,
   useCloseQuestionMutation,
@@ -73,10 +71,7 @@ export default function QAPage() {
   const [createQuestion] = useCreateQuestionMutation();
   const [updateQuestion] = useUpdateQuestionMutation();
   const [deleteQuestion] = useDeleteQuestionMutation();
-  const [toggleLike] = useToggleLikeMutation();
   const [togglePin] = useTogglePinMutation();
-  const [saveQuestion] = useSaveQuestionMutation();
-  const [unsaveQuestion] = useUnsaveQuestionMutation();
   const [createComment] = useCreateCommentMutation();
   const [markAsSolved] = useMarkAsSolvedMutation();
   const [closeQuestion] = useCloseQuestionMutation();
@@ -159,13 +154,13 @@ export default function QAPage() {
     }
   };
 
-  const handleLike = async (id: string) => {
-    try {
-      await toggleLike(id).unwrap();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleLike = async (id: string) => {
+  //   try {
+  //     await toggleLike(id).unwrap();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handlePin = async (id: string) => {
     try {
@@ -175,18 +170,6 @@ export default function QAPage() {
     }
   };
 
-  const handleSaveLater = async (id: string) => {
-    const question = questionsList.find(q => q.id === id);
-    try {
-      if (activeTab === "answer-later" || question?.isSavedForLater) {
-        await unsaveQuestion(id).unwrap();
-      } else {
-        await saveQuestion(id).unwrap();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleSubmitAnswer = async (questionId: string, text: string) => {
     if (text.length < 3) return;
@@ -264,8 +247,6 @@ export default function QAPage() {
                         answersMap={{}}
                         currentUserId={currentUserId}
                         activeTab={activeTab}
-                        onLike={handleLike}
-                        onSaveLater={handleSaveLater}
                         onSubmitAnswer={handleSubmitAnswer}
                         onLikeAnswer={() => {}}
                         onEdit={handleEdit}
@@ -287,8 +268,6 @@ export default function QAPage() {
                       answersMap={{}}
                       currentUserId={currentUserId}
                       activeTab={activeTab}
-                      onLike={handleLike}
-                      onSaveLater={handleSaveLater}
                       onSubmitAnswer={handleSubmitAnswer}
                       onLikeAnswer={() => {}}
                       onEdit={handleEdit}
@@ -306,8 +285,6 @@ export default function QAPage() {
                     answersMap={{}}
                     currentUserId={currentUserId}
                     activeTab={activeTab}
-                    onLike={handleLike}
-                    onSaveLater={handleSaveLater}
                     onSubmitAnswer={handleSubmitAnswer}
                     onLikeAnswer={() => {}}
                     onEdit={handleEdit}

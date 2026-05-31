@@ -32,8 +32,6 @@ export interface IQuestionCardProps {
   currentUserId: string;
   activeTab: string;
   answers: AnswerModel[];
-  onLike?: () => void;
-  onReply?: () => void;
   onSubmitAnswer: (questionId: string, text: string) => void;
   onLikeAnswer: (questionId: string, answerId: string) => void;
   onEdit: (id: string) => void;
@@ -103,8 +101,6 @@ export interface IQuestionList {
     answersMap: Record<string, AnswerModel[]>;
     currentUserId: string;
     activeTab: string;
-    onLike: (id: string) => void;
-    onSaveLater: (id: string) => void;
     onSubmitAnswer: (questionId: string, text: string) => void;
     onLikeAnswer: (questionId: string, answerId: string) => void;
     onEdit: (id: string) => void;
@@ -135,11 +131,10 @@ export interface ISidebarProps {
 }
 
 export interface IActionBarProps {
+    questionId:string
     likes: number;
     comments?: number;
-    onLike?: () => void;
     onComment?: () => void;
-    onReply?: () => void;
     isLiked?: boolean;
     isSaved?: boolean;
 }

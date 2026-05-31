@@ -5,7 +5,7 @@ import QuestionCard from '../molecules/QuestionCard';
 
 export const QuestionList = ({
   questions, answersMap, currentUserId, activeTab,
-  onLike, onSaveLater, onSubmitAnswer, onLikeAnswer,
+    onSubmitAnswer, onLikeAnswer,
   onEdit, onPin, onMarkSolved, onCloseQuestion, onDelete,
 }: IQuestionList) => (
   <div className="flex flex-col gap-4">
@@ -50,8 +50,6 @@ export const QuestionList = ({
             isSolved={question.isSolved ?? false} 
             isClosed={question.isClosed ?? false} 
             answers={answersMap[question.id] ?? []}
-            onLike={() => onLike(question.id)}
-            onReply={() => onSaveLater(question.id)}
             onSubmitAnswer={onSubmitAnswer}
             onLikeAnswer={onLikeAnswer}
             onEdit={onEdit}
