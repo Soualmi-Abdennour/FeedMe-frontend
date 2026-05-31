@@ -19,10 +19,7 @@ export function AvatarAtom({ name, avatarUrl, size = "md" }: IAvatarAtomProps) {
 
   return (
     <Avatar className={sizeMap[size]}>
-      {avatarUrl && <AvatarImage src={avatarUrl} alt={name || "User"} />}
-      <AvatarFallback className="bg-orange-500 text-white font-semibold">
-        {initials}
-      </AvatarFallback>
+      <AvatarImage src={avatarUrl?? "/default/default-profile-image.png"} alt={name || "User"} />
     </Avatar>
   );
 }

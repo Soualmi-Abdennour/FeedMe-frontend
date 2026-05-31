@@ -35,7 +35,7 @@ function RestaurantServicesForm() {
             <div className='flex flex-col  gap-5'>
                 {RESTAURANT_SERVICES.map((service) => (
                     <div className='flex items-center justify-between' key={service.label}>
-                        <h1 className='flex-1 text-xl px-7 font-bold text-left'>{service.value}</h1>
+                        <h1 className='flex-1 text-xl px-7 font-bold text-left'>{service.label}</h1>
                         <div className='flex gap-2'>
                             {[...Array.from(["YES", "NO"])].map((item) => (
                                 <Button

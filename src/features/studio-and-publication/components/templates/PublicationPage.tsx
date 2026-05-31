@@ -12,6 +12,7 @@ import ReelsSkeleton from '../atoms/ReelsSkeleton'
 import PostWrapper from '../organism/PostWrapper'
 import ReelSnapItem from '../organism/ReelSnapItem'
 import { useSearchParams } from 'next/navigation'
+import { getRandomDateFromNow, getRandomYesterdayMorningDate } from '../../utils/publication.utils'
 
 
 
@@ -19,7 +20,9 @@ const REEL_LIMIT=10
 export default function ReelsPage() {
     const params=useSearchParams()
     const [reels, setReels] = useState<PostAppModel[]>([])
-    const [cursor, SetCursor] = useState<string | undefined>(undefined)
+    const [cursor, SetCursor] = useState<string | undefined>(getRandomYesterdayMorningDate())
+    console.log(cursor);
+    
     const [hasMore, setHasMore] = useState(true)
     const isFetchingMore = useRef(false)
     const fetchResponse = useGetPublicationPostsQuery(

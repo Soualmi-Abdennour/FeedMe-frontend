@@ -1,12 +1,14 @@
 "use client";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { PostAppModel } from "@/features/studio-and-publication/types/studio.types";
 import PostPreview from "@/features/studio-and-publication/components/molecules/PostPreview";
 import { Loader2, ImageOff } from "lucide-react";
 import { IProfilePosts } from "@/features/user/types/props.types";
+import PostWrapper from "@/features/studio-and-publication/components/organism/PostWrapper";
 
 
-function ProfilePosts({ posts, isLoading, isError,sameUser=true }: IProfilePosts) {
+function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
+    const [postToShow,setPostToShow]=useState<PostAppModel|null>(null)
     return (
         <div className="p-4">
             {/* <h2 className="text-sm font-semibold text-foreground mb-3">Publications</h2> */}
@@ -23,14 +25,22 @@ function ProfilePosts({ posts, isLoading, isError,sameUser=true }: IProfilePosts
             )}
             {!isLoading && !isError && (
                 <div className="grid grid-cols-3 gap-1 ">
-                    {posts.map(({ id, mediaType, media }) => (
+                    {posts.map((post) => (
+                        <div
+                            onClick={(e) => {
+                                    setPostToShow(post)
+                            }}
+                        className="cursor-pointer"
+                         key={post.id}
+                        >
                         <PostPreview
-                            key={id}
-                            mediaType={mediaType}
-                            media={media}
-                            postId={id}
-                            sameUser={sameUser}
+                            key={post.id}
+                            mediaType={post.mediaType}
+                            media={post.media}
+                            postId={post.id}
+                            ownerId={post.user.id}
                         />
+                        </div>
                     ))
                     }
                     {posts.length === 0 && (
@@ -39,6 +49,23 @@ function ProfilePosts({ posts, isLoading, isError,sameUser=true }: IProfilePosts
                             <p className="text-sm">No Posts</p>
                         </div>
                     )}
+                </div>
+            )}
+            {postToShow && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+                    onClick={()=>setPostToShow(null)}
+                >
+                    <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden w-fit h-full mx-4">
+                        <button
+                            onClick={() => setPostToShow(null)}
+                            className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/40 text-white hover:bg-black/60 transition"
+                            aria-label="Close"
+                        >
+                            ✕
+                        </button>
+                        <PostWrapper post={postToShow} />
+                    </div>
                 </div>
             )}
         </div>

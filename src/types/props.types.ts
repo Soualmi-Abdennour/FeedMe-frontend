@@ -14,7 +14,8 @@ export interface IFormField {
         |"password"
         |"select"
         |"textArea"
-        | "time";
+        | "time"
+        | "number";
     selectList?:readonly {
         label:string;
         key:string

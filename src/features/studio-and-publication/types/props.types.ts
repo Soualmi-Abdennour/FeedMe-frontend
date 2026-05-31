@@ -49,7 +49,7 @@ export interface IPostPreviewProps {
     media:MediaAppModel[],
     mediaType: MediaType
     postId:string
-    sameUser?:boolean
+    ownerId:string
 } 
 export interface IPostFormProps {
     defaultValues?:IPostFormSchema & {

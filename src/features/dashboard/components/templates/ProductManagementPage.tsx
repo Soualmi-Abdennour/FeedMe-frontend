@@ -1,41 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
-import { ProductAppModel, AddProductPayload } from "../../types/product.types";
-import { ProductGrid } from "../organisms/ProductGrid";
-import { ProductFormModal } from "../molecules/ProductFormModal";
-import { DeleteProductModal } from "../molecules/DeleteProductModal";
-import {
-  useGetProductsQuery,
-  useAddProductMutation,
-  useUpdateProductMutation,
-  useDeleteProductMutation,
-} from "../../store/productManagement.api.slice";
 import { Button } from "@/components/ui/button";
+import { ProductAppModel } from "@/features/shop/types/shop.types";
+import { mapProductDbToAppModel } from "@/features/shop/utils/shop.utils";
+import React, { useState } from "react";
+import {
+  useAddProductMutation,
+  useDeleteProductMutation,
+  useGetProductsQuery,
+  useUpdateProductMutation,
+} from "../../store/productManagement.api.slice";
+import {  ProductFrom } from "../../types/product.types";
+import { buildProductForm } from "../../utils/productForm.utils";
+import { DeleteProductModal } from "../molecules/DeleteProductModal";
+import ProductForm from "../molecules/ProductForm";
+import { ProductGrid } from "../organisms/ProductGrid";
 
 export const ProductManagementPage: React.FC = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editTarget, setEditTarget] = useState<ProductAppModel | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<ProductAppModel | null>(null);
 
-  const { data: products = [], isLoading } = useGetProductsQuery();
+  const { data, isLoading } = useGetProductsQuery();
+  const products=data?.data?.products? data?.data?.products.map((product)=>mapProductDbToAppModel(product)) :[]
   const [addProduct] = useAddProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
 
-  const handleAdd = async (payload: AddProductPayload) => {
+  const handleAdd = async (payload: ProductFrom) => {
     try {
-      await addProduct(payload).unwrap();
+      await addProduct({
+        formData: buildProductForm({ payload })
+      }).unwrap();
       setShowAddModal(false);
     } catch (error) {
       console.error("Failed to create product:", error);
     }
   };
 
-  const handleEdit = async (payload: AddProductPayload) => {
+  const handleEdit = async (payload: ProductFrom) => {
     if (!editTarget) return;
     try {
-      await updateProduct({ id: editTarget.id, ...payload }).unwrap();
+      await updateProduct({ id: editTarget.id,formData:buildProductForm({payload}) }).unwrap();
       setEditTarget(null);
     } catch (error) {
       console.error("Failed to update product:", error);
@@ -73,13 +79,15 @@ export const ProductManagementPage: React.FC = () => {
         onDelete={setDeleteTarget}
       />
 
-      <ProductFormModal
+      <ProductForm
+        key={showAddModal ? "add-open" : "add-closed"}
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
         onSubmit={handleAdd}
       />
 
-      <ProductFormModal
+      <ProductForm
+        key={editTarget?.id ?? "edit-closed"}  
         isOpen={!!editTarget}
         onClose={() => setEditTarget(null)}
         onSubmit={handleEdit}

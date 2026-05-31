@@ -63,7 +63,7 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
 
     createComment: builder.mutation<void, { questionId: string; text: string }>({
       query: ({ questionId, text }) => ({
-        url: `/questions/${questionId}/comments`,
+        url: `/questions/comments/${questionId}`,
         method: "POST",
         body: { text }
       }),

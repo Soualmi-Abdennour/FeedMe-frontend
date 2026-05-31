@@ -1,5 +1,7 @@
-import { AddProductPayload, ProductAppModel } from "./product.types";
+import {  ProductFrom, ProductImage } from "./product.types";
 import { OrderModel, OrderStatus } from "./order.types";
+import { ProductAppModel } from "@/features/shop/types/shop.types";
+import { Dispatch, SetStateAction } from "react";
 
 export interface IProductCardProps {
     product: ProductAppModel;
@@ -43,7 +45,14 @@ export interface IOrderRowProps {
 export interface IProductFormModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (payload: AddProductPayload) => void;
+    onSubmit: (payload: ProductFrom) => void;
+    isLoading?: boolean;
+    editProduct?: ProductAppModel | null;
+}
+export interface IProductFormProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onSubmit: (payload: ProductFrom) => void;
     isLoading?: boolean;
     editProduct?: ProductAppModel | null;
 }
@@ -59,4 +68,8 @@ export interface IOrdersTableProps {
     onDelete: (id: string) => void;
     isCompleted?: boolean;
     onRowClick?: (order: OrderModel) => void;
+}
+export interface IProductImageDropZone {
+    profileImage:ProductImage 
+    setProfileImage:Dispatch<SetStateAction<ProductImage>>
 }

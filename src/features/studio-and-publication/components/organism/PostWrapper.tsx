@@ -13,7 +13,7 @@ function PostWrapper({post}:{post:PostAppModel}) {
     const [itemToShow, setItemToShow] = useState<"COMMENTS"|"DETAILS"|null>(null)
     const [commentsCount,setCommentsCount]=useState<number>(post.commentCount)
     return (
-        <div className={cn("relative flex h-[96%] items-end gap-4",itemToShow && "-translate-x-28")}>
+        <div className={cn("relative flex h-full items-end gap-4 w-fit",itemToShow && "-translate-x-28")}>
             <PostItem post={post}></PostItem>
             <PostActionsSideBar
                 toggleComments={() => setItemToShow(state=>state?null:"COMMENTS")}
