@@ -141,10 +141,7 @@ const config: Config = {
 		},
 		boxShadow:{
 			1: '0px 4px 25px 0px theme("colors.neutral.900")',
-		},
-		fontFamily: {
-			display: ['var(--font-playfair)', 'Georgia', 'serif'],
-		  },
+		}
     },
   },
   plugins: [require("tailwindcss-animate"),  require('tailwind-scrollbar-hide')

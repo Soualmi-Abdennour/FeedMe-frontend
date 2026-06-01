@@ -26,7 +26,7 @@ function MediaDropZone({ uploadedMedia, setUploadedMedia }: IMediaDropZoneProps)
             }
 
             if (imagesNumber > 0 && videosNumber > 0) {
-                setErrorMessage("You can just upload images or videos");
+                setErrorMessage("You can't upload both images and videos");
                 return;
             }
 
@@ -62,7 +62,7 @@ function MediaDropZone({ uploadedMedia, setUploadedMedia }: IMediaDropZoneProps)
     const canLoadMore = !hasVideo && uploadedMedia.length < 10;
 
     return (
-        <div className="w-full  justify-center gap-2 mb-3 "
+        <div className="w-full flex flex-col items-center justify-center gap-2 mb-3 "
 >
             {(isEmpty || canLoadMore) && (
                 <div

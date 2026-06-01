@@ -19,11 +19,11 @@ function OnboardingProcessPage() {
         <div className=''>
             {onboarding?.onboardingType === "USER" ? (
                 <div className="w-fit pt-5 mx-auto max-w-[1026px] min-w-32 flex flex-col  gap-5">
-                    <div className=' px-4  rounded-md mx-auto '>
-                    <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+                    <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto '>
+                        <h4 className='text-white'>FeedMe</h4>
                     </div>
                     <div
-                        className=" relative shadow-1 pt-8  pb-8 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                        className=" relative shadow-1 pt-8  pb-14 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
                         <Image
                             src={'auth/bck-form.svg'}
                             fill
@@ -37,11 +37,11 @@ function OnboardingProcessPage() {
                 </div>
             ) : (
                 <div className="w-fit pt-5 mx-auto max-w-[1026px] min-w-32 flex flex-col  gap-5">
-                    <div className='py-2 px-4 rounded-md mx-auto '>
-                    <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+                    <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto '>
+                        <h4 className='text-white'>FeedMe</h4>
                     </div>
                     <div
-                        className="relative shadow-1 pt-8 pb-8 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                        className="relative shadow-1 pt-8 pb-14 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
                         <Image
                             src={'auth/bck-form.svg'}
                             fill

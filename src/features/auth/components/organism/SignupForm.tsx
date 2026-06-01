@@ -67,7 +67,7 @@ function SignupForm({ className }: SignupFormProps) {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='max-w-[320px] mx-auto flex flex-col gap-1'
+            className='max-w-[320px] mx-auto flex flex-col gap-3'
         >
             {SIGN_UP_FIELDS.map((formField) => (
                 <div key={formField.name}>
@@ -77,7 +77,7 @@ function SignupForm({ className }: SignupFormProps) {
             <SubmitButton
                 disabled={isSubmitting}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
-                className='mt-1 text-white font-bold'
+                className='mt-4 text-white font-bold'
             >
                 {isSubmitting ? "Loading..." : "Continue"}
             </SubmitButton>

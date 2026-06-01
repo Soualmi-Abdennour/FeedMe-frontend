@@ -5,12 +5,12 @@ import Image from 'next/image'
 
 function ForgetPasswordPage() {
     return (
-        <div className="max-w-[512px] py-5 mx-auto  w-full flex flex-col  gap-5    ">
-            <div className='py-2 px-4 bg-transparent rounded-md mx-auto'>
-            <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+        <div className="max-w-[512px] pt-[86px] pb-52 mx-auto  w-full flex flex-col  gap-5    ">
+            <div className='py-2 px-4 bg-orange-500 rounded-md mx-auto'>
+                <h4 className='text-white'>FeedMe</h4>
             </div>
             <div 
-                className="relative shadow-1 pt-[80px] pb-[80px] px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
+                className="relative shadow-1 pt-[80px] pb-[130px] px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">
                 <Image
                     src={'auth/bck-form.svg'}
                     fill
@@ -19,7 +19,7 @@ function ForgetPasswordPage() {
                 ></Image>
                 <div className="text-center">
                     <h4>Welcome!</h4>
-                    <p className="body-text text-neutral-500  mb-4">
+                    <p className="body-text text-neutral-500  mb-8">
                         Fill in the information in order to listen with us
                     </p>
                     <ForgetPasswordForm ></ForgetPasswordForm>

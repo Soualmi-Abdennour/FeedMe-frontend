@@ -40,18 +40,11 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
         await onSubmit(postData)
     }
     return (
-        <div className='grid grid-cols-2 gap-20 justify-center w-full  '>
-            <div className='items-start gap-20 justify-center grid grid-cols-1'>
-                <div className='grid grid-cols-1 items-start'>
-                    {mediaList && (
+        <div className='grid grid-cols-1 justify-center w-full '>
+            {mediaList && (
                 <MediaPreviewGallery uploadedMedia={mediaList} setUploadedMedia={setMediaList} className=''/>
-            )} 
-                </div> 
-            <div className='grid grid-cols-1  '>
-                <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList}/>
-            </div>
-                
-            </div>
+            )}
+            <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList} />
             <form onSubmit={handleSubmit(submitForm)}>
                 {POST_FORM_FIELDS.map((formField) => (
                     <div key={formField.name}>

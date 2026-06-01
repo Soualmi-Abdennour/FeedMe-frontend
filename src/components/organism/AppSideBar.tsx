@@ -10,7 +10,6 @@ import { ApiResponse } from "@/types/api.types";
 import { toast } from "sonner";
 import { clearUser } from "@/features/user/store/user.slice";
 import { clearAuthState } from "@/features/auth/store/auth.slice";
-import Image from "next/image";
 
 function AppSidebar() {
     const pathName = usePathname()
@@ -47,21 +46,21 @@ function AppSidebar() {
         <aside className="
             fixed z-50
             group/sidebar
-            h-screen bg-white shadow-lg 
+            h-screen bg-white border-r border-gray-200
             flex flex-col
-            w-16 hover:w-56 hover:shadow-lg hover:shadow-primary-300 
+            w-16 hover:w-56
             transition-all duration-300 ease-in-out
             overflow-hidden
         ">
             {/* Logo */}
-            <div className="p-3 flex items-center justify-center h-[72px] shrink-0 mx-auto">
-                <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+            <div className="p-3 flex items-center justify-center h-[72px] shrink-0">
+                <div className="w-10 h-10 bg-orange-500 rounded-lg shrink-0" />
             </div>
 
             <div className="flex-1 flex flex-col justify-between overflow-hidden">
                 {/* Navigation Items */}
                 <nav className="px-2">
-                    <div className="flex flex-col space-y-1 ">
+                    <div className="flex flex-col space-y-1">
                         {NAV_ITEMS.map((item) => (
                             <AppNavItem
                                 key={item.label}

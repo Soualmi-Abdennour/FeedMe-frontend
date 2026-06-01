@@ -27,7 +27,7 @@ function VerificationView({ props }: { props: IVerificationViewProps }) {
                 src={imageUrl || ''}
                 alt='loading'
                 fill
-                className='-z-10 shadow-1 rounded-2xl my-5'
+                className='-z-10 shadow-1 rounded-lg my-5'
             ></Image>
             
         </div>
