@@ -24,7 +24,7 @@ function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
                 </div>
             )}
             {!isLoading && !isError && (
-                <div className="grid grid-cols-3 gap-1 ">
+                <div className="grid grid-cols-4 gap-1 ">
                     {posts.map((post) => (
                         <div
                             onClick={(e) => {
@@ -56,7 +56,7 @@ function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
                     onClick={()=>setPostToShow(null)}
                 >
-                    <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden w-fit h-full mx-4">
+                    <div className="relative bg-white rounded-3xl shadow-2xl max-w-[700px] h-full mx-4">
                         <button
                             onClick={() => setPostToShow(null)}
                             className="absolute top-3 right-3 z-10 flex items-center justify-center w-8 h-8 rounded-full bg-black/40 text-white hover:bg-black/60 transition"
