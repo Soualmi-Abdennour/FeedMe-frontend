@@ -63,7 +63,7 @@ export default function Navbar() {
 
       {/* Auth buttons — using your Button component */}
       <div className="flex items-center gap-3">
-        <Button variant="secondary" size="sm" asChild>
+        <Button variant="secondary" size="sm" asChild className='text-primary-500 font-bold'>
           <Link href="/sign-in">Log in</Link>
         </Button>
         <Button variant="primary" size="sm" asChild>

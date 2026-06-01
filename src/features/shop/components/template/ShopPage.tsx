@@ -83,15 +83,15 @@ export default function ShopPage() {
   );
 
   return (
-    
-    <div className="h-full w-full ">
-      <div className="flex flex-col justify-center bg-primary-50 px-[100px] shrink-0 z-10 max-w-[1600px] fixed h-[100px] items-center  "> 
+    <div className="min-h-full w-full flex flex-col px-4 md:px-10 py-8">
+      <ShopHeader />
+      <FilterSection search={search} onSearch={setSearch} sort={sort} onSort={setSort} />
+      <div className="sticky top-0 z-10 bg-primary-50 py-5 flex flex-col gap-6 shrink-0">     
         <CategoryBar active={tempActive} onSelect={handleSelectCategory} onApply={handleApply} />
       </div>
-      <div className="h-full w-full flex flex-col px-4 pt-[100px] md:px-10 py-8 overflow-y-auto">
-        <FilterSection search={search} onSearch={setSearch} sort={sort} onSort={setSort} />
+
       <SuccessToast visible={toastVisible} onDismiss={() => setToastVisible(false)} />
-      <div className='flex-1  min-h-0'>  
+      <div className='flex-1 min-h-0'>  
         <ProductGrid isLoading={isLoading} products={filteredProducts} onProductClick={setSelectedProduct} />
       </div>
       {selectedProduct && (
@@ -101,7 +101,6 @@ export default function ShopPage() {
           onAddToCart={handleAddToCart}
         />
       )}
-      </div>
     </div>
   );
 }

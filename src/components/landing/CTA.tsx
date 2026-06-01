@@ -18,7 +18,7 @@ export default function CTA() {
           <Button variant="primary" size="lg" asChild>
             <Link href="/sign-up" className='text-white font-bold'>Sign up</Link>
           </Button>
-          <Button variant="secondary" size="lg" asChild>
+          <Button variant="secondary" size="lg" asChild className='text-primary-500 font-bold'>
             <Link href="/sign-in">Log in</Link>
           </Button>
         </div>

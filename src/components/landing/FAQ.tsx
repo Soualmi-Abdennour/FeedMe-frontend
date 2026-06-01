@@ -81,7 +81,7 @@ export default function FAQ() {
         <p className="body-text text-neutral-500 mb-7">
           Reach out to our support team anytime.
         </p>
-        <Button variant="secondary" size="default" asChild>
+        <Button variant="secondary" size="default" asChild className='text-primary-500 font-bold'>
           <Link href="/">Contact</Link>
         </Button>
       </div>
