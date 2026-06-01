@@ -16,7 +16,7 @@ function ProfileHeader({ user, sameUser = false }: Props) {
     const profileData = extractProfileData(user)
     
     return (
-        <div className="flex flex-col gap-7 p-6 border-b border-border m-7 rounded-md shadow-lg ">
+        <div className="flex flex-col gap-7 bg-white p-6 border-b border-border m-7 rounded-md shadow-lg ">
             <div className="flex items-start justify-between gap-4 ">
                 <div className="flex items-center gap-4">
                     <div className="w-20 h-20 relative rounded-full overflow-hidden  border border-border flex-shrink-0">

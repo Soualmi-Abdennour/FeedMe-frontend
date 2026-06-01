@@ -4,10 +4,10 @@ import { FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { cn } from '@/utils/shadcn.utils';
+import TextareaAutosize from 'react-textarea-autosize';
 
 
-
-function TextAreaField({
+function TextAreaAutoSizeField({
     name,
     label,
     placeholder,
@@ -20,7 +20,7 @@ function TextAreaField({
     return (
         <>
             <div className={cn(
-                "w-full rounded-lg pl-4 py-1.5 border transition-all duration-200",
+                "w-full rounded-lg px-4 py-1.5 border transition-all duration-200",
                 "text-neutral-900 text-body",
                 "border-primary-500 shadow-primary-400",
                 "hover:border-primary-500 hover:bg-primary-100",
@@ -33,15 +33,16 @@ function TextAreaField({
                     name={name}
                     control={control}
                     render={({ field }) => (
-                        <Textarea
+                        <TextareaAutosize
                             {...field}
                             id={id}
                             name={name}
                             placeholder={placeholder}
                             disabled={disabled}
                             autoFocus={autoFocus}
-                            className={`textArea-container w-full bg-transparent hover:outline-none focus:outline-none outline-none border-none text-neutral-900 placeholder:text-neutral-400 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-h-[100px] resize-none"`}
-                        ></Textarea>
+                            minRows={2} 
+                            className="textArea-container w-full bg-transparent hover:outline-none focus:outline-none outline-none border-none text-neutral-900 placeholder:text-neutral-400 resize-none overflow-hidden"
+                        />
                     )}
                 >
                 </Controller>
@@ -53,4 +54,4 @@ function TextAreaField({
     )
 }
 
-export default TextAreaField
+export default TextAreaAutoSizeField

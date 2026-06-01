@@ -9,7 +9,7 @@ import { ICategoryBarProps } from '../../types/props.types';
 
 export  function CategoryBar({ active, onSelect, onApply }: ICategoryBarProps) {
   return (
-    <div className="flex items-center gap-4 mb-8">
+    <div className="flex items-center gap-15 mb-8 mx-auto w-full ">
       <div className="flex gap-3 overflow-x-auto scrollbar-hide flex-1 py-1">
         <CategoryPill
           label="All"
