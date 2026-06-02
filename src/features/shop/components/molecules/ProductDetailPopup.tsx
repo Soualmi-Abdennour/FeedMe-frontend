@@ -3,10 +3,9 @@
 import { ShoppingCart, X } from 'lucide-react';
 import { IProductDetailPopupProps } from '../../types/props.types';
 import Image from 'next/image';
+import Link from 'next/link';
 
-
-
-export  function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
+export function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
   const formatTime = (min: number) =>
     min >= 60 ? `${Math.floor(min / 60)}h ${min % 60}min` : `${min}min`;
 
@@ -27,48 +26,53 @@ export  function ProductDetailPopup({ product, onClose, onAddToCart }: IProductD
             <X size={20} />
           </button>
 
-          {/* ── Left: Image ── */}
-        {/* ── Left: Image ── */}
-<div className="w-full md:w-[45%] flex-shrink-0 bg-white p-4">
-  <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
-    {product.imageUrl ? (
-      <Image
-        src={product.imageUrl}
-        alt={product.name}
-        className="w-full h-full object-cover"
-        width={100}
-        height={100}
-      />
-    ) : (
-      <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
-        No image
-      </div>
-    )}
-  </div>
-</div>
-          {/* ── Right: Details ── */}
+          {/* Left: Image */}
+          <div className="w-full md:w-[45%] flex-shrink-0 bg-white p-4">
+            <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
+              {product.imageUrl ? (
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  width={100}
+                  height={100}
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-gray-300 text-sm">
+                  No image
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Right: Details */}
           <div className="flex-1 flex flex-col gap-3 p-5">
 
-            {/* Account holder */}
+            {/* Account holder — cliquable */}
             <div className="flex items-center gap-3 border border-gray-200 rounded-xl px-4 py-3">
               <span className="text-sm font-bold text-gray-800 whitespace-nowrap">
                 Account holder:
               </span>
-              <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
-                {product.seller.avatarUrl ? (
-                  <Image src={product.seller.avatarUrl} alt="" className="w-full h-full object-cover" width={40} height={40} />
-                ) : (
-                  product.seller.username[0].toUpperCase()
-                )}
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-sm font-semibold text-gray-800 truncate">
-                  {product.seller.username}
-                </span>
-                <span className="text-xs text-gray-400 truncate">
-                  {product.seller.username}
-                </span>
-              </div>
+              <Link
+                href={`/profile/${product.seller.username}`}
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
+                <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
+                  {product.seller.avatarUrl ? (
+                    <Image src={product.seller.avatarUrl} alt="" className="w-full h-full object-cover" width={40} height={40} />
+                  ) : (
+                    product.seller.username[0].toUpperCase()
+                  )}
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-semibold text-gray-800 truncate">
+                    {product.seller.username}
+                  </span>
+                  <span className="text-xs text-gray-400 truncate">
+                    {product.seller.username}
+                  </span>
+                </div>
+              </Link>
             </div>
 
             {/* Product name + Prep time */}

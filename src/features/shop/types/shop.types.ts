@@ -1,6 +1,7 @@
 export interface SellerModel {
   id: string;
   username: string;
+  displayName: string;
   avatarUrl?: string ;
 }
 
@@ -15,6 +16,7 @@ export type ProductAppModel = {
   ///rating?: number;
   description?: string;
   preparationTime?: number;
+  
 }
 
 export type ProductDbModel ={

@@ -12,11 +12,11 @@ export function mapProductDbToAppModel(p: ProductDbModel): ProductAppModel {
             : p.category?.toLowerCase() ?? "all",
         preparationTime: p.preparingTime,
         quantityAvailable: 0,
-        seller: {
-            id: p.restaurant?.id ?? "unknown",
-            username:
-                p.restaurant?.restaurantName ?? p.restaurant?.User?.userName ?? "Seller",
-            ...(p.restaurant?.restaurantLogoUrl && { avatarUrl:  p.restaurant.restaurantLogoUrl }),
-        },
+      seller: {
+    id: p.restaurant?.id ?? "unknown",
+    username: p.restaurant?.User?.userName ?? "Seller",  // ← userName pour le Link
+    displayName: p.restaurant?.restaurantName ?? p.restaurant?.User?.userName ?? "Seller",  // ← pour l'affichage
+    ...(p.restaurant?.restaurantLogoUrl && { avatarUrl: p.restaurant.restaurantLogoUrl }),
+},
     };
 }
