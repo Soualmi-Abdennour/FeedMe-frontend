@@ -6,12 +6,14 @@ import PostDetails from '../atoms/PostDetails'
 import PostActionsSideBar from '../molecules/PostActionsSideBar'
 import PostComments from '../molecules/PostComments'
 import PostItem from '../molecules/PostItem'
-import { useToggleLikeMutation } from '../../store/publication.api.slice'
 
 
 function PostWrapper({post}:{post:PostAppModel}) {
     const [itemToShow, setItemToShow] = useState<"COMMENTS"|"DETAILS"|null>(null)
     const [commentsCount,setCommentsCount]=useState<number>(post.commentCount)
+    console.log(post.commentCount);
+    console.log(commentsCount);
+
     return (
         <div className={cn("relative flex h-full items-end gap-4 w-fit",itemToShow && "-translate-x-28")}>
             <PostItem post={post}></PostItem>
@@ -34,7 +36,7 @@ function PostWrapper({post}:{post:PostAppModel}) {
                     ></PostDetails>)}
                 {itemToShow==="COMMENTS" && (
                     <PostComments
-                        postId={post.id}
+                        post={post}
                         setCommentsCount={setCommentsCount}
                         className='absolute left-[105%]  bottom-[15%]'
                     ></PostComments>

@@ -3,28 +3,30 @@
 import { useState, useMemo } from "react";
 
 // ORGANISMS
-import {QAPageHeader} from "../organism/QAPageHeader";
-import {QASidebar} from "../organism/QASidebar";
+import { QAPageHeader } from "../organism/QAPageHeader";
+import { QASidebar } from "../organism/QASidebar";
 import { QuestionList } from "../organism/QuestionList";
-import {QuestionModal} from "../organism/QuestionModal";
+import { QuestionModal } from "../organism/QuestionModal";
 
 // TYPES & RTK QUERY HOOKS
 import { QANavTab, QuestionModel } from "../../types/qa.types";
 import { useAppSelector } from "@/store/base.store";
 import {
-  useGetQuestionsQuery,
+  useGetAllQuestionsQuery,
   useGetMyQuestionsQuery,
   useGetSavedQuestionsQuery,
-  useGetMyAnsweredQuestionsQuery, 
+  useGetMyAnsweredQuestionsQuery,
   useCreateQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
-  useToggleLikeMutation,
-  useTogglePinMutation,
-  useCreateCommentMutation,
+  useToggleQuestionPinMutation,
+  useCreateQuestionAnswerMutation,
   useMarkAsSolvedMutation,
   useCloseQuestionMutation,
 } from "@/features/Q&A/store/qa.api.slice";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { QuestionAnswerResponse, QuestionResponse } from "@/types/api.types";
+import { toast } from "sonner";
 
 export default function QAPage() {
   // ================= STATE =================
@@ -36,7 +38,6 @@ export default function QAPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
-  const [successToastVisible, setSuccessToastVisible] = useState(false);
 
   const token = useAppSelector(state => state.authentication.authentication?.jwtToken);
   const currentUserId = useMemo(() => {
@@ -50,7 +51,7 @@ export default function QAPage() {
   }, [token]);
 
   // ================= RTK QUERY HOOKS =================
-  const { data: allResponseData, isLoading: isAllLoading } = useGetQuestionsQuery({
+  const { data: allResponseData, isLoading: isAllLoading } = useGetAllQuestionsQuery({
     limit: 20,
     cursor: currentCursor,
   }, { skip: activeTab === "my-questions" || activeTab === "answer-later" || activeTab === "my-answers" });
@@ -68,11 +69,11 @@ export default function QAPage() {
     skip: activeTab !== "my-answers"
   });
 
-  const [createQuestion] = useCreateQuestionMutation();
+  const [createQuestion, { isLoading: createQuestionLoading }] = useCreateQuestionMutation();
   const [updateQuestion] = useUpdateQuestionMutation();
   const [deleteQuestion] = useDeleteQuestionMutation();
-  const [togglePin] = useTogglePinMutation();
-  const [createComment] = useCreateCommentMutation();
+  const [togglePin] = useToggleQuestionPinMutation();
+  const [createAnswer] = useCreateQuestionAnswerMutation();
   const [markAsSolved] = useMarkAsSolvedMutation();
   const [closeQuestion] = useCloseQuestionMutation();
 
@@ -90,13 +91,12 @@ export default function QAPage() {
     return allResponseData?.data?.questions || [];
   }, [activeTab, allResponseData, myResponseData, savedResponseData, answeredResponseData]);
 
-  const isLoading = 
-    activeTab === "my-questions" ? isMyLoading : 
-    activeTab === "answer-later" ? isSavedLoading :
-    activeTab === "my-answers" ? isAnsweredLoading : // 👈 إضافة
-    isAllLoading;
+  const isLoading =
+    activeTab === "my-questions" ? isMyLoading :
+      activeTab === "answer-later" ? isSavedLoading :
+        activeTab === "my-answers" ? isAnsweredLoading : // 👈 إضافة
+          isAllLoading;
 
-  const nextCursor = (activeTab === "my-questions" || activeTab === "answer-later" || activeTab === "my-answers") ? null : (allResponseData?.data?.nextCursor || null);
 
   // ================= FILTER & SEARCH =================
   const filtered = useMemo(() => {
@@ -121,36 +121,70 @@ export default function QAPage() {
   const handleEdit = (questionId: string) => {
     const q = questionsList.find((q) => q.id === questionId);
     if (!q) return;
-    setEditingQuestionId(questionId);   
-    setNewTitle(q.title);              
-    setNewContent((q).content || q.content || ""); 
-    setIsModalOpen(true);              
+    setEditingQuestionId(questionId);
+    setNewTitle(q.title);
+    setNewContent((q).content || q.content || "");
+    setIsModalOpen(true);
   };
 
   const handleCreateQuestion = async () => {
     if (newTitle.trim().length < 5) return;
-    try {
       if (editingQuestionId) {
-        await updateQuestion({ id: editingQuestionId, title: newTitle, content: newContent }).unwrap();
+        const fetchResponse = await updateQuestion({ id: editingQuestionId, title: newTitle, content: newContent })
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: QuestionResponse = fetchResponse.data as QuestionResponse
+        if (error) {
+          const errorResponse = error.data as QuestionResponse
+          if (!errorResponse || errorResponse.status === "ERROR") {
+            toast.error("Something Went wrong.")
+          }
+          else {
+            toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+          }
+        }
+        else {
+          toast.success(successResponse.message)
+        }
         setEditingQuestionId(null);
       } else {
-        await createQuestion({ title: newTitle, content: newContent }).unwrap();
+        const fetchResponse = await createQuestion({ title: newTitle, content: newContent })
+        const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+        const successResponse: QuestionResponse = fetchResponse.data as QuestionResponse
+        if (error) {
+          const errorResponse = error.data as QuestionResponse
+          if (!errorResponse || errorResponse.status === "ERROR") {
+            toast.error("Something Went wrong.")
+          }
+          else {
+            toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+          }
+        }
+        else {
+          toast.success(successResponse.message)
+        }
       }
       setNewTitle("");
       setNewContent("");
       setIsModalOpen(false);
-      setSuccessToastVisible(true);
-      window.setTimeout(() => setSuccessToastVisible(false), 3000);
-    } catch (error) {
-      console.error(error);
-    }
+
   };
 
   const handleDelete = async (questionId: string) => {
-    try {
-      await deleteQuestion(questionId).unwrap();
-    } catch (error) {
-      console.error(error);
+    const fetchResponse = await deleteQuestion(questionId)
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: QuestionResponse = fetchResponse.data as QuestionResponse
+    if (error) {
+      const errorResponse = error.data as QuestionResponse
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      
+      toast.success(successResponse.message)
     }
   };
 
@@ -163,36 +197,77 @@ export default function QAPage() {
   // };
 
   const handlePin = async (id: string) => {
-    try {
-      await togglePin(id).unwrap();
-    } catch (error) {
-      console.error(error);
+    const fetchResponse = await togglePin(id)
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: QuestionResponse = fetchResponse.data as QuestionResponse
+    if (error) {
+      const errorResponse = error.data as QuestionResponse
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
     }
   };
 
 
   const handleSubmitAnswer = async (questionId: string, text: string) => {
     if (text.length < 3) return;
-    try {
-      await createComment({ questionId, text }).unwrap();
-    } catch (error) {
-      console.error(error);
+    const fetchResponse = await createAnswer({ questionId, text })
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: QuestionAnswerResponse = fetchResponse.data as QuestionAnswerResponse
+    if (error) {
+      const errorResponse = error.data as QuestionAnswerResponse
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
     }
+    else {
+      toast.success(successResponse.message)
+    }
+    
   };
 
   const handleMarkSolved = async (id: string) => {
-    try {
-      await markAsSolved(id).unwrap();
-    } catch (error) {
-      console.error(error);
+    const fetchResponse = await markAsSolved(id)
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: QuestionResponse = fetchResponse.data as QuestionResponse
+    if (error) {
+      const errorResponse = error.data as QuestionAnswerResponse
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
     }
   };
 
   const handleCloseQuestion = async (id: string) => {
-    try {
-      await closeQuestion(id).unwrap();
-    } catch (error) {
-      console.error(error);
+    const fetchResponse = await await closeQuestion(id)
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: QuestionResponse = fetchResponse.data as QuestionResponse
+    if (error) {
+      const errorResponse = error.data as QuestionAnswerResponse
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
     }
   };
 
@@ -236,7 +311,7 @@ export default function QAPage() {
                       <div className="flex items-center gap-2 mb-4">
                         <span className="text-orange-500">
                           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>
+                            <line x1="12" y1="17" x2="12" y2="22" /><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z" />
                           </svg>
                         </span>
                         <h2 className="text-base font-semibold text-orange-700">Pinned questions</h2>
@@ -248,7 +323,7 @@ export default function QAPage() {
                         currentUserId={currentUserId}
                         activeTab={activeTab}
                         onSubmitAnswer={handleSubmitAnswer}
-                        onLikeAnswer={() => {}}
+                        onLikeAnswer={() => { }}
                         onEdit={handleEdit}
                         onPin={handlePin}
                         onMarkSolved={handleMarkSolved}
@@ -269,7 +344,7 @@ export default function QAPage() {
                       currentUserId={currentUserId}
                       activeTab={activeTab}
                       onSubmitAnswer={handleSubmitAnswer}
-                      onLikeAnswer={() => {}}
+                      onLikeAnswer={() => { }}
                       onEdit={handleEdit}
                       onPin={handlePin}
                       onMarkSolved={handleMarkSolved}
@@ -286,7 +361,7 @@ export default function QAPage() {
                     currentUserId={currentUserId}
                     activeTab={activeTab}
                     onSubmitAnswer={handleSubmitAnswer}
-                    onLikeAnswer={() => {}}
+                    onLikeAnswer={() => { }}
                     onEdit={handleEdit}
                     onPin={handlePin}
                     onMarkSolved={handleMarkSolved}
@@ -296,27 +371,28 @@ export default function QAPage() {
                 </div>
               )}
 
-              {nextCursor && (
+              {/* {nextCursor && (
                 <div className="flex justify-center mt-4">
-                  <button 
+                  <button
                     onClick={() => setCurrentCursor(nextCursor)}
                     className="px-6 py-2 bg-[#3D2A22] text-white rounded-full text-sm font-medium hover:bg-[#2D1F1A]"
                   >
                     Load More
                   </button>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
       </div>
 
-      
+
 
       <QuestionModal
         open={isModalOpen}
         title={newTitle}
         content={newContent}
+        isLoading={createQuestionLoading}
         onClose={() => {
           setIsModalOpen(false);
           setEditingQuestionId(null);
@@ -328,9 +404,6 @@ export default function QAPage() {
         onSubmit={handleCreateQuestion}
       />
 
-      <div className={`fixed bottom-6 left-1/2 z-50 w-full max-w-sm -translate-x-1/2 rounded-full border border-[#D4D4D8] bg-[#111827] px-5 py-3 text-center text-sm text-white shadow-xl transition-opacity duration-300 ${successToastVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        Question process handled successfully
-      </div>
     </div>
   );
 }

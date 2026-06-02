@@ -11,7 +11,7 @@ export interface CartItem {
 export interface CartGroup {
   accountId: string;
   accountName: string;
-  username: string;
+  userName: string;
   accountAvatar: string;
   items: CartItem[];
 }

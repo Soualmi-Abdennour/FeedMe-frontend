@@ -2,20 +2,17 @@
 
 import SubmitButton from '@/components/atoms/SubmitButton'
 import FormField from '@/components/molecules/FormField'
+import { Button } from '@/components/ui/button'
+import { UserResponse } from '@/types/api.types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { setUser } from '../../../user/store/user.slice'
+import { toast } from 'sonner'
 import { SIGN_UP_FIELDS } from '../../constants/signup.constants'
 import { ISignupForm, signupFormSchema } from '../../schema/signup.schema'
 import { useSingupMutation } from '../../store/auth.api.slice'
-import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { ApiError, UserResponse } from '@/types/api.types'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 
 interface SignupFormProps {
     className?: string
@@ -23,7 +20,6 @@ interface SignupFormProps {
 function SignupForm({ className }: SignupFormProps) {
     const router = useRouter()
     const [signup] = useSingupMutation()
-    const dispatch = useDispatch()
     const {
         handleSubmit,
         control,
@@ -43,6 +39,7 @@ function SignupForm({ className }: SignupFormProps) {
         }
     })
     const onSubmit = async (formData: ISignupForm) => {
+        
         const fetchResponse = await signup(formData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
@@ -57,11 +54,9 @@ function SignupForm({ className }: SignupFormProps) {
             }
         }
         else {
-            const successResponseData = successResponse.data
             toast.success(successResponse.message)
-            router.replace('/verify-email')
+            router.replace(`/verify-email?identifier=${formData.email}`)
             reset()
-            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         }
     }
     return (

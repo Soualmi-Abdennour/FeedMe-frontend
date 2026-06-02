@@ -10,9 +10,11 @@ import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 
 
-function DeletePostForm({ className, postId, onClose }: IDeletePostFormProps) {
+function DeletePostForm({ className, postId, onClose,setIsProcess }: IDeletePostFormProps) {
     const [deletePost,{isLoading}] = useDeletePostMutation()
     const handleClick = async () => {
+        setIsProcess(true)
+
         const fetchResponse = await deletePost(postId)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
@@ -30,6 +32,8 @@ function DeletePostForm({ className, postId, onClose }: IDeletePostFormProps) {
             toast.success(successResponse.message)
             onClose()
         }
+        setIsProcess(false)
+
     }
      if (isLoading) {
             return (

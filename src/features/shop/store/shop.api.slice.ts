@@ -16,7 +16,7 @@ export const shopApiSlice = fetchAPI.injectEndpoints({
       providesTags: ['Products'],
     }),
 
-    addToCart: build.mutation({
+    addProductToCart: build.mutation({
       query: (productId) => ({
         url: '/cart',
         method: 'POST',
@@ -29,5 +29,5 @@ export const shopApiSlice = fetchAPI.injectEndpoints({
 
 export const {
   useGetAllProductsQuery,
-  useAddToCartMutation
+  useAddProductToCartMutation
 } = shopApiSlice;

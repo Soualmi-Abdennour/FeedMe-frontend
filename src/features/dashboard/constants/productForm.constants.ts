@@ -10,7 +10,7 @@ export const PRODUCT_FORM_FIELDS: Omit<IFormField, "errors" | "control">[] = [
         placeholder: "Your product name"
     },
     {
-        name: "preparationTime",
+        name: "preparingTime",
         label: "Preparation Time (minutes)",
         type: "number",
         autoFocus: false,

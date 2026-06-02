@@ -39,7 +39,7 @@ function AppSidebar() {
             setTimeout(() => {
                 dispatch(clearUser())   
                 dispatch(clearAuthState())
-            }, 2000);
+            }, 1000);
         }
     }
 

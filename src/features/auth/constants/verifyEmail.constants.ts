@@ -7,7 +7,7 @@ export const VERIFY_EMAIL_MESSAGES:VerificationProcessState={
     },
     FAIL:{
         dispalyMessage:"The operation failed, please verify your information.",
-        buttonMessage:"Try Again",
+        buttonMessage:"Back to Sign up",
     },
     ERROR:{
         dispalyMessage:"Sorry, there must have been an error in transferring the information. Please try again.",

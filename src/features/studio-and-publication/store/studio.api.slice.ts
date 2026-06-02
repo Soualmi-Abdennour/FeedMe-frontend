@@ -38,6 +38,13 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
             }),
             providesTags: ["Post"] // ✅
         }),
+        // useUploadPostVideo:build.mutation<string,FormData>({
+        //     query: (formData)=>({
+        //         url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`,
+        //         method: "POST",
+        //         body: formData
+        //     })
+        // })
     })
 })
 

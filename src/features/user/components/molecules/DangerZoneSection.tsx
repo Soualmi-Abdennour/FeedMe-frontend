@@ -19,26 +19,9 @@ function DangerZoneSection() {
     const router = useRouter()
     const [activeModal, setActiveModal] = useState<ModalType>(null)
 
-    // const [deactivateAccount, { isLoading: isDeactivating }] = useDeactivateAccountMutation()
     const [deleteAccount, { isLoading: isDeleting }] = useDeleteAccountMutation()
 
     const handleDeactivate = async () => {
-        // const fetchResponse = await deactivateAccount({ endpoint })
-        // const error = fetchResponse.error as FetchBaseQueryError
-        // const successResponse = fetchResponse.data as UserResponse
-
-        // if (error) {
-        //     const errorResponse = error.data as UserResponse
-        //     if (errorResponse.status === "ERROR") {
-        //         toast.error("Something went wrong.")
-        //     } else {
-        //         toast.error(errorResponse.message)
-        //     }
-        // } else {
-        //     toast.success(successResponse.message)
-        //     dispatch(clearUser())
-        //     router.push("/")
-        // }
         setActiveModal(null)
     }
 

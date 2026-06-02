@@ -3,7 +3,7 @@ import { createCommnetCredentials, deleteCommnetCredentials, getPostCommnetsCred
 
 export const publicationSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({   
-        getPublicationPosts:build.query<PostsResponse,getPostsCredentials>({
+        getAllPosts:build.query<PostsResponse,getPostsCredentials>({
             query: ({ cursor, limit = 10 }) => ({
                 url: `/posts`,
                 params: {
@@ -12,19 +12,19 @@ export const publicationSlice = fetchAPI.injectEndpoints({
                 },
             }),
         }),
-        toggleLike:build.mutation<LikeResponse,toggleLikeCredentials>({
+        togglePostLike:build.mutation<LikeResponse,toggleLikeCredentials>({
             query:({postId})=>({
                 url: `/posts/${postId}/toggle-like`,
                 method:"POST"
             })
         }),
-        toggleSave:build.mutation<SaveResponse,togglesSaveCredentials>({
+        togglePostSave:build.mutation<SaveResponse,togglesSaveCredentials>({
             query:({postId})=>({
                 url: `/posts/toggleSavePost/${postId}`,
                 method:"POST"
             })
         }),
-        createComment: build.mutation<SingleCommentResponse,createCommnetCredentials>({
+        createPostComment: build.mutation<SingleCommentResponse,createCommnetCredentials>({
             query: ({ postId, text}) => ({
                 url: `/posts/${postId}/comments`,
                 method: "POST",
@@ -32,7 +32,7 @@ export const publicationSlice = fetchAPI.injectEndpoints({
             }),     
             invalidatesTags:["Comments"]   
         }),
-        deleteComment:build.mutation<SingleCommentResponse,deleteCommnetCredentials>({
+        deletePostComment:build.mutation<SingleCommentResponse,deleteCommnetCredentials>({
             query:({commentId})=>({
                 url: `/posts/comments/${commentId}`,
                 method:"DELETE"
@@ -49,10 +49,10 @@ export const publicationSlice = fetchAPI.injectEndpoints({
 })
 
 export const {
-    useToggleLikeMutation,
-    useGetPublicationPostsQuery,
-    useCreateCommentMutation,
+    useCreatePostCommentMutation,
+    useGetAllPostsQuery,
+    useDeletePostCommentMutation,
     useGetPostCommentsQuery,
-    useToggleSaveMutation,
-    useDeleteCommentMutation
+    useTogglePostLikeMutation,
+    useTogglePostSaveMutation
 } = publicationSlice

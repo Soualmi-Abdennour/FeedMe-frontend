@@ -41,7 +41,6 @@ export const orderManagementApiSlice = fetchAPI.injectEndpoints({
 export const {
   useGetIncomingOrdersQuery,
   useRejectOrderMutation,
-
   useGetAcceptedOrdersQuery,
   useUpdateOrderStatusMutation,
 } = orderManagementApiSlice;

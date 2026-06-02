@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { QuantitiyController } from '../molecules/QuantityController';
 
 
-export const CartItem = ({ item, onApply, onDelete }: ICartItem) => {
+export const CartItem = ({ item, onApply, onDelete,isDeleteLoading,isApplyLoading }: ICartItem) => {
   const handleDelete = () => {
     if (onDelete) onDelete(item.id);
   };
@@ -19,6 +19,7 @@ export const CartItem = ({ item, onApply, onDelete }: ICartItem) => {
 
       <button
         onClick={handleDelete}
+        disabled={isDeleteLoading}
         className="absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center text-gray-300 hover:text-red-400 hover:bg-red-50 transition-all duration-200"
         aria-label="Remove item"
       >
@@ -47,6 +48,7 @@ export const CartItem = ({ item, onApply, onDelete }: ICartItem) => {
         <QuantitiyController
           initialQty={item.qty}
           onApply={onApply}
+          isApplyLoading={isApplyLoading}
         />
       </div>
 

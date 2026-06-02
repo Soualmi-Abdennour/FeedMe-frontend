@@ -9,6 +9,7 @@ export const QuantitiyController = ({
     min = 1,
     max = 99,
     onApply,
+    isApplyLoading
 }: IQuantityControllerProps) => {
     const [qty, setQty] = useState(initialQty);
 
@@ -56,6 +57,7 @@ export const QuantitiyController = ({
 
             <button
                 onClick={() => onApply(qty)}
+                disabled={isApplyLoading}
                 className="relative group flex items-center justify-center overflow-hidden bg-orange-500 hover:bg-orange-600 text-white text-[14px] font-bold h-[48px] px-10 rounded-2xl shadow-[0_8px_16px_-6px_rgba(249,115,22,0.5)] transition-all duration-300 active:scale-95 hover:-translate-y-1"
             >
                 <span className="relative z-10 tracking-wide">Apply</span>

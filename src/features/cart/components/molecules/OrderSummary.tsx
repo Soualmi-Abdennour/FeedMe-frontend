@@ -1,6 +1,6 @@
 "use client";
 
-export const OrderSummary = ({ total, onCompletePurchase }: { total: number; onCompletePurchase: () => void }) => {
+export const OrderSummary = ({ total, onCompletePurchase,isLoading }: { total: number; onCompletePurchase: () => void;isLoading:boolean }) => {
   
   return (
     <div className="bg-white rounded-[2rem] p-6 border border-gray-50 
@@ -27,6 +27,7 @@ export const OrderSummary = ({ total, onCompletePurchase }: { total: number; onC
 
       <button 
         onClick={onCompletePurchase}
+        disabled={isLoading}
         className="w-full bg-[#F27430] hover:bg-[#d95f26] text-white py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all hover:shadow-orange-200 hover:shadow-lg active:scale-[0.98]"
       >
         <span className="text-base">🛍️</span>

@@ -49,11 +49,9 @@ function ForgetPasswordForm() {
             }
         }
         else{
-            const successResponseData = successResponse.data
             toast.success(successResponse.message)
-            router.replace("/reset-password")
+            router.replace(`/reset-password?identifier=${formData.identifier}`)
             reset()
-            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         }
     }
     return (

@@ -19,9 +19,15 @@ export type QuestionsResponseData ={
     nextCursor?: string | null;
     results?: number;
 }
-export type QuestionCommentsResponseData = {
+export type QuestionResponseData ={
+    question: QuestionModel;
+}
+export type QuestionAnswersResponseData = {
     results: number; 
-    comments: any[] 
+    answers: any[] 
+}
+export type QuestionAnswerResponseData = {
+    answer: number; 
 }
 
 export type PostsResponseData = {
@@ -62,7 +68,9 @@ export type UserResponse=ApiResponse<UserResponseData|null>
 export type PostsResponse = ApiResponse<PostsResponseData | null>
 export type ProductsResponse = ApiResponse<ProductsResponseData | null>
 export type QuestionsResponse = ApiResponse<QuestionsResponseData | null>
-export type QuestionCommentsResponse = ApiResponse<QuestionCommentsResponseData | null>
+export type QuestionResponse = ApiResponse<QuestionResponseData | null>
+export type QuestionAnswersResponse = ApiResponse<QuestionAnswersResponseData | null>
+export type QuestionAnswerResponse = ApiResponse<QuestionAnswerResponseData | null>
 export type PostCommentsResponse = ApiResponse<PostCommentsResponseData | null>
 export type SinglePostResponse = ApiResponse<SinglePostResponseData | null>
 export type SingleCommentResponse = ApiResponse<SingleCommentResponseData | null>
@@ -129,7 +137,7 @@ export type getPostCommnetsCredentials={
 }
 
 export type getUserProfileCredentials={
-    userId:string
+    userName:string
 }
 export type getOtherUserPostsCredentials={
     userId:string
@@ -137,7 +145,7 @@ export type getOtherUserPostsCredentials={
 }
 export type getProductsCredentials ={
     category?: string;
-    sortBy?: 'price' | 'random' | 'preparationTime';
+    sortBy?: 'price' | 'random' | 'preparingTime';
     cursor?: string;
 }
 

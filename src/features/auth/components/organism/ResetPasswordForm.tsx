@@ -1,20 +1,16 @@
 "use client"
 import SubmitButton from '@/components/atoms/SubmitButton'
 import FormField from '@/components/molecules/FormField'
-import { setUser } from '@/features/user/store/user.slice'
 import { useAppDispatch, useAppSelector } from '@/store/base.store'
+import { UserResponse } from '@/types/api.types'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { RESET_PASSWORD_FIELDS } from '../../constants/resetPassword.constants'
 import { IResetPasswordForm, resetPasswordFormSchema } from '../../schema/resetPassword.schema'
 import { useResetPasswordMutation } from '../../store/auth.api.slice'
-import { setAuthState } from '../../store/auth.slice'
-import { toast } from 'sonner'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { UserResponse } from '@/types/api.types'
-import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
-
 
 function ResetPasswordForm() {
     const router = useRouter()
@@ -56,18 +52,9 @@ function ResetPasswordForm() {
             }
         }
         else{
-            const successResponseData = successResponse.data
             toast.success(successResponse.message)
-            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
-            dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
+            router.replace("/sign-in")
             reset()
-            if (!successResponseData?.user?.isVerified) {
-                router.replace("/verify-email")
-            }
-            else if (!successResponseData?.user?.isOnboardingCompleted)
-                router.replace("/onboarding")
-            else
-                router.replace("/publication")
         }
     }
     return (

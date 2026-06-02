@@ -8,8 +8,9 @@ import VerificationView from '../molecules/VerificationView'
 
 
 function VerificationProcess({ verificationMessages,queryFn, onSuccessFn,onErrorFn,onFailFn }:IVerificationProcessProps) {
+
     const [verificationResponse, setVerificationResponse]=useState<VerificationResponse>()
-    
+
     const getVerifyProps = (): IVerificationViewProps => {
         if (verificationResponse?.status === "ERROR") {
             return {

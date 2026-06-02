@@ -7,12 +7,12 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { IProductFormProps } from '../../types/props.types'
 import { IProductFormSchema, productFormSchema } from '../../schema/product.schema'
-import { PRODUCT_FORM_FIELDS } from '../../store/productForm.constants'
+import { PRODUCT_FORM_FIELDS } from '../../constants/productForm.constants'
 import { ProductImage } from '../../types/product.types'
 import ProductImageUploader from './ProductImageUploader'
 
 
-function ProductForm({ editProduct, onSubmit, onClose, isLoading,isOpen }: IProductFormProps) {    
+function ProductForm({ editProduct, onSubmit, onClose,isOpen }: IProductFormProps) {        
     const [profileImage, setProfileImage] = useState<ProductImage>({
             previewUrl:editProduct?.imageUrl,
             imageFile: undefined
@@ -24,20 +24,21 @@ function ProductForm({ editProduct, onSubmit, onClose, isLoading,isOpen }: IProd
             errors,
             isValid,
             isDirty,
+            isSubmitting
         }
     } = useForm<IProductFormSchema>({
         resolver: zodResolver(productFormSchema),
         mode: "onChange",
         defaultValues: editProduct ? {
             name: editProduct.name,
-            preparationTime: editProduct.preparationTime,
+            preparingTime: editProduct.preparingTime,
             description: editProduct.description,
             price: editProduct.price,
             category: editProduct.category
         } : {
             name: "",
             description: "",
-            preparationTime: 10,
+                preparingTime: 10,
             price: 100,
             // category:"DESSERTS_AND_SWEETS"
         }
@@ -72,16 +73,17 @@ function ProductForm({ editProduct, onSubmit, onClose, isLoading,isOpen }: IProd
 <div className="flex gap-3 mt-1">
                     <Button
                         type='button'
+                        disabled={isSubmitting}
                         variant={"ghost"}
                         onClick={onClose}
                         className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
                         Cancel
                     </Button>
                     <Button
-                        disabled={!isValid || !isDirty || isLoading || !profileImage.previewUrl}
+                            disabled={!isValid ||  isSubmitting || !profileImage.previewUrl || (!isDirty && profileImage.previewUrl === editProduct?.imageUrl)}
                         type='submit'
                         className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
-                        {isLoading ? "Saving…" : "Apply"}
+                        {isSubmitting ? "Saving…" : "Apply"}
                     </Button>
             </div>
                 </form>

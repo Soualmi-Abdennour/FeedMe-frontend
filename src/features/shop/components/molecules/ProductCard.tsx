@@ -15,7 +15,7 @@ export  function ProductCard({ product }: { product: ProductAppModel }) {
         <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
           <Image
             src={product.seller.avatarUrl ?? "/default/default-profile-image.png"}
-            alt={product.seller.username}
+            alt={product.seller.userName}
             className="w-full h-full object-cover"
             width={32}
             height={32}
@@ -23,10 +23,10 @@ export  function ProductCard({ product }: { product: ProductAppModel }) {
         </div>
         <div>
           <p className="text-xs font-medium text-gray-800 leading-tight">
-            {product.seller.username}
+            {product.seller.userName}
           </p>
           <p className="text-[10px] text-gray-400">
-            {product.seller.username}
+            {product.seller.userName}
           </p>
         </div>
       </div>
@@ -55,17 +55,17 @@ export  function ProductCard({ product }: { product: ProductAppModel }) {
         <div className="flex items-center justify-between mt-1">
           <p className="text-sm text-[#E85C1A] font-semibold">{product.price} DA</p>
 
-          {product.preparationTime && (
+          {product.preparingTime && (
             <div className="flex items-center gap-1 text-xs text-gray-600">
               <Clock size={14} className="text-orange-500" />
               <span>
-                {product.preparationTime
-                  ? product.preparationTime >= 60
-                    ? `${Math.floor(product.preparationTime / 60)}h ${product.preparationTime % 60 !== 0
-                      ? product.preparationTime % 60 + 'min'
+                {product.preparingTime
+                  ? product.preparingTime >= 60
+                    ? `${Math.floor(product.preparingTime / 60)}h ${product.preparingTime % 60 !== 0
+                      ? product.preparingTime % 60 + 'min'
                       : ''
                     }`
-                    : `${product.preparationTime} min`
+                    : `${product.preparingTime} min`
                   : 'N/A'}
               </span>
             </div>

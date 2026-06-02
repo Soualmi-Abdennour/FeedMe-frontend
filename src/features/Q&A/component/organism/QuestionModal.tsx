@@ -8,6 +8,7 @@ export  function QuestionModal({
   onChangeTitle,
   onChangeContent,
   onSubmit,
+  isLoading,
   mode = "create", // default to "create"
 }: IQuestionModalProps) {
   if (!open) return null;
@@ -35,15 +36,15 @@ export  function QuestionModal({
         />
 
         <div className="flex justify-end gap-2">
-          <button onClick={onClose} className="border px-4 py-2 rounded">
+          <button onClick={onClose} disabled={isLoading} className="border px-4 py-2 rounded">
             Cancel
           </button>
           <button
             onClick={onSubmit}
-            disabled={title.trim().length < 5}
+            disabled={title.trim().length < 5 || isLoading}
             className="bg-orange-500 disabled:opacity-40 text-white px-4 py-2 rounded"
           >
-            {mode === "edit" ? "Save changes" : "Publish"}  {/* ← يتغير */}
+            {isLoading ? "Loading...." :mode === "edit" ? "Save changes" : "Publish"} 
           </button>
         </div>
       </div>

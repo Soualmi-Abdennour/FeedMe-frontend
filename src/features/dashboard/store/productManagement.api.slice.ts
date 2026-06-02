@@ -1,14 +1,14 @@
-import { ProductAppModel } from "@/features/shop/types/shop.types";
+import { ProductDbModel } from "@/features/shop/types/shop.types";
 import { fetchAPI } from "@/store/base.store";
-import { AddProductPayload, ProductsResponse, UpdateProductPayload } from "@/types/api.types";
+import { AddProductPayload, ApiResponse, ProductsResponse, UpdateProductPayload } from "@/types/api.types";
 
 export const productManagementApiSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({
-        getProducts: build.query<ProductsResponse, void>({
+        getMyProducts: build.query<ProductsResponse, void>({
             query: () => "/products",
             providesTags: ["Products"],
         }),
-        addProduct: build.mutation<ProductAppModel,AddProductPayload>({
+        addProduct: build.mutation<ApiResponse<ProductDbModel>,AddProductPayload>({
             query: ({formData}) => ({
                 url: "/products",
                 method: "POST",
@@ -16,13 +16,13 @@ export const productManagementApiSlice = fetchAPI.injectEndpoints({
             }),
             invalidatesTags: ["Products"],
         }),
-        updateProduct: build.mutation<ProductAppModel, UpdateProductPayload>({
+        updateProduct: build.mutation<ApiResponse<ProductDbModel>, UpdateProductPayload>({
             query: ({ id, formData }) => ({
                 url: `/products/${id}`, method: "PATCH", body: formData 
             }),
             invalidatesTags: ["Products"],
         }),
-        deleteProduct: build.mutation<void, string>({
+        deleteProduct: build.mutation<ApiResponse<ProductDbModel>, string>({
             query: (id) => ({ url: `/products/${id}`, method: "DELETE" }),
             invalidatesTags: ["Products"],
         }),
@@ -30,7 +30,7 @@ export const productManagementApiSlice = fetchAPI.injectEndpoints({
 });
 
 export const {
-    useGetProductsQuery,
+    useGetMyProductsQuery,
     useAddProductMutation,
     useUpdateProductMutation,
     useDeleteProductMutation,

@@ -4,14 +4,14 @@ import { SingleCommentResponse } from '@/types/api.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import Image from 'next/image'
 import { toast } from 'sonner'
-import { useDeleteCommentMutation } from '../../store/publication.api.slice'
+import { useDeletePostCommentMutation } from '../../store/publication.api.slice'
 import { IPostComment } from '../../types/props.types'
 
 
-function PostComment({ user: commentOwner, text, createdAt, commentId }: IPostComment) {
+function PostComment({ user: commentOwner, text, createdAt, commentId,post,setCommentsCount }: IPostComment) {
     
     const { user } = useAppSelector(state => state.user)
-    const [deleteComment] = useDeleteCommentMutation()
+    const [deleteComment,{isLoading}] = useDeletePostCommentMutation()
     let profileImageUrl
     if (commentOwner.role === "USER") {
         profileImageUrl = commentOwner.profile?.userBasicInformation.profileImageUrl
@@ -34,10 +34,12 @@ function PostComment({ user: commentOwner, text, createdAt, commentId }: IPostCo
                 }
         else {
             toast.success(successResponse.message)
+            setCommentsCount(prev=>prev-1)
         }
     }
     return (
-        <div className='flex gap-2 items-start'>
+        <div className=' relative flex gap-2 items-start '>
+            {isLoading && <div className='absolute inset-0 bg-white/25 z-10 '></div>}
             <div className='size-8  rounded-full shrink-0'>
                 <Image src={profileImageUrl ?? "/default/default-profile-image.png"} alt='/' width={32} height={32} className='object-cover w-full h-full rounded-full'></Image>
             </div>
@@ -48,10 +50,11 @@ function PostComment({ user: commentOwner, text, createdAt, commentId }: IPostCo
                 </h6>
                 <p className='font-normal text-sm text-[#181818]'>{text}</p>
             </div>
-            {commentOwner.id === user?.id && (
+            {(commentOwner.id === user?.id || post.user.id === user?.id) &&  (
                 <div>
                     <button
                         onClick={handleDelete}
+                        disabled={isLoading}
                         className='text-red-500 text-xs p-1.5 rounded-md'
                     >
                         Delete

@@ -60,10 +60,10 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
                         className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
                             Cancel
                     </Button>
-                    <Button disabled={mediaList.length === 0 || !isValid || !isDirty} 
+                    <Button disabled={mediaList.length === 0 || !isValid || (!isDirty && mediaList.length===defaultValues?.mediaList.length)} 
                         type='submit'
                         className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
-                        Create Post
+                        {defaultValues? "Edit Post" :"Create Post"}
                     </Button>
                 </div>
 

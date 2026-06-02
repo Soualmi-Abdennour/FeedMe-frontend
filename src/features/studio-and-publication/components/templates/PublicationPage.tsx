@@ -3,7 +3,7 @@ import { PostsResponse } from '@/types/api.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-import { useGetPublicationPostsQuery } from '../../store/publication.api.slice'
+import { useGetAllPostsQuery } from '../../store/publication.api.slice'
 import { PostAppModel } from '../../types/studio.types'
 import { convertPostDbModelToPostAppModel } from '../../utils/post.utils'
 import EndOfFeed from '../atoms/EndOfFeed'
@@ -16,31 +16,30 @@ import { getRandomDateFromNow, getRandomYesterdayMorningDate } from '../../utils
 
 
 
-const REEL_LIMIT=10
+const REEL_LIMIT = 10
 export default function ReelsPage() {
-    const params=useSearchParams()
+    const params = useSearchParams()
     const [reels, setReels] = useState<PostAppModel[]>([])
-    const [cursor, SetCursor] = useState<string | undefined>(getRandomYesterdayMorningDate())
-    console.log(cursor);
-    
+    const [cursor, SetCursor] = useState<string | undefined>()
+
     const [hasMore, setHasMore] = useState(true)
     const isFetchingMore = useRef(false)
-    const fetchResponse = useGetPublicationPostsQuery(
-        {  cursor },
+    const fetchResponse = useGetAllPostsQuery(
+        { cursor },
         { skip: !hasMore }
     )
-    const {data,isFetching,isLoading}=fetchResponse
+    const { data, isFetching, isLoading } = fetchResponse
     const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
     const successResponse: PostsResponse = fetchResponse.data as PostsResponse
-    if (error) {                        
-                const errorResponse = error.data as PostsResponse            
-                if (!errorResponse || errorResponse.status === "ERROR") {
-                    toast.error("Something Went wrong.")
-                }
-                else {                
-                    toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
-                }
-            }
+    if (error) {
+        const errorResponse = error.data as PostsResponse
+        if (!errorResponse || errorResponse.status === "ERROR") {
+            toast.error("Something Went wrong.")
+        }
+        else {
+            toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+        }
+    }
     useEffect(() => {
         if (!successResponse || isFetching) return
         const posts = successResponse.data!.posts.map((post) => convertPostDbModelToPostAppModel(post))

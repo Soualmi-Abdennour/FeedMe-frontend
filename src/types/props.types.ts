@@ -59,10 +59,15 @@ export interface IVerificationViewProps {
     onClick?: () => void,
     buttonState?: VerificationState,
     buttonDisabled?: boolean,
-    imageUrl?:string
+    imageUrl?:string,
 }
 export interface IDefaultVerificationProcessProps extends IVerificationViewProps {
-    resendVerificationEndpoint?: string
+    resendVerificationEndpoint?: string;
+    identifier:string
+    fallBack:{
+        fallBackRedirectUrl:string
+        fallBackButtonLabel:string
+    }
 }
 
 export type VerificationProcessState = {

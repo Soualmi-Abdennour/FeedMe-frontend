@@ -1,6 +1,6 @@
 export interface SellerModel {
   id: string;
-  username: string;
+  userName: string;
   avatarUrl?: string ;
 }
 
@@ -13,7 +13,7 @@ export type ProductAppModel = {
   seller: SellerModel;
   quantityAvailable: number;
   description: string;
-  preparationTime: number;
+  preparingTime: number;
 }
 
 export type ProductDbModel ={
@@ -22,8 +22,8 @@ export type ProductDbModel ={
   price: string;
   description: string;
   image: string;
-  preparationTime: number;
-  category: "Vegetarian" | "Fast Food" | "Deserts & Sweets" | "Seafood" | "Healthy Food" | "Traditional dishes";
+  preparingTime: number;
+  category: ("Vegetarian" | "Fast Food" | "Deserts & Sweets" | "Seafood" | "Healthy Food" | "Traditional dishes")[];
   restaurant?: {
     id: string;
     restaurantName: string;
@@ -37,7 +37,5 @@ export type ProductDbModel ={
 
 
 
-/**params → variable li ghadi tdir request l API باش تجيب المنتجات
-category: "food" → كنقولو لل backend: “جيب ليا غير المنتجات ديال الكاتيجوري food”
-sortBy: "random" → كنقولو: “sorti المنتجات بطريقة عشوائية” (random) */
+
 

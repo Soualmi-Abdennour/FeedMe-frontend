@@ -1,35 +1,49 @@
 "use client";
 
-import VerifyEmailTokenPage from "@/features/auth/components/templates/VerifyEmailTokenPage";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import RouteGuardSkeleton from "@/components/atoms/RouteGuardSkeleton";
-import { useHydratedAuth, resolveRedirect } from "@/utils/routeGuard.utils";
+import VerifyEmailTokenPage from "@/features/auth/components/templates/VerifyEmailTokenPage";
+import { useHydratedAuth } from "@/utils/routeGuard.utils";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 
 export default function VerifyEmailRouteGuard() {
-    const router = useRouter();
-    const { isHydrated, jwt, user } = useHydratedAuth();
+    console.log("HHHHHHHHHHH");
 
-    useEffect(() => {
+    const router = useRouter();
+    const params = useSearchParams()
+    const token = params.get("token")
+    const identifier = params.get("identifier")
+    const {isHydrated,jwt,user}=useHydratedAuth()
+    useEffect(()=>{
+        
+        if(token && !identifier){
+            router.replace("/sign-up")
+            return
+        }
+        if (!identifier ){
+            router.replace("/sign-up")
+            return
+        }
+
         if (!isHydrated) return;
 
-        if (!user) {
-            router.replace("/sign-up");
-            return;
+        if(jwt && user && user.isOnboardingCompleted){
+            router.replace("/publication")
+            return
         }
-
-        if (user.isVerified) {
-            const redirect = resolveRedirect(user, jwt);
-            router.replace(redirect ?? "/publication");
+        if(jwt && user && !user.isOnboardingCompleted){
+            router.replace("/onboarding")
+            return
         }
-    }, [isHydrated, jwt, user, router]);
+    },[router,token,isHydrated,jwt,user,identifier])
 
-    if (!isHydrated) return <RouteGuardSkeleton />;
+    if (!identifier) return <RouteGuardSkeleton />; 
+    if (token && !identifier) return <RouteGuardSkeleton />; 
+    if (!isHydrated) return <RouteGuardSkeleton/>;
+    if (jwt && user && user.isOnboardingCompleted) return <RouteGuardSkeleton />
+    if (jwt && user && !user.isOnboardingCompleted) return <RouteGuardSkeleton />
 
-    if (!user) return <RouteGuardSkeleton />; 
-    if (user.isVerified) return <RouteGuardSkeleton />; 
-
-    return <VerifyEmailTokenPage></VerifyEmailTokenPage>;
+    return <VerifyEmailTokenPage identifier={identifier}></VerifyEmailTokenPage>;
 }
 

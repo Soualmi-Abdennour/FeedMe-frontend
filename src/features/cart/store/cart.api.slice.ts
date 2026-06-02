@@ -6,14 +6,6 @@ export const cartApiSlice = fetchAPI.injectEndpoints({
       query: () => '/cart',
       providesTags: ['Cart'],
     }),
-    addToCart: build.mutation({
-      query: (productId) => ({
-        url: '/cart',
-        method: 'POST',
-        body: { productId },
-      }),
-      invalidatesTags: ['Cart'],
-    }),
     updateCartItem: build.mutation({
       query: ({ itemId, quantity }) => ({
         url: `/cart/${itemId}`,
@@ -29,31 +21,30 @@ export const cartApiSlice = fetchAPI.injectEndpoints({
       }),
       invalidatesTags: ['Cart'],
     }),
-  clearCart: build.mutation<void, void>({
-  query: () => ({
-    url: '/cart',
-    method: 'DELETE',
-  }),
-  invalidatesTags: ['Cart'],
-}),
+    clearCart: build.mutation<void, void>({
+      query: () => ({
+        url: '/cart',
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Cart'],
+    }),
 
-  placeOrder: build.mutation({
-  query: ({ restaurantProfileId }) => ({  
-    url: '/orders',
-    method: 'POST',
-    body: { restaurantProfileId },
+    placeOrder: build.mutation({
+      query: ({ restaurantProfileId }) => ({
+        url: '/orders',
+        method: 'POST',
+        body: { restaurantProfileId },
+      }),
+    }),
   }),
-}),
-}),
-  
-  
+
+
 });
 
-export const { 
-  useGetCartQuery, 
-  useUpdateCartItemMutation, 
-  useAddToCartMutation,
+export const {
+  useGetCartQuery,
+  useUpdateCartItemMutation,
   useRemoveCartItemMutation,
-  useClearCartMutation ,
+  useClearCartMutation,
   usePlaceOrderMutation
 } = cartApiSlice;

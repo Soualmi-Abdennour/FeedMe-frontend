@@ -8,9 +8,10 @@ import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 
 
-function CreatePostForm({ className, onClose }: ICreatePostFormProps) {
+function CreatePostForm({ className, onClose,setIsProcess }: ICreatePostFormProps) {
     const [createPost,{isLoading}]=useCreatePostMutation()
     const  onSubmit=async (postData:FormData)=>{
+        setIsProcess(true)
         const fetchResponse = await createPost(postData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
@@ -27,7 +28,8 @@ function CreatePostForm({ className, onClose }: ICreatePostFormProps) {
         else {
             toast.success(successResponse.message)
             onClose()
-        }         
+        }  
+        setIsProcess(false)       
     }
      if (isLoading) {
             return (

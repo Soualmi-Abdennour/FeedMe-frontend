@@ -1,34 +1,39 @@
 "use client"
+import { UserResponse } from '@/types/api.types'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ReactNode, useCallback, useState } from "react"
+import { ReactNode, useCallback } from "react"
 import VerificationProcess from '../../../../components/organism/VerificationProcess'
 import { IDefaultVerificationProcessProps } from '../../../../types/props.types'
 import { VERIFY_PASSWORD_MESSAGES } from '../../constants/verifyPassword.constants'
 import { useLazyVerifyTokenQuery } from '../../store/auth.api.slice'
 import VerifyTokenDefaultView from '../molecules/VerifyTokenDefaultView'
 import ResetPasswordForm from '../organism/ResetPasswordForm'
-import { updateNestedProperty } from '@/utils/object.utils'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-import { ApiStatus, UserResponse, VerificationResponse } from '@/types/api.types'
-import Image from 'next/image'
 
 
 function ResetPasswordPage() {
-    const params = useSearchParams()
     const router=useRouter()
+    const params = useSearchParams()
+    
     const token = params.get("token") ?? ""
     const verifiedToken = params.get("verifiedToken")
-
+    const identifier = params.get("identifier")?? ""
 
     const props: IDefaultVerificationProcessProps = {
         displayMessage: VERIFY_PASSWORD_MESSAGES["DEFAULT"].dispalyMessage,
-        resendVerificationEndpoint: "forget-password"
+        identifier:identifier,
+        resendVerificationEndpoint: "forget-password",
+        fallBack:{
+            fallBackRedirectUrl:"/forget-password",
+            fallBackButtonLabel:"Back to Forget password"
+        }
     }
     const [verifyToken] = useLazyVerifyTokenQuery()
 
 
     const runVerifyTokenQuery=useCallback(async():Promise<UserResponse>=>{
-        const fetchResponse=await verifyToken({ token, endpoint: "verify-reset-password-token" })
+        const fetchResponse=await verifyToken({ token:token, endpoint: "verify-reset-password-token" })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         const errorResponse: UserResponse = error?.data as UserResponse

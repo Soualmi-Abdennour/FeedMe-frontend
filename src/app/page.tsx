@@ -1,11 +1,35 @@
 "use client"
+import RouteGuardSkeleton from '@/components/atoms/RouteGuardSkeleton';
+import { useHydratedAuth } from '@/utils/routeGuard.utils';
 import { ChefHat, MessageSquareMore, Share2, Video, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
+  const { isHydrated, jwt, user } = useHydratedAuth();
+
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    if (user && jwt && user.isOnboardingCompleted) {
+      router.replace("/publication");
+      return;
+    }
+
+    if (user && jwt && !user.isOnboardingCompleted) {
+      router.replace("/onboarding");
+      return
+    }
+  }, [isHydrated, jwt, user, router]);
+
+  if (!isHydrated) return <RouteGuardSkeleton />;
+
+  if (user && jwt && user.isOnboardingCompleted) return <RouteGuardSkeleton />;
+  if (user && jwt && !user.isOnboardingCompleted) return <RouteGuardSkeleton />;
 
   return (
     <div className="landing-container w-full min-h-screen scroll-smooth">

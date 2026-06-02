@@ -3,6 +3,7 @@
 import { X } from 'lucide-react';
 import Image from "next/image";
 import { IOrderDetailPopupProps } from '../../types/props.types';
+import Link from 'next/link';
 
 
 
@@ -12,7 +13,7 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
   const quantity = order.quantity ?? 1;
   const totalPrice = unitPrice * quantity;
 
-  
+
   return (
     <>
       <div className="fixed inset-0 z-50  bg-black/60 backdrop-blur-sm" onClick={onClose} />
@@ -31,9 +32,9 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
           <div className="w-full md:w-[45%] flex-shrink-0 bg-white p-4">
             <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
               {order.product.image ? (
-                <Image 
+                <Image
                   src={order.product.image}
-                  alt={order.product?.name} 
+                  alt={order.product?.name}
                   width={100}
                   height={100}
                   className="w-full h-full object-cover" />
@@ -51,17 +52,14 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
             {/* Account holder */}
             <div className="flex items-center gap-3 border border-gray-200 rounded-xl px-4 py-3">
               <span className="text-sm font-bold text-gray-800 whitespace-nowrap">Account holder:</span>
+              <Link href={`/profile/${order.user.userName}`}>
               <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
-                {order.user.avatar ? (
-                  <Image
-                    src={order.user.avatar}
-                    alt="" 
-                    width={100}
-                    height={100}
-                    className="w-full h-full object-cover" />
-                ) : (
-                  order.user?.userName?.[0]?.toUpperCase() ?? '?'
-                )}
+                <Image
+                  src={order.user.avatar ?? "/default/default-profile-image.png"}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-cover" />
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-sm font-semibold text-gray-800 truncate">
@@ -71,6 +69,7 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
                   {order.user?.userName ?? '—'}
                 </span>
               </div>
+              </Link>
             </div>
 
             {/* Product name + Order date */}
@@ -88,13 +87,13 @@ export default function OrderDetailPopup({ order, onClose }: IOrderDetailPopupPr
             </div>
 
             {/* Description */}
-           {/* Description */}
-<div className="border border-gray-200 rounded-xl px-4 py-3 flex-1">
-  <span className="text-sm font-bold text-gray-800">Description:</span>
-  <p className="text-sm text-gray-500 mt-0.5">
-    {order.product?.description || '—'}
-  </p>
-</div>
+            {/* Description */}
+            <div className="border border-gray-200 rounded-xl px-4 py-3 flex-1">
+              <span className="text-sm font-bold text-gray-800">Description:</span>
+              <p className="text-sm text-gray-500 mt-0.5">
+                {order.product?.description || '—'}
+              </p>
+            </div>
             {/* Price · Quantity · Total */}
             <div className="grid grid-cols-3 border border-gray-200 rounded-xl overflow-hidden mt-auto">
               <div className="flex flex-col items-center justify-center px-2 py-3 border-r border-gray-200">

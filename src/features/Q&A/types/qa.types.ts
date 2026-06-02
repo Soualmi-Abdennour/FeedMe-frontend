@@ -31,15 +31,30 @@ export interface QuestionModel {
   createdAt: string;
   likeCount: number;
   userId:string,
-  commentCount: number;
+  answerCount: number;
   isLiked?: boolean;
   isPinned?: boolean;
   isSavedForLater?: boolean;
   isClosed?: boolean;
-  isSolved?: boolean; // Optional flag to indicate if the question is solved
+  isSolved?: boolean; 
   isAnsweredByMe?: boolean;
-
 }
+// export interface QuestionModel {
+//   id: string;
+//   title: string;
+//   content: string;
+//   User: QAAuthorModel;
+//   createdAt: string;
+//   likeCount: number;
+//   userId:string,
+//   answerCount: number;
+//   isLiked?: boolean;
+//   isPinned?: boolean;
+//   isSavedForLater?: boolean;
+//   isClosed?: boolean;
+//   isSolved?: boolean; 
+//   isAnsweredByMe?: boolean;
+// }
 
 
 

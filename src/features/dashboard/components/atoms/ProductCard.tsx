@@ -8,6 +8,7 @@ import { IProductCardProps } from "../../types/props.types";
 
 
 export const ProductCard = ({ product, onEdit, onDelete }: IProductCardProps) => {
+    
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -38,13 +39,13 @@ export const ProductCard = ({ product, onEdit, onDelete }: IProductCardProps) =>
                 {menuOpen && (
                     <div className="absolute right-0 mt-1 w-28 bg-white rounded-xl shadow-lg border border-neutral-100 overflow-hidden z-20">
                         <button
-                            onClick={() => { setMenuOpen(false); onEdit(product); }}
+                            onClick={(e) => {e.stopPropagation(); setMenuOpen(false); onEdit(product); }}
                             className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-neutral-50"
                         >
                             Edit
                         </button>
                         <button
-                            onClick={() => { setMenuOpen(false); onDelete(product); }}
+                            onClick={(e) => { e.stopPropagation(); setMenuOpen(false); onDelete(product); }}
                             className="w-full text-left px-4 py-2 text-sm text-fail-500 hover:bg-fail-50"
                         >
                             Delete

@@ -13,23 +13,21 @@ export default function AuthRouteGuard({ children }: { children: React.ReactNode
     useEffect(() => {
         if (!isHydrated) return;
 
-        if (user && jwt && user.isVerified && user.isOnboardingCompleted) {
+        if (user && jwt  && user.isOnboardingCompleted) {
             router.replace("/publication");
             return;
         }
 
-        const redirect = resolveRedirect(user, jwt);
-        if (redirect && redirect !== "/sign-in" && redirect !== "/sign-up") {
-            router.replace(redirect);
+        if (user && jwt && !user.isOnboardingCompleted) {
+            router.replace("/onboarding");
+            return
         }
     }, [isHydrated, jwt, user, router]);
 
     if (!isHydrated) return <RouteGuardSkeleton />;
 
-    if (user && jwt && user.isVerified && user.isOnboardingCompleted) return <RouteGuardSkeleton />;
-
-    const redirect = resolveRedirect(user, jwt);
-    if (redirect && redirect !== "/sign-in" && redirect !== "/sign-up") return <RouteGuardSkeleton />;
+    if (user && jwt &&  user.isOnboardingCompleted) return <RouteGuardSkeleton />;
+    if (user && jwt && !user.isOnboardingCompleted) return <RouteGuardSkeleton />;
 
     return <>{children}</>;
 }

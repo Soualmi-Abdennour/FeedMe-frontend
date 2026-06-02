@@ -2,7 +2,7 @@ import { UserAppModel } from "@/features/user/types/user.types";
 import { Dispatch, SetStateAction } from "react";
 import { IPostFormSchema } from "../schema/postForm.schema";
 import { MediaAppModel } from "./media.types";
-import { MediaType } from "./studio.types";
+import { MediaType, PostAppModel } from "./studio.types";
 
 export interface IMediaDropZoneProps {
     uploadedMedia:MediaAppModel[]
@@ -29,12 +29,12 @@ export interface IPostActionsSideBar {
     isSaved:boolean
 }
 export interface ICommnetTextField { 
-    postId: string 
+    postId:string 
     setCommentsCount:Dispatch<SetStateAction<number>>
 }
 export interface IPostComments {
     className ?: string,
-    postId: string 
+    post: PostAppModel 
     setCommentsCount: Dispatch<SetStateAction<number>> 
 }
 
@@ -43,6 +43,8 @@ export interface IPostComment {
     commentId:string
     createdAt:Date
     user:UserAppModel
+    post:PostAppModel
+    setCommentsCount :Dispatch<SetStateAction<number>>
 }
 
 export interface IPostPreviewProps {
@@ -61,6 +63,8 @@ export interface IPostFormProps {
 export interface ICreatePostFormProps {
     className?: string;
     onClose : () => void ;
+    isProcess?:boolean;
+    setIsProcess:Dispatch<SetStateAction<boolean>>
 }
 export interface IEditPostFormProps extends ICreatePostFormProps { 
     postId:string

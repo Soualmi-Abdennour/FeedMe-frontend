@@ -4,7 +4,7 @@ import { Bookmark, Check, } from "lucide-react";
 import { TextLabel } from "../atoms/TextLabel";
 import { IActionBarProps } from "../../types/props.types";
 import { useState } from "react";
-import { useToggleLikeMutation, useToggleSaveQuestionMutation } from "../../store/qa.api.slice";
+import { useToggleQuestionLikeMutation, useToggleQuestionSaveMutation } from "../../store/qa.api.slice";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { LikeResponse } from "@/types/api.types";
 
@@ -12,8 +12,8 @@ import { LikeResponse } from "@/types/api.types";
 
 export  function ActionBar({
   likes,
-  comments = 0,
-  onComment,
+  answers = 0,
+  onAnswer,
   isLiked: isAlreadyLiked = false,
   isSaved:isAlreadySaved = false,
   questionId
@@ -21,9 +21,9 @@ export  function ActionBar({
   const [isLiked, setIsLiked] = useState<boolean>(isAlreadyLiked)
   const [likeCount,setLikeCount]=useState<number>(likes)
   const [isSaved, setIsSaved] = useState<boolean>(isAlreadySaved)
-  const [toggleSave]=useToggleSaveQuestionMutation()
+  const [toggleSave]=useToggleQuestionSaveMutation()
   
-    const [toggleLike] = useToggleLikeMutation();
+    const [toggleLike] = useToggleQuestionLikeMutation();
   const handleLike = async () => {
     const previousIsLiked = isLiked;
     const previousLikeCount = likeCount;
@@ -80,17 +80,17 @@ export  function ActionBar({
         <TextLabel variant="small" className={isLiked ? "text-orange-500" : "text-gray-400"}>{likeCount}</TextLabel>
       </button>
 
-      {/* Comment Button */}
-      {comments !== undefined && (
+      {/* Ansewr Button */}
+      {answers !== undefined && (
         <button
           onClick={(e) => {
             e.stopPropagation();
-            onComment?.();
+            onAnswer?.();
           }}
           className="flex items-center gap-2 hover:text-orange-500 transition-colors text-gray-400"
         >
-          <Icon name="comment" />
-          <TextLabel variant="small" className="text-gray-400">View answers ({comments})</TextLabel>
+          {/* <Icon name="comment" /> */}
+          <TextLabel variant="small" className="text-gray-400">View answers ({answers})</TextLabel>
         </button>
       )}
 

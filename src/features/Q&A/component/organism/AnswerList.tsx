@@ -1,9 +1,12 @@
 import { AvatarAtom } from "../atoms/AvatarAtom";
 import { AnswerInput } from "../molecules/AnswerInput";
-import { useDeleteCommentMutation } from "@/features/Q&A/store/qa.api.slice";
+import { useDeleteQuestionAnswerMutation } from "@/features/Q&A/store/qa.api.slice";
 import { useAppSelector } from "@/store/base.store";
 import { useMemo } from "react";
 import { IAnswerListProps } from "../../types/props.types";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { QuestionAnswerResponse } from "@/types/api.types";
+import { toast } from "sonner";
 
 
 export function AnswerList({
@@ -23,13 +26,23 @@ export function AnswerList({
     } catch { return ""; }
   }, [token]);
 
-  const [deleteComment] = useDeleteCommentMutation();
+  const [deleteAnswer] = useDeleteQuestionAnswerMutation();
 
-  const handleDelete = async (commentId: string) => {
-    try {
-      await deleteComment({ questionId, commentId }).unwrap();
-    } catch (error) {
-      console.error(error);
+  const handleDelete = async (answerId: string) => {
+    const fetchResponse = await deleteAnswer({ questionId, answerId })
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: QuestionAnswerResponse = fetchResponse.data as QuestionAnswerResponse
+    if (error) {
+      const errorResponse = error.data as QuestionAnswerResponse
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
     }
   };
 
@@ -42,22 +55,22 @@ export function AnswerList({
       ) : (
         answers.map((answer) => {
           const rawAnswer = answer as any;
-          const username = rawAnswer?.user?.UserProfile?.fullName || rawAnswer?.user?.userName || rawAnswer?.author?.username || "User";
+          const userName = rawAnswer?.user?.UserProfile?.fullName || rawAnswer?.user?.userName || rawAnswer?.author?.userName || "User";
           const avatarUrl = rawAnswer?.user?.UserProfile?.profilePicture || rawAnswer?.author?.avatarUrl || null;
           const content = rawAnswer?.text || rawAnswer?.content || "";
           const createdAt = rawAnswer?.createdAt || "";
-          const commentUserId = rawAnswer?.userId || rawAnswer?.user?.id || "";
-          const isOwner = commentUserId === currentUserId;
+          const answerUserId = rawAnswer?.userId || rawAnswer?.user?.id || "";
+          const isOwner = answerUserId === currentUserId;
 
           return (
             <div
               key={answer.id}
               className="flex gap-3 bg-[#FFF5F0] rounded-xl p-3 border border-[#F1D8CC]"
             >
-              <AvatarAtom avatarUrl={avatarUrl} name={username} size="sm" />
+              <AvatarAtom avatarUrl={avatarUrl} name={userName} size="sm" />
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-sm font-medium text-[#3D2A22]">{username}</span>
+                  <span className="text-sm font-medium text-[#3D2A22]">{userName}</span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-[#8B6F63]">
                       {new Date(createdAt).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })}

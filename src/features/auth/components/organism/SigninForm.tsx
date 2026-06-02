@@ -53,17 +53,18 @@ function SigninForm() {
         }
         else {
             const successResponseData = successResponse.data
+            console.log(successResponseData);
             toast.success(successResponse.message)
-
-            dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
             reset()
             if (!successResponseData?.user.isVerified) {
-                router.replace('/verify-email')
+                router.replace(`/verify-email?identifier=${successResponseData?.user.email}`)
             }
             else if (!successResponseData.user.isOnboardingCompleted) {
+                dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
                 dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
                 router.replace("/onboarding")
             } else {
+                dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
                 dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
                 router.replace("/publication")
             }

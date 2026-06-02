@@ -4,7 +4,7 @@ import { cn } from '@/utils/shadcn.utils'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { Bookmark, Heart, MessageCircleMore, ReceiptText } from 'lucide-react'
 import { useState } from 'react'
-import { useToggleLikeMutation, useToggleSaveMutation } from '../../store/publication.api.slice'
+import { useTogglePostLikeMutation, useTogglePostSaveMutation } from '../../store/publication.api.slice'
 import { IPostActionsSideBar } from '../../types/props.types'
 
 
@@ -21,8 +21,8 @@ function PostActionsSideBar({
     const [isLiked, setIsLiked] = useState<boolean>(isAlreadyLiked)
     const [isSaved, setIsSaved] = useState<boolean>(isAlreadySaved)
     const [likeCount,setLikeCount]=useState<number>(likesCount)
-    const [toggleLike] = useToggleLikeMutation()
-    const [toggleSave]=useToggleSaveMutation()
+    const [toggleLike] = useTogglePostLikeMutation()
+    const [toggleSave]=useTogglePostSaveMutation()
 
     const handleLike = async () => {
         const previousIsLiked = isLiked;

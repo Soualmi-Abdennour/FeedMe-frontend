@@ -6,7 +6,7 @@ export const productFormSchema = z.object({
         .string()
         .min(3, "Product Name must be at least 3 characters")
         .max(100, "Product Name be at most 100 characters"),
-    preparationTime:z
+    preparingTime: z
     .number()
     .min(5, "Preparation time can't be less then 5 min")
     .max(600, "Preparation time can't be more then 10 hours"),

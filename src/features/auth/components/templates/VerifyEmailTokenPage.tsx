@@ -13,32 +13,40 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import { ApiStatus, UserResponse } from "@/types/api.types"
 import { mapUserDbToAppModel } from "@/features/user/utils/user.utils"
 
-function VerifyEmailTokenPage() {
-
-    const params = useSearchParams()
+function VerifyEmailTokenPage({identifier}:{identifier:string}) {
     const dispatch = useAppDispatch()
-    const token = params.get("token") ?? ""
     const router = useRouter()
+    const params=useSearchParams()
+    const token = params.get("token")?? ""
 
 
     const props: IDefaultVerificationProcessProps = {
         displayMessage: VERIFY_EMAIL_MESSAGES["DEFAULT"].dispalyMessage,
-        resendVerificationEndpoint: "resend-verification-email"
+        identifier:identifier,
+        resendVerificationEndpoint: "resend-verification-email",
+        fallBack:{
+            fallBackRedirectUrl:"/sign-up",
+            fallBackButtonLabel:"Back to Sign up"
+        }
     }
 
     const [verifyToken] = useLazyVerifyTokenQuery()
 
 
     const runVerifyTokenQuery = useCallback(async (): Promise<UserResponse> => {
+        console.log("before");
+
         const fetchResponse = await verifyToken({
             token,
             endpoint: "verify-email-token"
         })
+        console.log(fetchResponse);
+
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         const errorResponse: UserResponse = error?.data as UserResponse
         return successResponse ?? errorResponse
-    }, [verifyToken, dispatch])
+    }, [verifyToken,token])
 
     const onSuccessFn = (successResponse: UserResponse) => {
         const successResponseData = successResponse.data

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import RouteGuardSkeleton from "@/components/atoms/RouteGuardSkeleton";
-import { useHydratedAuth, resolveRedirect } from "@/utils/routeGuard.utils";
+import { useHydratedAuth } from "@/utils/routeGuard.utils";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function ProtectedRouteGuard({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -12,16 +12,20 @@ export default function ProtectedRouteGuard({ children }: { children: React.Reac
     useEffect(() => {
         if (!isHydrated) return;
 
-        const redirect = resolveRedirect(user, jwt);
-        if (redirect) {
-            router.replace(redirect);
+        if(!user || !jwt) {
+            router.replace("/sign-in")
+            return
+        }
+        if(user && jwt && !user.isOnboardingCompleted) {
+            router.replace("/onboarding")
+            return
         }
     }, [isHydrated, jwt, user, router]);
 
     if (!isHydrated) return <RouteGuardSkeleton />;
 
-    const redirect = resolveRedirect(user, jwt);
-    if (redirect) return <RouteGuardSkeleton />;
+    if (!user || !jwt) return <RouteGuardSkeleton />;
+    if (user && jwt && !user.isOnboardingCompleted) return <RouteGuardSkeleton />;
 
     return <>{children}</>;
 }

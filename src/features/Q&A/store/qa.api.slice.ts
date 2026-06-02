@@ -2,11 +2,11 @@
 
 import { fetchAPI } from "@/store/base.store";
 import { QuestionModel } from "../types/qa.types";
-import { LikeResponse, QuestionCommentsResponse, QuestionsResponse, SaveResponse } from "@/types/api.types";
+import { LikeResponse, QuestionAnswerResponse, QuestionAnswersResponse, QuestionResponse, QuestionsResponse, SaveResponse } from "@/types/api.types";
 
 export const qaApiSlice = fetchAPI.injectEndpoints({
   endpoints: (builder) => ({
-    getQuestions: builder.query<{ data: { questions: QuestionModel[]; nextCursor: string | null } }, { limit: number; cursor: string | null }>({
+    getAllQuestions: builder.query<{ data: { questions: QuestionModel[]; nextCursor: string | null } }, { limit: number; cursor: string | null }>({
       query: ({ limit, cursor }) => `/questions?limit=${limit}${cursor ? `&cursor=${cursor}` : ""}`,
       providesTags: ["Questions"],
     }),
@@ -21,61 +21,57 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
       providesTags: ["Questions"],
     }),
 
-    createQuestion: builder.mutation<void, { title: string; content: string }>({
+    createQuestion: builder.mutation<QuestionResponse, { title: string; content: string }>({
       query: (newQuestion) => ({ url: "/questions", method: "POST", body: newQuestion }),
       invalidatesTags: ["Questions"],
     }),
 
-    updateQuestion: builder.mutation<void, { id: string; title: string; content: string }>({
+    updateQuestion: builder.mutation<QuestionResponse, { id: string; title: string; content: string }>({
       query: ({ id, ...body }) => ({ url: `/questions/${id}`, method: "PATCH", body }),
       invalidatesTags: ["Questions"],
     }),
 
-    deleteQuestion: builder.mutation<void, string>({
+    deleteQuestion: builder.mutation<QuestionResponse, string>({
       query: (id) => ({ url: `/questions/${id}`, method: "DELETE" }),
       invalidatesTags: ["Questions"],
     }),
 
-    toggleLike: builder.mutation<LikeResponse, string>({
+    toggleQuestionLike: builder.mutation<LikeResponse, string>({
       query: (id) => ({ url: `/questions/${id}/toggle-like`, method: "POST" }),
       invalidatesTags: ["Questions"],
     }),
 
-    togglePin: builder.mutation<void, string>({
+    toggleQuestionPin: builder.mutation<QuestionResponse, string>({
       query: (id) => ({ url: `/questions/pin/${id}`, method: "PATCH" }),
       invalidatesTags: ["Questions"],
     }),
 
-    toggleSaveQuestion: builder.mutation<SaveResponse, string>({
+    toggleQuestionSave: builder.mutation<SaveResponse, string>({
       query: (questionId) => ({ url: `/questions/save/${questionId}`, method: "POST" }),
       invalidatesTags: ["Questions"],
     }),
 
-    // unsaveQuestion: builder.mutation<void, string>({
-    //   query: (questionId) => ({ url: `/questions/save/${questionId}`, method: "DELETE" }),
-    //   invalidatesTags: ["Questions"],
-    // }),
 
-    getQuestionComments: builder.query<QuestionCommentsResponse, string>({
-      query: (questionId) => `/questions/${questionId}/comments`,
+    getQuestionAnswers: builder.query<QuestionAnswersResponse, string>({
+      query: (questionId) => `/questions/${questionId}/answers`,
       providesTags: ["Questions"],
     }),
 
-    createComment: builder.mutation<void, { questionId: string; text: string }>({
+    createQuestionAnswer: builder.mutation<QuestionAnswerResponse, { questionId: string; text: string }>({
       query: ({ questionId, text }) => ({
-        url: `/questions/comments/${questionId}`,
+        url: `/questions/${questionId}/answers`,
         method: "POST",
         body: { text }
       }),
       invalidatesTags: ["Questions"],
     }),
 
-    markAsSolved: builder.mutation<void, string>({
+    markAsSolved: builder.mutation<QuestionResponse, string>({
       query: (id) => ({ url: `/questions/${id}/solve`, method: "PATCH" }),
       invalidatesTags: ["Questions"],
     }),
 
-    closeQuestion: builder.mutation<void, string>({
+    closeQuestion: builder.mutation<QuestionResponse, string>({
       query: (id) => ({ url: `/questions/${id}/close`, method: "PATCH" }),
       invalidatesTags: ["Questions"],
     }),
@@ -83,9 +79,9 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
       query: () => "/questions/my/answered",
       providesTags: ["Questions"],
     }),
-    deleteComment: builder.mutation<void, { questionId: string; commentId: string }>({
-      query: ({ questionId, commentId }) => ({
-        url: `/questions/comments/${commentId}`,
+    deleteQuestionAnswer: builder.mutation<QuestionAnswerResponse, { questionId: string; answerId: string }>({
+      query: ({ questionId, answerId }) => ({
+        url: `/questions/answers/${answerId}`,
         method: "DELETE"
       }),
       invalidatesTags: ["Questions"],
@@ -94,22 +90,20 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
 });
 
 export const {
-  useGetQuestionsQuery,
-  useGetQuestionCommentsQuery,
+  useGetAllQuestionsQuery,
+  useCreateQuestionAnswerMutation,
   useGetMyQuestionsQuery,
   useGetSavedQuestionsQuery,
   useCreateQuestionMutation,
   useUpdateQuestionMutation,
   useDeleteQuestionMutation,
-  useToggleLikeMutation,
-  useTogglePinMutation,
-  useToggleSaveQuestionMutation,
-  // useSaveQuestionMutation,
-  // useUnsaveQuestionMutation,
-  useCreateCommentMutation,
+  useToggleQuestionLikeMutation,
+  useToggleQuestionPinMutation,
+  useToggleQuestionSaveMutation,
+  useDeleteQuestionAnswerMutation,
   useMarkAsSolvedMutation,
   useCloseQuestionMutation,
   useGetMyAnsweredQuestionsQuery,
-  useDeleteCommentMutation,
+  useGetQuestionAnswersQuery,
 
 } = qaApiSlice;

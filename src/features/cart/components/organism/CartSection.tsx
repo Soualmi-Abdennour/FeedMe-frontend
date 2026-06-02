@@ -6,36 +6,42 @@ import { AccountHeader } from '../molecules/AccountHeader';
 import { OrderSummary } from '../molecules/OrderSummary';
 import { CartItem } from './CartItem';
 import { Toast } from '@/components/molecules/Toast';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { toast } from 'sonner';
+import { ApiResponse } from '@/types/api.types';
 
 
 
 export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
-  const [updateCartItem] = useUpdateCartItemMutation();
-  const [removeCartItem] = useRemoveCartItemMutation();
-  const [placeOrder] = usePlaceOrderMutation();
+  const [updateCartItem,{isLoading:updateCartItemLoading}] = useUpdateCartItemMutation();
+  const [removeCartItem,{isLoading:removeCartItemLoading}] = useRemoveCartItemMutation();
+  const [placeOrder,{isLoading:placeOrderLoading}] = usePlaceOrderMutation();
 
   const [items, setItems] = useState(group.items);
   const [quantities, setQuantities] = useState<Record<string, number>>(
     Object.fromEntries(group.items.map(item => [item.id, item.qty]))
   );
-  const [showToast, setShowToast] = useState(false);
-
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
-  useEffect(() => () => clearTimeout(timerRef.current), []);
 
   const handleCompletePurchase = async () => {
-    try {
-      await placeOrder({ restaurantProfileId: group.accountId }).unwrap();
+    const fetchResponse = await placeOrder({ restaurantProfileId: group.accountId })
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: ApiResponse<null> = fetchResponse.data as ApiResponse<null>
 
-      setShowToast(true);
-
-      timerRef.current = setTimeout(() => {
+    if (error) {
+      const errorResponse = error.data as ApiResponse<null>
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
         setItems([]);
         onRemoveGroup();
-      }, 2000);
-    } catch (err) {
-      console.error("Failed to complete purchase:", err);
     }
+
   };
 
   const total = useMemo(() => {
@@ -46,22 +52,44 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
   }, [items, quantities]);
 
   const handleApply = async (itemId: string, qty: number) => {
-    try {
-      await updateCartItem({ itemId, quantity: qty }).unwrap();
+    const fetchResponse = await updateCartItem({ itemId, quantity: qty })
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: ApiResponse<null> = fetchResponse.data as ApiResponse<null>
+
+    if (error) {
+      const errorResponse = error.data as ApiResponse<null>
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
       setQuantities(prev => ({ ...prev, [itemId]: qty }));
-    } catch (error) {
-      console.error("Failed to update quantity:", error);
     }
   };
 
   const handleDelete = async (itemId: string) => {
-    try {
-      await removeCartItem(itemId).unwrap();
+    const fetchResponse = await removeCartItem(itemId)
+    const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
+    const successResponse: ApiResponse<null> = fetchResponse.data as ApiResponse<null>
+
+    if (error) {
+      const errorResponse = error.data as ApiResponse<null>
+      if (!errorResponse || errorResponse.status === "ERROR") {
+        toast.error("Something Went wrong.")
+      }
+      else {
+        toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+      }
+    }
+    else {
+      toast.success(successResponse.message)
       const newItems = items.filter(i => i.id !== itemId);
       setItems(newItems);
       if (newItems.length === 0) onRemoveGroup();
-    } catch (error) {
-      console.error("Failed to delete item:", error);
     }
   };
 
@@ -70,17 +98,11 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
   return (
     <div className="max-w-6xl mx-auto bg-[#F5F4F0] rounded-[2.5rem] p-6 md:p-10 space-y-8 antialiased">
 
-      <Toast
-        message="Order completed successfully!"
-        visible={showToast}
-        onHide={() => setShowToast(false)}
-      />
-
       <div className="bg-white border border-gray-100 rounded-3xl p-5 inline-flex items-center shadow-sm">
         <div className="px-2">
           <AccountHeader
             fullName={group.accountName}
-            userName={group.username}
+            userName={group.userName}
             avatarSrc={group.accountAvatar}
           />
         </div>
@@ -95,6 +117,8 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
                 item={item}
                 onApply={(qty) => handleApply(item.id, qty)}
                 onDelete={handleDelete}
+                isApplyLoading={updateCartItemLoading}
+                isDeleteLoading={removeCartItemLoading}
               />
             </div>
           ))}
@@ -105,6 +129,7 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
             <OrderSummary
               total={total}
               onCompletePurchase={handleCompletePurchase}
+              isLoading={placeOrderLoading}
             />
           </div>
         </div>

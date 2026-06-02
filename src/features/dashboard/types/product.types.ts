@@ -7,7 +7,7 @@ export type ProductFrom ={
     name: string;
     price: number;
     description: string;
-    preparationTime: number;
+    preparingTime: number;
     category: string;
     image: File ;
 }

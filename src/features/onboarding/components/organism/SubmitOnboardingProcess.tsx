@@ -1,5 +1,5 @@
 import React from 'react'
-import { setUser } from '@/features/user/store/user.slice'
+import { clearUser, setUser } from '@/features/user/store/user.slice'
 import { useAppDispatch, useAppSelector } from '@/store/base.store'
 import { onboardingCredientials, UserResponse } from '@/types/api.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
@@ -11,6 +11,7 @@ import { SUBMIT_ONBOARDING_MESSAGES } from '../../constants/submitOnboarding.con
 import { useRouter } from 'next/navigation'
 import { mapUserDbToAppModel } from '@/features/user/utils/user.utils'
 import { buildOnboardingFormData } from '../../utils/onboarding.utils'
+import { clearAuthState } from '@/features/auth/store/auth.slice'
 
 function SubmitOnboardingProcess() {
     const [onboard] = useOnboardMutation()
@@ -24,10 +25,17 @@ function SubmitOnboardingProcess() {
         const formData = buildOnboardingFormData({
             onboardingType,profile,avatarImageFile
         })
+        formData.entries().forEach((value)=>{
+            console.log(value);
+            
+        })
+        
         const fetchResponse = await onboard({
             endpoint,
             data:formData
         })
+        console.log(fetchResponse);
+        
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: UserResponse = fetchResponse.data as UserResponse
         const errorResponse: UserResponse = error?.data as UserResponse
@@ -41,9 +49,13 @@ function SubmitOnboardingProcess() {
         dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
         setTimeout(() => {
             dispatch(clearOnboarding())            
-        }, 2000);
+        }, 1000);
     }
     const onFailFn = () => {
+        
+        dispatch(clearUser())
+        dispatch(clearOnboarding())
+        dispatch(clearAuthState())
         router.replace("/sign-in")
     }
     return (

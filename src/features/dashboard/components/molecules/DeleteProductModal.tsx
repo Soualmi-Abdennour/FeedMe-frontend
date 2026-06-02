@@ -1,10 +1,7 @@
 "use client";
-
 import React from "react";
 import { IDeleteProductModalProps } from "../../types/props.types";
 import { Button } from "@/components/ui/button";
-
-
 
 export const DeleteProductModal = ({
     product,
@@ -37,6 +34,7 @@ export const DeleteProductModal = ({
                 <div className="flex gap-3 mt-1 border">
                     <Button
                         onClick={onCancel}
+                        disabled={isLoading}
                         variant={"ghost"}
                         className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition"
                     >

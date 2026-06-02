@@ -6,8 +6,9 @@ import { useParams } from 'next/navigation'
 import React from 'react'
 
 function Page() {
-  const { userId } = useParams()
-    return <OtherUserProfilePage userId={userId as string}></OtherUserProfilePage>
+  const { userName } = useParams()
+  
+  return <OtherUserProfilePage userName={userName as string}></OtherUserProfilePage>
 }
 
 export default Page

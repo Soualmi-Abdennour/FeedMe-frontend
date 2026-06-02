@@ -16,7 +16,7 @@ export interface IAnswerInputProps {
 export interface IQuestionCardProps {
   title: string;
   description: string;
-  username: string;
+  userName: string;
   userInitials: string;
   userBg: string;
   date: string;
@@ -75,7 +75,7 @@ export interface IQASearchBarProps {
     onSearch?: () => void;
 }
 export interface IUserHeaderProps {
-    username: string;
+    userName: string;
     initials: string;
     backgroundColor: string;
     date: string;
@@ -119,6 +119,7 @@ export interface IQuestionModalProps {
     onChangeTitle: (value: string) => void;
     onChangeContent: (value: string) => void;
     onSubmit: () => void;
+    isLoading:boolean
 }
 
 type QATab = 'all' | 'my-questions' | 'my-answers' | 'answer-later';
@@ -133,8 +134,8 @@ export interface ISidebarProps {
 export interface IActionBarProps {
     questionId:string
     likes: number;
-    comments?: number;
-    onComment?: () => void;
+    answers?: number;
+    onAnswer?: () => void;
     isLiked?: boolean;
     isSaved?: boolean;
 }

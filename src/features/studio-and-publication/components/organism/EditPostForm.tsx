@@ -9,29 +9,31 @@ import { toast } from 'sonner'
 import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
 
 
-function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
+function EditPostForm({ className, onClose, postId, setIsProcess }: IEditPostFormProps) {
     const fetchResponse = useGetPostQuery(postId)
     const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
     const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
-    
-    const [editPost,{isLoading}] = useEditPostMutation()
+
+    const [editPost, { isLoading }] = useEditPostMutation()
     const onSubmit = async (postData: FormData) => {
+        setIsProcess(true)
         const fetchResponse = await editPost({ postData, id: postId })
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
 
-        if (error) {                        
-                    const errorResponse = error.data as SinglePostResponse            
-                    if (!errorResponse || errorResponse.status === "ERROR") {
-                        toast.error("Something Went wrong.")
-                    }
-                    else {                
-                        toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
-                    }
-                } else {
+        if (error) {
+            const errorResponse = error.data as SinglePostResponse
+            if (!errorResponse || errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
+            }
+            else {
+                toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+            }
+        } else {
             toast.success(successResponse.message)
             onClose()
         }
+        setIsProcess(false)
     }
     if (isLoading || fetchResponse.isLoading) {
         return (

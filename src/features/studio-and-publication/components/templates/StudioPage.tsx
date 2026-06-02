@@ -1,19 +1,18 @@
 "use client"
 import DropdownSelect from '@/components/molecules/DropdownSelect'
 import { Button } from '@/components/ui/button'
-import React, { useState } from 'react'
-import PostPreview from '../molecules/PostPreview'
-import { POSTS_FILTER_OPTIONS } from '../../constants/postsFilter.constants'
-import CreatePostForm from '../organism/CreatePostForm'
-import { useRouter, useSearchParams } from 'next/navigation'
-import EditPostForm from '../organism/EditPostForm'
-import DeletePostForm from '../organism/DeletePostForm'
-import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
-import { useGetMyPostsQuery } from '../../store/studio.api.slice'  // ← الجديد
 import { Plus } from 'lucide-react'
-import { PostsFilterOption, PostsFilterOptionValue } from '../../types/studio.types'
-import { convertPostDbModelToPostAppModel } from '../../utils/post.utils'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
+import { POSTS_FILTER_OPTIONS } from '../../constants/postsFilter.constants'
+import { useGetMyPostsQuery } from '../../store/studio.api.slice'; // ← الجديد
+import { PostsFilterOptionValue } from '../../types/studio.types'
 import { filterPosts } from '../../utils/filter.utils'
+import { convertPostDbModelToPostAppModel } from '../../utils/post.utils'
+import PostPreview from '../molecules/PostPreview'
+import CreatePostForm from '../organism/CreatePostForm'
+import DeletePostForm from '../organism/DeletePostForm'
+import EditPostForm from '../organism/EditPostForm'
 
 
 
@@ -23,6 +22,7 @@ function StudioPage() {
     const [filterOptions, setFilterOptions] = useState<PostsFilterOptionValue[]>(['Image', "Multi-Image", "Video"])
     const [openCreatePostFrom, setOpenCreatePostForm] = useState<boolean>(false)
     const { data, isLoading, isError } = useGetMyPostsQuery()
+    const [isProcess,setIsProcess]=useState<boolean>(false)
     const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) : []
 
     return (
@@ -80,20 +80,21 @@ function StudioPage() {
             {openCreatePostFrom && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-                    onClick={() => setOpenCreatePostForm(false)}
+                    onClick={() => !isProcess &&  setOpenCreatePostForm(false)}
                 >
                     <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-2xl shadow-xl w-full max-w-md  p-6 flex flex-col gap-4">
-                        <CreatePostForm onClose={() => setOpenCreatePostForm(false)} />
+                        <CreatePostForm onClose={() => setOpenCreatePostForm(false)}  setIsProcess={setIsProcess}/>
                     </div>
                 </div>
             )}
             {seachParams.get("action") === "edit" && seachParams.get("id") && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-                    onClick={() => setOpenCreatePostForm(false)}
+                    onClick={() => !isProcess && setOpenCreatePostForm(false)}
                 >
                     <div onClick={(e) => e.stopPropagation()}>
                         <EditPostForm
+                            setIsProcess={setIsProcess}
                             postId={seachParams.get("id")!}
                             onClose={() => router.replace("/studio")}
                         />
@@ -103,10 +104,11 @@ function StudioPage() {
             {seachParams.get("action") === "delete" && seachParams.get("id") && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-                    onClick={() => setOpenCreatePostForm(false)}
+                    onClick={() => !isProcess && setOpenCreatePostForm(false)}
                 >
                     <div onClick={(e) => e.stopPropagation()}>
                         <DeletePostForm
+                        setIsProcess={setIsProcess}
                             postId={seachParams.get("id")!}
                             onClose={() => router.replace("/studio")}
                         />

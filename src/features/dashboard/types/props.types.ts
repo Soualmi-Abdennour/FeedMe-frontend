@@ -53,7 +53,6 @@ export interface IProductFormProps {
     isOpen: boolean;
     onClose: () => void;
     onSubmit: (payload: ProductFrom) => void;
-    isLoading?: boolean;
     editProduct?: ProductAppModel | null;
 }
 export interface IProductGridProps {

@@ -1,4 +1,4 @@
-import { useGetQuestionCommentsQuery } from "@/features/Q&A/store/qa.api.slice"; 
+import { useGetQuestionAnswersQuery } from "@/features/Q&A/store/qa.api.slice"; 
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import {TextLabel} from "../atoms/TextLabel";
@@ -10,7 +10,7 @@ import { IQuestionCardProps } from "../../types/props.types";
 
 
 export default function QuestionCard({
-  title, description, username, userInitials, userBg, date,
+  title, description, userName, userInitials, userBg, date,
   likes, answersCount, isLiked = false, isSaved = false,
   isPinned = false, isSolved = false, isClosed = false,
   questionId, authorId, currentUserId, activeTab,
@@ -23,11 +23,11 @@ export default function QuestionCard({
 
   const isOwner = authorId === currentUserId;
 
-  const { data: commentsData } = useGetQuestionCommentsQuery(questionId, {
+  const { data: answersData } = useGetQuestionAnswersQuery(questionId, {
     skip: !showAnswers
   });
 
-  const fetchedAnswers = commentsData?.data?.comments ?? [];
+  const fetchedAnswers = answersData?.data?.answers ?? [];
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}/qa/${questionId}`);
@@ -39,7 +39,7 @@ export default function QuestionCard({
 
       <div className="flex items-start justify-between">
         <UserHeader
-          username={username}
+          userName={userName}
           initials={userInitials}
           backgroundColor={userBg}
           date={date}
@@ -100,10 +100,10 @@ export default function QuestionCard({
       <ActionBar
         questionId={questionId}
         likes={likes}
-        comments={answersCount}
+        answers={answersCount}
         isLiked={isLiked}
         isSaved={isSaved}
-        onComment={() => setShowAnswers((p) => !p)}
+        onAnswer={() => setShowAnswers((p) => !p)}
       />
 
       {showAnswers && (

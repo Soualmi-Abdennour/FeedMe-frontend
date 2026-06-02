@@ -7,12 +7,12 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import Image from 'next/image'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { useCreateCommentMutation } from '../../store/publication.api.slice'
+import { useCreatePostCommentMutation } from '../../store/publication.api.slice'
 import { ICommnetTextField } from '../../types/props.types'
 
 function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
     const user=useAppSelector(state=>state.user.user!)
-    const [createComment]=useCreateCommentMutation()
+    const [createComment,{isLoading}]=useCreatePostCommentMutation()
     const [text,setText]=useState<string>("")
     
     const onSubmit=async()=>{        
@@ -56,7 +56,7 @@ function CommentTextField({ postId ,setCommentsCount}: ICommnetTextField) {
         ></Input>
         <Button
             variant={"ghost"}
-            disabled={text.trim().length===0}
+            disabled={text.trim().length===0 || isLoading}
             onClick={onSubmit}
             className='text-primary-500 rounded-full p-0 shrink-0 font-medium text-xs '
         >Post</Button>

@@ -17,12 +17,15 @@ export interface IQuantityControllerProps {
   min?: number;
   max?: number;
   onApply: (qty: number) => void;
+  isApplyLoading:boolean
 }
 
 export interface ICartItem {
   item: CartItem;
   onApply: (qty: number) => void;
   onDelete?: (id: string) => void;
+  isApplyLoading:boolean
+  isDeleteLoading:boolean  
 }
 
 export interface ICartSection {

@@ -23,12 +23,6 @@ export const userApiSlice=fetchAPI.injectEndpoints({
             })
         }),
 
-        // deactivateAccount: build.mutation<UserResponse, deactivateAccountCredentials>({
-        //     query: ({ endpoint }) => ({
-        //         url: `/profile/${endpoint}/deactivate`,
-        //         method: "PATCH",
-        //     })
-        // }),
 
 
         deleteAccount: build.mutation<UserResponse, void>({
@@ -39,8 +33,8 @@ export const userApiSlice=fetchAPI.injectEndpoints({
         }),
 
         getUserProfile:build.query<UserResponse,getUserProfileCredentials>({
-            query:({userId})=>({
-                url: `/profile/${userId}`,
+            query:({userName})=>({
+                url: `/profile?userName=${userName}`,
             })
         }),
         getOtherUserPosts:build.query<PostsResponse,getOtherUserPostsCredentials>({
