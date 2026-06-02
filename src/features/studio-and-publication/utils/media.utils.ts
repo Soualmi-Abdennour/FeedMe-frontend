@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { MediaAppModel, MediaDbModel } from "../types/media.types";
 import { PostFormData } from "../types/studio.types";
+import { UploadVideoPayload } from "@/types/api.types";
 
 
 export function countMedia(mediaList: MediaAppModel[]) {
@@ -33,11 +34,7 @@ export function buildPostFormData(data: PostFormData): FormData {
 
     data.mediaList!.forEach((media) => {
         if (media.source === "NEW") {
-            if (media.type === "VIDEO") {
-                formData.append("video", media.file!); // ✅ فيديو
-            } else {
-                formData.append("images", media.file!); // ✅ صورة
-            }
+            formData.append("images", media.file!); // ✅ صورة
         } else {
             keptMediaIds.push(media.id);
         }
@@ -65,4 +62,27 @@ export function convertMediaDbModelToMediaAppModel(mediaList: MediaDbModel[]): M
         type: media.type,
         source: "EXISTING"
     }))
+}
+
+export function buildVideoUploadFormData(file: File): UploadVideoPayload {
+    const UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!;
+    const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+    formData.append("resource_type", "video");
+    return { formData, cloudName: CLOUD_NAME };
+}
+
+export function isSameMediaArray(
+    arr1: MediaAppModel[],
+    arr2: MediaAppModel[]
+) {
+    if (arr1.length !== arr2.length) {
+        return false;
+    }
+
+    const urls2 = new Set(arr2.map(item => item.previewUrl));
+
+    return arr1.every(item => urls2.has(item.previewUrl));
 }

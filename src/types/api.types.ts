@@ -19,6 +19,7 @@ export type QuestionsResponseData ={
     nextCursor?: string | null;
     results?: number;
 }
+
 export type QuestionResponseData ={
     question: QuestionModel;
 }
@@ -149,10 +150,14 @@ export type getProductsCredentials ={
     cursor?: string;
 }
 
-export interface AddProductPayload  {
+export type AddProductPayload = {
     formData: FormData;
 }
-export interface UpdateProductPayload   {
+export type UpdateProductPayload =  {
     formData:FormData
     id: string;
+}
+export type UploadVideoPayload={
+    formData:FormData;
+    cloudName:string
 }

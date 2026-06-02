@@ -1,5 +1,5 @@
 import { fetchAPI } from "@/store/base.store";
-import { editPostCredientials, PostsResponse, SinglePostResponse } from "@/types/api.types";
+import { editPostCredientials, PostsResponse, SinglePostResponse, UploadVideoPayload } from "@/types/api.types";
 
 export const studioApiSlice = fetchAPI.injectEndpoints({
     endpoints: (build) => ({
@@ -38,6 +38,19 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
             }),
             providesTags: ["Post"] // ✅
         }),
+        uploadVideo: build.mutation<{secure_url:string}, UploadVideoPayload>({
+            query: ({cloudName,formData})=>({
+                url: `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`,
+                method: "POST", body: formData 
+            })
+        })
+            // async (file) => {
+            //     try {
+            //         const url = await uploadVideo(file);
+            //         return { data: url };
+            //     } catch (error) {
+            //         return { error: { status: "CUSTOM_ERROR", error: String(error) } };
+            //     }}})
         // useUploadPostVideo:build.mutation<string,FormData>({
         //     query: (formData)=>({
         //         url: `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`,
@@ -49,6 +62,7 @@ export const studioApiSlice = fetchAPI.injectEndpoints({
 })
 
 export const {
+    useUploadVideoMutation,
     useCreatePostMutation,
     useDeletePostMutation,
     useEditPostMutation,

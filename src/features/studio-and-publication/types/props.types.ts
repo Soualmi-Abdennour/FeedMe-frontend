@@ -59,6 +59,8 @@ export interface IPostFormProps {
     };
     onSubmit:(postData:FormData)=>Promise<void>
     onClose:()=>void
+    isVideoUploading:boolean
+    setIsVideoUploading:Dispatch<SetStateAction<boolean>>
 }
 export interface ICreatePostFormProps {
     className?: string;

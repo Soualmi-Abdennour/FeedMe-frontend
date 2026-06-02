@@ -7,9 +7,12 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
 import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
+import { useState } from 'react'
 
 
-function EditPostForm({ className, onClose, postId, setIsProcess }: IEditPostFormProps) {
+function EditPostForm({ className, onClose, postId, setIsProcess, }: IEditPostFormProps) {
+        const [isVideoUploading,setIsVideoUploading]=useState<boolean>(false)
+    
     const fetchResponse = useGetPostQuery(postId)
     const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
     const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
@@ -35,7 +38,7 @@ function EditPostForm({ className, onClose, postId, setIsProcess }: IEditPostFor
         }
         setIsProcess(false)
     }
-    if (isLoading || fetchResponse.isLoading) {
+    if (isLoading || fetchResponse.isLoading ||isVideoUploading) {
         return (
             <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
@@ -64,6 +67,8 @@ function EditPostForm({ className, onClose, postId, setIsProcess }: IEditPostFor
                 <h3>Something went wrong</h3>
             ) : successResponse?.data?.post ? (
                 <PostForm
+                    isVideoUploading={isVideoUploading}
+                    setIsVideoUploading={setIsVideoUploading}
                     defaultValues={{
                         title: successResponse.data.post.title,
                         description: successResponse.data.post.description,

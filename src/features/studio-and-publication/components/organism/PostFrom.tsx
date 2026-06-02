@@ -1,21 +1,24 @@
 "use client"
-import SubmitButton from '@/components/atoms/SubmitButton'
 import FormField from '@/components/molecules/FormField'
+import { Button } from '@/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { POST_FORM_FIELDS } from '../../constants/postForm.constants'
 import { IPostFormSchema, postFormSchema } from '../../schema/postForm.schema'
+import { useUploadVideoMutation } from '../../store/studio.api.slice'
 import { MediaAppModel } from '../../types/media.types'
 import { IPostFormProps } from '../../types/props.types'
-import { buildPostFormData } from '../../utils/media.utils'
+import { buildPostFormData, buildVideoUploadFormData, isSameMediaArray } from '../../utils/media.utils'
 import MediaDropZone from '../molecules/MediaDropZone'
 import MediaPreviewGallery from '../molecules/MediaPreviewGallery'
-import { Button } from '@/components/ui/button'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import { toast } from 'sonner'
 
 
-function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
+function PostForm({ defaultValues, onSubmit, onClose, isVideoUploading, setIsVideoUploading }: IPostFormProps) {
     const [mediaList, setMediaList] = useState<MediaAppModel[]>(defaultValues?.mediaList?? [])
+    const [uploadVideo]=useUploadVideoMutation()
     const {
         handleSubmit,
         control,
@@ -38,6 +41,21 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
         const postData = buildPostFormData({
             title, description, contentType, mediaList: mediaList
         })
+        if (mediaList[0].file?.type.startsWith("video/")){     
+            setIsVideoUploading(true)       
+            const fetchResponse=await uploadVideo(buildVideoUploadFormData(mediaList[0].file))
+            const error: FetchBaseQueryError =fetchResponse.error as FetchBaseQueryError
+            const videoUrl = fetchResponse.data?.secure_url            
+            if(error || !videoUrl){
+                toast.error("Something Went Wrong")
+                setIsVideoUploading(false)
+                return
+            }
+            else {
+                postData.append("videoUrl", videoUrl)
+            }
+            setIsVideoUploading(false)
+        }
         await onSubmit(postData)
     }
     return (
@@ -60,7 +78,8 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
                         className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
                             Cancel
                     </Button>
-                    <Button disabled={mediaList.length === 0 || !isValid || (!isDirty && mediaList.length===defaultValues?.mediaList.length)} 
+                    <Button 
+                        disabled={mediaList.length === 0 || !isValid || (!isDirty && isSameMediaArray(mediaList,defaultValues?.mediaList ??[]))} 
                         type='submit'
                         className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
                         {defaultValues? "Edit Post" :"Create Post"}

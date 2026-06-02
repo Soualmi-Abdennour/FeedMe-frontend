@@ -12,11 +12,11 @@ import { ProductImage } from '../../types/product.types'
 import ProductImageUploader from './ProductImageUploader'
 
 
-function ProductForm({ editProduct, onSubmit, onClose,isOpen }: IProductFormProps) {        
+function ProductForm({ editProduct, onSubmit, onClose, isOpen }: IProductFormProps) {
     const [profileImage, setProfileImage] = useState<ProductImage>({
-            previewUrl:editProduct?.imageUrl,
-            imageFile: undefined
-        })
+        previewUrl: editProduct?.imageUrl,
+        imageFile: undefined
+    })
     const {
         handleSubmit,
         control,
@@ -38,19 +38,19 @@ function ProductForm({ editProduct, onSubmit, onClose,isOpen }: IProductFormProp
         } : {
             name: "",
             description: "",
-                preparingTime: 10,
+            preparingTime: 10,
             price: 100,
             // category:"DESSERTS_AND_SWEETS"
         }
     })
     const submitForm = async (formData: IProductFormSchema) => {
 
-        await onSubmit({...formData,image:profileImage.imageFile!})
+        await onSubmit({ ...formData, image: profileImage.imageFile! })
     }
     if (!isOpen) return null;
 
     return (
-<div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/60 backdrop-blur-sm">
             <div className="bg-white relative rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 flex flex-col gap-4">
                 <h2 className="text-base font-bold text-neutral-800">
                     {editProduct ? "Edit product:" : "Add product:"}
@@ -70,28 +70,28 @@ function ProductForm({ editProduct, onSubmit, onClose,isOpen }: IProductFormProp
                         </div>
                     ))}
 
-<div className="flex gap-3 mt-1">
-                    <Button
-                        type='button'
-                        disabled={isSubmitting}
-                        variant={"ghost"}
-                        onClick={onClose}
-                        className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
-                        Cancel
-                    </Button>
-                    <Button
-                            disabled={!isValid ||  isSubmitting || !profileImage.previewUrl || (!isDirty && profileImage.previewUrl === editProduct?.imageUrl)}
-                        type='submit'
-                        className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
-                        {isSubmitting ? "Saving…" : "Apply"}
-                    </Button>
-            </div>
+                    <div className="flex gap-3 mt-1">
+                        <Button
+                            type='button'
+                            disabled={isSubmitting}
+                            variant={"ghost"}
+                            onClick={onClose}
+                            className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
+                            Cancel
+                        </Button>
+                        <Button
+                            disabled={!isValid || isSubmitting || !profileImage.previewUrl || (!isDirty && profileImage.previewUrl === editProduct?.imageUrl)}
+                            type='submit'
+                            className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
+                            {isSubmitting ? "Saving…" : "Apply"}
+                        </Button>
+                    </div>
                 </form>
             </div>
         </div>
 
         // <div className='grid grid-cols-1 justify-center w-full '>
-            
+
         // </div>
     )
 }

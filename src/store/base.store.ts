@@ -13,7 +13,10 @@ export const fetchAPI = createApi({
   tagTypes: ['Products', 'User', 'Orders', 'Cart', "Post", 'Onboarding', "Comments", "Questions", "Answers"],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, { endpoint, getState }) => {
+      if (endpoint === "uploadVideo") {
+              return headers;
+            }
       const state = getState() as RootState
       const token = state.authentication.authentication?.jwtToken
       if (token) {

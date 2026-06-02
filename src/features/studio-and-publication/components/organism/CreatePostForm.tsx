@@ -6,10 +6,12 @@ import { useCreatePostMutation } from '../../store/studio.api.slice'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { SinglePostResponse } from '@/types/api.types'
 import { toast } from 'sonner'
+import { useState } from 'react'
 
 
 function CreatePostForm({ className, onClose,setIsProcess }: ICreatePostFormProps) {
     const [createPost,{isLoading}]=useCreatePostMutation()
+    const [isVideoUploading,setIsVideoUploading]=useState<boolean>(false)
     const  onSubmit=async (postData:FormData)=>{
         setIsProcess(true)
         const fetchResponse = await createPost(postData)
@@ -31,7 +33,7 @@ function CreatePostForm({ className, onClose,setIsProcess }: ICreatePostFormProp
         }  
         setIsProcess(false)       
     }
-     if (isLoading) {
+     if (isLoading || isVideoUploading) {
             return (
                 <div className="w-full h-full flex flex-col items-center justify-center gap-4">
                     <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
@@ -56,7 +58,7 @@ function CreatePostForm({ className, onClose,setIsProcess }: ICreatePostFormProp
             <h2 className="text-base font-bold text-neutral-800">
                 Create Post :
             </h2>
-            <PostForm onSubmit={onSubmit} onClose={onClose}></PostForm>
+            <PostForm onSubmit={onSubmit} onClose={onClose} isVideoUploading={isVideoUploading} setIsVideoUploading={setIsVideoUploading}></PostForm>
         </div>
     )
 }
