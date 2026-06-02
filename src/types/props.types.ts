@@ -14,6 +14,7 @@ export interface IFormField {
         |"password"
         |"select"
         |"textArea"
+        |"textAreaAutoSize"
         | "time"
         | "number";
     selectList?:readonly {

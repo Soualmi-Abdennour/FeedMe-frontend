@@ -55,11 +55,11 @@ const [errorMessage, setErrorMessage] = useState<string | null>(null);
     });
 
     return (
-        <div className="relative ">
+        <div className="relative h-96 ">
 
         <div
             {...getRootProps()}
-            className="w-full h-36 border-2 border-dashed border-neutral-300 rounded-xl flex items-center justify-center cursor-pointer overflow-hidden hover:border-orange-400 transition"
+            className="w-full h-full border-2 border-dashed border-neutral-300 rounded-xl flex items-center justify-center cursor-pointer overflow-hidden hover:border-orange-400 transition"
             >
             {profileImage.previewUrl ? (
                 <Image

@@ -15,9 +15,10 @@ function PostWrapper({post}:{post:PostAppModel}) {
     console.log(commentsCount);
 
     return (
-        <div className={cn("relative flex h-full items-end gap-4 w-fit",itemToShow && "-translate-x-28")}>
+        <div className={cn("relative flex items-end h-full pr-2  gap-2 w-fit",itemToShow && "-translate-x-28")}>
             <PostItem post={post}></PostItem>
-            <PostActionsSideBar
+            <div className='flex flex-col pb-5 '>
+                <PostActionsSideBar
                 toggleComments={() => setItemToShow(state=>state?null:"COMMENTS")}
                 toggleDetails={() => setItemToShow(state => state ? null : "DETAILS")}
                 postId={post.id}
@@ -26,10 +27,12 @@ function PostWrapper({post}:{post:PostAppModel}) {
                 isLiked={!!post.isLiked}
                 isSaved={!!post.isSaved}
             ></PostActionsSideBar>
+            </div>
+            
             <>
                 {itemToShow==="DETAILS" &&(
                     <PostDetails
-                        className='absolute left-[105%]  bottom-[15%]'
+                        className='my-auto'
                         postTitle={post.title}
                         postDescription={post.description}
                         contentType={post.contentType}
@@ -38,7 +41,7 @@ function PostWrapper({post}:{post:PostAppModel}) {
                     <PostComments
                         post={post}
                         setCommentsCount={setCommentsCount}
-                        className='absolute left-[105%]  bottom-[15%]'
+                        className='my-auto'
                     ></PostComments>
                 )}
                 

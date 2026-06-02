@@ -14,7 +14,7 @@ function PostComments({ className, post,setCommentsCount }: IPostComments) {
     const comments = data?.data?.comments.map(comment=>convertCommentDbModelToAppModel(comment)) ?? []    
 
     return (
-        <div className={cn('flex gap-8 flex-col max-h-[444px] w-[346px] bg-[#F8F8F8] rounded-md p-6 ', className)}>
+        <div className={cn('flex gap-8 flex-col items- mt-[1000px] max-h-full w-[346px] bg-[#F8F8F8] rounded-md p-6 ', className)}>
             <h4 className='text-center  font-normal text-lg'>Post Comments</h4>
             <div className='flex flex-col gap-6 overflow-y-auto'>
                 {isLoading && (

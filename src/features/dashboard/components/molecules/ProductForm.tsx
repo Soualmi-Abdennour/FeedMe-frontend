@@ -50,8 +50,8 @@ function ProductForm({ editProduct, onSubmit, onClose, isOpen }: IProductFormPro
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/60 backdrop-blur-sm">
-            <div className="bg-white relative rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 flex flex-col gap-4">
+<div className="fixed inset-0 z-50 flex items-center justify-center  bg-black/60 backdrop-blur-sm">
+            <div className="bg-white relative rounded-2xl shadow-xl  max-w-full mx-4 p-6 flex flex-col gap-4">
                 <h2 className="text-base font-bold text-neutral-800">
                     {editProduct ? "Edit product:" : "Add product:"}
                 </h2>
@@ -62,7 +62,8 @@ function ProductForm({ editProduct, onSubmit, onClose, isOpen }: IProductFormPro
                 >
                     ✕
                 </button>
-                <ProductImageUploader profileImage={profileImage} setProfileImage={setProfileImage}></ProductImageUploader>
+                <div className='grid grid-cols-2 gap-20 w-[850px]'>
+                    <ProductImageUploader profileImage={profileImage} setProfileImage={setProfileImage}></ProductImageUploader>
                 <form onSubmit={handleSubmit(submitForm)}>
                     {PRODUCT_FORM_FIELDS.map((formField) => (
                         <div key={formField.name}>
@@ -87,6 +88,8 @@ function ProductForm({ editProduct, onSubmit, onClose, isOpen }: IProductFormPro
                         </Button>
                     </div>
                 </form>
+                </div>
+                
             </div>
         </div>
 

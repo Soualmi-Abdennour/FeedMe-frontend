@@ -23,7 +23,7 @@ function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessP
 
         const timer = setTimeout(() => {
             setCooldown(cooldown - 1);
-        }, 10000);
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, [cooldown]);
@@ -65,9 +65,9 @@ function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessP
                 ></Image>
                 <div className="flex flex-col justify-center items-center mx-10   ">
                     <h3>Check your email ?</h3>
-                    <p className="text-center text-neutral-500 pb-20 pt-5 ">
+                    <p className="text-center text-neutral-500 pb-20 pt-15 ">
                         {displayMessageWithEmail[0]}
-                        <span className="text-primary-600 font-bold text-xl">{identifier}</span>
+                        <span className="text-fail-500 font-bold">{identifier}</span>
                         {displayMessageWithEmail[1]}
                     </p>
                     {cooldown > 0 && <p className="mb-4">Resend the link in: {cooldown} seconds</p>}

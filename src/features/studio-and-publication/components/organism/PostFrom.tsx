@@ -59,11 +59,18 @@ function PostForm({ defaultValues, onSubmit, onClose, isVideoUploading, setIsVid
         await onSubmit(postData)
     }
     return (
-        <div className='grid grid-cols-1 justify-center w-full '>
-            {mediaList && (
+        <div className='grid grid-cols-2 gap-20 justify-center w-full  '>
+            <div className='items-start gap-20 justify-center grid grid-cols-1'>
+                <div className='grid grid-cols-1 items-start'>
+                    {mediaList && (
                 <MediaPreviewGallery uploadedMedia={mediaList} setUploadedMedia={setMediaList} className=''/>
-            )}
-            <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList} />
+            )} 
+                </div> 
+            <div className='grid grid-cols-1  '>
+                <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList}/>
+            </div>
+                
+            </div>
             <form onSubmit={handleSubmit(submitForm)}>
                 {POST_FORM_FIELDS.map((formField) => (
                     <div key={formField.name}>

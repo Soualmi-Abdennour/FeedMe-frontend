@@ -12,7 +12,7 @@ export const POST_FORM_FIELDS: Omit<IFormField, "errors" | "control">[] = [
     {
         name: "description",
         label: "Post Description",
-        type: "textArea",
+        type: "textAreaAutoSize",
         placeholder: "Something about your post..."
     },
     {
