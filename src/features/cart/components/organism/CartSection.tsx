@@ -68,7 +68,7 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
   if (items.length === 0) return null;
 
   return (
-    <div className="max-w-6xl mx-auto bg-[#F5F4F0] rounded-[2.5rem] p-6 md:p-10 space-y-8 antialiased">
+    <div className="max-w-6xl mx-auto bg-[#F5F4F0] rounded-[2.5rem] p-2 md:p-10 space-y-8 antialiased">
 
       <Toast
         message="Order completed successfully!"
@@ -86,8 +86,7 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
+      <div className="grid grid-cols-2 lg:grid-cols-12 gap-[99px] items-start">
         <div className="lg:col-span-8 flex flex-col gap-5 w-full">
           {items.map(item => (
             <div key={item.id} className="transition-all duration-300 hover:-translate-y-0.5">
