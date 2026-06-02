@@ -18,7 +18,6 @@ function NormalUserEditAccount() {
                     newPasswordConfirm: "",
                 }}
             />
-            <NotificationsToggle /> 
             <DangerZoneSection/> 
         </div>
     )

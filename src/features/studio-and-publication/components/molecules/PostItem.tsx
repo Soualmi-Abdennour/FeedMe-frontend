@@ -5,18 +5,21 @@ import MultiImageMediaPlayer from '../atoms/MultiImageMediaPlayer'
 import SingleImageMediaPlayer from '../atoms/SingleImageMediaPlayer'
 import VideoMediaPlayer from '../atoms/VideoxMediaPlayer'
 import Link from 'next/link';
-
+import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
+import { PostDetailPopup } from './PostDetailPopup'
 
 
 
 function PostItem({ post }: { post: PostAppModel }) {
-    const { media, user: { userName, role, profile } } = post
+  const { media, user: { userName, role, profile } } = post;
+
     let profileImage
     if (role === "USER") {
         profileImage = profile?.userBasicInformation.profileImageUrl
     } else {
         profileImage = profile?.restaurantBasicInformation.restaurantLogoUrl
-    } const renderMedia = () => {
+    } 
+    const renderMedia = () => {
         if (!media || media.length === 0) return null
 
         // Single video
@@ -24,43 +27,51 @@ function PostItem({ post }: { post: PostAppModel }) {
             return <VideoMediaPlayer media={media} />
         }
 
-        // Multiple images → carousel
-        if (media.length > 1) {
-            return <MultiImageMediaPlayer mediaList={media} />
-        }
-
-        // Single image
-        return <SingleImageMediaPlayer media={media} />
+    if (media.length > 1) {
+      return <MultiImageMediaPlayer mediaList={media} />;
     }
 
-    return (
-        <div className="relative h-full w-[387px] overflow-hidden rounded-2xl  shadow-xl">
-            <div className="absolute inset-0">{renderMedia()}</div>
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 flex items-end gap-3 px-4 pb-5">
-                <Link href={`/profile/${userName}`}>
-                    <div className='size-10  rounded-full shrink-0'>
-                        <Image src={profileImage ?? "/default/default-profile-image.png"} alt='/' width={40} height={40} className='object-cover w-full h-full rounded-full'></Image>
-                    </div>
-                    <div className="flex-1 overflow-hidden">
-                        <p className="truncate text-sm font-semibold text-white">{userName}</p>
-                        {post.title && (
-                            <p className="line-clamp-2 text-xs text-white/70 leading-relaxed mt-0.5">
-                                {post.title}
-                            </p>
-                        )}
-                    </div>
-                </Link>
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="shrink-0 rounded-full border-2 border-primary-500 bg-white/10 text-primary-500 backdrop-blur-sm hover:bg-primary-500 hover:text-white transition-all"
-                >
-                    Follow
-                </Button>
-            </div>
+    return <SingleImageMediaPlayer media={media} />;
+  };
+
+  return (
+    <>
+      {/* CARD */}
+      <div
+        className="relative h-full w-[387px] overflow-hidden rounded-2xl shadow-xl cursor-pointer"
+      >
+        <div className="absolute inset-0">{renderMedia()}</div>
+
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+        <div className="absolute bottom-0 left-0 right-0 flex items-end gap-3 px-4 pb-5">
+          {/* <div className="size-10 rounded-full shrink-0">
+            <Image
+              src={profileImage ?? "/default/default-profile-image.png"}
+              alt="/"
+              width={40}
+              height={40}
+              className="object-cover w-full h-full rounded-full"
+            />
+          </div> */}
+{/* 
+          <div className="flex-1 overflow-hidden">
+             <p className="truncate text-sm font-semibold text-white">
+              {userName}
+            </p> 
+
+            {post.title && (
+              <p className="line-clamp-2 text-xs text-white/70 mt-0.5">
+                {post.title}
+              </p>
+            )}
+          </div> */}
         </div>
-    )
+      </div>
+
+      
+    </>
+  );
 }
 
-export default PostItem
+export default PostItem;

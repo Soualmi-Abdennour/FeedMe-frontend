@@ -141,8 +141,7 @@ export type getUserProfileCredentials={
     userName:string
 }
 export type getOtherUserPostsCredentials={
-    userId:string
-    // profileType:"USER"|"RESTAURANT"
+    userId:string    
 }
 export type getProductsCredentials ={
     category?: string;

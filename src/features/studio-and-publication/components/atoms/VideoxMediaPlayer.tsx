@@ -46,11 +46,11 @@ function VideoMediaPlayer({ media }: { media: MediaAppModel[] }) {
     }, [])
     
     return (
-        <div className="relative h-full w-full" onClick={toggle}>
+        <div className="relative h-full w-full bg-black" onClick={toggle}>
             <video
                 ref={videoRef}
                 src={video.previewUrl}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
                 autoPlay
                 loop
                 playsInline

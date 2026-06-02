@@ -19,6 +19,7 @@ export interface IQuestionCardProps {
   userName: string;
   userInitials: string;
   userBg: string;
+  
   date: string;
   likes: number;
   answersCount: number;
@@ -49,6 +50,8 @@ export interface IQuestionMenuProps {
     isPinned: boolean;
     isSolved: boolean;
     isClosed: boolean;
+        userName: string;  // ← ajoute
+
     onEdit: () => void;
     onPin: () => void;
     onMarkSolved: () => void;

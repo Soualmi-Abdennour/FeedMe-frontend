@@ -284,7 +284,7 @@ export default function QAPage() {
       </div>
 
       <div className="flex-1 flex flex-col">
-        <div className="border-b border-[#F1D8CC] bg-white shadow-sm">
+        <div className="border-b border-[#F1D8CC] bg-white shadow-sm mx-4 rounded-2xl">
           <QAPageHeader
             searchValue={search}
             onSearch={setSearch}
@@ -294,12 +294,7 @@ export default function QAPage() {
 
         <div className="px-6 md:px-10 py-8 flex justify-center">
           <div className="w-full max-w-5xl space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-[#3D2A22]">Q&A: Ask your questions</h1>
-              <p className="text-sm text-[#8B6F63] mt-2">
-                Share your cooking questions and get help from the community.
-              </p>
-            </div>
+            
 
             <div className="space-y-6">
               {isLoading && questionsList.length === 0 ? (

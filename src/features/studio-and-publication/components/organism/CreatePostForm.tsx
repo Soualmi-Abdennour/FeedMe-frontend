@@ -35,8 +35,8 @@ function CreatePostForm({ className, onClose,setIsProcess }: ICreatePostFormProp
     }
      if (isLoading || isVideoUploading) {
             return (
-                <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
+            <div className="w-full h-full flex flex-col items-center justify-center gap-4   bg-white rounded-2xl py-6 px-32">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent " />
                     <div className="text-center">
                         <h3 className="text-lg font-semibold">Processing request</h3>
                         <p className="text-sm text-muted-foreground">

@@ -28,7 +28,7 @@ export  function QAPageHeader({
   };
 
   return (
-    <header className="bg-white border-b border-[#F1D8CC] py-6 px-6 shadow-sm">
+    <header className="bg-white border-b border-[#F1D8CC] py-6 px-6 shadow-sm ">
       <div className="max-w-7xl mx-auto">
 
         {/* TOP BAR */}

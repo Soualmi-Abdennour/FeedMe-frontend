@@ -1,30 +1,20 @@
 import { useEffect, useRef } from "react";
+import NextLink from "next/link";
 import {
-  Pencil,
-  Pin,
-  PinOff,
-  CheckCircle2,
-  Lock,
-  
-  Trash2,
-  User,
-  Link,
-  LockOpen,
+  Pencil, Pin, PinOff, CheckCircle2, Lock,
+  Trash2, User, LockOpen,
 } from "lucide-react";
 import { IQuestionMenuProps } from "../../types/props.types";
-import {MenuItem} from "./MenuItem";
+import { MenuItem } from "./MenuItem";
 
-
-
-
-
-export  function QuestionMenu({
+export function QuestionMenu({
   isOwner,
   isInMyQuestions,
   hasAnswers,
   isPinned,
   isSolved,
   isClosed,
+  userName,
   onEdit,
   onPin,
   onMarkSolved,
@@ -56,64 +46,37 @@ export  function QuestionMenu({
     >
       {isOwner ? (
         <>
-          <MenuItem
-            icon={<Pencil size={iconSize} />}
-            label="Edit"
-            onClick={onEdit}
-          />
-
+          <MenuItem icon={<Pencil size={iconSize} />} label="Edit" onClick={onEdit} />
           <MenuItem
             icon={isPinned ? <PinOff size={iconSize} /> : <Pin size={iconSize} />}
             label={isPinned ? "Unpin" : "Pin"}
             onClick={onPin}
-            disabled={!isInMyQuestions} 
+            disabled={!isInMyQuestions}
             hint={!isInMyQuestions ? "Only available in My Questions tab" : undefined}
           />
-
-          {/* <MenuItem
+          <MenuItem
             icon={<CheckCircle2 size={iconSize} />}
-            label="Mark as solved"
+            label={isSolved ? "Mark as unsolved" : "Mark as solved"}
             onClick={onMarkSolved}
-            disabled={!hasAnswers || isSolved}
-            hint={!hasAnswers ? "No answers yet" : isSolved ? "Already solved" : undefined}
-          /> */}
-<MenuItem
-  icon={<CheckCircle2 size={iconSize} />}
-  label={isSolved ? "Mark as unsolved" : "Mark as solved"}
-  onClick={onMarkSolved}
-  disabled={!hasAnswers}
-  hint={!hasAnswers ? "No answers yet" : undefined}
-/>
-          {/* <MenuItem
-            icon={<Lock size={iconSize} />}
-            label="Close question"
-            onClick={onClose}
-            disabled={isClosed}
-            hint={isClosed ? "Already closed" : undefined}
-          /> */}
-            <MenuItem
+            disabled={!hasAnswers}
+            hint={!hasAnswers ? "No answers yet" : undefined}
+          />
+          <MenuItem
             icon={isClosed ? <LockOpen size={iconSize} /> : <Lock size={iconSize} />}
             label={isClosed ? "Reopen question" : "Close question"}
             onClick={onClose}
-            />
-          <div className="my-1 border-t border-[#F1D8CC]" />
-
-          <MenuItem
-            icon={<Trash2 size={iconSize} />}
-            label="Delete"
-            onClick={onDelete}
-            danger
           />
+          <div className="my-1 border-t border-[#F1D8CC]" />
+          <MenuItem icon={<Trash2 size={iconSize} />} label="Delete" onClick={onDelete} danger />
         </>
-      ) : ( // For non-owners, only show view profile and copy link options; no edit/pin/mark solved/close/delete   
-        <>
+      ) : (
+        <NextLink href={`/profile/${userName}`} onClick={onDismiss}>
           <MenuItem
             icon={<User size={iconSize} />}
             label="View profile"
             onClick={onViewProfile}
           />
-       
-        </>
+        </NextLink>
       )}
     </div>
   );

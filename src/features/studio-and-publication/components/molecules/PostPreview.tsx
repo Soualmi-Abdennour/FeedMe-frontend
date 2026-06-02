@@ -24,7 +24,7 @@ function PostPreview({ media, postId, mediaType,ownerId}: IPostPreviewProps) {
         }, []);
 
     return (
-        <div className='relative flex items-center justify-center w-full aspect-[9/16] overflow-hidden rounded-xl bg-black'>
+        <div className='relative flex items-center justify-center w-full aspect-[4/5] overflow-hidden rounded-xl bg-black cursor-pointer'>
             {sameUser && <button
                 className='absolute top-2 right-2 z-10'
                 onClick={(e) => {
@@ -37,10 +37,17 @@ function PostPreview({ media, postId, mediaType,ownerId}: IPostPreviewProps) {
             {showList && sameUser && (
                 <div ref={menuRef} className="absolute top-8 right-2 mt-1 w-28 bg-white rounded-xl shadow-lg  border-neutral-100 overflow-hidden z-20 border-2">
                     <Link href={`/studio?action=edit&id=${postId}`}>
-                        <button className="w-full text-left px-4 py-2  text-sm font-medium text-gray-700 hover:bg-neutral-50">Edit</button>
+                        <button
+                        onClick={(e) => e.stopPropagation()}                      
+                        className="w-full text-left px-4 py-2  text-sm font-medium text-gray-700 hover:bg-neutral-50">Edit</button>
                     </Link>
                     <Link href={`/studio?action=delete&id=${postId}`}>
-                        <button className="w-full text-left font-medium px-4 py-2 text-sm text-fail-500 hover:bg-fail-50">Delete</button>
+                        <button
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-full text-left font-medium px-4 py-2 text-sm text-fail-500 hover:bg-fail-50"
+                        >
+                            Delete
+                        </button>
                     </Link>
                 </div>
             )}
@@ -61,15 +68,15 @@ function PostPreview({ media, postId, mediaType,ownerId}: IPostPreviewProps) {
             {mediaType === "VIDEO" ? (
                 <video
                     src={media?.[0]?.previewUrl}
-                    className='absolute inset-0 w-full h-full object-cover'
+                className='absolute inset-0 w-full h-full object-contain' 
                 />
             ) : (
                 <Image
                     src={media?.[0]?.previewUrl|| "/placeholder.png"}
                     fill
                     alt=''
-                    className='object-cover'
-                    sizes='(max-width: 768px) 50vw, 33vw'
+                    className='object-contain'
+                    sizes=' 33vw' //(max-width: 768px) 50vw,
                 />
             )}
         </div>

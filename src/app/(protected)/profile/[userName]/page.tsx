@@ -7,7 +7,6 @@ import React from 'react'
 
 function Page() {
   const { userName } = useParams()
-  
   return <OtherUserProfilePage userName={userName as string}></OtherUserProfilePage>
 }
 

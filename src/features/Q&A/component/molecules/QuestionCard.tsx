@@ -7,6 +7,7 @@ import {ActionBar} from "./ActionBar";
 import {QuestionMenu} from "./QuestionMenu";
 import {UserHeader} from "./UserHeader";
 import { IQuestionCardProps } from "../../types/props.types";
+import NextLink from 'next/link'
 
 
 export default function QuestionCard({
@@ -78,6 +79,7 @@ export default function QuestionCard({
                 isPinned={isPinned}
                 isSolved={isSolved}
                 isClosed={isClosed}
+                userName={userName}
                 onEdit={() => { onEdit(questionId); setMenuOpen(false); }}
                 onPin={() => { onPin(questionId); setMenuOpen(false); }}
                 onMarkSolved={() => { onMarkSolved(questionId); setMenuOpen(false); }}

@@ -20,7 +20,7 @@ export  function ProductCard({ product }: { product: ProductAppModel }) {
             width={32}
             height={32}
           />
-        </div>
+        </div> 
         <div>
           <p className="text-xs font-medium text-gray-800 leading-tight">
             {product.seller.userName}

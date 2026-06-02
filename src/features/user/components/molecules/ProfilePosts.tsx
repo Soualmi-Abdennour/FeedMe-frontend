@@ -10,7 +10,7 @@ import PostWrapper from "@/features/studio-and-publication/components/organism/P
 function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
     const [postToShow,setPostToShow]=useState<PostAppModel|null>(null)
     return (
-        <div className="p-4">
+        <div className="py-4 px-12">
             {/* <h2 className="text-sm font-semibold text-foreground mb-3">Publications</h2> */}
             {isLoading && (
                 <div className="flex items-center justify-center py-16">
@@ -24,7 +24,7 @@ function ProfilePosts({ posts, isLoading, isError }: IProfilePosts) {
                 </div>
             )}
             {!isLoading && !isError && (
-                <div className="grid grid-cols-4 gap-1 ">
+                <div className="grid grid-cols-4 gap-3 ">
                     {posts.map((post) => (
                         <div
                             onClick={(e) => {

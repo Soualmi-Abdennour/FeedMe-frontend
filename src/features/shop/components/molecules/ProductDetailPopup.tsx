@@ -9,8 +9,6 @@ import Link from 'next/link';
 
 
 export function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
-  console.log(product);
-
   const { user } = useAppSelector(state => state.user)
   const formatTime = (min: number) =>
     min >= 60 ? `${Math.floor(min / 60)}h ${min % 60}min` : `${min}min`;
@@ -32,8 +30,7 @@ export function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDe
             <X size={20} />
           </button>
 
-          {/* ── Left: Image ── */}
-          {/* ── Left: Image ── */}
+          {/* Left: Image */}
           <div className="w-full md:w-[45%] flex-shrink-0 bg-white p-4">
             <div className="w-full h-full min-h-[300px] md:min-h-[380px] rounded-xl overflow-hidden bg-gray-100">
               {product.imageUrl ? (
@@ -51,26 +48,34 @@ export function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDe
               )}
             </div>
           </div>
-          {/* ── Right: Details ── */}
+
+          {/* Right: Details */}
           <div className="flex-1 flex flex-col gap-3 p-5">
 
-            {/* Account holder */}
+            {/* Account holder — cliquable */}
             <div className="flex items-center gap-3 border border-gray-200 rounded-xl px-4 py-3">
               <span className="text-sm font-bold text-gray-800 whitespace-nowrap">
                 Account holder:
               </span>
-              <Link href={`/profile/${product.seller.userName}`}>
-              <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
-                <Image src={product.seller?.avatarUrl ?? "/default/default-profile-image.png"} alt="" className="w-full h-full object-cover" width={40} height={40} />
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-sm font-semibold text-gray-800 truncate">
-                  {product.seller?.userName}
-                </span>
-                <span className="text-xs text-gray-400 truncate">
-                  {product.seller?.userName}
-                </span>
-              </div>
+              <Link
+                href={`/profile/${product.seller.userName}`}
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
+                <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
+                  {product.seller.avatarUrl ? (
+                    <Image src={product.seller.avatarUrl} alt="" className="w-full h-full object-cover" width={40} height={40} />
+                  ) : (
+                    product.seller.userName[0].toUpperCase()
+                  )}
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-semibold text-gray-800 truncate">
+                    {product.seller.userName}
+                  </span>
+                  <span className="text-xs text-gray-400 truncate">
+                    {product.seller.userName}
+                  </span>
+                </div>
               </Link>
             </div>
 

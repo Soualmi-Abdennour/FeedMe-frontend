@@ -38,8 +38,8 @@ export const userApiSlice=fetchAPI.injectEndpoints({
             })
         }),
         getOtherUserPosts:build.query<PostsResponse,getOtherUserPostsCredentials>({
-            query:({userId})=>({
-                url: `/posts/other-posts/${userId}`
+            query: ({ userId })=>({
+                url: `/posts?userName=${userId}`
             }),
         }),
         getUserSavedPosts:build.query<PostsResponse,void>({

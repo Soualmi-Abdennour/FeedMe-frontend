@@ -17,7 +17,7 @@ function MultiImageMediaPlayer({ mediaList }: { mediaList: MediaAppModel[] }) {
     }
 
     return (
-        <div className="relative h-full w-full overflow-hidden">
+        <div className="relative h-full w-full overflow-hidden bg-black">
 
             {/* Slides — all stacked, only active one visible */}
             {mediaList.map((m, i) => (
@@ -30,7 +30,7 @@ function MultiImageMediaPlayer({ mediaList }: { mediaList: MediaAppModel[] }) {
                         src={m.previewUrl}
                         alt={`media ${i + 1}`}
                         fill
-                        className="object-cover"
+                        className="object-contain"
                         sizes="387px"
                     />
                 </div>

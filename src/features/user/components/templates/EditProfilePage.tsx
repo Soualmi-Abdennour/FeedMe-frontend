@@ -9,7 +9,7 @@ import { UserAppModel } from '../../types/user.types'
 function EditProfilePage() {   
     const {user}=useAppSelector(state=>state.user)
     return (
-        <main className='h-full overflow-y-auto'>
+        <main className='h-full '>
         {user?.role==="USER" ? (
             <NormalUserEditProfilePage></NormalUserEditProfilePage>
         ):(
