@@ -75,6 +75,7 @@ function PostActionsSideBar({
                 </div>
                 <span className="text-xs font-medium text-black/80">{likeCount}</span>
             </button>
+
             <button 
                 onClick={toggleComments}
                 className="flex flex-col items-center gap-1 group"
@@ -84,6 +85,7 @@ function PostActionsSideBar({
                 </div>
                 <span className="text-xs font-medium text-black/80">{commentsCount}</span>
             </button>
+
             <button 
                 onClick={handleSave}
                 className="flex flex-col items-center gap-1 group"
@@ -92,6 +94,8 @@ function PostActionsSideBar({
                     <Bookmark fill={isSaved ? "orange" : "none"} className={cn("size-5 text-black")} />
                 </div>
             </button>
+
+{/* 
             <button 
                 onClick={toggleDetails}
                 className="flex flex-col items-center gap-1 group"
@@ -99,7 +103,8 @@ function PostActionsSideBar({
                 <div className="flex size-10 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm transition group-hover:bg-black/20">
                     <ReceiptText className="size-5 text-black" />
                 </div>
-            </button>
+            </button> */}
+            
         </div>
     )
 }

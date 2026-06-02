@@ -17,7 +17,7 @@ function NormalUserEditProfilePage(props: Props) {
     const { userBasicInformation, userUsagePreferences } = profile as NormalUserProfileAppModel
     
     return (
-        <div className='flex flex-col gap-10'>
+        <div className='flex flex-col gap-10 pb-8'>
             <EditInformationFormWithImageUploader
                 fieldToUpdate={"userBasicInformation"}
                 endpoint={"user"}

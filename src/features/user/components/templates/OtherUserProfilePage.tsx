@@ -8,10 +8,9 @@ import ProfilePostsNavBar from '../molecules/ProfilePostsNavBar';
 import RestaurantProfileServices from '../molecules/RestaurantProfileServices';
 import OtherUserProfilePosts from '../organism/OtherUserProfilePosts';
 
-function OtherUserProfilePage({userId}:{userId:string}) {
+function OtherUserProfilePage({userName}:{userName:string}) {
     const [currentTab, setCurrentTab] = useState<string>("POSTS")
-    const { data, isLoading, isError } = useGetUserProfileQuery({ userId})
-
+const { data, isLoading, isError } = useGetUserProfileQuery({ userName})
     if(isLoading) {
         return (
             <div className="flex items-center justify-center py-16 h-full">
@@ -34,7 +33,7 @@ function OtherUserProfilePage({userId}:{userId:string}) {
         const renderTab = (): React.ReactNode => {
             if (user?.role === "RESTAURANT") {
                 if (currentTab === 'POSTS')
-                    return <OtherUserProfilePosts userId={userId}></OtherUserProfilePosts>
+                    return <OtherUserProfilePosts userName={userName}></OtherUserProfilePosts>
                 else if (currentTab === 'RESTAURANT_INFO' && user?.profile)
                     return <RestaurantProfileServices profile={user.profile} />
             }
@@ -44,7 +43,7 @@ function OtherUserProfilePage({userId}:{userId:string}) {
                 <ProfileHeader user={user!} />
                 <div>
                     {user?.role === "USER" ? (
-                        <OtherUserProfilePosts userId={userId}></OtherUserProfilePosts>
+                        <OtherUserProfilePosts userName={userName}></OtherUserProfilePosts>
                     ) : (
                         <div>
                             <ProfilePostsNavBar currentTab={currentTab} navItems={OTHER_PROFILE_NAV_ITEMS} setCurrentTab={setCurrentTab}></ProfilePostsNavBar>

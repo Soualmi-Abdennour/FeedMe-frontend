@@ -12,11 +12,11 @@ function ProtectedLayout({
 }) {
     return (
         <ProtectedRouteGuard>
-            <main className={cn('h-screen relative z-0 ')}>
+            <main className={cn('relative z-0 h-screen')}>
                 <AppSidebar />
-                <div className='pl-20 bg-primary-50 h-screen flex flex-col '>
-                    <AppHeader />
-                    <div className='flex-1 mt-3  h-[calc(100%-68px)]'>
+                <div className='pl-20 bg-primary-50  flex flex-col h-full'>
+                    {/* <AppHeader /> */}
+                    <div className='flex-1 mt-3  h-[calc(100%-68px)] '>
                         {children}
                     </div>
                 </div>

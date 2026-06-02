@@ -38,14 +38,14 @@ export const userApiSlice=fetchAPI.injectEndpoints({
             })
         }),
 
-        getUserProfile:build.query<UserResponse,getUserProfileCredentials>({
-            query:({userId})=>({
-                url: `/profile/${userId}`,
+       getUserProfile:build.query<UserResponse,getUserProfileCredentials>({
+            query:({userName})=>({
+                url: `/profile?userName=${userName}`,
             })
         }),
         getOtherUserPosts:build.query<PostsResponse,getOtherUserPostsCredentials>({
-            query:({userId})=>({
-                url: `/posts/other-posts/${userId}`
+            query:({userName})=>({
+                url: `/posts?userName=${userName}`
             }),
         }),
         getUserSavedPosts:build.query<PostsResponse,void>({

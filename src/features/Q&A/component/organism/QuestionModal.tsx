@@ -40,7 +40,7 @@ export  function QuestionModal({
           </button>
           <button
             onClick={onSubmit}
-            disabled={title.trim().length < 5}
+            disabled={title.trim().length < 3}
             className="bg-orange-500 disabled:opacity-40 text-white px-4 py-2 rounded"
           >
             {mode === "edit" ? "Save changes" : "Publish"}  {/* ← يتغير */}

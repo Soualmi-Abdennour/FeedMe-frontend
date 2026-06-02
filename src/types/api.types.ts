@@ -129,10 +129,10 @@ export type getPostCommnetsCredentials={
 }
 
 export type getUserProfileCredentials={
-    userId:string
+    userName:string
 }
 export type getOtherUserPostsCredentials={
-    userId:string
+    userName:string
     // profileType:"USER"|"RESTAURANT"
 }
 export type getProductsCredentials ={

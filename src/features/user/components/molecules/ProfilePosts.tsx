@@ -8,7 +8,7 @@ import { IProfilePosts } from "@/features/user/types/props.types";
 
 function ProfilePosts({ posts, isLoading, isError,sameUser=true }: IProfilePosts) {
     return (
-        <div className="p-4">
+        <div className="py-4 px-12">
             {/* <h2 className="text-sm font-semibold text-foreground mb-3">Publications</h2> */}
             {isLoading && (
                 <div className="flex items-center justify-center py-16">
@@ -22,7 +22,7 @@ function ProfilePosts({ posts, isLoading, isError,sameUser=true }: IProfilePosts
                 </div>
             )}
             {!isLoading && !isError && (
-                <div className="grid grid-cols-3 gap-1 ">
+                <div className="grid grid-cols-4 gap-3 ">
                     {posts.map(({ id, mediaType, media }) => (
                         <PostPreview
                             key={id}

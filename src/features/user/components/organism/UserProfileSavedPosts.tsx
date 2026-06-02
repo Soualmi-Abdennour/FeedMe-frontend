@@ -7,7 +7,7 @@ function UserProfileSavedPosts() {
   const {data,isError,isLoading}=useGetUserSavedPostsQuery()
   const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) :[] 
   return (
-    <ProfilePosts posts={posts} isLoading={isLoading} isError={isError} />
+    <ProfilePosts posts={posts} isLoading={isLoading} isError={isError}  sameUser={false} />
   )
 }
 

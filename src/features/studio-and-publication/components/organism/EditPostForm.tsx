@@ -35,8 +35,8 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
     }
     if (isLoading || fetchResponse.isLoading) {
         return (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-4">
-                <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent" />
+            <div className="w-full h-full flex flex-col items-center justify-center gap-4   bg-white rounded-2xl py-6 px-32">
+                <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent " />
                 <div className="text-center">
                     <h3 className="text-lg font-semibold">Processing request</h3>
                     <p className="text-sm text-muted-foreground">
@@ -47,7 +47,7 @@ function EditPostForm({ className, onClose, postId }: IEditPostFormProps) {
         )
     }
     return (
-        <div className={cn('relative max-w-[600px] w-full flex flex-col items-center border-2 border-black bg-white p-10 gap-3', className)}>
+        <div className={cn('relative w-full flex flex-col items-center bg-white rounded-2xl p-6 gap-3', className)}>
             <button
                 onClick={onClose}
                 className="absolute top-3 right-4 text-gray-500 hover:text-gray-900 text-xl font-bold"

@@ -13,11 +13,15 @@ export interface IMediaGalleryProps extends IMediaDropZoneProps {
 }
 
 export interface IPostDetails {
-    className?:string;
-    postTitle:string;
-    postDescription:string;
-    contentType:"DISH"|"RECIPE"
+    className?: string;
+    postTitle: string;
+    postDescription: string;
+    contentType: "DISH" | "RECIPE";
+    userPhoto?: string;
+    userSlug?: string;
+    username?: string;
 }
+
 
 export interface IPostActionsSideBar {
     toggleComments:()=>void;
@@ -42,7 +46,7 @@ export interface IPostComment {
     text:string
     commentId:string
     createdAt:Date
-    user:UserAppModel
+    user?:UserAppModel
 }
 
 export interface IPostPreviewProps {

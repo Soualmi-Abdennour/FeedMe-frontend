@@ -9,6 +9,8 @@ import { ICategoryBarProps } from '../../types/props.types';
 
 export  function CategoryBar({ active, onSelect, onApply }: ICategoryBarProps) {
   return (
+    <div className="sticky top-0 z-30 bg-white border-b">
+
     <div className="flex items-center gap-4 mb-8">
       <div className="flex gap-3 overflow-x-auto scrollbar-hide flex-1 py-1">
         <CategoryPill
@@ -41,6 +43,7 @@ isActive={active.includes(cat.value.toLowerCase())}
         Apply
        </button>
     </div>
+    </div>
   );
 };
-;7
+;
