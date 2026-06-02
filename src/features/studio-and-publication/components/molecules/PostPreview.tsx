@@ -6,13 +6,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import { IPostPreviewProps } from '../../types/props.types'
 import Image from 'next/image'
 import { Image as ImageIcon } from "lucide-react"
+import { useAppSelector } from '@/store/base.store'
 
-function PostPreview({ media, postId, mediaType,sameUser=true}: IPostPreviewProps) {    
+function PostPreview({ media, postId, mediaType,ownerId}: IPostPreviewProps) { 
+    const user=useAppSelector(state=>state.user.user)   
+    const sameUser=user?.id===ownerId
     const [showList, setShowList] = useState<boolean>(false)
     const menuRef = useRef<HTMLDivElement>(null);
-    
-    
-    
         useEffect(() => {
             const handleOutside = (e: MouseEvent) => {
                 if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -27,11 +27,14 @@ function PostPreview({ media, postId, mediaType,sameUser=true}: IPostPreviewProp
         <div className='relative flex items-center justify-center w-full aspect-[9/16] overflow-hidden rounded-xl bg-black'>
             {sameUser && <button
                 className='absolute top-2 right-2 z-10'
-                onClick={() => setShowList(state => !state)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                        setShowList(state => !state)
+                }}
             >
                 <EllipsisVertical className='size-6 text-white' />
             </button>}
-            {showList &&sameUser && (
+            {showList && sameUser && (
                 <div ref={menuRef} className="absolute top-8 right-2 mt-1 w-28 bg-white rounded-xl shadow-lg  border-neutral-100 overflow-hidden z-20 border-2">
                     <Link href={`/studio?action=edit&id=${postId}`}>
                         <button className="w-full text-left px-4 py-2  text-sm font-medium text-gray-700 hover:bg-neutral-50">Edit</button>

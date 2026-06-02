@@ -21,7 +21,8 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
         control,
         formState: {
             errors,
-            isValid
+            isValid,
+            isDirty
         }
     } = useForm<IPostFormSchema>({
         resolver: zodResolver(postFormSchema),
@@ -40,11 +41,18 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
         await onSubmit(postData)
     }
     return (
-        <div className='grid grid-cols-1 justify-center w-full '>
-            {mediaList && (
+        <div className='grid grid-cols-2 gap-20 justify-center w-full  '>
+            <div className='items-start gap-20 justify-center grid grid-cols-1'>
+                <div className='grid grid-cols-1 items-start'>
+                    {mediaList && (
                 <MediaPreviewGallery uploadedMedia={mediaList} setUploadedMedia={setMediaList} className=''/>
-            )}
-            <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList} />
+            )} 
+                </div> 
+            <div className='grid grid-cols-1  '>
+                <MediaDropZone uploadedMedia={mediaList} setUploadedMedia={setMediaList}/>
+            </div>
+                
+            </div>
             <form onSubmit={handleSubmit(submitForm)}>
                 {POST_FORM_FIELDS.map((formField) => (
                     <div key={formField.name}>
@@ -59,7 +67,7 @@ function PostForm({ defaultValues,onSubmit,onClose  }: IPostFormProps) {
                         className="flex-1 py-2 rounded-full border border-neutral-200 text-sm text-neutral-600 hover:bg-neutral-50 transition">
                             Cancel
                     </Button>
-                    <Button disabled={mediaList.length === 0 || !isValid } 
+                    <Button disabled={mediaList.length === 0 || !isValid || !isDirty} 
                         type='submit'
                         className="flex-1 py-2 rounded-full bg-primary-500 text-white text-sm font-semibold hover:bg-primary-600 transition disabled:opacity-60">
                         Create Post

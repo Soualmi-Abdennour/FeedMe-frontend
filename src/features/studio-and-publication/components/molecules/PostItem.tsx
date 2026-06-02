@@ -13,8 +13,13 @@ import { convertMediaDbModelToMediaAppModel } from '../../utils/media.utils'
 
 
 function PostItem({post} : {post:PostAppModel}) {
-    const { media,user:{userName} } = post
-    const renderMedia = () => {
+const { media,user:{userName,role,profile} } = post
+    let profileImage
+    if(role==="USER"){
+        profileImage=profile?.userBasicInformation.profileImageUrl
+    }else {
+        profileImage=profile?.restaurantBasicInformation.restaurantLogoUrl
+    }    const renderMedia = () => {
         if (!media || media.length === 0) return null
 
         // Single video
@@ -41,8 +46,9 @@ function PostItem({post} : {post:PostAppModel}) {
            
 
             <div className="absolute bottom-0 left-0 right-0 flex items-end gap-3 px-4 pb-5">
-                <div className="size-10 shrink-0 rounded-full bg-gradient-to-br from-rose-400 to-violet-600 ring-2 ring-white/30" />
-
+<div className='size-10  rounded-full shrink-0'>
+                <Image src={profileImage ?? "/default/default-profile-image.png"} alt='/' width={40} height={40} className='object-cover w-full h-full rounded-full'></Image>
+            </div>
                 <div className="flex-1 overflow-hidden">
                     <p className="truncate text-sm font-semibold text-white">{userName}</p>
                     {post.title && (

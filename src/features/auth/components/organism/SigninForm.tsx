@@ -72,7 +72,7 @@ function SigninForm() {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className='flex flex-col gap-5 '
+            className='flex flex-col gap-4 '
         >
             {SIGN_IN_FIELDS.map((formField) => (
                 <div key={formField.name}>

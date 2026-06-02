@@ -7,10 +7,8 @@ export function mapProductDbToAppModel(p: ProductDbModel): ProductAppModel {
         price: parseFloat(p.price),
         description: p.description,
         imageUrl: p.image,
-        category: Array.isArray(p.category)
-            ? p.category[0]?.toLowerCase()
-            : p.category?.toLowerCase() ?? "all",
-        preparationTime: p.preparingTime,
+        category: p.category,
+        preparationTime: p.preparationTime,
         quantityAvailable: 0,
         seller: {
             id: p.restaurant?.id ?? "unknown",

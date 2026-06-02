@@ -30,7 +30,7 @@ export interface IFilterSectionProps {
 export interface IProductDetailPopupProps {
     product: ProductAppModel;
     onClose: () => void;
-    onAddToCart: () => void;
+    onAddToCart?: () => void;
 }
 
 export interface IShopSearchBarInputProps {

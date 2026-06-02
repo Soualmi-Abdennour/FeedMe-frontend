@@ -26,12 +26,12 @@ function StudioPage() {
     const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) : []
 
     return (
-        <div className='relative z-0 w-full px-32 py-24 h-full'>
+        <div className='relative z-0 w-full px-32  h-full'>
             <header className='flex justify-between max-h-[56px] items-center  '>
                 <Button
                     onClick={() => setOpenCreatePostForm(true)}
                     variant="ghost"
-                    className="flex items-center gap-2 px-5 py-2 border-2 border-primary-400 text-primary-500 rounded-full text-sm font-semibold hover:bg-primary-50 transition"
+                    className="flex items-center gap-2 px-5 py-4 border-2 border-primary-400 text-primary-500 rounded-full text-sm font-semibold hover:bg-primary-50 transition"
                 >
                     <Plus size={26}></Plus>
                     Create Post
@@ -59,13 +59,13 @@ function StudioPage() {
                 {!isLoading && !isError && (
                     <div className='grid grid-cols-3 gap-3 '>
                         {filterPosts({ posts, selectFilterOptions: filterOptions })
-                            .map(({ mediaType, media, id }) => (
+                            .map(({ mediaType, media, id,user }) => (
                                 <PostPreview
                                     key={id}
                                     mediaType={mediaType}
                                     media={media}
                                     postId={id}
-                                    sameUser={true}
+                                    ownerId={user.id}
                                 />
                             ))
                         }
@@ -82,7 +82,7 @@ function StudioPage() {
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
                     onClick={() => setOpenCreatePostForm(false)}
                 >
-                    <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-2xl shadow-xl w-full max-w-md  p-6 flex flex-col gap-4">
+                    <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-2xl shadow-xl w-full max-w-[900px]  p-6 flex flex-col gap-4">
                         <CreatePostForm onClose={() => setOpenCreatePostForm(false)} />
                     </div>
                 </div>

@@ -57,7 +57,7 @@ function CartPage() {
           </button>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-16 w-full">
           {groups.map((group: any) => (
             <CartSection
               key={group.accountId}

@@ -425,3 +425,12 @@
     order: -1;
   }
 }
+*{
+ @apply        [scrollbar-width:auto] 
+                [scrollbar-color:#fb923c_transparent] 
+                supports-[scrollbar-width:thin]:[scrollbar-width:auto]
+                [&::-webkit-scrollbar]:w-[6px]
+                [&::-webkit-scrollbar-track]:bg-transparent
+                [&::-webkit-scrollbar-thumb]:bg-[#fb923c]
+                [&::-webkit-scrollbar-thumb]:rounded-full
+}

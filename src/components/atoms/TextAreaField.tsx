@@ -40,7 +40,7 @@ function TextAreaField({
                             placeholder={placeholder}
                             disabled={disabled}
                             autoFocus={autoFocus}
-                            className={`textArea-container w-full bg-transparent hover:outline-none focus:outline-none outline-none border-none text-neutral-900 placeholder:text-neutral-400 `}
+                            className={`textArea-container w-full bg-transparent hover:outline-none focus:outline-none outline-none border-none text-neutral-900 placeholder:text-neutral-400 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-h-[100px] resize-none"`}
                         ></Textarea>
                     )}
                 >

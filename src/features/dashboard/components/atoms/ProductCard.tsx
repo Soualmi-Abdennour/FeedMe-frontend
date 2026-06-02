@@ -25,7 +25,10 @@ export const ProductCard = ({ product, onEdit, onDelete }: IProductCardProps) =>
         <div className="relative bg-white rounded-2xl overflow-hidden shadow-sm border border-neutral-100">
             <div ref={menuRef} className="absolute top-2 right-2 z-10">
                 <button
-                    onClick={() => setMenuOpen((prev) => !prev)}
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setMenuOpen((prev) => !prev)
+                    }}
                     className="w-7 h-7 flex items-center justify-center rounded-full bg-black/20 hover:bg-black/30 transition"
                     aria-label="Options"
                 >
@@ -52,7 +55,7 @@ export const ProductCard = ({ product, onEdit, onDelete }: IProductCardProps) =>
 
             <div className="relative w-full h-36">
                 <Image
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     fill
                     className="object-cover"

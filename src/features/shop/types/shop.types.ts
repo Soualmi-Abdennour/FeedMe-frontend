@@ -9,12 +9,11 @@ export type ProductAppModel = {
   name: string;
   price: number;
   imageUrl: string ;
-  category: string;
+  category: "Vegetarian"|"Fast Food"| "Deserts & Sweets"| "Seafood"| "Healthy Food"| "Traditional dishes"
   seller: SellerModel;
   quantityAvailable: number;
-  ///rating?: number;
-  description?: string;
-  preparationTime?: number;
+  description: string;
+  preparationTime: number;
 }
 
 export type ProductDbModel ={
@@ -23,8 +22,8 @@ export type ProductDbModel ={
   price: string;
   description: string;
   image: string;
-  preparingTime: number;
-  category: string | string[];
+  preparationTime: number;
+  category: "Vegetarian" | "Fast Food" | "Deserts & Sweets" | "Seafood" | "Healthy Food" | "Traditional dishes";
   restaurant?: {
     id: string;
     restaurantName: string;

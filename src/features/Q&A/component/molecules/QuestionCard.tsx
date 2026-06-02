@@ -14,7 +14,7 @@ export default function QuestionCard({
   likes, answersCount, isLiked = false, isSaved = false,
   isPinned = false, isSolved = false, isClosed = false,
   questionId, authorId, currentUserId, activeTab,
-  answers, onLike, onReply,
+  answers,
   onSubmitAnswer, onLikeAnswer,
   onEdit, onPin, onMarkSolved, onClose, onDelete,
 }: IQuestionCardProps) {
@@ -98,12 +98,11 @@ export default function QuestionCard({
       </div>
 
       <ActionBar
+        questionId={questionId}
         likes={likes}
         comments={answersCount}
         isLiked={isLiked}
         isSaved={isSaved}
-        onLike={onLike}
-        onReply={onReply}
         onComment={() => setShowAnswers((p) => !p)}
       />
 

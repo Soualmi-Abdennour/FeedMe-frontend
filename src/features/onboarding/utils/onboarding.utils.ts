@@ -32,14 +32,12 @@ function appendToFormData(formData: FormData, value: unknown, key: string): void
     }
 
     if (Array.isArray(value)) {
-        // value.forEach((item, index) => appendToFormData(formData, item, `${key}[${index}]`));
-        value.forEach((item, index) => appendToFormData(formData, item, `${key}`));
+        value.forEach((item, index) => appendToFormData(formData, item, `${key}-${index}`));
         return;
     }
 
     if (typeof value === "object") {
         Object.entries(value).forEach(([field, val]) =>
-            // appendToFormData(formData, val, `${key}[${field}]`)
             appendToFormData(formData, val, `${key}-${field}`)
         );
         return;
