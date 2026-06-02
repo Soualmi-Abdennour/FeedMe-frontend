@@ -35,7 +35,6 @@ export interface IProfilePosts  {
     posts: PostAppModel[];
     isLoading: boolean;
     isError: boolean;
-    sameUser?:boolean
 };
 
 

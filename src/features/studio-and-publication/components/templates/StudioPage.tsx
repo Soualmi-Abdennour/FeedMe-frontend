@@ -59,13 +59,13 @@ function StudioPage() {
                 {!isLoading && !isError && (
                     <div className='grid grid-cols-3 gap-3 '>
                         {filterPosts({ posts, selectFilterOptions: filterOptions })
-                            .map(({ mediaType, media, id }) => (
+                            .map(({ mediaType, media, id,user }) => (
                                 <PostPreview
                                     key={id}
                                     mediaType={mediaType}
                                     media={media}
                                     postId={id}
-                                    sameUser={true}
+                                    ownerId={user.id}
                                 />
                             ))
                         }

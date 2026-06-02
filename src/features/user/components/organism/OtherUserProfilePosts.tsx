@@ -6,7 +6,7 @@ function OtherUserProfilePosts({userId}:{userId:string}) {
   const { data, isError, isLoading } = useGetOtherUserPostsQuery({userId})
   const posts = data?.data?.posts ? data.data.posts.map((post) => convertPostDbModelToPostAppModel(post)) : []
   return (
-    <ProfilePosts posts={posts} isLoading={isLoading} isError={isError} sameUser={false} />
+    <ProfilePosts posts={posts} isLoading={isLoading} isError={isError}  />
   )
 }
 

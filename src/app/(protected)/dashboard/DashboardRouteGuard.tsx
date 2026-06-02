@@ -1,25 +1,25 @@
 "use client"
+import { ProductManagementPage } from "@/features/dashboard/components/templates/ProductManagementPage";
 import RouteGuardSkeleton from '@/components/atoms/RouteGuardSkeleton';
-import ShopPage from '@/features/shop/components/template/ShopPage';
 import { useHydratedAuth } from '@/utils/routeGuard.utils';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 
-export default function Page(){
+export default function DashboardRouteGuard({children}:{children:React.ReactNode}){
     const router = useRouter();
     const { isHydrated, user } = useHydratedAuth();
     useEffect(() => {
         if (!isHydrated) return;
 
-        if (user?.role==="RESTAURANT") {
-            router.replace("/dashboard/product-managment");
+        if (user?.role==="USER") {
+            router.replace("/shop");
         }
     }, [isHydrated, user, router]);
 
     if (!isHydrated) return <RouteGuardSkeleton />;
-    if (user?.role === "RESTAURANT") return <RouteGuardSkeleton />
+    if (user?.role === "USER") return <RouteGuardSkeleton></RouteGuardSkeleton>
     
 
-    return <ShopPage></ShopPage>;
+    return <>{children}</>;
 }

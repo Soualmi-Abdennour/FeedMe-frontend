@@ -23,15 +23,15 @@ function PostComment({ user: commentOwner, text, createdAt, commentId }: IPostCo
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SingleCommentResponse = fetchResponse.data as SingleCommentResponse
 
-        if (error) {
-            const errorResponse = error.data as SingleCommentResponse
-            if (error.status || errorResponse.status === "ERROR") {
-                toast.error("Something Went wrong.")
-            }
-            else {
-                toast.error(errorResponse.message)
-            }
-        }
+        if (error) {                        
+                    const errorResponse = error.data as SingleCommentResponse            
+                    if (!errorResponse || errorResponse.status === "ERROR") {
+                        toast.error("Something Went wrong.")
+                    }
+                    else {                
+                        toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
+                    }
+                }
         else {
             toast.success(successResponse.message)
         }

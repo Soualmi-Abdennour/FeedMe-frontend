@@ -13,10 +13,10 @@ function AppHeader() {
     else
         profileImage = user?.profile?.restaurantBasicInformation.restaurantLogoUrl    
     return (
-        <header className='flex items-center justify-end gap-4 w-full bg-white shadow-lg h-14 px-3 z-40'>
-            <Link href={"/cart"}>
+        <header className='flex items-center justify-end gap-4 w-full bg-[#F8F8F8] shadow-[3px_4px_4px_0px_#00000040] h-14 px-3 z-40'>
+            {user?.role==="USER" && <Link href={"/cart"}>
                 <ShoppingCart size={24}></ShoppingCart>
-            </Link>
+            </Link>}
             <Link href={"/profile"}>
                 <div className='rounded-full size-8 '>
                     <Image

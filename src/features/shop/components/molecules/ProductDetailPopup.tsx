@@ -3,10 +3,14 @@
 import { ShoppingCart, X } from 'lucide-react';
 import { IProductDetailPopupProps } from '../../types/props.types';
 import Image from 'next/image';
+import { useAppSelector } from '@/store/base.store';
 
 
 
 export  function ProductDetailPopup({ product, onClose, onAddToCart }: IProductDetailPopupProps) {
+  console.log(product);
+  
+  const {user}=useAppSelector(state=>state.user)
   const formatTime = (min: number) =>
     min >= 60 ? `${Math.floor(min / 60)}h ${min % 60}min` : `${min}min`;
 
@@ -55,18 +59,18 @@ export  function ProductDetailPopup({ product, onClose, onAddToCart }: IProductD
                 Account holder:
               </span>
               <div className="w-10 h-10 rounded-full bg-orange-200 flex items-center justify-center text-orange-600 font-bold text-base overflow-hidden flex-shrink-0">
-                {product.seller.avatarUrl ? (
-                  <Image src={product.seller.avatarUrl} alt="" className="w-full h-full object-cover" width={40} height={40} />
+                {product.seller?.avatarUrl ? (
+                  <Image src={product.seller?.avatarUrl} alt="" className="w-full h-full object-cover" width={40} height={40} />
                 ) : (
-                  product.seller.username[0].toUpperCase()
+                  product.seller?.username[0].toUpperCase()
                 )}
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-sm font-semibold text-gray-800 truncate">
-                  {product.seller.username}
+                  {product.seller?.username}
                 </span>
                 <span className="text-xs text-gray-400 truncate">
-                  {product.seller.username}
+                  {product.seller?.username}
                 </span>
               </div>
             </div>
@@ -99,13 +103,13 @@ export  function ProductDetailPopup({ product, onClose, onAddToCart }: IProductD
                 <span className="text-sm font-bold text-gray-800">Price:</span>
                 <span className="text-sm text-gray-600">{product.price} DA</span>
               </div>
-              <button
+              {user?.role==="USER" && onAddToCart && <button
                 onClick={onAddToCart}
                 className="flex items-center gap-2 bg-[#E85C1A] hover:bg-orange-600 text-white font-semibold text-sm rounded-xl px-6 py-3 transition-colors active:scale-95"
               >
                 <ShoppingCart size={18} />
                 Add to Cart
-              </button>
+              </button>}
             </div>
 
           </div>

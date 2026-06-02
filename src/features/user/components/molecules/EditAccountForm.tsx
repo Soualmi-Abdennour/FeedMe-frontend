@@ -53,12 +53,14 @@ function EditAccountForm({ defaultValues }: Props) {
 
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (error.status || errorResponse.status === "ERROR") {
-                toast.error("Something went wrong.")
-            } else {
-                toast.error(errorResponse.message)
+            if (!errorResponse || errorResponse.status === "ERROR") {
+                toast.error("Something Went wrong.")
             }
-        } else {
+            else {
+                toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+            }
+        } 
+        else {
             toast.success(successResponse.message)
             dispatch(setUser(mapUserDbToAppModel(successResponse.data?.user!)))
             dispatch(setAuthState({

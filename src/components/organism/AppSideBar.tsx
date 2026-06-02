@@ -24,15 +24,15 @@ function AppSidebar() {
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: ApiResponse<null> = fetchResponse.data as ApiResponse<null>
 
-        if (error) {
-            const errorResponse = error.data as ApiResponse<null>
-            if (error.status || errorResponse.status === "ERROR") {
-                toast.error("Something Went wrong.")
-            }
-            else {
-                toast.error(errorResponse.message)
-            }
-        }
+        if (error) {                        
+                    const errorResponse = error.data as ApiResponse<null>            
+                    if (!errorResponse || errorResponse.status === "ERROR") {
+                        toast.error("Something Went wrong.")
+                    }
+                    else {                
+                        toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
+                    }
+                }
         else {
             toast.success(successResponse.message)
             router.replace("/")

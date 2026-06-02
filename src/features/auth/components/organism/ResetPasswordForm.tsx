@@ -48,23 +48,23 @@ function ResetPasswordForm() {
 
         if (error) {
             const errorResponse = error.data as UserResponse
-            if (error.status || errorResponse.status === "ERROR") {
+            if (!errorResponse || errorResponse.status === "ERROR") {
                 toast.error("Something Went wrong.")
             }
             else {
-                toast.error(errorResponse.message)
-            }        
+                toast.error(errorResponse.errors?.at(0)?.message ?? errorResponse.message)
+            }
         }
         else{
             const successResponseData = successResponse.data
             toast.success(successResponse.message)
             dispatch(setUser(mapUserDbToAppModel(successResponseData?.user!)))
+            dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
             reset()
             if (!successResponseData?.user?.isVerified) {
                 router.replace("/verify-email")
-                dispatch(setAuthState({ jwtToken: successResponseData?.jwtToken! }))
             }
-            if (!successResponseData?.user?.isOnboardingCompleted)
+            else if (!successResponseData?.user?.isOnboardingCompleted)
                 router.replace("/onboarding")
             else
                 router.replace("/publication")

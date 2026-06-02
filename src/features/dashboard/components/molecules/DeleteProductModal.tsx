@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ProductAppModel } from "../../types/product.types";
 import { IDeleteProductModalProps } from "../../types/props.types";
 import { Button } from "@/components/ui/button";
 

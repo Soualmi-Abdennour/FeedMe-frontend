@@ -12,6 +12,7 @@ import ReelsSkeleton from '../atoms/ReelsSkeleton'
 import PostWrapper from '../organism/PostWrapper'
 import ReelSnapItem from '../organism/ReelSnapItem'
 import { useSearchParams } from 'next/navigation'
+import { getRandomDateFromNow, getRandomYesterdayMorningDate } from '../../utils/publication.utils'
 
 
 
@@ -19,7 +20,9 @@ const REEL_LIMIT=10
 export default function ReelsPage() {
     const params=useSearchParams()
     const [reels, setReels] = useState<PostAppModel[]>([])
-    const [cursor, SetCursor] = useState<string | undefined>(undefined)
+    const [cursor, SetCursor] = useState<string | undefined>(getRandomYesterdayMorningDate())
+    console.log(cursor);
+    
     const [hasMore, setHasMore] = useState(true)
     const isFetchingMore = useRef(false)
     const fetchResponse = useGetPublicationPostsQuery(
@@ -29,16 +32,15 @@ export default function ReelsPage() {
     const {data,isFetching,isLoading}=fetchResponse
     const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
     const successResponse: PostsResponse = fetchResponse.data as PostsResponse
-    if(error){               
-        const errorResponse=error.data as PostsResponse
-        if (error.status || errorResponse.status === "ERROR") {
-                toast.error("Something Went wrong.")
+    if (error) {                        
+                const errorResponse = error.data as PostsResponse            
+                if (!errorResponse || errorResponse.status === "ERROR") {
+                    toast.error("Something Went wrong.")
+                }
+                else {                
+                    toast.error(errorResponse.errors?.at(0)?.message?? errorResponse.message)
+                }
             }
-            else {
-                toast.error(errorResponse.message)
-            }    
-        }
-
     useEffect(() => {
         if (!successResponse || isFetching) return
         const posts = successResponse.data!.posts.map((post) => convertPostDbModelToPostAppModel(post))

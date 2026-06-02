@@ -2,7 +2,7 @@
 
 import { fetchAPI } from "@/store/base.store";
 import { QuestionModel } from "../types/qa.types";
-import { QuestionCommentsResponse, QuestionsResponse } from "@/types/api.types";
+import { LikeResponse, QuestionCommentsResponse, QuestionsResponse, SaveResponse } from "@/types/api.types";
 
 export const qaApiSlice = fetchAPI.injectEndpoints({
   endpoints: (builder) => ({
@@ -36,7 +36,7 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
       invalidatesTags: ["Questions"],
     }),
 
-    toggleLike: builder.mutation<void, string>({
+    toggleLike: builder.mutation<LikeResponse, string>({
       query: (id) => ({ url: `/questions/${id}/toggle-like`, method: "POST" }),
       invalidatesTags: ["Questions"],
     }),
@@ -46,15 +46,15 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
       invalidatesTags: ["Questions"],
     }),
 
-    saveQuestion: builder.mutation<void, string>({
+    toggleSaveQuestion: builder.mutation<SaveResponse, string>({
       query: (questionId) => ({ url: `/questions/save/${questionId}`, method: "POST" }),
       invalidatesTags: ["Questions"],
     }),
 
-    unsaveQuestion: builder.mutation<void, string>({
-      query: (questionId) => ({ url: `/questions/save/${questionId}`, method: "DELETE" }),
-      invalidatesTags: ["Questions"],
-    }),
+    // unsaveQuestion: builder.mutation<void, string>({
+    //   query: (questionId) => ({ url: `/questions/save/${questionId}`, method: "DELETE" }),
+    //   invalidatesTags: ["Questions"],
+    // }),
 
     getQuestionComments: builder.query<QuestionCommentsResponse, string>({
       query: (questionId) => `/questions/${questionId}/comments`,
@@ -63,7 +63,7 @@ export const qaApiSlice = fetchAPI.injectEndpoints({
 
     createComment: builder.mutation<void, { questionId: string; text: string }>({
       query: ({ questionId, text }) => ({
-        url: `/questions/${questionId}/comments`,
+        url: `/questions/comments/${questionId}`,
         method: "POST",
         body: { text }
       }),
@@ -103,8 +103,9 @@ export const {
   useDeleteQuestionMutation,
   useToggleLikeMutation,
   useTogglePinMutation,
-  useSaveQuestionMutation,
-  useUnsaveQuestionMutation,
+  useToggleSaveQuestionMutation,
+  // useSaveQuestionMutation,
+  // useUnsaveQuestionMutation,
   useCreateCommentMutation,
   useMarkAsSolvedMutation,
   useCloseQuestionMutation,

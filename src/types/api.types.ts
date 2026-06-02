@@ -140,3 +140,11 @@ export type getProductsCredentials ={
     sortBy?: 'price' | 'random' | 'preparationTime';
     cursor?: string;
 }
+
+export interface AddProductPayload  {
+    formData: FormData;
+}
+export interface UpdateProductPayload   {
+    formData:FormData
+    id: string;
+}

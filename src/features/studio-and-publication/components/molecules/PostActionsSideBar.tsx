@@ -67,7 +67,10 @@ function PostActionsSideBar({
     return (
         <div className='flex flex-col items-center gap-5'>
             <button 
-                onClick={handleLike}
+                onClick={(e)=>{
+                    e.stopPropagation()
+                    handleLike()
+                }}
                 className="flex flex-col items-center gap-1 group"
             >
                 <div className="flex size-10 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm transition group-hover:bg-black/20">
@@ -76,7 +79,10 @@ function PostActionsSideBar({
                 <span className="text-xs font-medium text-black/80">{likeCount}</span>
             </button>
             <button 
-                onClick={toggleComments}
+                onClick={(e)=>{
+                    e.stopPropagation()
+                    toggleComments()
+                }}
                 className="flex flex-col items-center gap-1 group"
             >
                 <div className="flex size-10 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm transition group-hover:bg-black/20">
@@ -85,7 +91,10 @@ function PostActionsSideBar({
                 <span className="text-xs font-medium text-black/80">{commentsCount}</span>
             </button>
             <button 
-                onClick={handleSave}
+                onClick={(e)=>{
+                    e.stopPropagation()
+                    handleSave()
+                }}
                 className="flex flex-col items-center gap-1 group"
             >
                 <div className="flex size-10 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm transition group-hover:bg-black/20">
@@ -93,7 +102,10 @@ function PostActionsSideBar({
                 </div>
             </button>
             <button 
-                onClick={toggleDetails}
+                onClick={(e)=>{
+                    e.stopPropagation()
+                    toggleDetails()
+                }}
                 className="flex flex-col items-center gap-1 group"
             >
                 <div className="flex size-10 items-center justify-center rounded-full bg-black/10 backdrop-blur-sm transition group-hover:bg-black/20">
