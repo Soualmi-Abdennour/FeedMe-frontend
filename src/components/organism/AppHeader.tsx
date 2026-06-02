@@ -13,6 +13,7 @@ import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation'
 import { clearAuthState } from '@/features/auth/store/auth.slice'
+import { clearOnboarding } from '@/features/onboarding/store/onboarding.slice'
 
 function AppHeader() {
     const { user } = useAppSelector(state => state.user)
@@ -39,6 +40,7 @@ function AppHeader() {
             setTimeout(() => {
                 dispatch(clearUser())
                 dispatch(clearAuthState())
+                dispatch(clearOnboarding())
             }, 1000);
         }
     }

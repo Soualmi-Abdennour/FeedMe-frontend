@@ -1,8 +1,7 @@
 "use client"
 import { useAppSelector } from '@/store/base.store'
-import EditAccountForm from '../molecules/EditAccountForm'
 import DangerZoneSection from '../molecules/DangerZoneSection'
-import NotificationsToggle from '../molecules/NotificationsToggle'
+import EditAccountForm from '../molecules/EditAccountForm'
 
 function RestaurantUserEditAccount() {
     const { user } = useAppSelector(state => state.user)
@@ -18,7 +17,6 @@ function RestaurantUserEditAccount() {
                     newPasswordConfirm: "",
                 }}
             />
-            <NotificationsToggle /> 
             <DangerZoneSection/> 
         </div>
     )

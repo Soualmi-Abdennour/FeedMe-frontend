@@ -23,14 +23,14 @@ function VerifyTokenDefaultView({ props }: { props: IDefaultVerificationProcessP
 
         const timer = setTimeout(() => {
             setCooldown(cooldown - 1);
-        }, 1000);
+        }, 1500);
 
         return () => clearTimeout(timer);
     }, [cooldown]);
 
     const handleClick = async () => {
 
-        setCooldown(10); // restart cooldown on click
+        setCooldown(15); // restart cooldown on click
         const fetchResponse = await sendVerificationEmail({
             identifier,
             endpoint: resendVerificationEndpoint!

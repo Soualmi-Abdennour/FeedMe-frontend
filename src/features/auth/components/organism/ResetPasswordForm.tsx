@@ -12,18 +12,18 @@ import { RESET_PASSWORD_FIELDS } from '../../constants/resetPassword.constants'
 import { IResetPasswordForm, resetPasswordFormSchema } from '../../schema/resetPassword.schema'
 import { useResetPasswordMutation } from '../../store/auth.api.slice'
 
-function ResetPasswordForm() {
+function ResetPasswordForm({identifier}:{identifier:string}) {
     const router = useRouter()
     const [resetPassword] = useResetPasswordMutation()
     const dispatch = useAppDispatch()
-    const { user:userInState } = useAppSelector(state => state.user)
     const {
         handleSubmit,
         control,
         reset,
         formState: {
             errors,
-            isSubmitting
+            isSubmitting,
+            isValid
         }
     } = useForm<IResetPasswordForm>({
         resolver: zodResolver(resetPasswordFormSchema),
@@ -35,7 +35,7 @@ function ResetPasswordForm() {
     })
     const onSubmit = async (formData: IResetPasswordForm) => {
         const fetchResponse = await resetPassword({
-            identifier: userInState?.email!,
+            identifier,
             password: formData.password,
             passwordConfirm: formData.passwordConfirm
         })
@@ -69,7 +69,7 @@ function ResetPasswordForm() {
             ))}
             <SubmitButton
                 className='text-white font-bold mt-8'
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isValid}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
                 variant='primary'
             >

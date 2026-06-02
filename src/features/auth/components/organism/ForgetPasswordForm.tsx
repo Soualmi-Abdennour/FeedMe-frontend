@@ -25,7 +25,8 @@ function ForgetPasswordForm() {
         reset,
         formState: {
             errors,
-            isSubmitting
+            isSubmitting,
+            isValid
         }
     } = useForm<IForgetPasswordForm>({
         resolver: zodResolver(forgetPasswordFormSchema),
@@ -66,7 +67,7 @@ function ForgetPasswordForm() {
             ))}
             <SubmitButton
                 className='text-white font-bold '
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isValid}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting ? "Loading..." : "Continue"}

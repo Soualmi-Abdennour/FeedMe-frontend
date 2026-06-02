@@ -42,7 +42,7 @@ function ResetPasswordPage() {
     },[verifyToken,token])
 
     const onSuccessFn = () => {
-        router.replace(`/reset-password?verifiedToken=${token}`)
+        router.replace(`/reset-password?verifiedToken=${token}&identifier=${identifier}`)
     }
     const onFailFn = () => {
         router.replace("/forget-password")
@@ -67,7 +67,7 @@ function ResetPasswordPage() {
                     <p className="body-text text-neutral-500 mb-4">
                         Fill in the information in order to listen with us
                     </p>
-                    <ResetPasswordForm ></ResetPasswordForm>
+                    <ResetPasswordForm identifier={identifier}></ResetPasswordForm>
                 </div>
             </div>
             </div>

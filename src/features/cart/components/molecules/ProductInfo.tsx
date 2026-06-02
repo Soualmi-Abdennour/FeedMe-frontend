@@ -1,9 +1,9 @@
 import { IProductInfo } from "../../types/props.types";
 
 export const ProductInfo = ({ name, price, description }: IProductInfo) => (
-  <div className="flex flex-col gap-4 w-full max-w-2xl">
-    <div className="flex items-center gap-2 w-full">
-      <div className="flex flex-1 items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
+  <div className=" w-full ">
+    <div className=" w-full">
+      <div className=" bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
         <span className="text-[15px] font-bold text-gray-950 whitespace-nowrap">
           Product name:
         </span>
@@ -12,7 +12,7 @@ export const ProductInfo = ({ name, price, description }: IProductInfo) => (
         </span>
       </div>
 
-      <div className="flex flex-[0.5] items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
+      <div className=" items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-1 shadow-sm">
         <span className="text-[15px] font-bold text-gray-950 whitespace-nowrap">
           Price:
         </span>

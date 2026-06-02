@@ -28,7 +28,8 @@ function SigninForm() {
         reset,
         formState: {
             errors,
-            isSubmitting
+            isSubmitting,
+            isValid
         }
     } = useForm<ISigninForm>({
         resolver: zodResolver(signinFormSchema),
@@ -87,7 +88,7 @@ function SigninForm() {
             </button>
             <SubmitButton
                 className=' text-white font-bold'
-                disabled={isSubmitting}
+                disabled={isSubmitting ||!isValid}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
             >
                 {isSubmitting ? "Loading..." : "Continue"}

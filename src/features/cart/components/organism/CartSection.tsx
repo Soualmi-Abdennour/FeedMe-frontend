@@ -96,20 +96,20 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
   if (items.length === 0) return null;
 
   return (
-    <div className="max-w-6xl mx-auto bg-[#F5F4F0] rounded-[2.5rem] p-2 md:p-10 space-y-8 antialiased">
-
-      <div className="bg-white border border-gray-100 rounded-3xl p-5 inline-flex items-center shadow-sm">
-        <div className="px-2">
+    // className = "max-w-6xl mx-auto bg-[#F5F4F0] rounded-[2.5rem] p-2 md:p-10 space-y-8 antialiased border-2"
+    <div >
+      {/* <div className="bg-white border border-gray-100 rounded-3xl p-5 inline-flex items-center shadow-sm"> */}
+        {/* <div className="px-2 border-2 border-red-600"> */}
           <AccountHeader
             fullName={group.accountName}
             userName={group.userName}
             avatarSrc={group.accountAvatar}
           />
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
 
-      <div className="grid grid-cols-2 lg:grid-cols-12 gap-[99px] items-start">
-        <div className="lg:col-span-8 flex flex-col gap-5 w-full">
+      {/* <div className="grid grid-cols-2 lg:grid-cols-12 gap-[99px] items-start">
+        <div className="lg:col-span-8 flex flex-col gap-5 w-full"> */}
           {items.map(item => (
             <div key={item.id} className="transition-all duration-300 hover:-translate-y-0.5">
               <CartItem
@@ -121,19 +121,19 @@ export const CartSection = ({ group, onRemoveGroup }: ICartSection) => {
               />
             </div>
           ))}
-        </div>
+        {/* </div> */}
 
-        <div className="lg:col-span-4 w-full sticky top-8">
-          <div className="bg-white border border-gray-100 rounded-[2rem] p-8 shadow-xl shadow-black/[0.03]">
+        {/* <div className="lg:col-span-4 w-full sticky top-8">
+          <div className="bg-white border border-gray-100 rounded-[2rem] p-8 shadow-xl shadow-black/[0.03]"> */}
             <OrderSummary
               total={total}
               onCompletePurchase={handleCompletePurchase}
               isLoading={placeOrderLoading}
             />
-          </div>
-        </div>
+          {/* </div>
+        </div> */}
 
-      </div>
+      {/* </div> */}
     </div>
   );
 };

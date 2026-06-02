@@ -85,7 +85,7 @@ function EditAccountForm({ defaultValues }: Props) {
                     {enableEdit ? <CircleX className='size-[24px] mx-1'></CircleX> : <Pencil className='size-[24px] mx-1'></Pencil>}
                 </Button>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
+            <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5' autoComplete="off">
                 <div className='flex flex-col gap-2'>
                     {EDIT_ACCOUNT_FORM_FIELDS.slice(0,2).map((formField)=>(
                         <div key={formField.name} >

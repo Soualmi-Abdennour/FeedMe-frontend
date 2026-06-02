@@ -8,6 +8,7 @@ import {QuestionMenu} from "./QuestionMenu";
 import {UserHeader} from "./UserHeader";
 import { IQuestionCardProps } from "../../types/props.types";
 import NextLink from 'next/link'
+import { useAppSelector } from "@/store/base.store";
 
 
 export default function QuestionCard({
@@ -47,7 +48,7 @@ export default function QuestionCard({
         />
 
         <div className="flex items-center gap-2 shrink-0">
-          {isPinned && (
+          {isPinned && isOwner && (
             <span className="text-xs bg-orange-100 text-orange-800 px-2 py-0.5 rounded-full font-medium">
               Pinned
             </span>

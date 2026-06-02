@@ -37,12 +37,12 @@ function PostForm({ defaultValues, onSubmit, onClose, isVideoUploading, setIsVid
         }
     })
     const submitForm =async (formData: IPostFormSchema) => {
+        setIsVideoUploading(true)       
         const { title, description, contentType } = formData
         const postData = buildPostFormData({
             title, description, contentType, mediaList: mediaList
         })
         if (mediaList[0].file?.type.startsWith("video/")){     
-            setIsVideoUploading(true)       
             const fetchResponse=await uploadVideo(buildVideoUploadFormData(mediaList[0].file))
             const error: FetchBaseQueryError =fetchResponse.error as FetchBaseQueryError
             const videoUrl = fetchResponse.data?.secure_url            
@@ -54,9 +54,9 @@ function PostForm({ defaultValues, onSubmit, onClose, isVideoUploading, setIsVid
             else {
                 postData.append("videoUrl", videoUrl)
             }
-            setIsVideoUploading(false)
         }
         await onSubmit(postData)
+        setIsVideoUploading(false)
     }
     return (
         <div className='grid grid-cols-2 gap-20 justify-center w-full  '>

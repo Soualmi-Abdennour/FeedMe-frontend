@@ -26,12 +26,12 @@ export const QuantitiyController = ({
     };
 
     return (
-        <div className="flex justify-between w-full items-center gap-20  mt-4 bg-transparent">
-            <div className="flex justify-between items-center gap-4 bg-white border border-gray-100 rounded-2xl px-4 py-2 shadow-sm ring-1 ring-black/5">
+        <div className=" mt-4 bg-transparent">
+            <div className=" bg-white border border-gray-100 rounded-2xl px-4 py-2 shadow-sm ring-1 ring-black/5">
                 <span className="text-[15px] font-extrabold tracking-widest text-blue-950/70">
                     Quantity
                 </span>
-                <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-2 py-1">
+                <div className=" bg-gray-50 rounded-xl px-2 py-1">
                     <button
                         onClick={decrement}
                         disabled={qty <= min}
@@ -58,10 +58,10 @@ export const QuantitiyController = ({
             <button
                 onClick={() => onApply(qty)}
                 disabled={isApplyLoading}
-                className="relative group flex ml-20 items-center justify-center overflow-hidden bg-orange-500 hover:bg-orange-600 text-white text-[14px] font-bold h-[48px] px-10 rounded-2xl shadow-[0_8px_16px_-6px_rgba(249,115,22,0.5)] transition-all duration-300 active:scale-95 hover:-translate-y-1"
+                className="  flex ml-20 items-center justify-center overflow-hidden bg-orange-500 hover:bg-orange-600 text-white text-[14px] font-bold h-[48px] px-10 rounded-2xl shadow-[0_8px_16px_-6px_rgba(249,115,22,0.5)] transition-all duration-300 active:scale-95 hover:-translate-y-1"
             >
-                <span className="relative z-10 tracking-wide">Apply</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <span className="tracking-wide">Apply</span>
+                {/* <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" /> */}
             </button>
         </div>
     );

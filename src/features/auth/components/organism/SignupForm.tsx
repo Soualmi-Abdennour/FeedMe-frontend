@@ -26,7 +26,8 @@ function SignupForm({ className }: SignupFormProps) {
         reset,
         formState: {
             errors,
-            isSubmitting
+            isSubmitting,
+            isValid
         }
     } = useForm<ISignupForm>({
         resolver: zodResolver(signupFormSchema),
@@ -70,7 +71,7 @@ function SignupForm({ className }: SignupFormProps) {
                 </div>
             ))}
             <SubmitButton
-                disabled={isSubmitting}
+                disabled={isSubmitting ||!isValid}
                 state={isSubmitting ? "LOADING" : "DEFAULT"}
                 className='mt-1 text-white font-bold'
             >
