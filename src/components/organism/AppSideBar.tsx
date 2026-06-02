@@ -55,7 +55,7 @@ function AppSidebar() {
         ">
             {/* Logo */}
             <div className="p-3 flex items-center justify-center h-[72px] shrink-0 mx-auto">
-                <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+                <Image src="/FeedMe-Orange.svg" width={60} height={60} alt='logo' ></Image>
             </div>
 
             <div className="flex-1 flex flex-col justify-between overflow-hidden">

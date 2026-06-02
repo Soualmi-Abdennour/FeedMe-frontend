@@ -40,7 +40,7 @@ export default function Navbar() {
           Replace the placeholder below with your real logo:
           <Image src="/FeedMe Orange.svg" width={34} height={34} alt="FeedMe" />
         */}
-        <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+        <Image src="/FeedMe-Orange.svg" width={60} height={60} alt='logo' ></Image>
         <span className="font-display text-[22px] font-bold text-neutral-900 leading-none">
           FeedMe
         </span>

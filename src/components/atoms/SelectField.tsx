@@ -24,7 +24,7 @@ function SelectField({
 
     return (
     
-        <>
+        <div className='w-full flex flex-col gap-2 mb-2'>
             <div className={cn(
                 "select-container",
                 "w-full rounded-lg pl-4 py-1.5 border transition-all duration-200",
@@ -72,7 +72,7 @@ function SelectField({
             <p className={`mt-4 text-left text-sm ${errors[name] ? "text-red-500" : ""}`}>
                 {errors[name]?.message}
             </p>            
-        </>
+        </div>
     );
 }
 

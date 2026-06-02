@@ -38,7 +38,7 @@ function PostItem({ post }: { post: PostAppModel }) {
     <>
       {/* CARD */}
       <div
-        className="relative h-full w-[387px] overflow-hidden rounded-2xl shadow-xl cursor-pointer"
+        className="relative h-full w-[387px] overflow-hidden rounded-2xl shadow-xl cursor-pointer "
       >
         <div className="absolute inset-0">{renderMedia()}</div>
 

@@ -114,49 +114,49 @@ export default function ReelsPage() {
     }, [])
 
     return (
-    <div className="relative w-full h-full">
-        <div
-            ref={containerRef}
-            className="w-full h-full overflow-y-scroll"
-            style={{
-                scrollSnapType: 'y mandatory',
-                msOverflowStyle: 'none',
-                scrollbarWidth: 'none',
-            }}
-        >
-            {isLoading && reels.length === 0 ? (
-                <ReelsSkeleton />
-            ) : (
-                reels.map(reel => (
-                    <ReelSnapItem key={reel.id}>
-                        <PostWrapper post={reel} />
+        <div className="relative w-full  h-[585px]">
+            <div
+                ref={containerRef}
+                className="w-full  h-[585px] overflow-y-scroll"
+                style={{
+                    scrollSnapType: 'y mandatory',
+                    msOverflowStyle: 'none',
+                    scrollbarWidth: 'none',
+                }}
+            >
+                {isLoading && reels.length === 0 ? (
+                    <ReelsSkeleton />
+                ) : (
+                    reels.map(reel => (
+                        <ReelSnapItem key={reel.id}>
+                            <PostWrapper post={reel} />
+                        </ReelSnapItem>
+                    ))
+                )}
+
+                {isFetching && reels.length > 0 && (
+                    <ReelSnapItem>
+                        <ReelLoadingSpinner />
                     </ReelSnapItem>
-                ))
-            )}
+                )}
 
-            {isFetching && reels.length > 0 && (
-                <ReelSnapItem>
-                    <ReelLoadingSpinner />
-                </ReelSnapItem>
-            )}
+                {!hasMore && reels.length > 0 && (
+                    <ReelSnapItem>
+                        <EndOfFeed />
+                    </ReelSnapItem>
+                )}
 
-            {!hasMore && reels.length > 0 && (
-                <ReelSnapItem>
-                    <EndOfFeed />
-                </ReelSnapItem>
-            )}
+                {reels.length === 0 && (
+                    <ReelSnapItem>
+                        <EndOfFeed />
+                    </ReelSnapItem>
+                )}
 
-            {reels.length === 0 && (
-                <ReelSnapItem>
-                    <EndOfFeed />
-                </ReelSnapItem>
-            )}
-
-            <div ref={sentinelRef} className="h-1 w-full" aria-hidden />
+                <div ref={sentinelRef} className="h-1 w-full" aria-hidden />
+            </div>
         </div>
-    </div>
-)
- 
+    )
+
 }
 
 

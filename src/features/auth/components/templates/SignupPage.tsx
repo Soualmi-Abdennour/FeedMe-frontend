@@ -7,7 +7,7 @@ function SignupPage() {
     return (
         <div className="max-w-[512px] py-5 mx-auto  w-full flex flex-col  gap-3">
             <div className=' px-4 bg-transparent rounded-md mx-auto'>
-            <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+            <Image src="/FeedMe-Orange.svg" width={60} height={60} alt='logo' ></Image>
             </div>
             <div 
                 className="relative shadow-1 pt-6 pb-7 px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">

@@ -56,7 +56,8 @@ function PostForm({ defaultValues, onSubmit, onClose, isVideoUploading, setIsVid
             }
         }
         await onSubmit(postData)
-        setIsVideoUploading(false)
+                    setIsVideoUploading(false)
+
     }
     return (
         <div className='grid grid-cols-2 gap-20 justify-center w-full  '>

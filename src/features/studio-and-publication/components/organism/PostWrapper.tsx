@@ -20,11 +20,11 @@ function PostWrapper({ post }: { post: PostAppModel }) {
         : post.user.profile?.restaurantBasicInformation?.restaurantName ?? post.user.userName
 
     return (
-        <div className="flex h-full items-center justify-center gap-4">
+        <div className="flex  h-full max-w-[1400px] items-center justify-center ">
 
             {showDetails && (
                 <PostDetails
-                    className="self-center h-full w-[400px]"
+                    className="self-center h-full shrink-0 w-[400px]"
                     postTitle={post.title}
                     postDescription={post.description}
                     contentType={post.contentType}
@@ -35,9 +35,10 @@ function PostWrapper({ post }: { post: PostAppModel }) {
                 />
             )}
 
-            <div className="flex h-full items-center justify-center gap-4 shrink-0 w-[400px]">
+            <div className="flex h-full items-center justify-end gap-4 shrink-0 w-[500px]">
                 <PostItem post={post} />
-                <PostActionsSideBar
+                <div className='pr-3 pt-20 mt-20'>
+                    <PostActionsSideBar
                     toggleComments={() => setShowComments(s => !s)}
                     toggleDetails={() => setShowDetails(s => !s)}
                     postId={post.id}
@@ -46,13 +47,15 @@ function PostWrapper({ post }: { post: PostAppModel }) {
                     isLiked={!!post.isLiked}
                     isSaved={!!post.isSaved}
                 />
+                </div>
+                
             </div>
 
             {showComments && (
                 <PostComments
                         post={post}
                     setCommentsCount={setCommentsCount}
-                    className="self-center h-full w-[400px]"
+                    className="self-center h-full shr w-[300px] mr-3"
                 />
             )}
         </div>

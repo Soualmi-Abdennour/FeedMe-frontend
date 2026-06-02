@@ -11,9 +11,9 @@ import { useState } from 'react'
 
 function CreatePostForm({ className, onClose, setIsProcess,isProcess }: ICreatePostFormProps) {
     const [createPost, { isLoading }] = useCreatePostMutation()
-    // const [isVideoUploading, setIsVideoUploading] = useState<boolean>(false)
+    const [isVideoUploading, setIsVideoUploading] = useState<boolean>(false)
     const onSubmit = async (postData: FormData) => {
-        // setIsProcess(true)
+        setIsProcess(true)
         const fetchResponse = await createPost(postData)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse
@@ -31,9 +31,9 @@ function CreatePostForm({ className, onClose, setIsProcess,isProcess }: ICreateP
             toast.success(successResponse.message)
             onClose()
         }
-        // setIsProcess(false)
+        setIsProcess(false)
     }
-    if (isLoading || isProcess) {
+    if (isLoading || isVideoUploading) {
         return (
             <div className="w-full h-full flex flex-col items-center justify-center gap-4   bg-white rounded-2xl py-6 px-32">
                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-500 border-t-transparent " />
@@ -65,7 +65,7 @@ function CreatePostForm({ className, onClose, setIsProcess,isProcess }: ICreateP
                         [&::-webkit-scrollbar-track]:bg-transparent
                         [&::-webkit-scrollbar-thumb]:bg-primary-500
                         [&::-webkit-scrollbar-thumb]:rounded-full overflow-x-hidden">
-                <PostForm onSubmit={onSubmit} onClose={onClose} isVideoUploading={isProcess!} setIsVideoUploading={setIsProcess}></PostForm>
+                <PostForm onSubmit={onSubmit} onClose={onClose} isVideoUploading={isVideoUploading} setIsVideoUploading={setIsVideoUploading}></PostForm>
             </div>
         </div>
     )

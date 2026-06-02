@@ -14,7 +14,6 @@ function DeletePostForm({ className, postId, onClose,setIsProcess }: IDeletePost
     const [deletePost,{isLoading}] = useDeletePostMutation()
     const handleClick = async () => {
         setIsProcess(true)
-
         const fetchResponse = await deletePost(postId)
         const error: FetchBaseQueryError = fetchResponse.error as FetchBaseQueryError
         const successResponse: SinglePostResponse = fetchResponse.data as SinglePostResponse

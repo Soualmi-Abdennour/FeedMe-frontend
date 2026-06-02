@@ -7,7 +7,7 @@ function ForgetPasswordPage() {
     return (
         <div className="max-w-[512px] py-5 mx-auto  w-full flex flex-col  gap-5    ">
             <div className='py-2 px-4 bg-transparent rounded-md mx-auto'>
-            <Image src="FeedMe Orange.svg" width={60} height={60} alt='logo' ></Image>
+            <Image src="/FeedMe-Orange.svg" width={60} height={60} alt='logo' ></Image>
             </div>
             <div 
                 className="relative shadow-1 pt-[80px] pb-[80px] px-20 rounded-tl-[32px] rounded-br-[32px] overflow-hidden">

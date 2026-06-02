@@ -18,7 +18,7 @@ function TextAreaAutoSizeField({
     id
 }: IFormField) {
     return (
-        <>
+        <div className='w-full flex flex-col gap-1 mb-2'>
             <div className={cn(
                 "w-full rounded-lg px-4 py-1.5 border transition-all duration-200",
                 "text-neutral-900 text-body",
@@ -47,10 +47,10 @@ function TextAreaAutoSizeField({
                 >
                 </Controller>
             </div>
-                <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
+                <p className={`text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                     {errors[name] && errors[name].message}
                 </p>
-        </>
+        </div>
     )
 }
 

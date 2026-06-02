@@ -11,7 +11,7 @@ function NumberField({
     name, label, placeholder, disabled = false, autoFocus = false, control, errors, id
 }: IFormField) {
     return (
-        <>
+        <div className='w-full flex flex-col gap-2 mb-2'>
             <div className={cn(
                 "w-full rounded-lg pl-4 border transition-all duration-200",
                 "text-neutral-900 text-body",
@@ -64,7 +64,7 @@ function NumberField({
             <p className={`mt-4 text-left text-sm ${errors[name] ? "text-fail-500" : ""}`}>
                 {errors[name] && errors[name].message}
             </p>
-        </>
+        </div>
     )
 }
 export default NumberField

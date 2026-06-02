@@ -36,7 +36,7 @@ export default function Footer() {
             Replace with your real logo:
             <Image src="/FeedMe Orange.svg" width={30} height={30} alt="FeedMe" />
           */}
-          <Image src="FeedMe Orange.svg" width={40} height={40} alt='logo' ></Image>
+          <Image src="/FeedMe-Orange.svg" width={40} height={40} alt='logo' ></Image>
           <span className="font-display text-[20px] font-bold text-neutral-0">FeedMe</span>
         </div>
 

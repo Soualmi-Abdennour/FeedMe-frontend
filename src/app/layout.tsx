@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: 'FeedMe',
   description: 'Food community app for Algeria',
   icons:{
-    icon:"/logo.svg"
+    icon:"/FeedMeOrange.svg"
   }
 }
 
@@ -31,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className,`min-h-screen ` )}>
+      <body className={cn(inter.className,`min-h-screen bg-primary-50` )}>
         <StoreProvider>
           <div>
             {children}

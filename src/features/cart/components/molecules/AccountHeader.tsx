@@ -4,14 +4,14 @@ import { IAccountHeader } from "../../types/props.types";
 
 
 export const AccountHeader = ({ fullName, userName, avatarSrc }: IAccountHeader) => (
-  <div className=" p-2 pl-4 bg-white border border-gray-200 rounded-2xl shadow-sm w-fit">
+  <div className="flex items-center top-10 right-16 gap-4 p-2 pl-4 bg-white border border-gray-200 rounded-2xl shadow-sm w-fit">
   {/* Label */}
   <span className="text-sm font-bold text-gray-900">
     Account holder:
   </span>
 
   {/* User Info Section */}
-  <div className="">
+  <div className="flex items-center gap-3">
     <Avatar
       src={avatarSrc}
       alt={fullName}
@@ -20,7 +20,7 @@ export const AccountHeader = ({ fullName, userName, avatarSrc }: IAccountHeader)
       fallback={fullName[0].toUpperCase()}
     />
     
-    <div className="">
+    <div className="flex flex-col justify-center">
       <span className="font-bold text-[15px] text-gray-800 leading-none mb-1">
         {fullName}
       </span>
